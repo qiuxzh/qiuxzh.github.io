@@ -1,0 +1,3 @@
+var posts=["2026/08/08/hello-world/","2026/08/08/蓝桥杯17届web国一心得/","2026/08/08/AI/使用大模型来减少大模型的幻觉/","2025/12/02/casual/README/","2025/12/01/other/如何精确报告bug/","2025/11/24/test/测试笔记/","2026/08/08/AI/Claude Code 系统提示词组成/","2026/08/08/growth/如何学习/0.总览/","2025/11/29/growth/如何学习/可理解输入假说/","2025/11/29/backend/Spring/认识Spring ioC和DI/","2026/08/08/growth/如何学习/如何自律/","2026/08/08/growth/如何学习/知识的两大类/","2026/03/10/growth/如何学习/苏格拉底式学习/","2026/08/08/growth/如何学习/遗忘/","2026/08/08/growth/认知/成长类问题难以借鉴他人经验/","2025/11/29/growth/认知/被动思维/","2025/11/29/growth/认知/高考思维/"];function toRandomPost(){
+    pjax.loadUrl('/'+posts[Math.floor(Math.random() * posts.length)]);
+  };

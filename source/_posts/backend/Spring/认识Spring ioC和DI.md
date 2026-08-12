@@ -1,5 +1,6 @@
 ---
 title: 认识Spring ioC和DI
+updated: 2026-05-09 17:13:11
 date: 2025-11-29
 tag:
   - 后端

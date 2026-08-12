@@ -1,94 +1,182 @@
-## 总
+---
+title: 17届蓝桥杯web国一心得
+date: 2026-6-8
+tag:
+  - 未分类
+categories:
+  - 默认分类
+cover:
+reprint: false
+---
 
-总体来看，web赛道的难度上比 C/C++、Java、Python 这样的算法类赛道要简单很多
+## 写在前面
 
+我是2026年（17届）蓝桥杯 Web 应用开发赛道的选手，拿了省一+国一。
 
-大致考点如下：
-- js基本语法，比如（数组、字符串、Date对象、Promise、正则表达式）
-- DOM、BOM api
-- axios，fetch，xhr等ajax请求调用方式（axios为主）
-- Vue组合式语法（setup语法、watch、computed、自定义指令、插槽、父子通信等）
-- vue-router
-- pinia
-- node的 api，包括fs，path，http
-- css （尤其是flex布局，grid布局）
-- html
-- element-plus（不需要记住每个组件的props等，考试会给文档，但是要熟悉）
-- echarts（不需要记住api，只需要有大概的影响）
+先说一下我的情况供参考：
+- 编程基础：会 HTML/CSS/JS，学过 Vue2/Vue3，了解node，有一定算法和编程基础。实习过几个月，写过前端项目。
+- 备赛时长：省赛前集中准备了约 3 周，每天 3~4 小时；国赛前又刷了一周
 
-建议都系统的自学一遍。
+----
 
+# 经验
 
+web 赛道的难度比 C/C++、Java、Python 这类算法赛道要**简单很多**，它更接近"前端综合应用"而不是算法
+
+会前端语法就能拿到80%的分数左右
+最痛苦的情况就是思路会但是因为记不起某个语法/api而导致题目做不下去
+因此备赛的核心是**记忆语法和api**
+如果考试时给了参考文档，这个比赛将没有区分度
+
+## 省赛
 
 17届省赛：
-题目记不太清楚了，只知道考前没复习fs模块的api，导致一道很简单的题0分。
+
+省赛我的表现一般，考完觉得大概只拿到了35%的分数。好在运气不错，拿了奖。
+
+核心原因就是语法/api记不住
+
+我记得有一道题好像是用fs模块递归打印目录树，但是我考前没有复习 fs 模块，这个题直接零分。题目思路其实很简单，写个递归而已。
+但是得0分还是很冤的。
+
+复习了一周多，每天4小时。
+遇到不会的就查资料，问AI，没有做限时训练（赛前一定要限时训练，不要学我）。
 
 
+## 国赛
 
-国赛心得：
+国赛总体感觉比省赛简单一些，会写九道半。
+有一道题的一小问让写vue-router的重定向的路由的配置，没想起来。
 
 
-题目特点：
-有的题目判分可能是这样的：
+复习了一周左右，每天6小时。限时训练了三套模拟题
 
-```
+## 题目
+
+### 题目结构
+
+一共十道题
+
+题目分数：5分、10分、15分、20分、25分
+
+总分好像是150分
+
+### 两种判分方式
+
+有的题，判分是**各小问独立**的：
+
+```markdown
 - 完成目标 1，得 5 分。
 - 完成目标 2，得 10 分。
 - 完成目标 3，得 10 分。
 ```
 
-每个小问都是独立的，目标1没写出来，不影响你做目标2；目标2没写出来，也不影响你写目标3。
+每个小问独立，目标 1 没写出来，不影响你做目标 2；目标 2 没写出来，也不影响你写目标 3。
 
+**空题是最大浪费**
 
-还有的题目是这样判分的：
-```
+---
+
+还有的题，判分是**递进**的：
+
+```markdown
 - 完成目标 1，得 5 分。
 - 完成目标 2，得 10 分。
-- 完成目标 2 的基础上完成目标 3，得 10 分。
+- 在完成目标 2 的基础上完成目标 3，得 10 分。
 ```
 
-第三小问需要在第二小问做对的基础上做对，才能拿到第三问的分。
+第 3 问必须在第 2 问做对的基础上才能拿分，意味着你无法在第二问没做出来的情况下做对第三问！
 
-这意味着你无法在第二问没做出来的情况下做对第三问。
+这意味着：**每一问都要尽量做对，才能解锁下一问**，不能跳题。
 
- 
+需要非常小心！
 
 
-vue的ref需要.value吗？reactive呢？computed呢？pinia的state呢？
+## 刷题
 
-## 具体考点
+### 资源
 
-### css/html
+[往期比赛 - 蓝桥云课](https://www.lanqiao.cn/contests/history/) 这个网站里面有一些完整的web模拟题套卷，建议在即将比赛的前一两个星期做几套，限时训练。
 
-css是必考的，一般在第一题。
-最常考的 flex布局，还有grid布局。还考过 transform
+注意，模拟题的质量比真题低很多。
 
-html是基本功，题目一般不会直接考，但是必须了解 html
+在有真题的情况下还是刷真题吧。
 
-能记住就能得全分，记不住基本就是0分了。
 
+### 两种刷题目的
+
+#### 为了知识点的差缺补漏而刷题
+
+
+
+#### 为了手感而刷题
+
+限时训练
+
+一定要在考前几天刷
+
+练心态，时间分配，和感觉
+
+
+# 考点梳理
+
+注：考点梳理基于我备考期间刷题的经验，还是建议请以官方大纲为准。
+
+## 总体考点
+
+大致考点如下：
+- ★★★★★ js 基本语法，比如（数组、字符串、Date对象、Promise、正则表达式）
+- ★★★★★axios，fetch等ajax请求调用方式
+- ★★★★css （尤其是flex布局，grid布局）
+- ★DOM、BOM api
+- ★★★★★ Vue组合式语法（setup语法、watch、computed、自定义指令、插槽、父子通信等）
+- ★★vue-router
+- ★★★pinia
+- ★★★node的 api，包括fs，path，http
+- ★html
+- ★element-plus（不需要记住每个组件的props等，考试会给文档，但是要熟悉）
+- ★echarts（不需要记住api，只需要有大概的影响）
+
+
+## css
+
+css 是必考的，一般出现在第一题。最常考 **flex 布局**，还有 **grid 布局**。也考过 **transform**。
+
+复习的重点是flex布局和grid布局
 
 附一些网课：
-- [flex讲解](https://www.bilibili.com/video/BV1cbCuBqE7L)
-- [grid讲解](https://www.bilibili.com/video/BV1yXqaBoEv1/)
-- [grid讲解2](https://www.bilibili.com/video/BV18p411A7JB)
+
+- [flex 讲解](https://www.bilibili.com/video/BV1cbCuBqE7L)
+- [grid 讲解](https://www.bilibili.com/video/BV1yXqaBoEv1/)
+- [grid 讲解 2](https://www.bilibili.com/video/BV18p411A7JB)
 
 
-css很难，但是很多东西似乎不考（至少我还没遇到过）
+> 能记住语法就能得全分，记不住语法基本就是 0 分了。
+
+---
+
+
+css 下限极低但是上限极高，但很多东西似乎不考（至少我刷题时还没遇到过）：
 - 定位
 - 浮动
 - 文字排版
 
-### js
 
-熟练掌握js是毋庸置疑的。
+## html
+
+html 是基本功，题目一般不直接考，但必须了解 html
+
+## js
 
 最重要的是js的字符串、数组、object处理、Set
 
-
-
 我的笔记如下：
 
+我的主要记忆方式是做速查表，把语法规则、注意事项等全部列出来记忆。
+笔记整理在下面了。
+
+
+### 字符串
 
 ```js
 str.charAt(i) //按索引取字符
@@ -118,7 +206,7 @@ str.substring(start, end)
 '5'.padEnd(2, '0') // "50"
 ```
 
-
+### 数组
 
 ```js
 [1,2,3].push('a')                    // 4                     尾部添加，返回新长度
@@ -166,6 +254,8 @@ Array.isArray([1,2])                 // true                  判断是否为数
 [1,3,5].some(v=>v>4)                 // true                  至少一个满足条件
 ```
 
+### object
+
 ```js
 obj = {a:1, b:2}
 Object.keys(obj)   => ['a','b']
@@ -197,6 +287,7 @@ Object.keys(obj).includes('a') // false
 
 ```
 
+### set
 
 ```js
 const s = new Set()
@@ -215,18 +306,18 @@ const uniqueArr = [...s]  // 转回数组
 const union = new Set([...setA, ...setB]) // 并
 const intersect = new Set([...setA].filter(item => setB.has(item))) // 交
 
-**Set 判断相等，用的是 === 严格相等**
+// Set 判断相等，用的是 === 严格相等
 ```
-
 
 
 ### Date
 
-date太重要了，因此我专门开一个标题来写。
+Date绝对是最重要最重要的知识点，没有之一。
+
+因为几乎每套模拟、真题都考，而且难度不会太大。
 
 
-我的笔记如下：（不太全，仅供参考。建议问AI）
-
+需要死记硬背
 ```js
 // 创建
 const d = new Date()
@@ -258,12 +349,141 @@ let sorted = arr.toSorted((a,b) => new Date(b.timestamp).getTime() - new Date(a.
 ```
 
 
+### promise
+
+必考的知识点，至少会出一题
+
+promise创建、a必考的知识点，需要非常重视。要掌握：**promise 创建、async/await 语法糖、all/allSettled/all/any/race 方法**。
+
+建议自己手写一个promise以加深理解，可以参考这个视频：[手写Promise核心代码 - JavaScript前端Web工程师_哔哩哔哩_bilibili](https://www.bilibili.com/video/BV1RR4y1p7my/)
+
+
+```js
+// 创建
+const p = new Promise((resolve, reject) => {
+  // 异步逻辑
+  resolve(data)   // 成功
+  reject(err)     // 失败
+})
+
+// 消费
+p.then(res => {}).catch(err => {}).finally(() => {})
+
+// 静态方法
+Promise.resolve(x)       // 转成已成功的 promise
+Promise.reject(x)        // 转成已失败的 promise
+Promise.all([p1, p2])    // ✅ 全部成功才成功，返回结果数组；有一个失败立即失败
+Promise.allSettled([p1, p2]) // 等全部结束，不管成败，返回 [{status, value/reason}]
+Promise.race([p1, p2])   // 第一个结束的（成败都算）
+Promise.any([p1, p2])    // 第一个成功的；全部失败才失败
+
+// async/await 是 promise 的语法糖
+async function fn() {
+  const res = await fetchData() // await 等到 promise 完成，拿到 resolve 的值
+  return res
+}
+```
+
+今年国赛考了一道promise，问的好像是有两个promise对象，一个是30秒后自动resolved，一个是用户点击按钮resolved，封装一个promise对象，结果值是两个promise中先完成的那一个
+
+
+### 正则表达式
+
+除了要了解正则的语法外，还需要记忆js和正则相关的api
+
+
+### ajax
+
+必考且是送分题，且非常套路化。
+
+往往会给一个json文件，里面是数据，让你在js代码中通过axios等方式模拟网络请求拿到json的结果并赋值给变量
+
+侧重复习 axios 和 fatch api的语法，譬如如何发起 get 请求、获取响应结果。
+原生的 xhr api 可选
+
+```js
+// GET
+axios.get('/api/user', { params: { id: 1 } })
+  .then(res => { console.log(res.data) })
+
+// POST
+axios.post('/api/user', { name: '小明' })
+  .then(res => { console.log(res.data) })
+
+// async/await 写法
+const res = await axios.get('/api/user')
+console.log(res.data) // axios 的响应在 res.data 里 ⚠️
+```
+
+> axios 的响应数据在 `res.data`，而不是 `res` 本身，这点容易写错。
+
+### dom
+
+有大致了解即可
+
+```js
+document.getElementById('id')                // 获取单个元素
+document.querySelector('.cls')               // 匹配第一个元素
+document.querySelectorAll('.cls')            // 返回NodeList集合
+
+el.id = 'a'                                   // 直接读写标准属性
+el.setAttribute('data-id', 1)                 // 设置自定义属性
+el.getAttribute('data-id')                    // 获取自定义属性
+el.removeAttribute('data-id')                 // 删除属性
+el.classList.add('a')                         // 添加类名
+el.classList.remove('a')                      // 删除类名
+el.classList.toggle('a')                      // 切换类名
+el.classList.contains('a')                    // 判断是否包含类名
+
+el.style.color = 'red'                        // 设置行内样式
+getComputedStyle(el).width                    // 获取最终计算样式（只读）
+
+el.innerText = '文本'                         // 纯文本（会渲染样式）
+el.textContent = '文本'                       // 纯文本（不渲染）
+el.innerHTML = '<b>1</b>'                     // 插入HTML ⚠️ XSS风险
+
+el.parentNode                                 // 获取父节点
+el.parentElement                              // 获取父元素
+el.children                                   // 子元素集合（仅元素）
+el.childNodes                                 // 不好用 
+el.firstElementChild                          // 第一个子元素
+el.lastElementChild                           // 最后一个子元素
+el.previousElementSibling                     // 上一个兄弟元素
+el.nextElementSibling                         // 下一个兄弟元素
+
+document.createElement('div')                // 创建元素节点
+parent.appendChild(child)                    // 末尾添加子节点
+parent.insertBefore(newNode, refNode)         // 插入到参考节点前
+parent.removeChild(child)                     // 删除子节点
+el.remove()                                   // 直接删除自身 ✅ 文本 / 注释节点无 remove
+// el.parentNode.removeChild(el);
+el.cloneNode(true)                            // 深克隆；false浅克隆
+
+
+el.addEventListener('click', fn)              // 绑定事件
+el.removeEventListener('click', fn)           // 移除事件
+e.target                                      // 实际触发元素
+e.currentTarget                               // 绑定事件元素
+e.preventDefault()                            // 阻止默认行为
+e.stopPropagation()                           // 阻止事件冒泡
+
+el.offsetWidth / offsetHeight                 // 宽高(含边框)
+el.clientWidth / clientHeight                 // 宽高(不含边框)
+el.offsetTop / offsetLeft                    // 相对定位父级坐标
+window.scrollY                               // 页面纵向滚动距离
+el.getBoundingClientRect()                    // 视口内位置+尺寸
+
+document.documentElement                      // <html>根元素
+document.body                                 // <body>元素
+document.title                                // 页面标题
+document.URL                                  // 当前页面URL
+```
+
+## vue
+
 ### vue
 
-
-下面是我备赛时的笔记，基本涵盖所有语法考点。
-容易记混的我一般会用 `⚠️` 标出
-
+必考，现在大概会考vue3组合式语法。
 
 ```js
 // 组合式基础导入
@@ -482,100 +702,6 @@ const style1 = { color: 'red', fontSize: '16px' }-->
 ```
 
 
-### promise
-
-必考的知识点
-
-你需要非常重视
-
-promise创建、async语法糖、rece/allSettled/all/any方法、
-
-建议自己手写一份，可以参考这个视频： [手写Promise核心代码 - JavaScript前端Web工程师_哔哩哔哩_bilibili](https://www.bilibili.com/video/BV1RR4y1p7my/)
-
-
-
-### node
-
-要求你记住fs、path、http模块的语法。
-
-大概是这一坨：
-```js
-# ==================== path 路径 ====================
-path.basename('/a/b/c.txt')        // c.txt              已知目录，获取文件名
-path.dirname('/a/b/c.txt')         // /a/b               获取目录名
-path.join('/a','b','c.txt')        // /a/b/c.txt         拼接路径✅自动处理斜杠
-// path.extname('/a/b/c.txt')         // .txt               获取后缀
-path.resolve('a','b')              // 绝对路径           转绝对路径（基于执行目录） 🚩 区分join和resolve
-path.isAbsolute('/a/b')            // true               判断是否绝对路径
-path.parse('/a/b/c.txt')           // {root,dir,base,ext,name} 解析路径对象
-fs.statSync('路径').isFile()        // true=文件 🚩注意这是fs的方法，不是path的
-fs.statSync('路径').isDirectory()   // true=文件夹
-// 读取项目根目录下的json文件
-const filePath = path.join(__dirname, 'data.json')
-
-
-# ==================== fs 同步 ====================
-fs.readdirSync('dir')              // [文件名]            读取目录下文件列表
-
-fs.readFileSync('a.txt','utf-8')   // 读取文本内容✅同步
-fs.writeFileSync('a.txt','hello')   // 写入文件（覆盖）✅不存在自动创建
-fs.appendFileSync('a.txt','add')    // 追加内容（不覆盖）
-
-fs.mkdirSync('dir',{recursive:true})// 创建文件夹✅递归创建
-fs.rmdirSync('dir',{recursive:true})// 删除文件夹（含内容）
-fs.rmSync('dir',{recursive:true})   // 通用删除（文件/文件夹）
-
-fs.copyFileSync('a.txt','b.txt')   // 复制文件
-fs.renameSync('a','b')             // 重命名/移动文件
-fs.unlinkSync('a.txt')             // 删除文件
-
-fs.existsSync('a.txt')             // true/false 判断是否存在⚠️不建议配合读写
-fs.statSync('a').isFile()          // true               是否是文件
-fs.statSync('a').isDirectory()     // true               是否是目录
-
-```
-
-```js
-# ==================== 创建服务器 ====================
-http.createServer((req,res)=>{}).listen(3000)  // 创建HTTP服务器并监听端口
-
-# ==================== 请求对象 req ====================
-req.method        // GET/POST/PUT/DELETE  请求方法
-req.url           // 请求路径（如 /api/user）
-req.headers       // 请求头对象（{host,content-type}）
-let data  = ''
-req.on('data',chunk=>{data += chunk.toString()})   // 接收请求体数据。chunk的Buffer对象
-req.on('end',()=>{})       // 请求体接收完成
-
-# ==================== 响应对象 res ====================
-res.setHeader('Content-Type','application/json')  // 设置响应头
-res.writeHead(200,{'Content-Type':'text/plain'})   // 设置状态码+响应头
-res.write('hello')  // 写入响应内容并发送。多次write用于流式传输的场景
-res.end('bye')      // 结束响应并发送数据✅必须调用
-res.end(JSON.stringify({msg:'ok'})) // 返回JSON
-
-# ==================== 发送请求（客户端） ====================
-http.get('http://xxx',res=>{})  // 发送GET请求
-http.request(options,cb=>{})    // 通用请求（支持POST/PUT/DELETE）
-
-```
-
-
-
-
-最坑的是这些api非常容易记错，譬如，同步删除文件夹的api，是`fs.rmDirSync`，还是`fs.rmdirSync`？
-如果记不清楚，考试的时候还需要花时间
-
-
-真的记不住也不是没办法
-
-比如，你想列出文件夹下面的目录，但是不知道函数名是啥了，可以在命令行敲`node`，导入fs，然后打印它，就可以看到fs的所有方法了，阅读这些方法名，就能知道函数名是什么了
-
-
-![image.png](https://qiuxz-blog-image.oss-cn-beijing.aliyuncs.com/blog/20260612122908398.png)
-
-
-
 ### vue-router
 
 ```jsx
@@ -681,103 +807,121 @@ store.add()        // 执行方法
 userStore.$state = { count: 0, user: {} } // 替换整个state
 ```
 
-### ajax
+### element-plus
 
-侧重复习 axios，譬如如何发起 get 请求、获取响应结果
+大致了解其api即可。不需要记忆！
 
-很多题目第一问都让用 axios 发起请求拿到数据，是送分题，一定要学会 axios
+**考试时会给出使用说明**
 
-fetch也尽量学习一下
-原生的xhr可选
+## node
 
-### dom
+要求你了解fs、path、http这三个模块的语法。
 
+
+大概内容如下(不需要死记硬背)
+```js
+# ==================== path 路径 ====================
+path.basename('/a/b/c.txt')        // c.txt              已知目录，获取文件名
+path.dirname('/a/b/c.txt')         // /a/b               获取目录名
+path.join('/a','b','c.txt')        // /a/b/c.txt         拼接路径✅自动处理斜杠
+// path.extname('/a/b/c.txt')         // .txt               获取后缀
+path.resolve('a','b')              // 绝对路径           转绝对路径（基于执行目录） 🚩 区分join和resolve
+path.isAbsolute('/a/b')            // true               判断是否绝对路径
+path.parse('/a/b/c.txt')           // {root,dir,base,ext,name} 解析路径对象
+fs.statSync('路径').isFile()        // true=文件 🚩注意这是fs的方法，不是path的
+fs.statSync('路径').isDirectory()   // true=文件夹
+// 读取项目根目录下的json文件
+const filePath = path.join(__dirname, 'data.json')
+
+
+# ==================== fs 同步 ====================
+fs.readdirSync('dir')              // [文件名]            读取目录下文件列表
+
+fs.readFileSync('a.txt','utf-8')   // 读取文本内容✅同步
+fs.writeFileSync('a.txt','hello')   // 写入文件（覆盖）✅不存在自动创建
+fs.appendFileSync('a.txt','add')    // 追加内容（不覆盖）
+
+fs.mkdirSync('dir',{recursive:true})// 创建文件夹✅递归创建
+fs.rmdirSync('dir',{recursive:true})// 删除文件夹（含内容）
+fs.rmSync('dir',{recursive:true})   // 通用删除（文件/文件夹）
+
+fs.copyFileSync('a.txt','b.txt')   // 复制文件
+fs.renameSync('a','b')             // 重命名/移动文件
+fs.unlinkSync('a.txt')             // 删除文件
+
+fs.existsSync('a.txt')             // true/false 判断是否存在⚠️不建议配合读写
+fs.statSync('a').isFile()          // true               是否是文件
+fs.statSync('a').isDirectory()     // true               是否是目录
+
+```
 
 ```js
-document.getElementById('id')                // 获取单个元素
-document.querySelector('.cls')               // 匹配第一个元素
-document.querySelectorAll('.cls')            // 返回NodeList集合
+# ==================== 创建服务器 ====================
+http.createServer((req,res)=>{}).listen(3000)  // 创建HTTP服务器并监听端口
 
-el.id = 'a'                                   // 直接读写标准属性
-el.setAttribute('data-id', 1)                 // 设置自定义属性
-el.getAttribute('data-id')                    // 获取自定义属性
-el.removeAttribute('data-id')                 // 删除属性
-el.classList.add('a')                         // 添加类名
-el.classList.remove('a')                      // 删除类名
-el.classList.toggle('a')                      // 切换类名
-el.classList.contains('a')                    // 判断是否包含类名
+# ==================== 请求对象 req ====================
+req.method        // GET/POST/PUT/DELETE  请求方法
+req.url           // 请求路径（如 /api/user）
+req.headers       // 请求头对象（{host,content-type}）
+let data  = ''
+req.on('data',chunk=>{data += chunk.toString()})   // 接收请求体数据。chunk的Buffer对象
+req.on('end',()=>{})       // 请求体接收完成
 
-el.style.color = 'red'                        // 设置行内样式
-getComputedStyle(el).width                    // 获取最终计算样式（只读）
+# ==================== 响应对象 res ====================
+res.setHeader('Content-Type','application/json')  // 设置响应头
+res.writeHead(200,{'Content-Type':'text/plain'})   // 设置状态码+响应头
+res.write('hello')  // 写入响应内容并发送。多次write用于流式传输的场景
+res.end('bye')      // 结束响应并发送数据✅必须调用
+res.end(JSON.stringify({msg:'ok'})) // 返回JSON
 
-el.innerText = '文本'                         // 纯文本（会渲染样式）
-el.textContent = '文本'                       // 纯文本（不渲染）
-el.innerHTML = '<b>1</b>'                     // 插入HTML ⚠️ XSS风险
+# ==================== 发送请求（客户端） ====================
+http.get('http://xxx',res=>{})  // 发送GET请求
+http.request(options,cb=>{})    // 通用请求（支持POST/PUT/DELETE）
 
-el.parentNode                                 // 获取父节点
-el.parentElement                              // 获取父元素
-el.children                                   // 子元素集合（仅元素）
-el.childNodes                                 // 不好用 
-el.firstElementChild                          // 第一个子元素
-el.lastElementChild                           // 最后一个子元素
-el.previousElementSibling                     // 上一个兄弟元素
-el.nextElementSibling                         // 下一个兄弟元素
+```
 
-document.createElement('div')                // 创建元素节点
-parent.appendChild(child)                    // 末尾添加子节点
-parent.insertBefore(newNode, refNode)         // 插入到参考节点前
-parent.removeChild(child)                     // 删除子节点
-el.remove()                                   // 直接删除自身 ✅ 文本 / 注释节点无 remove
-// el.parentNode.removeChild(el);
-el.cloneNode(true)                            // 深克隆；false浅克隆
+最核心的内容(建议记住)：
 
-
-el.addEventListener('click', fn)              // 绑定事件
-el.removeEventListener('click', fn)           // 移除事件
-e.target                                      // 实际触发元素
-e.currentTarget                               // 绑定事件元素
-e.preventDefault()                            // 阻止默认行为
-e.stopPropagation()                           // 阻止事件冒泡
-
-el.offsetWidth / offsetHeight                 // 宽高(含边框)
-el.clientWidth / clientHeight                 // 宽高(不含边框)
-el.offsetTop / offsetLeft                    // 相对定位父级坐标
-window.scrollY                               // 页面纵向滚动距离
-el.getBoundingClientRect()                    // 视口内位置+尺寸
-
-document.documentElement                      // <html>根元素
-document.body                                 // <body>元素
-document.title                                // 页面标题
-document.URL                                  // 当前页面URL
+```js
+fs.statSync('路径').isFile()        // true=文件 🚩注意这是fs的方法，不是path的
+fs.statSync('路径').isDirectory()   // true=文件夹
+fs.readdirSync('dir')              // [文件名]            读取目录下文件列表
+fs.readFileSync('a.txt','utf-8')   // 读取文本内容✅同步
+fs.writeFileSync('a.txt','hello')   // 写入文件（覆盖）✅不存在自动创建
 ```
 
 
-### 正则表达式
+
+最坑的是这些api非常容易记错，譬如，我现在问你，同步删除文件夹的api，是`fs.rmDirSync`，还是`fs.rmdirSync`？
+考试时有的学校电脑的vscode没有提示，如果记不清楚，考试的时候还需要花时间调试
 
 
 
 
-### 其他
+真的记不住也不是没办法
+
+比如，你想列出文件夹下面的目录，但是不知道函数名是啥了，可以在命令行敲`node`，然后就进入了node交互的模式，输入`const fs = require("fs")`导入fs  ，然后打印它，就可以看到fs的所有方法了，阅读这些方法名，就能知道函数名是什么了
+
+![image.png](https://qiuxz-blog-image.oss-cn-beijing.aliyuncs.com/blog/20260612122908398.png)
+
+如果函数的参数记不住呢？
+例如，你想用 fs.appendFile，不知道参数，可以调用函数的 toString 方法来查看
+
+![image.png](https://qiuxz-blog-image.oss-cn-beijing.aliyuncs.com/blog/20260812112609187.png)
+
+
+
+## 其他
 
 只记得语法还不够，下面的这些内容我觉得对比赛非常有用，可以很好的复习语法以及训练你的思维：
-- 封装一个计算`[a,b]`之间的随机数
+
+- 封装一个计算`[a,b]`之间的随机数的函数
 - 封装一个能格式化时间为`YYYY-MM-DD HH-mm-ss`的函数
-- 使用`node`的`fs`、`path`等 api 实现 `tree` 指令的效果
+- 使用`node`的`fs`、`path`库 api 实现 `tree` 指令的效果
 - 手撕一个简单的`v-if` 指令
 - 手撕 Promise
 
+# 其他
 
-
-## 刷题
-
-
-我备赛期间，并没有拿到最近一两年的完整的省赛、国赛真题（当时真的动用了各种搜索引擎和AI）（可能是这个赛道确实很冷门），只拿到了零碎的真题
-
-
-
-[往期比赛 - 蓝桥云课](https://www.lanqiao.cn/contests/history/) 这个网站里面有一些完整的web模拟题套卷，建议在即将比赛的前一两个星期做几套，限时训练。
-
-我做过三套，感受：模拟题的质量比真题低很多。在有真题的情况下还是刷真题吧。
-
-
+暂无
 

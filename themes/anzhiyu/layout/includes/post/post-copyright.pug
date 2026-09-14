@@ -15,7 +15,7 @@ if theme.post_copyright.enable && page.copyright !== false
       .post-copyright__author_name=author
       .post-copyright__author_desc=config.subtitle
     .post-copyright__post__info
-      if (page.copyright_author && page.copyright_author !== config.author)
+      if (page.reprint || (page.copyright_author && page.copyright_author !== config.author))
         a.post-copyright__reprint(title="该文章为转载文章，注意版权协议" href=url_for(url)) 转载
       else
         a.post-copyright__original(title="该文章为原创文章，注意版权协议" href=url_for(url)) 原创

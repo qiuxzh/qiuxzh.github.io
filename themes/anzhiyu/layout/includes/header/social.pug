@@ -1,5 +1,7 @@
 each value, title in theme.social
-  a.social-icon.faa-parent.animated-hover(href=url_for(trim(value.split('||')[0])) target="_blank" title=title === undefined ? '' : trim(title))
+  - var socialValue = trim(value.split('||')[0])
+  - var isCopy = socialValue.startsWith('copy:')
+  a.social-icon.faa-parent.animated-hover(href=isCopy ? 'javascript:void(0);' : url_for(socialValue) target=isCopy ? false : '_blank' title=title === undefined ? '' : trim(title) data-copy=isCopy ? trim(socialValue.slice(5)) : false)
     if value.split('||')[1]
       - var icon_value = trim(value.split('||')[1])
       - var anima_value = value.split('||')[2] ? trim(value.split('||')[2]) : 'faa-tada'

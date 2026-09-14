@@ -91,19 +91,16 @@
   font-size: 0.9rem;
   line-height: 1.5;
   color: var(--font-color);
-  border-left: 2px solid transparent;
   transition: all 0.2s;
 }
 .column-link:hover {
   color: var(--anzhiyu-main);
   background: var(--anzhiyu-main-op);
-  border-left-color: var(--anzhiyu-main);
 }
 .column-link.active {
-  color: var(--anzhiyu-white);
-  background: linear-gradient(120deg, var(--anzhiyu-main), #49b1f5);
-  border-left-color: transparent;
-  box-shadow: var(--anzhiyu-shadow-main);
+  color: var(--anzhiyu-main);
+  background: var(--anzhiyu-main-op);
+  font-weight: 700;
 }
 #blog-container:has(.column-nav) {
   display: flex;

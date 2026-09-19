@@ -8,5 +8,8 @@ Thumbs.db
 .deploy*/
 .deploy_git*/
 source/_posts/_unfinished
+
+# Excalidraw 产物
 *.excalidraw
 *.excalidraw.md
+source/_posts/**/*.svg

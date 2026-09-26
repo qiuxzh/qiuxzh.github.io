@@ -811,8 +811,8 @@ aside:
     enable: false
     face: https://bu.dusays.com/2023/01/13/63c02edf44033.png
     backFace: https://bu.dusays.com/2023/05/13/645fa415e8694.png
-  card_recent_post:
-    enable: true
+  card_recent_post: # 最近发布
+    enable: false
     limit: 5 # if set 0 will show all
     sort: date # date or updated
     sort_order: # Don't modify the setting unless you know how it works
@@ -1249,6 +1249,7 @@ inject:
     # 自定义js
     # - <script src="/js/xxx"></script>
     - <script src="/js/social-copy.js"></script>
+    - <script src="/js/column-nav-mobile.js"></script>
 
 # CDN
 # Don't modify the following settings unless you know how they work
@@ -1341,12 +1342,8 @@ CDN:
 column:
   enable: true
   columns:
-    - name: AI
-      path: AI
-    - name: 后端
-      path: backend
-    - name: 成长
-      path: growth
-    - name: 随笔
-      path: casual
+    - name: 如何学习
+      path: growth/learn
+    - name: 思考
+      path: growth/thinking
 

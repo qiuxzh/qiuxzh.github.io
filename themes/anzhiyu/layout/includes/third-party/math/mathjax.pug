@@ -7,7 +7,11 @@ script.
         tags: 'ams'
       },
       chtml: {
-        scale: 1.1
+        scale: 1.1,
+        // MathJax 4 默认从 cdn.jsdelivr.net 取 NewCM 字体，国内直连拿不到，
+        // 公式会退化成缺字形。这里改走 npmmirror（与 mathjax@4.0.0 对应）。
+        fontURL: 'https://registry.npmmirror.com/@mathjax/mathjax-newcm-font/4.0.0/files/chtml/woff2',
+        dynamicPrefix: 'https://registry.npmmirror.com/@mathjax/mathjax-newcm-font/4.0.0/files/chtml/dynamic'
       },
       options: {
         renderActions: {

@@ -21,7 +21,7 @@ llm-pi-ai:
     opencode-go:
       apiKeyEnv: OPENCODE_GO_API_KEY
       headers:
-        x-opencode-session: 一个固定的UUID
+        x-opencode-session: 一个固定的UUID,如 3f2a8c1e-7b4d-4e9a-9c2f-1d6b8a5e0f73
 ```
 
 

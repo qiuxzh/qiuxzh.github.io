@@ -1,0 +1,778 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no"><title>QUT知识图谱作业解析：第二章 知识图谱表示 | qiuxz's Blog</title><meta name="keywords" content="考试"><meta name="author" content="qiuxz"><meta name="copyright" content="qiuxz"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#f7f9fe"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-touch-fullscreen" content="yes"><meta name="apple-mobile-web-app-title" content="QUT知识图谱作业解析：第二章 知识图谱表示"><meta name="application-name" content="QUT知识图谱作业解析：第二章 知识图谱表示"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="#f7f9fe"><meta property="og:type" content="article"><meta property="og:title" content="QUT知识图谱作业解析：第二章 知识图谱表示"><meta property="og:url" content="https://qiuxzh.github.io/other/QUT/QUT%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E4%BD%9C%E4%B8%9A%E8%A7%A3%E6%9E%90-%E7%AC%AC%E4%BA%8C%E7%AB%A0-%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E8%A1%A8%E7%A4%BA/index.html"><meta property="og:site_name" content="qiuxz's Blog"><meta property="og:description" content="第二章 知识图谱表示自测先做一遍，答案和解析在后面。 1. SMN 主要用于以下（　）领域。　A. 图像处理　B. 语音识别　C. 文本相似度匹配　D. 数据库管理 2. TransE 模型基于平移假设，其评分函数通过计算头实体向量、关系向量与尾实体向量之间的欧氏距离来衡量三元组的合理性，该距离公式"><meta property="og:locale" content="zh-CN"><meta property="og:image" content="https://qiuxzh.github.io/img/avatar.jpg"><meta property="article:author" content="qiuxz"><meta property="article:tag"><meta name="twitter:card" content="summary"><meta name="twitter:image" content="https://qiuxzh.github.io/img/avatar.jpg"><meta name="description" content="第二章 知识图谱表示自测先做一遍，答案和解析在后面。 1. SMN 主要用于以下（　）领域。　A. 图像处理　B. 语音识别　C. 文本相似度匹配　D. 数据库管理 2. TransE 模型基于平移假设，其评分函数通过计算头实体向量、关系向量与尾实体向量之间的欧氏距离来衡量三元组的合理性，该距离公式"><link rel="shortcut icon" href="/favicon.ico"><link rel="canonical" href="https://qiuxzh.github.io/other/QUT/QUT%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E4%BD%9C%E4%B8%9A%E8%A7%A3%E6%9E%90-%E7%AC%AC%E4%BA%8C%E7%AB%A0-%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E8%A1%A8%E7%A4%BA/"><link rel="preconnect" href="//cdn.cbd.int"/><meta name="google-site-verification" content="xxx"/><meta name="baidu-site-verification" content="code-xxx"/><meta name="msvalidate.01" content="xxx"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.cbd.int/node-snackbar@0.1.16/dist/snackbar.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.cbd.int/@fancyapps/ui@6.1.6/dist/fancybox/fancybox.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  linkPageTop: undefined,
+  peoplecanvas: {"enable":true,"img":"https://upload-bbs.miyoushe.com/upload/2024/07/27/125766904/ba62475f396df9de3316a08ed9e65d86_5680958632268053399..png"},
+  postHeadAiDescription: undefined,
+  diytitle: undefined,
+  LA51: undefined,
+  greetingBox: undefined,
+  twikooEnvId: '',
+  commentBarrageConfig:undefined,
+  music_page_default: "nav_music",
+  root: '/',
+  preloader: {"source":3},
+  friends_vue_info: undefined,
+  navMusic: false,
+  mainTone: undefined,
+  authorStatus: undefined,
+  algolia: undefined,
+  localSearch: undefined,
+  translate: {"defaultEncoding":2,"translateDelay":0,"msgToTraditionalChinese":"繁","msgToSimplifiedChinese":"简","rightMenuMsgToTraditionalChinese":"转为繁体","rightMenuMsgToSimplifiedChinese":"转为简体"},
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":330},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    simplehomepage: true,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: {"copy":true,"copyrightEbable":false,"limitCount":50,"languages":{"author":"作者: qiuxz","link":"链接: ","source":"来源: qiuxz's Blog","info":"著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。","copySuccess":"复制成功，复制和转载请标注本文地址"}},
+  lightbox: 'fancybox',
+  Snackbar: {"chs_to_cht":"你已切换为繁体","cht_to_chs":"你已切换为简体","day_to_night":"你已切换为深色模式","night_to_day":"你已切换为浅色模式","bgLight":"#425AEF","bgDark":"#1f1f1f","position":"top-center"},
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.cbd.int/flickr-justified-gallery@2.2.0/dist/fjGallery.min.js',
+      css: 'https://cdn.cbd.int/flickr-justified-gallery@2.2.0/dist/fjGallery.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: true,
+  isAnchor: false,
+  shortcutKey: undefined,
+  autoDarkmode: true
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  configTitle: 'qiuxz\'s Blog',
+  title: 'QUT知识图谱作业解析：第二章 知识图谱表示',
+  postAI: '',
+  pageFillDescription: '第二章 知识图谱表示, 自测, 第1题, 第2题, 第3题, 第4题, 第5题, 第6题, 第7题, 第8题, 第9题, 第10题, 第11题, 第12题, 第13题, 第14题, 第15题, 第16题, 第17题, 第18题, 第19题, 第20题, 第21题, 第22题, 第23题, 第24题, 第25题, 第26题, 第27题, 第28题, 第29题, 第30题第二章知识图谱表示自测先做一遍答案和解析在后面主要用于以下领域图像处理语音识别文本相似度匹配数据库管理模型基于平移假设其评分函数通过计算头实体向量关系向量与尾实体向量之间的欧氏距离来衡量三元组的合理性该距离公式为在评估知识图谱嵌入模型如的链接预测性能时构建负样本集是关键步骤为了确保评估的公平性和有效性下列哪种构建负样本的策略是最为规范且常用的随机生成全新的实体和关系名称与原始图谱无任何重叠仅替换三元组中的关系保持头实体和尾实体不变且无需检查生成的三元组是否在正样本中存在采用伯努利分布或均匀分布替换头实体或尾实体并过滤掉那些实际上存在于知识图谱中的正样本三元组直接使用原始训练集中的正样本三元组作为负样本以测试模型的过拟合程度在需要高精度逻辑推理的知识图谱应用场景中纯基于向量的知识表示技术如往往面临挑战下列关于其原因及改进思路的描述最准确的是向量表示无法存储任何结构化信息必须完全回归到一阶逻辑符号表示向量空间中的几何运算难以精确表达复杂的逻辑约束如对称性反对称性结合符号规则可增强推理的可解释性和准确性向量模型的训练速度太慢无法满足实时推理需求因此应改用基于规则的专家系统向量表示只能处理文本数据无法处理知识图谱中的结构化三元组数据模型提出的主要目的是解决问题提高符号逻辑的复杂性增强大规模数据处理能力简化实体关系表示处理多媒体数据在基于向量的知识图谱表示中模型旨在克服在处理对称反对称逆关系和组合关系时的局限将实体和关系映射到复数空间其核心建模机制是通过复数乘法实现关系的平移变换旋转变换投影变换缩放变换在模型中假设输入文本序列为设定窗口大小为若以单词作为中心词根据模型的训练机制下列哪一组构成了正确的训练样本对中心词上下文词和和和和神经符号人工智能旨在融合神经网络向量表示与符号人工智能符号表示关于这种融合趋势的优势下列说法最恰当的是完全消除了对标注数据的需求实现了无监督的逻辑推理结合了神经网络的感知与泛化能力以及符号系统的逻辑推理与可解释性使得模型不再需要梯度下降算法仅通过逻辑推导即可更新参数将所有的符号规则直接转化为固定的向量常量从而彻底抛弃了逻辑引擎在利用模型对知识图谱进行嵌入训练时若遇到或等复杂关系类型如一个演员出演多部电影模型往往难以区分不同尾实体的向量位置导致预测精度下降造成这一局限的根本原因是未引入负样本采样机制评分函数未考虑时间维度信息同一关系下不同实体被强制映射到相同平移向量向量维度不足以覆盖所有实体数量某医疗团队计划构建一个临床辅助诊断系统需要将非结构化的电子病历转化为计算机可处理的形式以便后续进行疾病风险预测和诊疗决策支持在这一知识库构建流程中将提取出的实体和关系转化为计算机模型和方法的核心环节称为知识认知知识收集知识表示知识库维护在模型的平移假设及评分函数中关于变量含义训练机制及局限性的描述符合材料界定的有向量分别代表头实体关系和尾实体的嵌入表示评分函数值越小表明三元组越可能为真训练时通过随机替换头实体或尾实体来生成负样本该模型采用作为损失函数进行优化该模型能完美处理及等复杂关系类型在构建基于符号的知识图谱时若需实现比更丰富的语义表达提供的扩展能力包括支持类的交并补等布尔运算提供存在量化和全称量化的属性限制仅支持简单的传递性推理支持定义属性的逆属性及对称性允许对属性施加基数约束在模型中直接使用计算词汇表上所有词的概率计算量过大负采样是一种常用的优化技术关于负采样及其目标函数下列说法正确的有负采样将多分类问题转化为多个二分类问题即判断上下文词是否为真正的目标词在构造负样本时通常根据词频分布对词汇表中的词进行采样高频词被选为负样本的概率更大负采样的目标函数旨在最大化正样本的对数似然同时最小化负样本的对数似然或最大化其非目标概率负采样技术完全消除了计算因此在反向传播时不需要更新输出层权重矩阵相比于层次负采样通过随机选择少量负样本显著降低了每次迭代的计算复杂度模型将关系视为头实体向量到尾实体向量的平移这种简单的几何约束在处理复杂关系模式时存在局限性下列关于局限性的分析正确的有难以有效建模一对多关系因为同一个头实体和关系向量只能映射到一个理想的尾实体向量能够完美处理自反关系因为向量加法天然支持的情况只要对于对称关系要求关系向量必须为零向量或接近零向量这可能导致不同对称关系无法区分在处理多对多关系时表现优异因为向量空间的连续性允许重叠由于平移约束的刚性在处理组合关系或复杂逻辑规则推理时能力有限依据对知识表示的经典界定区别于普通数据格式或数据结构的核心特征包括支持基于已有信息进行逻辑推理能够辅助系统进行决策制定本质上是一种特定的编程语言语法主要用于实现机器学习中的特征提取仅仅是数据的静态存储结构在基于符号的知识表示技术中语义网络和框架是两种经典方法关于这两种技术的特性及异同下列说法正确的有语义网络通过节点表示概念通过带标记的有向边表示概念间的语义关系如等框架理论侧重于描述典型情境或对象的原型结构通过槽和填值来组织知识语义网络在处理多重继承时容易产生二义性而框架系统通常通过特定的继承机制如最近优先来解决冲突框架中的默认值允许在槽值缺失时进行自动填充这体现了其处理不完全信息的能力语义网络和框架都主要依赖于向量空间中的几何距离来衡量概念之间的相似度模型基于翻译假设使用范数作为距离度量假设实体和关系向量为二维向量已知头实体向量关系向量尾实体向量下列关于三元组得分及合理性的判断正确的有三元组的距离得分为三元组的距离得分为相比是更合理的尾实体因为其距离得分更低若使用范数的得分将大于的得分模型中得分越低表示三元组成立的可能性越大是什么它用什么方式表示数据在基于向量的知识图谱表示中模型假设头实体向量与关系向量之和近似等于尾实体向量请从几何空间映射的角度分析为何该线性平移假设难以有效处理或等复杂关系类型指出知识表示并非单纯的数据格式数据结构或编程语言其核心在于支持推理然而在当前的工业实践中基于向量嵌入的知识图谱表示技术被广泛应用于推荐系统和智能搜索这类技术往往侧重于语义相似度的计算而非严格的逻辑推导请结合知识表示是用计算机模型和方法处理知识以实现推理学习或决策这一核心定义论述符号主义表示如与连接主义表示如在实现推理与学习决策目标上的辩证关系在论述中请阐明两者各自的优势领域并分析在何种应用场景下应优先选择哪种范式或者如何理解两者的互补性模型基于翻译假设将实体和关系映射到低维向量空间请简述模型的评分函数能量函数定义写出其常用的边际损失函数公式并解释该损失函数中边际参数在区分正负样本时的具体作用在基于向量的知识表示技术中模型通过中心词预测上下文词来学习词向量假设在一个简化的词汇表中给定中心词和特定的上下文词已知中心词向量三个词汇的输出向量即作为上下文词时的向量分别为请根据函数的定义计算在该简化场景下给定中心词时预测出上下文词为的条件概率要求写出计算公式中间步骤指数项的值及最终结果保留两位小数早期的知识表示技术有哪些简要描述每种技术的特点在基于向量的知识表示学习模型中核心思想是将关系视为头实体向量到尾实体向量的平移操作即满足假设在一个三维向量空间中给定以下实体和关系的嵌入向量头实体的向量表示为关系的向量表示为尾实体的向量表示为尾实体的向量表示为请使用范数曼哈顿距离作为距离度量函数分别计算三元组和的能量值得分根据计算结果判断哪个三元组更合理并简述模型中能量值大小与三元组合理性之间的关系分析模型在处理一对多多对一或多对多关系时可能面临的几何局限性并结合上述向量平移的原理进行解释考虑一个简化的知识图谱场景包含实体集合北京中国首都和关系集合位于假设使用模型进行知识表示向量维度为维已知初始嵌入向量如下北京中国位于的能量函数定义为范数请计算三元组北京位于中国在当前嵌入下的能量值距离并判断如果存在另一个候选尾实体美国模型会更倾向于预测哪个实体作为北京位于的答案请给出计算依据在基于模型的词向量训练过程中假设中心词的输入向量为上下文窗口大小为即只有一个上下文词设词汇表大小为模型使用函数来计算给定中心词时生成上下文词的概率其中是输出向量现假设词汇表仅包含个词已知中心词为其输入向量各词的输出向量为请计算的值保留两位小数并简述如果要将最大化在向量空间上和应该呈现怎样的几何关系知识表示的核心特征在于其支持推理这与单纯的数据格式或数据结构存在本质区别对错模型能够有效处理知识图谱中的及等复杂关系类型不存在表示局限对错根据的经典描述数据与知识的关键区别在于知识表示支持而不仅仅是存储或结构化模型基于平移假设其核心评分函数定义为该公式成立的前提是将实体和关系都映射到同一个空间中第题主要用于以下领域图像处理语音识别文本相似度匹配数据库管理答案是语义匹配网络把头实体关系尾实体分别编码成向量再算匹配度用在文本相似度匹配上它绕开几何平移靠处理上下文抽局部特征最后接一个分类层输出分数第题模型基于平移假设其评分函数通过计算头实体向量关系向量与尾实体向量之间的欧氏距离来衡量三元组的合理性该距离公式为答案把关系当成从头实体到尾实体的一次平移评分函数就是平移后的误差取或范数是的旋转形式先做一次映射矩阵投影再算距离接近的思路多了一个时间嵌入属于时序知识图谱模型的落点与重合整条链子靠一次加法走完从出发沿平移落点就是第题在评估知识图谱嵌入模型如的链接预测性能时构建负样本集是关键步骤为了确保评估的公平性和有效性下列哪种构建负样本的策略是最为规范且常用的随机生成全新的实体和关系名称与原始图谱无任何重叠仅替换三元组中的关系保持头实体和尾实体不变且无需检查生成的三元组是否在正样本中存在采用伯努利分布或均匀分布替换头实体或尾实体并过滤掉那些实际上存在于知识图谱中的正样本三元组直接使用原始训练集中的正样本三元组作为负样本以测试模型的过拟合程度答案负样本靠腐蚀正样本得到把或换掉再过滤掉换出来却在库里真成立的三元组不过滤就会把正确答案当错答案指标被压低用伯努利分布决定换头还是换尾是为了照顾不同实体度数差别过大的情况引入了词表外的名称换关系不符合腐蚀的常规做法拿正样本当负样本没有意义第题在需要高精度逻辑推理的知识图谱应用场景中纯基于向量的知识表示技术如往往面临挑战下列关于其原因及改进思路的描述最准确的是向量表示无法存储任何结构化信息必须完全回归到一阶逻辑符号表示向量空间中的几何运算难以精确表达复杂的逻辑约束如对称性反对称性结合符号规则可增强推理的可解释性和准确性向量模型的训练速度太慢无法满足实时推理需求因此应改用基于规则的专家系统向量表示只能处理文本数据无法处理知识图谱中的结构化三元组数据答案用距离近似语义对称反对称组合这些约束只能被近似满足推理过程也说不出依据符号规则补上的正是这一块逻辑严密每一步都能解释说向量存不了结构过于绝对把瓶颈说成训练速度方向就错了与事实相反处理的本来就是三元组第题模型提出的主要目的是解决问题提高符号逻辑的复杂性增强大规模数据处理能力简化实体关系表示处理多媒体数据答案把实体和关系压进同一个空间用一次加法表示关系表示形式和计算都变简单了代价是几何约束太硬一对多这类关系它处理不好第题在基于向量的知识图谱表示中模型旨在克服在处理对称反对称逆关系和组合关系时的局限将实体和关系映射到复数空间其核心建模机制是通过复数乘法实现关系的平移变换旋转变换投影变换缩放变换答案把关系当成复平面上的旋转并约束旋转能表达对称转回到原处反对称反向旋转逆关系转回去和组合关系角度相加这几种正是平移假设做不好的旋转对称关系组合关系角度相加关系不再是平移向量而是一个处处模长为的旋转因子第题在模型中假设输入文本序列为设定窗口大小为若以单词作为中心词根据模型的训练机制下列哪一组构成了正确的训练样本对中心词上下文词和和和和答案窗口为中心词的上下文只有左右各一个词也就是和样本对按中心词上下文词排列所以是与把两者写反了取到了窗口外面里根本没有中心词中心词上下文上下文窗口样本对只有与窗口框住左右各一个词中心词预测这两处上下文第题神经符号人工智能旨在融合神经网络向量表示与符号人工智能符号表示关于这种融合趋势的优势下列说法最恰当的是完全消除了对标注数据的需求实现了无监督的逻辑推理结合了神经网络的感知与泛化能力以及符号系统的逻辑推理与可解释性使得模型不再需要梯度下降算法仅通过逻辑推导即可更新参数将所有的符号规则直接转化为固定的向量常量从而彻底抛弃了逻辑引擎答案融合的目的就是把两边长处接起来神经网络从数据里学特征能泛化符号系统做严格推理每步可解释说它免掉标注还能无监督做逻辑推理不成立说参数更新不再需要梯度也不对说融合等于抛弃逻辑引擎正好相反第题在利用模型对知识图谱进行嵌入训练时若遇到或等复杂关系类型如一个演员出演多部电影模型往往难以区分不同尾实体的向量位置导致预测精度下降造成这一局限的根本原因是未引入负样本采样机制评分函数未考虑时间维度信息同一关系下不同实体被强制映射到相同平移向量向量维度不足以覆盖所有实体数量答案同一个关系只有一个向量一个头实体连多个尾实体时只有一个落点几个尾实体就被拉到同一处模型自然分不开说没做负采样训练里是做了的扯到时间维度不是这个问题的成因想靠加维度解决几何上的冲突依旧存在第题某医疗团队计划构建一个临床辅助诊断系统需要将非结构化的电子病历转化为计算机可处理的形式以便后续进行疾病风险预测和诊疗决策支持在这一知识库构建流程中将提取出的实体和关系转化为计算机模型和方法的核心环节称为知识认知知识收集知识表示知识库维护答案知识库的形成要过五个阶段知识认知知识收集知识表示知识库建立知识库维护把实体和关系转成计算机模型与方法能处理的形式对应的正是知识表示第题在模型的平移假设及评分函数中关于变量含义训练机制及局限性的描述符合材料界定的有向量分别代表头实体关系和尾实体的嵌入表示评分函数值越小表明三元组越可能为真训练时通过随机替换头实体或尾实体来生成负样本该模型采用作为损失函数进行优化该模型能完美处理及等复杂关系类型答案前四项都对分别是头实体关系尾实体的向量越小说明离越近三元组越可能成立训练时随机替换头或尾生成负样本配优化项把短板写成了长处恰恰处理不好一对多多对一和多对多第题在构建基于符号的知识图谱时若需实现比更丰富的语义表达提供的扩展能力包括支持类的交并补等布尔运算提供存在量化和全称量化的属性限制仅支持简单的传递性推理支持定义属性的逆属性及对称性允许对属性施加基数约束答案比多出来的能力集中在类运算和属性约束上类的布尔运算存在量化与全称量化的属性限制逆属性与对称性这类属性特征以及基数约束说的传递性本来就有算不上扩展第题在模型中直接使用计算词汇表上所有词的概率计算量过大负采样是一种常用的优化技术关于负采样及其目标函数下列说法正确的有负采样将多分类问题转化为多个二分类问题即判断上下文词是否为真正的目标词在构造负样本时通常根据词频分布对词汇表中的词进行采样高频词被选为负样本的概率更大负采样的目标函数旨在最大化正样本的对数似然同时最小化负样本的对数似然或最大化其非目标概率负采样技术完全消除了计算因此在反向传播时不需要更新输出层权重矩阵相比于层次负采样通过随机选择少量负样本显著降低了每次迭代的计算复杂度答案负采样把整个词表上的多分类拆成一堆二分类正样本是真实上下文另外抽个词当负样本目标函数一边抬高正样本一边压低负样本采样按词频的次方进行高频词更容易被抽中计算量从降到通常取到错在说不用更新输出层正样本和负样本对应的输出向量还是要更新的第题模型将关系视为头实体向量到尾实体向量的平移这种简单的几何约束在处理复杂关系模式时存在局限性下列关于局限性的分析正确的有难以有效建模一对多关系因为同一个头实体和关系向量只能映射到一个理想的尾实体向量能够完美处理自反关系因为向量加法天然支持的情况只要对于对称关系要求关系向量必须为零向量或接近零向量这可能导致不同对称关系无法区分在处理多对多关系时表现优异因为向量空间的连续性允许重叠由于平移约束的刚性在处理组合关系或复杂逻辑规则推理时能力有限答案对一对多时只有一个落点几个尾实体被压在一起对对称关系要同时满足和两式相减得两个不同的对称关系都会往零向量上靠从此分不开对平移只能表达线性关系组合和复杂逻辑规则覆盖不到错在完美两个字错在多对多上同样会挤向量第题依据对知识表示的经典界定区别于普通数据格式或数据结构的核心特征包括支持基于已有信息进行逻辑推理能够辅助系统进行决策制定本质上是一种特定的编程语言语法主要用于实现机器学习中的特征提取仅仅是数据的静态存储结构答案把知识表示和数据格式分开的判据是能力能支持推理能辅助决策说它是编程语言语法明确否认把特征提取当成本质那只是数据处理的一步的静态存储更是把知识表示降格成了数据库第题在基于符号的知识表示技术中语义网络和框架是两种经典方法关于这两种技术的特性及异同下列说法正确的有语义网络通过节点表示概念通过带标记的有向边表示概念间的语义关系如等框架理论侧重于描述典型情境或对象的原型结构通过槽和填值来组织知识语义网络在处理多重继承时容易产生二义性而框架系统通常通过特定的继承机制如最近优先来解决冲突框架中的默认值允许在槽值缺失时进行自动填充这体现了其处理不完全信息的能力语义网络和框架都主要依赖于向量空间中的几何距离来衡量概念之间的相似度答案语义网络用节点表示概念带标记的有向边表示与这类关系框架用槽和填值描述原型结构默认值能在槽值缺失时补上多重继承下语义网络容易走出二义性框架靠最近优先一类的继承规则消解张冠李戴几何距离是向量表示的特征第题模型基于翻译假设使用范数作为距离度量假设实体和关系向量为二维向量已知头实体向量关系向量尾实体向量下列关于三元组得分及合理性的判断正确的有三元组的距离得分为三元组的距离得分为相比是更合理的尾实体因为其距离得分更低若使用范数的得分将大于的得分模型中得分越低表示三元组成立的可能性越大答案先算对差的绝对值和是对对差是绝对值和为而不是的数值写错了小于更合理对换还是对不成立是的基本判据第题是什么它用什么方式表示数据答案是资源描述框架一种描述资源的语义模型用来表示和交换网络数据它用三元组表示数据一个三元组由主语谓语宾语三段组成主语通常是一个实体谓语是实体之间的关系或属性宾语可以是另一个实体也可以是一个字面值第题在基于向量的知识图谱表示中模型假设头实体向量与关系向量之和近似等于尾实体向量请从几何空间映射的角度分析为何该线性平移假设难以有效处理或等复杂关系类型答案把实体和关系放进同一个向量空间关系只是一个固定的平移向量只能落到一个点上一对多关系里同一个和要同时满足与向量加法的结果唯一于是推出两个不同的尾实体在空间里被挤到一起模型分不出谁是谁多对一关系反过来多个头实体经过同一个落到同一位置与推出头实体也混在一起根源是平移的刚性同一个关系下所有实体对被锁死在同一组向量差上这类模型引入关系特定的投影空间松开的就是这个约束图谱里一个作者写了两本书向量空间里两个落点重合作者书书写写书书两本书被迫落到同一个点模型无法区分同一个只有一个落点一对多关系在这里必然撞车第题指出知识表示并非单纯的数据格式数据结构或编程语言其核心在于支持推理然而在当前的工业实践中基于向量嵌入的知识图谱表示技术被广泛应用于推荐系统和智能搜索这类技术往往侧重于语义相似度的计算而非严格的逻辑推导请结合知识表示是用计算机模型和方法处理知识以实现推理学习或决策这一核心定义论述符号主义表示如与连接主义表示如在实现推理与学习决策目标上的辩证关系在论述中请阐明两者各自的优势领域并分析在何种应用场景下应优先选择哪种范式或者如何理解两者的互补性答案符号主义表示把知识写成显式的概念和逻辑约束基于描述逻辑可以做分类推断传递性验证每一步都能给出依据它对应定义里推理那一端适合医疗诊断合规审查这类要可靠要可解释的场景短板在规模非结构化数据很难直接进来学习能力也弱连接主义表示把知识压进低维向量用距离和相似度承载语义天然适配机器学习它对应学习与决策那一端善于处理噪声发现隐含关联推荐和搜索这类允许概率误差的场景用得多短板是黑盒严格的逻辑约束只能近似满足两条路各自负责一端的任务谁也替代不了谁判断标准是任务要不要严格逻辑要就用符号表示要的是大规模模式发现和实时响应就用向量表示工程上常见的做法是底下用向量做召回和初筛上面用符号规则做校验也就是神经符号这条路第题模型基于翻译假设将实体和关系映射到低维向量空间请简述模型的评分函数能量函数定义写出其常用的边际损失函数公式并解释该损失函数中边际参数在区分正负样本时的具体作用答案评分函数定义为取或范数三元组成立时应该落在附近这个值越小三元组越可信训练用边际损失正样本取库里的三元组负样本由替换头实体或尾实体生成是边际超参数要求负样本的得分至少比正样本高出这么多两者的差距已经达到时项取不再产生梯度差距不够时才有损失梯度把正样本拉近把负样本推远设得越大对正负样本之间间隔的要求越严第题在基于向量的知识表示技术中模型通过中心词预测上下文词来学习词向量假设在一个简化的词汇表中给定中心词和特定的上下文词已知中心词向量三个词汇的输出向量即作为上下文词时的向量分别为请根据函数的定义计算在该简化场景下给定中心词时预测出上下文词为的条件概率要求写出计算公式中间步骤指数项的值及最终结果保留两位小数答案公式是先算点积三个词的指数项分别是分母加起来是保留两位小数为点积越大指数项越大归一化后的概率越高词向量学到的就是这种相对大小第题早期的知识表示技术有哪些简要描述每种技术的特点答案一阶谓词逻辑用命题联结词个体词谓词和量词描述知识表达精确自然但只能处理确定性知识过程性和不确定性知识表达不了产生式规则用或表示规则能表达不确定性和过程性知识模块化好靠规则就能推理框架把知识组织成框架名槽侧面和值引入类与实例形成层次结构支持继承缺点是表达不了过程性知识也没有明确的推理机制语义网络用图结构把实体和关系画出来表达能力强灵活但没有公认的形式化体系构建和维护成本高第题在基于向量的知识表示学习模型中核心思想是将关系视为头实体向量到尾实体向量的平移操作即满足假设在一个三维向量空间中给定以下实体和关系的嵌入向量头实体的向量表示为关系的向量表示为尾实体的向量表示为尾实体的向量表示为请使用范数曼哈顿距离作为距离度量函数分别计算三元组和的能量值得分根据计算结果判断哪个三元组更合理并简述模型中能量值大小与三元组合理性之间的关系分析模型在处理一对多多对一或多对多关系时可能面临的几何局限性并结合上述向量平移的原理进行解释答案先算对差是零向量距离为对差是距离为的能量值更低更合理是距离模型能量值越小说明平移后的落点离尾实体越近三元组成立的可能性越大一对多时同一个只能对应一个落点多个尾实体被挤到相近位置多对一时多个头实体经过同一个收敛到同一处多对多两头都挤这些实体在现实中本该分开平移假设给不了这份自由度第题考虑一个简化的知识图谱场景包含实体集合北京中国首都和关系集合位于假设使用模型进行知识表示向量维度为维已知初始嵌入向量如下北京中国位于的能量函数定义为范数请计算三元组北京位于中国在当前嵌入下的能量值距离并判断如果存在另一个候选尾实体美国模型会更倾向于预测哪个实体作为北京位于的答案请给出计算依据答案对差是范数对差是范数小于模型更倾向于把中国填进北京位于的空位比较的是平移落点和候选实体之间的距离距离小的得分高第题在基于模型的词向量训练过程中假设中心词的输入向量为上下文窗口大小为即只有一个上下文词设词汇表大小为模型使用函数来计算给定中心词时生成上下文词的概率其中是输出向量现假设词汇表仅包含个词已知中心词为其输入向量各词的输出向量为请计算的值保留两位小数并简述如果要将最大化在向量空间上和应该呈现怎样的几何关系答案点积指数项分母要让最大就得让最大点积等于两个向量的模长乘夹角余弦模长固定时夹角趋近度才能取到最大也就是和方向一致共线同向同时其他词的得分要压下去分母才不会把分子摊薄第题知识表示的核心特征在于其支持推理这与单纯的数据格式或数据结构存在本质区别对错答案把知识表示和数据格式数据结构编程语言区分开的依据就是它能支持推理学习和决策只存不推的是数据能推的才算知识表示第题模型能够有效处理知识图谱中的及等复杂关系类型不存在表示局限对错答案这句话和的实际能力相反唯一一个头实体连多个尾实体时几个会被挤到一起对称关系还会逼得趋近零向量复杂关系正是它的短板第题根据的经典描述数据与知识的关键区别在于知识表示支持而不仅仅是存储或结构化答案推理的判据落在能力上数据负责记录和存储知识表示要能让计算机在此基础上做逻辑推导和决策所以填推理第题模型基于平移假设其核心评分函数定义为该公式成立的前提是将实体和关系都映射到同一个空间中答案向量要做向量加法实体和关系就必须在同一个向量空间里这也是和的分水岭后者把实体投影到关系空间加法就不再直接成立',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2026-11-06 10:04:00',
+  postMainColor: '',
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+      win.saveToLocal = {
+        set: (key, value, ttl) => {
+          if (ttl === 0) return
+          const now = Date.now()
+          const expiry = now + ttl * 86400000
+          const item = {
+            value,
+            expiry
+          }
+          localStorage.setItem(key, JSON.stringify(item))
+        },
+      
+        get: key => {
+          const itemStr = localStorage.getItem(key)
+      
+          if (!itemStr) {
+            return undefined
+          }
+          const item = JSON.parse(itemStr)
+          const now = Date.now()
+      
+          if (now > item.expiry) {
+            localStorage.removeItem(key)
+            return undefined
+          }
+          return item.value
+        }
+      }
+    
+      win.getScript = (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        script.onerror = reject
+        script.onload = script.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          script.onload = script.onreadystatechange = null
+          resolve()
+        }
+
+        Object.keys(attr).forEach(key => {
+          script.setAttribute(key, attr[key])
+        })
+
+        document.head.appendChild(script)
+      })
+    
+      win.getCSS = (url, id = false) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onerror = reject
+        link.onload = link.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          link.onload = link.onreadystatechange = null
+          resolve()
+        }
+        document.head.appendChild(link)
+      })
+    
+      win.activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#18171d')
+        }
+      }
+      win.activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#f7f9fe')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          const isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches
+          const isLightMode = window.matchMedia('(prefers-color-scheme: light)').matches
+          const isNotSpecified = window.matchMedia('(prefers-color-scheme: no-preference)').matches
+          const hasNoSupport = !isDarkMode && !isLightMode && !isNotSpecified
+
+          if (t === undefined) {
+            if (isLightMode) activateLightMode()
+            else if (isDarkMode) activateDarkMode()
+            else if (isNotSpecified || hasNoSupport) {
+              const now = new Date()
+              const hour = now.getHours()
+              const isNight = hour <= 6 || hour >= 18
+              isNight ? activateDarkMode() : activateLightMode()
+            }
+            window.matchMedia('(prefers-color-scheme: dark)').addListener(e => {
+              if (saveToLocal.get('theme') === undefined) {
+                e.matches ? activateDarkMode() : activateLightMode()
+              }
+            })
+          } else if (t === 'light') activateLightMode()
+          else activateDarkMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+      const detectApple = () => {
+        if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+          document.documentElement.classList.add('apple')
+        }
+      }
+      detectApple()
+    })(window)</script><meta name="generator" content="Hexo 7.0.0"></head><body data-type="anzhiyu"><div id="web_bg"></div><div id="an_music_bg"></div><div id="loading-box" onclick="document.getElementById(&quot;loading-box&quot;).classList.add(&quot;loaded&quot;)"><div class="loading-bg"><img class="loading-img nolazyload" alt="加载头像" src="/img/avatar.jpg"/><div class="loading-image-dot"></div></div></div><script>const preloader = {
+  endLoading: () => {
+    document.getElementById('loading-box').classList.add("loaded");
+  },
+  initLoading: () => {
+    document.getElementById('loading-box').classList.remove("loaded")
+  }
+}
+window.addEventListener('load',()=> { preloader.endLoading() })
+setTimeout(function(){preloader.endLoading();},10000)
+
+if (true) {
+  document.addEventListener('pjax:send', () => { preloader.initLoading() })
+  document.addEventListener('pjax:complete', () => { preloader.endLoading() })
+}</script><link rel="stylesheet" href="https://cdn.cbd.int/anzhiyu-theme-static@1.1.10/progress_bar/progress_bar.css"/><script async="async" src="https://cdn.cbd.int/pace-js@1.2.4/pace.min.js" data-pace-options="{ &quot;restartOnRequestAfter&quot;:false,&quot;eventLag&quot;:false}"></script><div class="post" id="body-wrap"><header class="not-top-img" id="page-header"><nav id="nav"><div id="nav-group"><span id="blog_name"><a id="site-name" href="/" accesskey="h"><div class="title">qiuxz's Blog</div><i class="anzhiyufont anzhiyu-icon-house-chimney"></i></a></span><div class="mask-name-container"><div id="name-container"><a id="page-name" href="javascript:anzhiyu.scrollToDest(0, 500)">PAGE_NAME</a></div></div><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="javascript:void(0);"><span> 文章</span></a><ul class="menus_item_child"><li><a class="site-page child faa-parent animated-hover" href="/archives/"><i class="anzhiyufont anzhiyu-icon-box-archive faa-tada" style="font-size: 0.9em;"></i><span> 隧道</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><span> 关于</span></a><ul class="menus_item_child"><li><a class="site-page child faa-parent animated-hover" href="/other/about/"><i class="anzhiyufont anzhiyu-icon-paper-plane faa-tada" style="font-size: 0.9em;"></i><span> 关于本人</span></a></li><li><a class="site-page child faa-parent animated-hover" href="javascript:toRandomPost()"><i class="anzhiyufont anzhiyu-icon-shoe-prints1 faa-tada" style="font-size: 0.9em;"></i><span> 随便逛逛</span></a></li></ul></div></div></div><div id="nav-right"><div class="nav-button" id="randomPost_button"><a class="site-page" onclick="toRandomPost()" title="随机前往一个文章" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-dice"></i></a></div><input id="center-console" type="checkbox"/><label class="widget" for="center-console" title="中控台" onclick="anzhiyu.switchConsole();"><i class="left"></i><i class="widget center"></i><i class="widget right"></i></label><div id="console"><div class="console-card-group-reward"><ul class="reward-all console-card"><li class="reward-item"><a href="https://npm.elemecdn.com/anzhiyu-blog@1.1.6/img/post/common/qrcode-weichat.png" target="_blank"><img class="post-qr-code-img" alt="微信" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://npm.elemecdn.com/anzhiyu-blog@1.1.6/img/post/common/qrcode-weichat.png"/></a><div class="post-qr-code-desc">微信</div></li><li class="reward-item"><a href="https://npm.elemecdn.com/anzhiyu-blog@1.1.6/img/post/common/qrcode-alipay.png" target="_blank"><img class="post-qr-code-img" alt="支付宝" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://npm.elemecdn.com/anzhiyu-blog@1.1.6/img/post/common/qrcode-alipay.png"/></a><div class="post-qr-code-desc">支付宝</div></li></ul></div><div class="console-card-group"><div class="console-card-group-left"><div class="console-card" id="card-newest-comments"><div class="card-content"><div class="author-content-item-tips">互动</div><span class="author-content-item-title"> 最新评论</span></div><div class="aside-list"><span>正在加载中...</span></div></div></div><div class="console-card-group-right"><div class="console-card tags"><div class="card-content"><div class="author-content-item-tips">兴趣点</div><span class="author-content-item-title">寻找你感兴趣的领域</span><div class="card-tags"><div class="item-headline"></div><div class="card-tag-cloud"><a href="/tags/YJango%E8%A7%86%E9%A2%91%E6%95%B4%E7%90%86/" style="font-size: 1.05rem;">YJango视频整理<sup>11</sup></a><a href="/tags/%E4%B8%AA%E4%BA%BA%E6%88%90%E9%95%BF/" style="font-size: 1.05rem;">个人成长<sup>3</sup></a><a href="/tags/%E5%AD%A6%E4%B9%A0/" style="font-size: 1.05rem;">学习<sup>13</sup></a><a href="/tags/%E6%84%9F%E6%82%9F/" style="font-size: 1.05rem;">感悟<sup>1</sup></a><a href="/tags/%E6%9C%AA%E5%88%86%E7%B1%BB/" style="font-size: 1.05rem;">未分类<sup>6</sup></a><a href="/tags/%E6%9E%B6%E6%9E%84/" style="font-size: 1.05rem;">架构<sup>1</sup></a><a href="/tags/%E8%80%83%E8%AF%95/" style="font-size: 1.05rem;">考试<sup>5</sup></a></div></div><hr/></div></div><div class="console-card history"><div class="item-headline"><i class="anzhiyufont anzhiyu-icon-box-archiv"></i><span>文章</span></div><div class="card-archives"><div class="item-headline"><i class="anzhiyufont anzhiyu-icon-archive"></i><span>归档</span><a class="card-more-btn" href="/archives/" title="查看更多">
+    <i class="anzhiyufont anzhiyu-icon-angle-right"></i></a></div><ul class="card-archive-list"><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2026/11/"><span class="card-archive-list-date">十一月 2026</span><div class="card-archive-list-count-group"><span class="card-archive-list-count">6</span><span>篇</span></div></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2026/10/"><span class="card-archive-list-date">十月 2026</span><div class="card-archive-list-count-group"><span class="card-archive-list-count">3</span><span>篇</span></div></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2026/09/"><span class="card-archive-list-date">九月 2026</span><div class="card-archive-list-count-group"><span class="card-archive-list-count">15</span><span>篇</span></div></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2026/08/"><span class="card-archive-list-date">八月 2026</span><div class="card-archive-list-count-group"><span class="card-archive-list-count">4</span><span>篇</span></div></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2026/06/"><span class="card-archive-list-date">六月 2026</span><div class="card-archive-list-count-group"><span class="card-archive-list-count">4</span><span>篇</span></div></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2026/05/"><span class="card-archive-list-date">五月 2026</span><div class="card-archive-list-count-group"><span class="card-archive-list-count">1</span><span>篇</span></div></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2026/03/"><span class="card-archive-list-date">三月 2026</span><div class="card-archive-list-count-group"><span class="card-archive-list-count">1</span><span>篇</span></div></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2025/12/"><span class="card-archive-list-date">十二月 2025</span><div class="card-archive-list-count-group"><span class="card-archive-list-count">2</span><span>篇</span></div></a></li></ul></div><hr/></div></div></div><div class="button-group"><div class="console-btn-item"><a class="darkmode_switchbutton" title="显示模式切换" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-moon"></i></a></div><div class="console-btn-item" id="consoleHideAside" onclick="anzhiyu.hideAsideBtn()" title="边栏显示控制"><a class="asideSwitch"><i class="anzhiyufont anzhiyu-icon-arrows-left-right"></i></a></div></div><div class="console-mask" onclick="anzhiyu.hideConsole()" href="javascript:void(0);"></div></div><div class="nav-button" id="nav-totop"><a class="totopbtn" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-arrow-up"></i><span id="percent" onclick="anzhiyu.scrollToDest(0,500)">0</span></a></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);" title="切换"><i class="anzhiyufont anzhiyu-icon-bars"></i></a></div></div></div></nav></header><main id="blog-container"><div class="layout" id="content-inner"><div id="post"><div id="post-info"><div id="post-firstinfo"><div class="meta-firstline"><a class="post-meta-original">原创</a><span class="post-meta-categories"><span class="post-meta-separator"></span><i class="anzhiyufont anzhiyu-icon-inbox post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E6%9C%9F%E6%9C%AB%E8%80%83%E8%AF%95/" itemprop="url">期末考试</a></span><span class="article-meta tags"><a class="article-meta__tags" href="/tags/%E8%80%83%E8%AF%95/" tabindex="-1" itemprop="url"> <span> <i class="anzhiyufont anzhiyu-icon-hashtag"></i>考试</span></a></span></div></div><h1 class="post-title" itemprop="name headline">QUT知识图谱作业解析：第二章 知识图谱表示</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="anzhiyufont anzhiyu-icon-calendar-days post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" itemprop="dateCreated datePublished" datetime="2026-11-06T10:04:00.000Z" title="发表于 2026-11-06 10:04:00">2026-11-06</time><span class="post-meta-separator"></span><i class="anzhiyufont anzhiyu-icon-history post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" itemprop="dateCreated datePublished" datetime="2026-11-06T10:04:00.000Z" title="更新于 2026-11-06 10:04:00">2026-11-06</time></span></div><div class="meta-secondline"></div></div></div><article class="post-content" id="article-container" itemscope itemtype="https://qiuxzh.github.io/other/QUT/QUT%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E4%BD%9C%E4%B8%9A%E8%A7%A3%E6%9E%90-%E7%AC%AC%E4%BA%8C%E7%AB%A0-%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E8%A1%A8%E7%A4%BA/"><header><a class="post-meta-categories" href="/categories/%E6%9C%9F%E6%9C%AB%E8%80%83%E8%AF%95/" itemprop="url">期末考试</a><a href="/tags/%E8%80%83%E8%AF%95/" tabindex="-1" itemprop="url">考试</a><h1 id="CrawlerTitle" itemprop="name headline">QUT知识图谱作业解析：第二章 知识图谱表示</h1><span itemprop="author" itemscope itemtype="http://schema.org/Person">qiuxz</span><time itemprop="dateCreated datePublished" datetime="2026-11-06T10:04:00.000Z" title="发表于 2026-11-06 10:04:00">2026-11-06</time><time itemprop="dateCreated datePublished" datetime="2026-11-06T10:04:00.000Z" title="更新于 2026-11-06 10:04:00">2026-11-06</time></header><h2 id="第二章-知识图谱表示"><a href="#第二章-知识图谱表示" class="headerlink" title="第二章 知识图谱表示"></a>第二章 知识图谱表示</h2><h3 id="自测"><a href="#自测" class="headerlink" title="自测"></a>自测</h3><p>先做一遍，答案和解析在后面。</p>
+<p><strong>1.</strong> SMN 主要用于以下（　）领域。　A. 图像处理　B. 语音识别　C. 文本相似度匹配　D. 数据库管理</p>
+<p><strong>2.</strong> TransE 模型基于平移假设，其评分函数通过计算头实体向量、关系向量与尾实体向量之间的欧氏距离来衡量三元组的合理性，该距离公式为（　）。　A. $\lVert h+r-t \rVert$　B. $\lVert h\circ r-t \rVert$　C. $\lVert h^{\top}M_r r-t \rVert$　D. $\lVert h+r+\tau-t \rVert$</p>
+<p><strong>3.</strong> 在评估知识图谱嵌入模型（如 TransE）的链接预测性能时，构建负样本集是关键步骤。为了确保评估的公平性和有效性，下列哪种构建负样本的策略是最为规范且常用的？　A. 随机生成全新的实体和关系名称，与原始图谱无任何重叠　B. 仅替换三元组中的关系，保持头实体和尾实体不变，且无需检查生成的三元组是否在正样本中存在　C. 采用伯努利分布或均匀分布替换头实体或尾实体，并过滤掉那些实际上存在于知识图谱中的正样本三元组　D. 直接使用原始训练集中的正样本三元组作为负样本，以测试模型的过拟合程度</p>
+<p><strong>4.</strong> 在需要高精度逻辑推理的知识图谱应用场景中，纯基于向量的知识表示技术（如 TransE）往往面临挑战。下列关于其原因及改进思路的描述，最准确的是？　A. 向量表示无法存储任何结构化信息，必须完全回归到一阶逻辑符号表示　B. 向量空间中的几何运算难以精确表达复杂的逻辑约束（如对称性、反对称性），结合符号规则可增强推理的可解释性和准确性　C. 向量模型的训练速度太慢，无法满足实时推理需求，因此应改用基于规则的专家系统　D. 向量表示只能处理文本数据，无法处理知识图谱中的结构化三元组数据</p>
+<p><strong>5.</strong> TransE 模型提出的主要目的是解决（　）问题。　A. 提高符号逻辑的复杂性　B. 增强大规模数据处理能力　C. 简化实体关系表示　D. 处理多媒体数据</p>
+<p><strong>6.</strong> 在基于向量的知识图谱表示中，RotatE 模型旨在克服 TransE 在处理对称、反对称、逆关系和组合关系时的局限。RotatE 将实体和关系映射到复数空间，其核心建模机制是通过复数乘法实现关系的　A. 平移变换　B. 旋转变换　C. 投影变换　D. 缩放变换</p>
+<p><strong>7.</strong> 在 Skip-gram 模型中，假设输入文本序列为 [“I”, “love”, “natural”, “language”, “processing”]，设定窗口大小（window size）为 1。若以单词 “natural” 作为中心词（center word），根据 Skip-gram 模型的训练机制，下列哪一组构成了正确的训练样本对（中心词, 上下文词）？　A. (“natural”, “love”) 和 (“natural”, “language”)　B. (“love”, “natural”) 和 (“language”, “natural”)　C. (“natural”, “I”) 和 (“natural”, “processing”)　D. (“I”, “love”) 和 (“processing”, “language”)</p>
+<p><strong>8.</strong> 神经符号人工智能（Neuro-Symbolic AI）旨在融合神经网络（向量表示）与符号人工智能（符号表示）。关于这种融合趋势的优势，下列说法最恰当的是？　A. 完全消除了对标注数据的需求，实现了无监督的逻辑推理　B. 结合了神经网络的感知与泛化能力以及符号系统的逻辑推理与可解释性　C. 使得模型不再需要梯度下降算法，仅通过逻辑推导即可更新参数　D. 将所有的符号规则直接转化为固定的向量常量，从而彻底抛弃了逻辑引擎</p>
+<p><strong>9.</strong> 在利用 TransE 模型对知识图谱进行嵌入训练时，若遇到 “1-to-N” 或 “N-to-1” 等复杂关系类型（如一个演员出演多部电影），模型往往难以区分不同尾实体的向量位置，导致预测精度下降。造成这一局限的根本原因是　A. 未引入负样本采样机制　B. 评分函数未考虑时间维度信息　C. 同一关系下不同实体被强制映射到相同平移向量　D. 向量维度不足以覆盖所有实体数量</p>
+<p><strong>10.</strong> 某医疗团队计划构建一个临床辅助诊断系统，需要将非结构化的电子病历转化为计算机可处理的形式，以便后续进行疾病风险预测和诊疗决策支持。在这一知识库构建流程中，将提取出的实体和关系转化为计算机模型和方法的核心环节称为　A. 知识认知　B. 知识收集　C. 知识表示　D. 知识库维护</p>
+<p><strong>11.</strong> 在 TransE 模型的平移假设 $h+r\approx t$ 及评分函数 $E&#x3D;\lVert h+r-t \rVert$ 中，关于变量含义、训练机制及局限性的描述，符合材料界定的有　A. 向量 $h$、$r$、$t$ 分别代表头实体、关系和尾实体的嵌入表示　B. 评分函数值 $E$ 越小，表明三元组 $(h,r,t)$ 越可能为真　C. 训练时通过随机替换头实体或尾实体来生成负样本　D. 该模型采用 margin-based ranking loss 作为损失函数进行优化　E. 该模型能完美处理 1-to-N、N-to-1 及 N-to-N 等复杂关系类型</p>
+<p><strong>12.</strong> 在构建基于符号的知识图谱时，若需实现比 RDFS 更丰富的语义表达，OWL 提供的扩展能力包括　A. 支持类的交、并、补等布尔运算　B. 提供存在量化（∃）和全称量化（∀）的属性限制　C. 仅支持简单的 subClassOf 传递性推理　D. 支持定义属性的逆属性（inverseOf）及对称性　E. 允许对属性施加基数约束（Cardinality Constraints）</p>
+<p><strong>13.</strong> 在 Skip-gram 模型中，直接使用 Softmax 计算词汇表上所有词的概率计算量过大。负采样（Negative Sampling）是一种常用的优化技术。关于负采样及其目标函数，下列说法正确的有：　A. 负采样将多分类问题转化为多个二分类问题，即判断上下文词是否为真正的目标词。　B. 在构造负样本时，通常根据词频分布对词汇表中的词进行采样，高频词被选为负样本的概率更大。　C. 负采样的目标函数旨在最大化正样本的对数似然，同时最小化负样本的对数似然（或最大化其非目标概率）。　D. 负采样技术完全消除了 Softmax 计算，因此在反向传播时不需要更新输出层权重矩阵。　E. 相比于层次 Softmax，负采样通过随机选择少量负样本，显著降低了每次迭代的计算复杂度。</p>
+<p><strong>14.</strong> TransE 模型将关系视为头实体向量到尾实体向量的平移（$h+r&#x3D;t$）。这种简单的几何约束在处理复杂关系模式时存在局限性。下列关于 TransE 局限性的分析，正确的有：　A. TransE 难以有效建模一对多（1-N）关系，因为同一个头实体和关系向量只能映射到一个理想的尾实体向量。　B. TransE 能够完美处理自反关系（Reflexive），因为向量加法天然支持 $h+r&#x3D;h$ 的情况（只要 $r&#x3D;0$）。　C. 对于对称关系（Symmetric），TransE 要求关系向量 r 必须为零向量或接近零向量，这可能导致不同对称关系无法区分。　D. TransE 在处理多对多（M-N）关系时表现优异，因为向量空间的连续性允许重叠。　E. 由于平移约束的刚性，TransE 在处理组合关系或复杂逻辑规则推理时能力有限。</p>
+<p><strong>15.</strong> 依据 Davis 对知识表示（KR）的经典界定，区别于普通数据格式或数据结构的核心特征包括　A. 支持基于已有信息进行逻辑推理　B. 能够辅助系统进行决策制定　C. 本质上是一种特定的编程语言语法　D. 主要用于实现机器学习中的特征提取　E. 仅仅是数据的静态存储结构</p>
+<p><strong>16.</strong> 在基于符号的知识表示技术中，语义网络（Semantic Networks）和框架（Frames）是两种经典方法。关于这两种技术的特性及异同，下列说法正确的有：　A. 语义网络通过节点表示概念，通过带标记的有向边表示概念间的语义关系，如 IS-A、Part-of 等。　B. 框架理论侧重于描述典型情境或对象的原型结构，通过槽（Slots）和填值（Fillers）来组织知识。　C. 语义网络在处理多重继承时容易产生二义性，而框架系统通常通过特定的继承机制（如最近优先）来解决冲突。　D. 框架中的默认值（Default Values）允许在槽值缺失时进行自动填充，这体现了其处理不完全信息的能力。　E. 语义网络和框架都主要依赖于向量空间中的几何距离来衡量概念之间的相似度。</p>
+<p><strong>17.</strong> TransE 模型基于翻译假设 $h+r\approx t$，使用 L1 范数作为距离度量 $d(h,r,t)&#x3D;\lVert h+r-t \rVert_1$。假设实体和关系向量为二维向量，已知头实体向量 $h&#x3D;[1,2]$，关系向量 $r&#x3D;[0,1]$，尾实体向量 $t_1&#x3D;[1,3]$，$t_2&#x3D;[2,2]$。下列关于三元组得分及合理性的判断，正确的有：　A. 三元组 $(h,r,t_1)$ 的距离得分为 0。　B. 三元组 $(h,r,t_2)$ 的距离得分为 1。　C. 相比 $t_2$，$t_1$ 是更合理的尾实体，因为其距离得分更低。　D. 若使用 L2 范数，$(h,r,t_1)$ 的得分将大于 $(h,r,t_2)$ 的得分。　E. TransE 模型中，得分越低表示三元组成立的可能性越大。</p>
+<p><strong>18.</strong> RDF 是什么？它用什么方式表示数据？</p>
+<p><strong>19.</strong> 在基于向量的知识图谱表示中，TransE 模型假设头实体向量与关系向量之和近似等于尾实体向量（$h+r\approx t$）。请从几何空间映射的角度分析，为何该线性平移假设难以有效处理 “1-to-N” 或 “N-to-1” 等复杂关系类型？</p>
+<p><strong>20.</strong> Davis（1993）指出，知识表示（KR）并非单纯的数据格式、数据结构或编程语言，其核心在于支持推理。然而，在当前的工业实践中，基于向量嵌入（Embedding）的知识图谱表示技术被广泛应用于推荐系统和智能搜索，这类技术往往侧重于语义相似度的计算而非严格的逻辑推导。</p>
+<p>请结合 “知识表示是用计算机模型和方法处理知识，以实现推理、学习或决策” 这一核心定义，论述符号主义表示（如 OWL&#x2F;RDF）与连接主义表示（如 TransE&#x2F;Word2Vec）在实现 “推理” 与 “学习&#x2F;决策” 目标上的辩证关系。在论述中，请阐明两者各自的优势领域，并分析在何种应用场景下应优先选择哪种范式，或者如何理解两者的互补性。</p>
+<p><strong>21.</strong> TransE 模型基于翻译假设（Translation Hypothesis），将实体和关系映射到低维向量空间。请简述 TransE 模型的评分函数（能量函数）定义，写出其常用的边际损失函数（Margin-based Loss）公式，并解释该损失函数中 “边际（Margin）” 参数在区分正负样本时的具体作用。</p>
+<p><strong>22.</strong> 在基于向量的知识表示技术中，Skip-gram 模型通过中心词预测上下文词来学习词向量。假设在一个简化的词汇表 $V&#x3D;{w_1,w_2,w_3}$ 中，给定中心词 $w_c$ 和特定的上下文词 $w_o$。已知中心词向量 $v_{w_c}&#x3D;[1.0,0.5]$，三个词汇的输出向量（即作为上下文词时的向量）分别为 $u_{w_1}&#x3D;[0.2,0.1]$、$u_{w_2}&#x3D;[0.5,0.5]$、$u_{w_3}&#x3D;[0.1,0.8]$。请根据 Softmax 函数的定义，计算在该简化场景下，给定中心词 $w_c$ 时预测出上下文词为 $w_2$ 的条件概率 $P(w_2\mid w_c)$。要求写出计算公式、中间步骤（指数项的值）及最终结果（保留两位小数）。</p>
+<p><strong>23.</strong> 早期的知识表示技术有哪些？简要描述每种技术的特点。</p>
+<p><strong>24.</strong> 在基于向量的知识表示学习模型 TransE 中，核心思想是将关系视为头实体向量到尾实体向量的平移操作，即满足 $h+r\approx t$。假设在一个三维向量空间中，给定以下实体和关系的嵌入向量：头实体 $h$ (Paris) 的向量表示为 $h&#x3D;[1.0,2.0,3.0]$，关系 $r$ (CapitalOf) 的向量表示为 $r&#x3D;[0.5,-1.0,0.5]$，尾实体 $t_1$ (France) 的向量表示为 $t_1&#x3D;[1.5,1.0,3.5]$，尾实体 $t_2$ (Germany) 的向量表示为 $t_2&#x3D;[2.0,0.5,4.0]$。请使用 L1 范数（曼哈顿距离）作为距离度量函数 $d(h,r,t)&#x3D;\lVert h+r-t \rVert_1$，分别计算三元组 (Paris, CapitalOf, France) 和 (Paris, CapitalOf, Germany) 的能量值（得分）。根据计算结果，判断哪个三元组更合理，并简述 TransE 模型中能量值大小与三元组合理性之间的关系。分析 TransE 模型在处理 “一对多”（1-N）、“多对一”（N-1）或 “多对多”（N-N）关系时可能面临的几何局限性，并结合上述向量平移的原理进行解释。</p>
+<p><strong>25.</strong> 考虑一个简化的知识图谱场景，包含实体集合 $E&#x3D;{\text{北京},\text{中国},\text{首都}}$ 和关系集合 $R&#x3D;{\text{位于}}$。假设使用 TransE 模型进行知识表示，向量维度为 2 维。已知初始嵌入向量如下：北京 $h&#x3D;[1.0,2.0]$，中国 $t&#x3D;[4.0,5.0]$，位于 $r&#x3D;[2.0,2.0]$。TransE 的能量函数定义为 $f_r(h,t)&#x3D;\lVert h+r-t \rVert_2$（L2 范数）。请计算三元组 (北京,位于,中国) 在当前嵌入下的能量值（距离），并判断如果存在另一个候选尾实体美国 $t’&#x3D;[0.0,0.0]$，模型会更倾向于预测哪个实体作为 “北京-位于-?” 的答案？请给出计算依据。</p>
+<p><strong>26.</strong> 在基于 Skip-gram 模型的词向量训练过程中，假设中心词 $w_c$ 的输入向量为 $v_c$，上下文窗口大小为 1，即只有一个上下文词 $w_o$。设词汇表大小为 $V$。Skip-gram 模型使用 Softmax 函数来计算给定中心词 $w_c$ 时生成上下文词 $w_o$ 的概率：</p>
+<p>$$<br>P(w_o\mid w_c)&#x3D;\frac{\exp(u_o^{\top}v_c)}{\sum_{w}\exp(u_w^{\top}v_c)}<br>$$</p>
+<p>其中 $u_w$ 是输出向量。现假设词汇表仅包含 3 个词：A, B, C。已知中心词为 A，其输入向量 $v_A&#x3D;[1,0]$。各词的输出向量为：$u_A&#x3D;[1,1]$，$u_B&#x3D;[0,1]$，$u_C&#x3D;[-1,0]$。请计算 $P(B\mid A)$ 的值（保留两位小数），并简述如果要将 $P(B\mid A)$ 最大化，在向量空间上 $v_A$ 和 $u_B$ 应该呈现怎样的几何关系？</p>
+<p><strong>27.</strong> 知识表示（KR）的核心特征在于其支持推理，这与单纯的数据格式或数据结构存在本质区别。　A. 对　B. 错</p>
+<p><strong>28.</strong> TransE 模型能够有效处理知识图谱中的 1-to-N、N-to-1 及 N-to-N 等复杂关系类型，不存在表示局限。　A. 对　B. 错</p>
+<p><strong>29.</strong> 根据 Davis 的经典描述，数据与知识的关键区别在于知识表示支持____，而不仅仅是存储或结构化。</p>
+<p><strong>30.</strong> TransE 模型基于平移假设，其核心评分函数定义为 $E&#x3D;\lVert h+r-t \rVert$，该公式成立的前提是将实体和关系都映射到同一个____空间中。</p>
+<h3 id="第1题"><a href="#第1题" class="headerlink" title="第1题"></a>第1题</h3><p>SMN 主要用于以下（　）领域。</p>
+<ul>
+<li>A. 图像处理</li>
+<li>B. 语音识别</li>
+<li>C. 文本相似度匹配</li>
+<li>D. 数据库管理</li>
+</ul>
+<p><strong>答案：C</strong></p>
+<p>SMN 是语义匹配网络（Semantic Matching Network），把头实体、关系、尾实体分别编码成向量再算匹配度，用在文本相似度匹配上。它绕开几何平移，靠 LSTM 处理上下文、CNN 抽局部特征，最后接一个分类层输出分数。</p>
+<h3 id="第2题"><a href="#第2题" class="headerlink" title="第2题"></a>第2题</h3><p>TransE 模型基于平移假设，其评分函数通过计算头实体向量、关系向量与尾实体向量之间的欧氏距离来衡量三元组的合理性，该距离公式为（　）。</p>
+<ul>
+<li>A. $\lVert h+r-t \rVert$</li>
+<li>B. $\lVert h\circ r-t \rVert$</li>
+<li>C. $\lVert h^{\top}M_r r-t \rVert$</li>
+<li>D. $\lVert h+r+\tau-t \rVert$</li>
+</ul>
+<p><strong>答案：A</strong></p>
+<p>TransE 把关系当成从头实体到尾实体的一次平移，评分函数就是平移后的误差 $\lVert h+r-t \rVert$，取 L1 或 L2 范数。B 是 RotatE 的旋转形式；C 先做一次映射矩阵投影再算距离，接近 TransR 的思路；D 多了一个时间嵌入 τ，属于时序知识图谱模型。</p>
+<div align="center">
+  <svg viewBox="0 0 720 300" width="100%" style="max-width:720px;height:auto" xmlns="http://www.w3.org/2000/svg" font-family="Segoe UI, 'Microsoft YaHei', sans-serif">
+    <defs>
+      <marker id="ta1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+        <path d="M 0 0 L 10 5 L 0 10 z" fill="#2f6f8f"/>
+      </marker>
+      <marker id="ta2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+        <path d="M 0 0 L 10 5 L 0 10 z" fill="#3f7a5a"/>
+      </marker>
+    </defs>
+    <line x1="110" y1="238" x2="640" y2="238" stroke="#cfdde5" stroke-width="1.2"/>
+    <line x1="110" y1="238" x2="110" y2="60" stroke="#cfdde5" stroke-width="1.2"/>
+    <text x="646" y="242" font-size="11" fill="#8fa1ae">x</text>
+    <text x="104" y="54" font-size="11" fill="#8fa1ae">y</text>
+    <line x1="110" y1="238" x2="215" y2="120" stroke="#2f6f8f" stroke-width="1.9" marker-end="url(#ta1)"/>
+    <text x="143" y="184" font-size="14" fill="#2f6f8f">h</text>
+    <line x1="215" y1="120" x2="540" y2="190" stroke="#2f6f8f" stroke-width="1.9" marker-end="url(#ta1)"/>
+    <text x="368" y="140" font-size="14" fill="#2f6f8f">r</text>
+    <line x1="110" y1="238" x2="532" y2="191" stroke="#3f7a5a" stroke-width="1.9" stroke-dasharray="6 4" marker-end="url(#ta2)"/>
+    <text x="552" y="186" font-size="14" fill="#3f7a5a">t</text>
+    <circle cx="110" cy="238" r="4" fill="#1f2933"/>
+    <text x="88" y="256" font-size="11" fill="#5b6b76">O</text>
+    <text x="556" y="148" font-size="11" fill="#5b6b76">t 的落点与 h+r 重合</text>
+    <text x="360" y="284" font-size="13" fill="#5b6b76" text-anchor="middle">h + r = t</text>
+  </svg>
+</div>
+
+<p><em>整条链子靠一次加法走完：从 h 出发沿 r 平移，落点就是 t。</em></p>
+<h3 id="第3题"><a href="#第3题" class="headerlink" title="第3题"></a>第3题</h3><p>在评估知识图谱嵌入模型（如 TransE）的链接预测性能时，构建负样本集是关键步骤。为了确保评估的公平性和有效性，下列哪种构建负样本的策略是最为规范且常用的？</p>
+<ul>
+<li>A. 随机生成全新的实体和关系名称，与原始图谱无任何重叠</li>
+<li>B. 仅替换三元组中的关系，保持头实体和尾实体不变，且无需检查生成的三元组是否在正样本中存在</li>
+<li>C. 采用伯努利分布或均匀分布替换头实体或尾实体，并过滤掉那些实际上存在于知识图谱中的正样本三元组</li>
+<li>D. 直接使用原始训练集中的正样本三元组作为负样本，以测试模型的过拟合程度</li>
+</ul>
+<p><strong>答案：C</strong></p>
+<p>负样本靠腐蚀正样本得到：把 h 或 t 换掉，再过滤掉换出来却在库里真成立的三元组。不过滤就会把正确答案当错答案，指标被压低。用伯努利分布决定换头还是换尾，是为了照顾不同实体度数差别过大的情况。A 引入了词表外的名称，B 换关系不符合腐蚀的常规做法，D 拿正样本当负样本没有意义。</p>
+<h3 id="第4题"><a href="#第4题" class="headerlink" title="第4题"></a>第4题</h3><p>在需要高精度逻辑推理的知识图谱应用场景中，纯基于向量的知识表示技术（如 TransE）往往面临挑战。下列关于其原因及改进思路的描述，最准确的是？</p>
+<ul>
+<li>A. 向量表示无法存储任何结构化信息，必须完全回归到一阶逻辑符号表示</li>
+<li>B. 向量空间中的几何运算难以精确表达复杂的逻辑约束（如对称性、反对称性），结合符号规则可增强推理的可解释性和准确性</li>
+<li>C. 向量模型的训练速度太慢，无法满足实时推理需求，因此应改用基于规则的专家系统</li>
+<li>D. 向量表示只能处理文本数据，无法处理知识图谱中的结构化三元组数据</li>
+</ul>
+<p><strong>答案：B</strong></p>
+<p>TransE 用距离近似语义，对称、反对称、组合这些约束只能被近似满足，推理过程也说不出依据。符号规则补上的正是这一块：逻辑严密，每一步都能解释。A 说向量存不了结构，过于绝对；C 把瓶颈说成训练速度，方向就错了；D 与事实相反，TransE 处理的本来就是三元组。</p>
+<h3 id="第5题"><a href="#第5题" class="headerlink" title="第5题"></a>第5题</h3><p>TransE 模型提出的主要目的是解决（　）问题。</p>
+<ul>
+<li>A. 提高符号逻辑的复杂性</li>
+<li>B. 增强大规模数据处理能力</li>
+<li>C. 简化实体关系表示</li>
+<li>D. 处理多媒体数据</li>
+</ul>
+<p><strong>答案：C</strong></p>
+<p>TransE 把实体和关系压进同一个空间，用一次加法表示关系，表示形式和计算都变简单了。代价是几何约束太硬，一对多这类关系它处理不好。</p>
+<h3 id="第6题"><a href="#第6题" class="headerlink" title="第6题"></a>第6题</h3><p>在基于向量的知识图谱表示中，RotatE 模型旨在克服 TransE 在处理对称、反对称、逆关系和组合关系时的局限。RotatE 将实体和关系映射到复数空间，其核心建模机制是通过复数乘法实现关系的</p>
+<ul>
+<li>A. 平移变换</li>
+<li>B. 旋转变换</li>
+<li>C. 投影变换</li>
+<li>D. 缩放变换</li>
+</ul>
+<p><strong>答案：B</strong></p>
+<p>RotatE 把关系当成复平面上的旋转，$t &#x3D; h \circ r$，并约束 $\lvert r \rvert &#x3D; 1$。旋转能表达对称（转 180° 回到原处）、反对称（反向旋转）、逆关系（转回去）和组合关系（角度相加），这几种正是平移假设做不好的。</p>
+<div align="center">
+  <svg viewBox="0 0 720 280" width="100%" style="max-width:720px;height:auto" xmlns="http://www.w3.org/2000/svg" font-family="Segoe UI, 'Microsoft YaHei', sans-serif">
+    <defs>
+      <marker id="ta3" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+        <path d="M 0 0 L 10 5 L 0 10 z" fill="#2f6f8f"/>
+      </marker>
+      <marker id="ta4" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+        <path d="M 0 0 L 10 5 L 0 10 z" fill="#b4552d"/>
+      </marker>
+      <marker id="ta5" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+        <path d="M 0 0 L 10 5 L 0 10 z" fill="#3f7a5a"/>
+      </marker>
+    </defs>
+    <circle cx="330" cy="150" r="96" fill="none" stroke="#cfdde5" stroke-width="1.3" stroke-dasharray="5 4"/>
+    <circle cx="330" cy="150" r="3.5" fill="#1f2933"/>
+    <line x1="330" y1="150" x2="418" y2="117" stroke="#2f6f8f" stroke-width="1.8" marker-end="url(#ta3)"/>
+    <line x1="330" y1="150" x2="298" y2="60" stroke="#3f7a5a" stroke-width="1.8" marker-end="url(#ta5)"/>
+    <path d="M 409 121 A 84 84 0 0 0 301 71" fill="none" stroke="#b4552d" stroke-width="1.6" marker-end="url(#ta4)"/>
+    <text x="432" y="126" font-size="14" fill="#2f6f8f">h</text>
+    <text x="286" y="48" font-size="14" fill="#3f7a5a">t</text>
+    <text x="430" y="100" font-size="12" fill="#b4552d">r：旋转 90°</text>
+    <text x="478" y="150" font-size="12" fill="#5b6b76">|r| = 1</text>
+    <text x="478" y="172" font-size="12" fill="#5b6b76">对称关系＝180°</text>
+    <text x="478" y="194" font-size="12" fill="#5b6b76">组合关系＝角度相加</text>
+  </svg>
+</div>
+
+<p><em>关系不再是平移向量，而是一个处处模长为 1 的旋转因子。</em></p>
+<h3 id="第7题"><a href="#第7题" class="headerlink" title="第7题"></a>第7题</h3><p>在 Skip-gram 模型中，假设输入文本序列为 [“I”, “love”, “natural”, “language”, “processing”]，设定窗口大小（window size）为 1。若以单词 “natural” 作为中心词（center word），根据 Skip-gram 模型的训练机制，下列哪一组构成了正确的训练样本对（中心词, 上下文词）？</p>
+<ul>
+<li>A. (“natural”, “love”) 和 (“natural”, “language”)</li>
+<li>B. (“love”, “natural”) 和 (“language”, “natural”)</li>
+<li>C. (“natural”, “I”) 和 (“natural”, “processing”)</li>
+<li>D. (“I”, “love”) 和 (“processing”, “language”)</li>
+</ul>
+<p><strong>答案：A</strong></p>
+<p>窗口为 1，中心词 natural 的上下文只有左右各一个词，也就是 love 和 language。样本对按（中心词，上下文词）排列，所以是 (“natural”,”love”) 与 (“natural”,”language”)。B 把两者写反了，C 取到了窗口外面，D 里根本没有中心词。</p>
+<div align="center">
+  <svg viewBox="0 0 720 210" width="100%" style="max-width:720px;height:auto" xmlns="http://www.w3.org/2000/svg" font-family="Segoe UI, 'Microsoft YaHei', sans-serif">
+    <defs>
+      <marker id="ta6" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+        <path d="M 0 0 L 10 5 L 0 10 z" fill="#2f6f8f"/>
+      </marker>
+    </defs>
+    <rect x="60" y="52" width="100" height="46" rx="7" fill="#f4f6f7" stroke="#b9c4cc" stroke-width="1.3"/>
+    <text x="110" y="81" font-size="13" fill="#7b8b96" text-anchor="middle">I</text>
+    <rect x="180" y="52" width="100" height="46" rx="7" fill="#eaf3f7" stroke="#2f6f8f" stroke-width="1.6"/>
+    <text x="230" y="81" font-size="13" fill="#1f2933" text-anchor="middle">love</text>
+    <rect x="300" y="52" width="100" height="46" rx="7" fill="#f6e7c8" stroke="#b4552d" stroke-width="1.8"/>
+    <text x="350" y="81" font-size="13" fill="#1f2933" text-anchor="middle">natural</text>
+    <rect x="420" y="52" width="100" height="46" rx="7" fill="#eaf3f7" stroke="#2f6f8f" stroke-width="1.6"/>
+    <text x="470" y="81" font-size="13" fill="#1f2933" text-anchor="middle">language</text>
+    <rect x="540" y="52" width="100" height="46" rx="7" fill="#f4f6f7" stroke="#b9c4cc" stroke-width="1.3"/>
+    <text x="590" y="81" font-size="13" fill="#7b8b96" text-anchor="middle">processing</text>
+    <line x1="298" y1="75" x2="284" y2="75" stroke="#2f6f8f" stroke-width="1.6" marker-end="url(#ta6)"/>
+    <line x1="402" y1="75" x2="416" y2="75" stroke="#2f6f8f" stroke-width="1.6" marker-end="url(#ta6)"/>
+    <text x="350" y="126" font-size="12" fill="#b4552d" text-anchor="middle">中心词</text>
+    <text x="230" y="126" font-size="12" fill="#2f6f8f" text-anchor="middle">上下文</text>
+    <text x="470" y="126" font-size="12" fill="#2f6f8f" text-anchor="middle">上下文</text>
+    <text x="350" y="172" font-size="12" fill="#5b6b76" text-anchor="middle">窗口＝1，样本对只有 (natural, love) 与 (natural, language)</text>
+  </svg>
+</div>
+
+<p><em>窗口框住左右各一个词，中心词预测这两处上下文。</em></p>
+<h3 id="第8题"><a href="#第8题" class="headerlink" title="第8题"></a>第8题</h3><p>神经符号人工智能（Neuro-Symbolic AI）旨在融合神经网络（向量表示）与符号人工智能（符号表示）。关于这种融合趋势的优势，下列说法最恰当的是？</p>
+<ul>
+<li>A. 完全消除了对标注数据的需求，实现了无监督的逻辑推理</li>
+<li>B. 结合了神经网络的感知与泛化能力以及符号系统的逻辑推理与可解释性</li>
+<li>C. 使得模型不再需要梯度下降算法，仅通过逻辑推导即可更新参数</li>
+<li>D. 将所有的符号规则直接转化为固定的向量常量，从而彻底抛弃了逻辑引擎</li>
+</ul>
+<p><strong>答案：B</strong></p>
+<p>融合的目的就是把两边长处接起来：神经网络从数据里学特征、能泛化，符号系统做严格推理、每步可解释。A 说它免掉标注还能无监督做逻辑推理，不成立；C 说参数更新不再需要梯度，也不对；D 说融合等于抛弃逻辑引擎，正好相反。</p>
+<h3 id="第9题"><a href="#第9题" class="headerlink" title="第9题"></a>第9题</h3><p>在利用 TransE 模型对知识图谱进行嵌入训练时，若遇到 “1-to-N” 或 “N-to-1” 等复杂关系类型（如一个演员出演多部电影），模型往往难以区分不同尾实体的向量位置，导致预测精度下降。造成这一局限的根本原因是</p>
+<ul>
+<li>A. 未引入负样本采样机制</li>
+<li>B. 评分函数未考虑时间维度信息</li>
+<li>C. 同一关系下不同实体被强制映射到相同平移向量</li>
+<li>D. 向量维度不足以覆盖所有实体数量</li>
+</ul>
+<p><strong>答案：C</strong></p>
+<p>同一个关系 $r$ 只有一个向量。一个头实体连多个尾实体时，$h+r$ 只有一个落点，几个尾实体就被拉到同一处，模型自然分不开。A 说没做负采样，训练里是做了的；B 扯到时间维度，不是这个问题的成因；D 想靠加维度解决，几何上的冲突依旧存在。</p>
+<h3 id="第10题"><a href="#第10题" class="headerlink" title="第10题"></a>第10题</h3><p>某医疗团队计划构建一个临床辅助诊断系统，需要将非结构化的电子病历转化为计算机可处理的形式，以便后续进行疾病风险预测和诊疗决策支持。在这一知识库构建流程中，将提取出的实体和关系转化为计算机模型和方法的核心环节称为</p>
+<ul>
+<li>A. 知识认知</li>
+<li>B. 知识收集</li>
+<li>C. 知识表示</li>
+<li>D. 知识库维护</li>
+</ul>
+<p><strong>答案：C</strong></p>
+<p>知识库的形成要过五个阶段：知识认知、知识收集、知识表示、知识库建立、知识库维护。把实体和关系转成计算机模型与方法能处理的形式，对应的正是知识表示。</p>
+<h3 id="第11题"><a href="#第11题" class="headerlink" title="第11题"></a>第11题</h3><p>在 TransE 模型的平移假设 $h+r\approx t$ 及评分函数 $E&#x3D;\lVert h+r-t \rVert$ 中，关于变量含义、训练机制及局限性的描述，符合材料界定的有</p>
+<ul>
+<li>A. 向量 $h$、$r$、$t$ 分别代表头实体、关系和尾实体的嵌入表示</li>
+<li>B. 评分函数值 $E$ 越小，表明三元组 $(h,r,t)$ 越可能为真</li>
+<li>C. 训练时通过随机替换头实体或尾实体来生成负样本</li>
+<li>D. 该模型采用 margin-based ranking loss 作为损失函数进行优化</li>
+<li>E. 该模型能完美处理 1-to-N、N-to-1 及 N-to-N 等复杂关系类型</li>
+</ul>
+<p><strong>答案：A、B、C、D</strong></p>
+<p>前四项都对。$h$、$r$、$t$ 分别是头实体、关系、尾实体的向量；$E$ 越小说明 $h+r$ 离 $t$ 越近，三元组越可能成立；训练时随机替换头或尾生成负样本，配 margin-based ranking loss 优化。E 项把短板写成了长处，TransE 恰恰处理不好一对多、多对一和多对多。</p>
+<h3 id="第12题"><a href="#第12题" class="headerlink" title="第12题"></a>第12题</h3><p>在构建基于符号的知识图谱时，若需实现比 RDFS 更丰富的语义表达，OWL 提供的扩展能力包括</p>
+<ul>
+<li>A. 支持类的交、并、补等布尔运算</li>
+<li>B. 提供存在量化（∃）和全称量化（∀）的属性限制</li>
+<li>C. 仅支持简单的 subClassOf 传递性推理</li>
+<li>D. 支持定义属性的逆属性（inverseOf）及对称性</li>
+<li>E. 允许对属性施加基数约束（Cardinality Constraints）</li>
+</ul>
+<p><strong>答案：A、B、D、E</strong></p>
+<p>OWL 比 RDFS 多出来的能力集中在类运算和属性约束上：类的布尔运算、存在量化与全称量化的属性限制、逆属性与对称性这类属性特征，以及基数约束。C 说的 subClassOf 传递性 RDFS 本来就有，算不上扩展。</p>
+<h3 id="第13题"><a href="#第13题" class="headerlink" title="第13题"></a>第13题</h3><p>在 Skip-gram 模型中，直接使用 Softmax 计算词汇表上所有词的概率计算量过大。负采样（Negative Sampling）是一种常用的优化技术。关于负采样及其目标函数，下列说法正确的有：</p>
+<ul>
+<li>A. 负采样将多分类问题转化为多个二分类问题，即判断上下文词是否为真正的目标词。</li>
+<li>B. 在构造负样本时，通常根据词频分布对词汇表中的词进行采样，高频词被选为负样本的概率更大。</li>
+<li>C. 负采样的目标函数旨在最大化正样本的对数似然，同时最小化负样本的对数似然（或最大化其非目标概率）。</li>
+<li>D. 负采样技术完全消除了 Softmax 计算，因此在反向传播时不需要更新输出层权重矩阵。</li>
+<li>E. 相比于层次 Softmax，负采样通过随机选择少量负样本，显著降低了每次迭代的计算复杂度。</li>
+</ul>
+<p><strong>答案：A、B、C、E</strong></p>
+<p>负采样把整个词表上的多分类拆成一堆二分类：正样本是真实上下文，另外抽 K 个词当负样本，目标函数一边抬高正样本、一边压低负样本。采样按词频的 3&#x2F;4 次方进行，高频词更容易被抽中；计算量从 $O(V)$ 降到 $O(K)$，$K$ 通常取 5 到 20。D 错在说不用更新输出层，正样本和负样本对应的输出向量还是要更新的。</p>
+<h3 id="第14题"><a href="#第14题" class="headerlink" title="第14题"></a>第14题</h3><p>TransE 模型将关系视为头实体向量到尾实体向量的平移（$h+r&#x3D;t$）。这种简单的几何约束在处理复杂关系模式时存在局限性。下列关于 TransE 局限性的分析，正确的有：</p>
+<ul>
+<li>A. TransE 难以有效建模一对多（1-N）关系，因为同一个头实体和关系向量只能映射到一个理想的尾实体向量。</li>
+<li>B. TransE 能够完美处理自反关系（Reflexive），因为向量加法天然支持 $h+r&#x3D;h$ 的情况（只要 $r&#x3D;0$）。</li>
+<li>C. 对于对称关系（Symmetric），TransE 要求关系向量 r 必须为零向量或接近零向量，这可能导致不同对称关系无法区分。</li>
+<li>D. TransE 在处理多对多（M-N）关系时表现优异，因为向量空间的连续性允许重叠。</li>
+<li>E. 由于平移约束的刚性，TransE 在处理组合关系或复杂逻辑规则推理时能力有限。</li>
+</ul>
+<p><strong>答案：A、C、E</strong></p>
+<p>A 对：一对多时 $h+r$ 只有一个落点，几个尾实体被压在一起。C 对：对称关系要同时满足 $h+r\approx t$ 和 $t+r\approx h$，两式相减得 $r\approx 0$，两个不同的对称关系都会往零向量上靠，从此分不开。E 对：平移只能表达线性关系，组合和复杂逻辑规则覆盖不到。B 错在 “完美” 两个字，D 错在多对多上 TransE 同样会挤向量。</p>
+<h3 id="第15题"><a href="#第15题" class="headerlink" title="第15题"></a>第15题</h3><p>依据 Davis 对知识表示（KR）的经典界定，区别于普通数据格式或数据结构的核心特征包括</p>
+<ul>
+<li>A. 支持基于已有信息进行逻辑推理</li>
+<li>B. 能够辅助系统进行决策制定</li>
+<li>C. 本质上是一种特定的编程语言语法</li>
+<li>D. 主要用于实现机器学习中的特征提取</li>
+<li>E. 仅仅是数据的静态存储结构</li>
+</ul>
+<p><strong>答案：A、B</strong></p>
+<p>Davis 把知识表示和数据格式分开的判据是能力：能支持推理，能辅助决策。C 说它是编程语言语法，Davis 明确否认；D 把特征提取当成本质，那只是数据处理的一步；E 的静态存储更是把知识表示降格成了数据库。</p>
+<h3 id="第16题"><a href="#第16题" class="headerlink" title="第16题"></a>第16题</h3><p>在基于符号的知识表示技术中，语义网络（Semantic Networks）和框架（Frames）是两种经典方法。关于这两种技术的特性及异同，下列说法正确的有：</p>
+<ul>
+<li>A. 语义网络通过节点表示概念，通过带标记的有向边表示概念间的语义关系，如 IS-A、Part-of 等。</li>
+<li>B. 框架理论侧重于描述典型情境或对象的原型结构，通过槽（Slots）和填值（Fillers）来组织知识。</li>
+<li>C. 语义网络在处理多重继承时容易产生二义性，而框架系统通常通过特定的继承机制（如最近优先）来解决冲突。</li>
+<li>D. 框架中的默认值（Default Values）允许在槽值缺失时进行自动填充，这体现了其处理不完全信息的能力。</li>
+<li>E. 语义网络和框架都主要依赖于向量空间中的几何距离来衡量概念之间的相似度。</li>
+</ul>
+<p><strong>答案：A、B、C、D</strong></p>
+<p>语义网络用节点表示概念、带标记的有向边表示 IS-A 与 Part-of 这类关系；框架用槽和填值描述原型结构，默认值能在槽值缺失时补上；多重继承下语义网络容易走出二义性，框架靠最近优先一类的继承规则消解。E 张冠李戴，几何距离是向量表示的特征。</p>
+<h3 id="第17题"><a href="#第17题" class="headerlink" title="第17题"></a>第17题</h3><p>TransE 模型基于翻译假设 $h+r\approx t$，使用 L1 范数作为距离度量 $d(h,r,t)&#x3D;\lVert h+r-t \rVert_1$。假设实体和关系向量为二维向量，已知头实体向量 $h&#x3D;[1,2]$，关系向量 $r&#x3D;[0,1]$，尾实体向量 $t_1&#x3D;[1,3]$，$t_2&#x3D;[2,2]$。下列关于三元组得分及合理性的判断，正确的有：</p>
+<ul>
+<li>A. 三元组 $(h,r,t_1)$ 的距离得分为 0。</li>
+<li>B. 三元组 $(h,r,t_2)$ 的距离得分为 1。</li>
+<li>C. 相比 $t_2$，$t_1$ 是更合理的尾实体，因为其距离得分更低。</li>
+<li>D. 若使用 L2 范数，$(h,r,t_1)$ 的得分将大于 $(h,r,t_2)$ 的得分。</li>
+<li>E. TransE 模型中，得分越低表示三元组成立的可能性越大。</li>
+</ul>
+<p><strong>答案：A、B、C、E</strong></p>
+<p>先算 $h+r&#x3D;[1,3]$。对 $t_1&#x3D;[1,3]$，差的绝对值和是 0，A 对。对 $t_2&#x3D;[2,2]$，差是 $[-1,1]$，绝对值和为 2 而不是 1，B 的数值写错了。0 小于 2，$t_1$ 更合理，C 对。换 L2 还是 0 对 2，D 不成立。E 是 TransE 的基本判据。</p>
+<h3 id="第18题"><a href="#第18题" class="headerlink" title="第18题"></a>第18题</h3><p>RDF 是什么？它用什么方式表示数据？</p>
+<p><strong>答案：</strong></p>
+<p>RDF 是资源描述框架（Resource Description Framework），一种描述资源的语义模型，用来表示和交换网络数据。</p>
+<p>它用三元组表示数据，一个三元组由主语、谓语、宾语三段组成。主语通常是一个实体，谓语是实体之间的关系或属性，宾语可以是另一个实体，也可以是一个字面值。</p>
+<h3 id="第19题"><a href="#第19题" class="headerlink" title="第19题"></a>第19题</h3><p>在基于向量的知识图谱表示中，TransE 模型假设头实体向量与关系向量之和近似等于尾实体向量（$h+r\approx t$）。请从几何空间映射的角度分析，为何该线性平移假设难以有效处理 “1-to-N” 或 “N-to-1” 等复杂关系类型？</p>
+<p><strong>答案：</strong></p>
+<p>TransE 把实体和关系放进同一个向量空间，关系只是一个固定的平移向量，$h+r$ 只能落到一个点上。</p>
+<p>一对多关系里，同一个 $h$ 和 $r$ 要同时满足 $h+r\approx t_1$ 与 $h+r\approx t_2$，向量加法的结果唯一，于是推出 $t_1\approx t_2$，两个不同的尾实体在空间里被挤到一起，模型分不出谁是谁。</p>
+<p>多对一关系反过来，多个头实体经过同一个 $r$ 落到同一位置，$h_1+r\approx t$ 与 $h_2+r\approx t$ 推出 $h_1\approx h_2$，头实体也混在一起。</p>
+<p>根源是平移的刚性：同一个关系下所有实体对被锁死在同一组向量差上。TransR 这类模型引入关系特定的投影空间，松开的就是这个约束。</p>
+<div align="center">
+  <svg viewBox="0 0 720 292" width="100%" style="max-width:720px;height:auto" xmlns="http://www.w3.org/2000/svg" font-family="Segoe UI, 'Microsoft YaHei', sans-serif">
+    <defs>
+      <marker id="ta7" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+        <path d="M 0 0 L 10 5 L 0 10 z" fill="#2f6f8f"/>
+      </marker>
+      <marker id="ta8" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+        <path d="M 0 0 L 10 5 L 0 10 z" fill="#b4552d"/>
+      </marker>
+    </defs>
+    <rect x="20" y="28" width="330" height="234" rx="8" fill="#fbfdfe" stroke="#cfdde5" stroke-width="1.2"/>
+    <rect x="370" y="28" width="330" height="234" rx="8" fill="#fbfdfe" stroke="#cfdde5" stroke-width="1.2"/>
+    <text x="185" y="54" font-size="13" fill="#2f6f8f" text-anchor="middle">图谱里：一个作者写了两本书</text>
+    <text x="535" y="54" font-size="13" fill="#b4552d" text-anchor="middle">向量空间里：两个落点重合</text>
+    <rect x="46" y="112" width="72" height="44" rx="7" fill="#eaf3f7" stroke="#2f6f8f" stroke-width="1.5"/>
+    <text x="82" y="139" font-size="13" fill="#1f2933" text-anchor="middle">作者</text>
+    <rect x="248" y="84" width="80" height="42" rx="7" fill="#eef6f0" stroke="#3f7a5a" stroke-width="1.4"/>
+    <text x="288" y="110" font-size="13" fill="#1f2933" text-anchor="middle">书 A</text>
+    <rect x="248" y="178" width="80" height="42" rx="7" fill="#eef6f0" stroke="#3f7a5a" stroke-width="1.4"/>
+    <text x="288" y="204" font-size="13" fill="#1f2933" text-anchor="middle">书 B</text>
+    <line x1="120" y1="124" x2="242" y2="104" stroke="#2f6f8f" stroke-width="1.6" marker-end="url(#ta7)"/>
+    <line x1="120" y1="144" x2="242" y2="190" stroke="#2f6f8f" stroke-width="1.6" marker-end="url(#ta7)"/>
+    <text x="170" y="102" font-size="12" fill="#5b6b76">写</text>
+    <text x="170" y="200" font-size="12" fill="#5b6b76">写</text>
+    <rect x="410" y="130" width="66" height="40" rx="7" fill="#eaf3f7" stroke="#2f6f8f" stroke-width="1.5"/>
+    <text x="443" y="155" font-size="13" fill="#1f2933" text-anchor="middle">h</text>
+    <line x1="478" y1="150" x2="536" y2="150" stroke="#2f6f8f" stroke-width="1.6" marker-end="url(#ta7)"/>
+    <text x="507" y="140" font-size="12" fill="#5b6b76">r</text>
+    <circle cx="548" cy="150" r="7" fill="#b4552d"/>
+    <text x="548" y="128" font-size="11" fill="#b4552d" text-anchor="middle">h+r</text>
+    <rect x="596" y="96" width="86" height="40" rx="7" fill="#eef6f0" stroke="#3f7a5a" stroke-width="1.4"/>
+    <text x="639" y="121" font-size="13" fill="#1f2933" text-anchor="middle">书 A</text>
+    <rect x="596" y="166" width="86" height="40" rx="7" fill="#eef6f0" stroke="#3f7a5a" stroke-width="1.4"/>
+    <text x="639" y="191" font-size="13" fill="#1f2933" text-anchor="middle">书 B</text>
+    <line x1="596" y1="116" x2="556" y2="145" stroke="#b4552d" stroke-width="1.3" stroke-dasharray="4 3" marker-end="url(#ta8)"/>
+    <line x1="596" y1="186" x2="556" y2="157" stroke="#b4552d" stroke-width="1.3" stroke-dasharray="4 3" marker-end="url(#ta8)"/>
+    <text x="535" y="240" font-size="11" fill="#b4552d" text-anchor="middle">两本书被迫落到同一个点，模型无法区分</text>
+  </svg>
+</div>
+
+<p><em>同一个 $h+r$ 只有一个落点，一对多关系在这里必然撞车。</em></p>
+<h3 id="第20题"><a href="#第20题" class="headerlink" title="第20题"></a>第20题</h3><p>Davis（1993）指出，知识表示（KR）并非单纯的数据格式、数据结构或编程语言，其核心在于支持推理。然而，在当前的工业实践中，基于向量嵌入（Embedding）的知识图谱表示技术被广泛应用于推荐系统和智能搜索，这类技术往往侧重于语义相似度的计算而非严格的逻辑推导。</p>
+<p>请结合 “知识表示是用计算机模型和方法处理知识，以实现推理、学习或决策” 这一核心定义，论述符号主义表示（如 OWL&#x2F;RDF）与连接主义表示（如 TransE&#x2F;Word2Vec）在实现 “推理” 与 “学习&#x2F;决策” 目标上的辩证关系。在论述中，请阐明两者各自的优势领域，并分析在何种应用场景下应优先选择哪种范式，或者如何理解两者的互补性。</p>
+<p><strong>答案：</strong></p>
+<p>符号主义表示把知识写成显式的概念和逻辑约束，基于描述逻辑可以做分类推断、传递性验证，每一步都能给出依据。它对应 KR 定义里 “推理” 那一端，适合医疗诊断、合规审查这类要可靠、要可解释的场景；短板在规模，非结构化数据很难直接进来，学习能力也弱。</p>
+<p>连接主义表示把知识压进低维向量，用距离和相似度承载语义，天然适配机器学习。它对应 “学习与决策” 那一端，善于处理噪声、发现隐含关联，推荐和搜索这类允许概率误差的场景用得多；短板是黑盒，严格的逻辑约束只能近似满足。</p>
+<p>两条路各自负责一端的任务，谁也替代不了谁。判断标准是任务要不要严格逻辑：要，就用符号表示；要的是大规模模式发现和实时响应，就用向量表示。工程上常见的做法是底下用向量做召回和初筛，上面用符号规则做校验，也就是神经符号 AI 这条路。</p>
+<h3 id="第21题"><a href="#第21题" class="headerlink" title="第21题"></a>第21题</h3><p>TransE 模型基于翻译假设（Translation Hypothesis），将实体和关系映射到低维向量空间。请简述 TransE 模型的评分函数（能量函数）定义，写出其常用的边际损失函数（Margin-based Loss）公式，并解释该损失函数中 “边际（Margin）” 参数在区分正负样本时的具体作用。</p>
+<p><strong>答案：</strong></p>
+<p>评分函数定义为 $f_r(h,t)&#x3D;\lVert h+r-t \rVert$，取 L1 或 L2 范数。三元组成立时 $h+r$ 应该落在 $t$ 附近，这个值越小，三元组越可信。</p>
+<p>训练用边际损失：</p>
+<p>$$<br>L&#x3D;\sum_{(h,r,t)\in S}\max\bigl(0,\ \gamma+f_r(h,t)-f_r(h’,t’)\bigr)<br>$$</p>
+<p>正样本取库里的三元组，负样本由替换头实体或尾实体生成，$\gamma$ 是边际超参数。</p>
+<p>$\gamma$ 要求负样本的得分至少比正样本高出这么多。两者的差距已经达到 $\gamma$ 时，hinge 项取 0，不再产生梯度；差距不够时才有损失，梯度把正样本拉近、把负样本推远。$\gamma$ 设得越大，对正负样本之间间隔的要求越严。</p>
+<h3 id="第22题"><a href="#第22题" class="headerlink" title="第22题"></a>第22题</h3><p>在基于向量的知识表示技术中，Skip-gram 模型通过中心词预测上下文词来学习词向量。假设在一个简化的词汇表 $V&#x3D;{w_1,w_2,w_3}$ 中，给定中心词 $w_c$ 和特定的上下文词 $w_o$。已知中心词向量 $v_{w_c}&#x3D;[1.0,0.5]$，三个词汇的输出向量（即作为上下文词时的向量）分别为 $u_{w_1}&#x3D;[0.2,0.1]$、$u_{w_2}&#x3D;[0.5,0.5]$、$u_{w_3}&#x3D;[0.1,0.8]$。请根据 Softmax 函数的定义，计算在该简化场景下，给定中心词 $w_c$ 时预测出上下文词为 $w_2$ 的条件概率 $P(w_2\mid w_c)$。要求写出计算公式、中间步骤（指数项的值）及最终结果（保留两位小数）。</p>
+<p><strong>答案：</strong></p>
+<p>公式是</p>
+<p>$$<br>P(w_o\mid w_c)&#x3D;\frac{\exp(u_o^{\top}v_c)}{\sum_{w\in V}\exp(u_w^{\top}v_c)}<br>$$</p>
+<p>先算点积：$u_{w_2}^{\top}v_c&#x3D;0.5\times1.0+0.5\times0.5&#x3D;0.75$。三个词的指数项分别是 $\exp(0.25)\approx1.2840$、$\exp(0.75)\approx2.1170$、$\exp(0.50)\approx1.6487$，分母加起来是 5.0497。</p>
+<p>$P(w_2\mid w_c)&#x3D;2.1170&#x2F;5.0497\approx0.4192$，保留两位小数为 0.42。</p>
+<p>点积越大，指数项越大，归一化后的概率越高。词向量学到的就是这种相对大小。</p>
+<h3 id="第23题"><a href="#第23题" class="headerlink" title="第23题"></a>第23题</h3><p>早期的知识表示技术有哪些？简要描述每种技术的特点。</p>
+<p><strong>答案：</strong></p>
+<p>一阶谓词逻辑用命题、联结词、个体词、谓词和量词描述知识，表达精确自然，但只能处理确定性知识，过程性和不确定性知识表达不了。</p>
+<p>产生式规则用 $P\to Q$ 或 IF P THEN Q 表示规则，能表达不确定性和过程性知识，模块化好，靠规则就能推理。</p>
+<p>框架把知识组织成框架名、槽、侧面和值，引入类与实例形成层次结构，支持继承，缺点是表达不了过程性知识，也没有明确的推理机制。</p>
+<p>语义网络用图结构把实体和关系画出来，表达能力强、灵活，但没有公认的形式化体系，构建和维护成本高。</p>
+<h3 id="第24题"><a href="#第24题" class="headerlink" title="第24题"></a>第24题</h3><p>在基于向量的知识表示学习模型 TransE 中，核心思想是将关系视为头实体向量到尾实体向量的平移操作，即满足 $h+r\approx t$。假设在一个三维向量空间中，给定以下实体和关系的嵌入向量：头实体 $h$ (Paris) 的向量表示为 $h&#x3D;[1.0,2.0,3.0]$，关系 $r$ (CapitalOf) 的向量表示为 $r&#x3D;[0.5,-1.0,0.5]$，尾实体 $t_1$ (France) 的向量表示为 $t_1&#x3D;[1.5,1.0,3.5]$，尾实体 $t_2$ (Germany) 的向量表示为 $t_2&#x3D;[2.0,0.5,4.0]$。请使用 L1 范数（曼哈顿距离）作为距离度量函数 $d(h,r,t)&#x3D;\lVert h+r-t \rVert_1$，分别计算三元组 (Paris, CapitalOf, France) 和 (Paris, CapitalOf, Germany) 的能量值（得分）。根据计算结果，判断哪个三元组更合理，并简述 TransE 模型中能量值大小与三元组合理性之间的关系。分析 TransE 模型在处理 “一对多”（1-N）、“多对一”（N-1）或 “多对多”（N-N）关系时可能面临的几何局限性，并结合上述向量平移的原理进行解释。</p>
+<p><strong>答案：</strong></p>
+<p>先算 $h+r&#x3D;[1.5,1.0,3.5]$。对 $t_1&#x3D;[1.5,1.0,3.5]$，差是零向量，L1 距离为 0；对 $t_2&#x3D;[2.0,0.5,4.0]$，差是 $[-0.5,0.5,-0.5]$，L1 距离为 1.5。</p>
+<p>$(Paris,\ CapitalOf,\ France)$ 的能量值更低，更合理。TransE 是距离模型，能量值越小说明平移后的落点离尾实体越近，三元组成立的可能性越大。</p>
+<p>一对多时，同一个 $h+r$ 只能对应一个落点，多个尾实体被挤到相近位置；多对一时，多个头实体经过同一个 $r$ 收敛到同一处；多对多两头都挤。这些实体在现实中本该分开，平移假设给不了这份自由度。</p>
+<h3 id="第25题"><a href="#第25题" class="headerlink" title="第25题"></a>第25题</h3><p>考虑一个简化的知识图谱场景，包含实体集合 $E&#x3D;{\text{北京},\text{中国},\text{首都}}$ 和关系集合 $R&#x3D;{\text{位于}}$。假设使用 TransE 模型进行知识表示，向量维度为 2 维。已知初始嵌入向量如下：北京 $h&#x3D;[1.0,2.0]$，中国 $t&#x3D;[4.0,5.0]$，位于 $r&#x3D;[2.0,2.0]$。TransE 的能量函数定义为 $f_r(h,t)&#x3D;\lVert h+r-t \rVert_2$（L2 范数）。请计算三元组 (北京,位于,中国) 在当前嵌入下的能量值（距离），并判断如果存在另一个候选尾实体美国 $t’&#x3D;[0.0,0.0]$，模型会更倾向于预测哪个实体作为 “北京-位于-?” 的答案？请给出计算依据。</p>
+<p><strong>答案：</strong></p>
+<p>$h+r&#x3D;[1.0+2.0,\ 2.0+2.0]&#x3D;[3.0,4.0]$。</p>
+<p>对 $t&#x3D;[4.0,5.0]$，差是 $[-1.0,-1.0]$，L2 范数 $\sqrt{1+1}\approx1.41$。</p>
+<p>对 $t’&#x3D;[0.0,0.0]$，差是 $[3.0,4.0]$，L2 范数 $\sqrt{9+16}&#x3D;5.0$。</p>
+<p>1.41 小于 5.0，模型更倾向于把 “中国” 填进 “北京−位于−?” 的空位。TransE 比较的是平移落点和候选实体之间的距离，距离小的得分高。</p>
+<h3 id="第26题"><a href="#第26题" class="headerlink" title="第26题"></a>第26题</h3><p>在基于 Skip-gram 模型的词向量训练过程中，假设中心词 $w_c$ 的输入向量为 $v_c$，上下文窗口大小为 1，即只有一个上下文词 $w_o$。设词汇表大小为 $V$。Skip-gram 模型使用 Softmax 函数来计算给定中心词 $w_c$ 时生成上下文词 $w_o$ 的概率：</p>
+<p>$$<br>P(w_o\mid w_c)&#x3D;\frac{\exp(u_o^{\top}v_c)}{\sum_{w}\exp(u_w^{\top}v_c)}<br>$$</p>
+<p>其中 $u_w$ 是输出向量。现假设词汇表仅包含 3 个词：A, B, C。已知中心词为 A，其输入向量 $v_A&#x3D;[1,0]$。各词的输出向量为：$u_A&#x3D;[1,1]$，$u_B&#x3D;[0,1]$，$u_C&#x3D;[-1,0]$。请计算 $P(B\mid A)$ 的值（保留两位小数），并简述如果要将 $P(B\mid A)$ 最大化，在向量空间上 $v_A$ 和 $u_B$ 应该呈现怎样的几何关系？</p>
+<p><strong>答案：</strong></p>
+<p>点积：$u_A^{\top}v_A&#x3D;1$，$u_B^{\top}v_A&#x3D;0$，$u_C^{\top}v_A&#x3D;-1$。</p>
+<p>指数项：$e^1\approx2.718$，$e^0&#x3D;1$，$e^{-1}\approx0.368$，分母 $Z&#x3D;4.086$。</p>
+<p>$P(B\mid A)&#x3D;1&#x2F;4.086\approx0.24$。</p>
+<p>要让 $P(B\mid A)$ 最大，就得让 $u_B^{\top}v_A$ 最大。点积等于两个向量的模长乘夹角余弦，模长固定时，夹角趋近 0 度才能取到最大，也就是 $v_A$ 和 $u_B$ 方向一致、共线同向。同时其他词的得分要压下去，分母才不会把分子摊薄。</p>
+<h3 id="第27题"><a href="#第27题" class="headerlink" title="第27题"></a>第27题</h3><p>知识表示（KR）的核心特征在于其支持推理，这与单纯的数据格式或数据结构存在本质区别。</p>
+<ul>
+<li>A. 对</li>
+<li>B. 错</li>
+</ul>
+<p><strong>答案：A</strong></p>
+<p>Davis 把知识表示和数据格式、数据结构、编程语言区分开的依据，就是它能支持推理、学习和决策。只存不推的是数据，能推的才算知识表示。</p>
+<h3 id="第28题"><a href="#第28题" class="headerlink" title="第28题"></a>第28题</h3><p>TransE 模型能够有效处理知识图谱中的 1-to-N、N-to-1 及 N-to-N 等复杂关系类型，不存在表示局限。</p>
+<ul>
+<li>A. 对</li>
+<li>B. 错</li>
+</ul>
+<p><strong>答案：B</strong></p>
+<p>这句话和 TransE 的实际能力相反。$h+r$ 唯一，一个头实体连多个尾实体时几个 $t$ 会被挤到一起；对称关系还会逼得 $r$ 趋近零向量。复杂关系正是它的短板。</p>
+<h3 id="第29题"><a href="#第29题" class="headerlink" title="第29题"></a>第29题</h3><p>根据 Davis 的经典描述，数据与知识的关键区别在于知识表示支持____，而不仅仅是存储或结构化。</p>
+<p><strong>答案：推理</strong></p>
+<p>Davis 的判据落在能力上：数据负责记录和存储，知识表示要能让计算机在此基础上做逻辑推导和决策，所以填 “推理”。</p>
+<h3 id="第30题"><a href="#第30题" class="headerlink" title="第30题"></a>第30题</h3><p>TransE 模型基于平移假设，其核心评分函数定义为 $E&#x3D;\lVert h+r-t \rVert$，该公式成立的前提是将实体和关系都映射到同一个____空间中。</p>
+<p><strong>答案：向量</strong></p>
+<p>$h+r$ 要做向量加法，实体和关系就必须在同一个向量空间里。这也是 TransE 和 TransR 的分水岭：后者把实体投影到关系空间，加法就不再直接成立。</p>
+</article><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/other/QUT/QUT%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E4%BD%9C%E4%B8%9A%E8%A7%A3%E6%9E%90-%E7%AC%AC%E4%B8%89%E7%AB%A0-%E7%9F%A5%E8%AF%86%E6%8A%BD%E5%8F%96%E6%8A%80%E6%9C%AF/"><img class="prev-cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">QUT知识图谱作业解析：第三章 知识抽取技术</div></div></a></div><div class="next-post pull-right"><a href="/other/QUT/QUT%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E4%BD%9C%E4%B8%9A%E8%A7%A3%E6%9E%90-%E7%AC%AC%E4%B8%80%E7%AB%A0-%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E6%A6%82%E8%BF%B0/"><img class="next-cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">QUT知识图谱作业解析：第一章 知识图谱概述</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="anzhiyufont anzhiyu-icon-thumbs-up fa-fw" style="font-size: 1.5rem; margin-right: 4px"></i><span>喜欢这篇文章的人也看了</span></div><div class="relatedPosts-list"><div><a href="/other/QUT/QUT%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E4%BD%9C%E4%B8%9A%E8%A7%A3%E6%9E%90-%E7%AC%AC%E4%B8%80%E7%AB%A0-%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E6%A6%82%E8%BF%B0/" title="QUT知识图谱作业解析：第一章 知识图谱概述"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/" alt="cover"><div class="content is-center"><div class="date"><i class="anzhiyufont anzhiyu-icon-calendar-days fa-fw"></i> 2026-11-06</div><div class="title">QUT知识图谱作业解析：第一章 知识图谱概述</div></div></a></div><div><a href="/other/QUT/QUT%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E4%BD%9C%E4%B8%9A%E8%A7%A3%E6%9E%90-%E7%AC%AC%E4%B8%89%E7%AB%A0-%E7%9F%A5%E8%AF%86%E6%8A%BD%E5%8F%96%E6%8A%80%E6%9C%AF/" title="QUT知识图谱作业解析：第三章 知识抽取技术"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/" alt="cover"><div class="content is-center"><div class="date"><i class="anzhiyufont anzhiyu-icon-calendar-days fa-fw"></i> 2026-11-06</div><div class="title">QUT知识图谱作业解析：第三章 知识抽取技术</div></div></a></div><div><a href="/other/QUT/QUT%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E4%BD%9C%E4%B8%9A%E8%A7%A3%E6%9E%90-%E7%AC%AC%E5%85%AD%E7%AB%A0-%E5%9B%BE%E8%A1%A8%E7%A4%BA%E5%AD%A6%E4%B9%A0%E4%B8%8E%E5%9B%BE%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/" title="QUT知识图谱作业解析：第六章 图表示学习与图神经网络"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/" alt="cover"><div class="content is-center"><div class="date"><i class="anzhiyufont anzhiyu-icon-calendar-days fa-fw"></i> 2026-11-06</div><div class="title">QUT知识图谱作业解析：第六章 图表示学习与图神经网络</div></div></a></div><div><a href="/other/QUT/QUT%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E4%BD%9C%E4%B8%9A%E8%A7%A3%E6%9E%90-%E7%AC%AC%E5%9B%9B%E7%AB%A0-%E7%9F%A5%E8%AF%86%E8%9E%8D%E5%90%88/" title="QUT知识图谱作业解析：第四章 知识融合"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/" alt="cover"><div class="content is-center"><div class="date"><i class="anzhiyufont anzhiyu-icon-calendar-days fa-fw"></i> 2026-11-06</div><div class="title">QUT知识图谱作业解析：第四章 知识融合</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="card-content"><div class="author-info-avatar"><img class="avatar-img" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/img/avatar.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__description">大三学生，全栈开发者，终身学习者</div><div class="author-info__bottom-group"><a class="author-info__bottom-group-left" href="/"><h1 class="author-info__name">qiuxz</h1><div class="author-info__desc"></div></a><div class="card-info-social-icons is-center"><a class="social-icon faa-parent animated-hover" href="https://github.com/qiuxzh" target="_blank" title="Github"><i class="anzhiyufont anzhiyu-icon-github"></i></a><a class="social-icon faa-parent animated-hover" href="javascript:void(0);" title="QQ" data-copy="1256227507"><i class="anzhiyufont anzhiyu-icon-qq"></i></a><a class="social-icon faa-parent animated-hover" href="javascript:void(0);" title="Email" data-copy="1256227507@qq.com"><i class="anzhiyufont anzhiyu-icon-envelope"></i></a></div></div></div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="anzhiyufont anzhiyu-icon-bars"></i><span>文章目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E4%BA%8C%E7%AB%A0-%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E8%A1%A8%E7%A4%BA"><span class="toc-number">1.</span> <span class="toc-text">第二章 知识图谱表示</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%87%AA%E6%B5%8B"><span class="toc-number">1.1.</span> <span class="toc-text">自测</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC1%E9%A2%98"><span class="toc-number">1.2.</span> <span class="toc-text">第1题</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC2%E9%A2%98"><span class="toc-number">1.3.</span> <span class="toc-text">第2题</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC3%E9%A2%98"><span class="toc-number">1.4.</span> <span class="toc-text">第3题</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC4%E9%A2%98"><span class="toc-number">1.5.</span> <span class="toc-text">第4题</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC5%E9%A2%98"><span class="toc-number">1.6.</span> <span class="toc-text">第5题</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC6%E9%A2%98"><span class="toc-number">1.7.</span> <span class="toc-text">第6题</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC7%E9%A2%98"><span class="toc-number">1.8.</span> <span class="toc-text">第7题</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC8%E9%A2%98"><span class="toc-number">1.9.</span> <span class="toc-text">第8题</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC9%E9%A2%98"><span class="toc-number">1.10.</span> <span class="toc-text">第9题</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC10%E9%A2%98"><span class="toc-number">1.11.</span> <span class="toc-text">第10题</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC11%E9%A2%98"><span class="toc-number">1.12.</span> <span class="toc-text">第11题</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC12%E9%A2%98"><span class="toc-number">1.13.</span> <span class="toc-text">第12题</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC13%E9%A2%98"><span class="toc-number">1.14.</span> <span class="toc-text">第13题</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC14%E9%A2%98"><span class="toc-number">1.15.</span> <span class="toc-text">第14题</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC15%E9%A2%98"><span class="toc-number">1.16.</span> <span class="toc-text">第15题</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC16%E9%A2%98"><span class="toc-number">1.17.</span> <span class="toc-text">第16题</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC17%E9%A2%98"><span class="toc-number">1.18.</span> <span class="toc-text">第17题</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC18%E9%A2%98"><span class="toc-number">1.19.</span> <span class="toc-text">第18题</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC19%E9%A2%98"><span class="toc-number">1.20.</span> <span class="toc-text">第19题</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC20%E9%A2%98"><span class="toc-number">1.21.</span> <span class="toc-text">第20题</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC21%E9%A2%98"><span class="toc-number">1.22.</span> <span class="toc-text">第21题</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC22%E9%A2%98"><span class="toc-number">1.23.</span> <span class="toc-text">第22题</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC23%E9%A2%98"><span class="toc-number">1.24.</span> <span class="toc-text">第23题</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC24%E9%A2%98"><span class="toc-number">1.25.</span> <span class="toc-text">第24题</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC25%E9%A2%98"><span class="toc-number">1.26.</span> <span class="toc-text">第25题</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC26%E9%A2%98"><span class="toc-number">1.27.</span> <span class="toc-text">第26题</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC27%E9%A2%98"><span class="toc-number">1.28.</span> <span class="toc-text">第27题</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC28%E9%A2%98"><span class="toc-number">1.29.</span> <span class="toc-text">第28题</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC29%E9%A2%98"><span class="toc-number">1.30.</span> <span class="toc-text">第29题</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC30%E9%A2%98"><span class="toc-number">1.31.</span> <span class="toc-text">第30题</span></a></li></ol></li></ol></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"></div><div id="footer-bar"><div class="footer-bar-links"><div class="footer-bar-left"><div id="footer-bar-tips"><div class="copyright">&copy;2020 - 2026 By <a class="footer-bar-link" href="/" title="qiuxz" target="_blank">qiuxz</a></div></div><div id="footer-type-tips"></div></div><div class="footer-bar-right"><a class="footer-bar-link" target="_blank" rel="noopener" href="https://github.com/anzhiyu-c/hexo-theme-anzhiyu" title="主题">主题</a></div></div></div></footer></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="sidebar-site-data site-data is-center"><a href="/archives/" title="archive"><div class="headline">文章</div><div class="length-num">39</div></a><a href="/tags/" title="tag"><div class="headline">标签</div><div class="length-num">7</div></a><a href="/categories/" title="category"><div class="headline">分类</div><div class="length-num">9</div></a></div><span class="sidebar-menu-item-title">功能</span><div class="sidebar-menu-item"><a class="darkmode_switchbutton menu-child" href="javascript:void(0);" title="显示模式"><i class="anzhiyufont anzhiyu-icon-circle-half-stroke"></i><span>显示模式</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="javascript:void(0);"><span> 文章</span></a><ul class="menus_item_child"><li><a class="site-page child faa-parent animated-hover" href="/archives/"><i class="anzhiyufont anzhiyu-icon-box-archive faa-tada" style="font-size: 0.9em;"></i><span> 隧道</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><span> 关于</span></a><ul class="menus_item_child"><li><a class="site-page child faa-parent animated-hover" href="/other/about/"><i class="anzhiyufont anzhiyu-icon-paper-plane faa-tada" style="font-size: 0.9em;"></i><span> 关于本人</span></a></li><li><a class="site-page child faa-parent animated-hover" href="javascript:toRandomPost()"><i class="anzhiyufont anzhiyu-icon-shoe-prints1 faa-tada" style="font-size: 0.9em;"></i><span> 随便逛逛</span></a></li></ul></div></div><span class="sidebar-menu-item-title">标签</span><div class="card-tags"><div class="item-headline"></div><div class="card-tag-cloud"><a href="/tags/YJango%E8%A7%86%E9%A2%91%E6%95%B4%E7%90%86/" style="font-size: 0.88rem;">YJango视频整理<sup>11</sup></a><a href="/tags/%E4%B8%AA%E4%BA%BA%E6%88%90%E9%95%BF/" style="font-size: 0.88rem;">个人成长<sup>3</sup></a><a href="/tags/%E5%AD%A6%E4%B9%A0/" style="font-size: 0.88rem;">学习<sup>13</sup></a><a href="/tags/%E6%84%9F%E6%82%9F/" style="font-size: 0.88rem;">感悟<sup>1</sup></a><a href="/tags/%E6%9C%AA%E5%88%86%E7%B1%BB/" style="font-size: 0.88rem;">未分类<sup>6</sup></a><a href="/tags/%E6%9E%B6%E6%9E%84/" style="font-size: 0.88rem;">架构<sup>1</sup></a><a href="/tags/%E8%80%83%E8%AF%95/" style="font-size: 0.88rem;">考试<sup>5</sup></a></div></div><hr/></div></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="anzhiyufont anzhiyu-icon-book-open"></i></button><button id="translateLink" type="button" title="简繁转换">繁</button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="anzhiyufont anzhiyu-icon-circle-half-stroke"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="anzhiyufont anzhiyu-icon-arrows-left-right"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="anzhiyufont anzhiyu-icon-gear"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="anzhiyufont anzhiyu-icon-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><i class="anzhiyufont anzhiyu-icon-arrow-up"></i></button></div></div><div id="rightMenu"><div class="rightMenu-group rightMenu-small"><div class="rightMenu-item" id="menu-backward"><i class="anzhiyufont anzhiyu-icon-arrow-left"></i></div><div class="rightMenu-item" id="menu-forward"><i class="anzhiyufont anzhiyu-icon-arrow-right"></i></div><div class="rightMenu-item" id="menu-refresh"><i class="anzhiyufont anzhiyu-icon-arrow-rotate-right" style="font-size: 1rem;"></i></div><div class="rightMenu-item" id="menu-top"><i class="anzhiyufont anzhiyu-icon-arrow-up"></i></div></div><div class="rightMenu-group rightMenu-line rightMenuPlugin"><div class="rightMenu-item" id="menu-copytext"><i class="anzhiyufont anzhiyu-icon-copy"></i><span>复制选中文本</span></div><div class="rightMenu-item" id="menu-pastetext"><i class="anzhiyufont anzhiyu-icon-paste"></i><span>粘贴文本</span></div><a class="rightMenu-item" id="menu-commenttext"><i class="anzhiyufont anzhiyu-icon-comment-medical"></i><span>引用到评论</span></a><div class="rightMenu-item" id="menu-newwindow"><i class="anzhiyufont anzhiyu-icon-window-restore"></i><span>新窗口打开</span></div><div class="rightMenu-item" id="menu-copylink"><i class="anzhiyufont anzhiyu-icon-link"></i><span>复制链接地址</span></div><div class="rightMenu-item" id="menu-copyimg"><i class="anzhiyufont anzhiyu-icon-images"></i><span>复制此图片</span></div><div class="rightMenu-item" id="menu-downloadimg"><i class="anzhiyufont anzhiyu-icon-download"></i><span>下载此图片</span></div><div class="rightMenu-item" id="menu-newwindowimg"><i class="anzhiyufont anzhiyu-icon-window-restore"></i><span>新窗口打开图片</span></div><div class="rightMenu-item" id="menu-search"><i class="anzhiyufont anzhiyu-icon-magnifying-glass"></i><span>站内搜索</span></div><div class="rightMenu-item" id="menu-searchBaidu"><i class="anzhiyufont anzhiyu-icon-magnifying-glass"></i><span>百度搜索</span></div></div><div class="rightMenu-group rightMenu-line rightMenuOther"><a class="rightMenu-item menu-link" id="menu-randomPost"><i class="anzhiyufont anzhiyu-icon-shuffle"></i><span>随便逛逛</span></a><a class="rightMenu-item menu-link" href="/categories/"><i class="anzhiyufont anzhiyu-icon-cube"></i><span>博客分类</span></a><a class="rightMenu-item menu-link" href="/tags/"><i class="anzhiyufont anzhiyu-icon-tags"></i><span>文章标签</span></a></div><div class="rightMenu-group rightMenu-line rightMenuOther"><a class="rightMenu-item" id="menu-copy" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-copy"></i><span>复制地址</span></a><a class="rightMenu-item" id="menu-commentBarrage" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-message"></i><span class="menu-commentBarrage-text">关闭热评</span></a><a class="rightMenu-item" id="menu-darkmode" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-circle-half-stroke"></i><span class="menu-darkmode-text">深色模式</span></a><a class="rightMenu-item" id="menu-translate" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-language"></i><span>轉為繁體</span></a></div></div><div id="rightmenu-mask"></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="/js/tw_cn.js"></script><script src="https://cdn.cbd.int/@fancyapps/ui@6.1.6/dist/fancybox/fancybox.umd.js"></script><script src="https://cdn.cbd.int/instant.page@5.2.0/instantpage.js" type="module"></script><script src="https://cdn.cbd.int/vanilla-lazyload@19.1.3/dist/lazyload.iife.min.js"></script><script src="https://cdn.cbd.int/node-snackbar@0.1.16/dist/snackbar.min.js"></script><canvas id="universe"></canvas><script async src="https://npm.elemecdn.com/anzhiyu-theme-static@1.0.0/dark/dark.js"></script><script>// 消除控制台打印
+var HoldLog = console.log;
+console.log = function () {};
+let now1 = new Date();
+queueMicrotask(() => {
+  const Log = function () {
+    HoldLog.apply(console, arguments);
+  }; //在恢复前输出日志
+  const grt = new Date("08/08/2026 00:00:00"); //此处修改你的建站时间或者网站上线时间
+  now1.setTime(now1.getTime() + 250);
+  const days = (now1 - grt) / 1000 / 60 / 60 / 24;
+  const dnum = Math.floor(days);
+  const ascll = [
+    `欢迎使用安知鱼!`,
+    `生活明朗, 万物可爱`,
+    `
+        
+       █████╗ ███╗   ██╗███████╗██╗  ██╗██╗██╗   ██╗██╗   ██╗
+      ██╔══██╗████╗  ██║╚══███╔╝██║  ██║██║╚██╗ ██╔╝██║   ██║
+      ███████║██╔██╗ ██║  ███╔╝ ███████║██║ ╚████╔╝ ██║   ██║
+      ██╔══██║██║╚██╗██║ ███╔╝  ██╔══██║██║  ╚██╔╝  ██║   ██║
+      ██║  ██║██║ ╚████║███████╗██║  ██║██║   ██║   ╚██████╔╝
+      ╚═╝  ╚═╝╚═╝  ╚═══╝╚══════╝╚═╝  ╚═╝╚═╝   ╚═╝    ╚═════╝
+        
+        `,
+    "已上线",
+    dnum,
+    "天",
+    "©2020 By 安知鱼 V1.7.1",
+  ];
+  const ascll2 = [`NCC2-036`, `调用前置摄像头拍照成功，识别为【小笨蛋】.`, `Photo captured: `, `🤪`];
+
+  setTimeout(
+    Log.bind(
+      console,
+      `\n%c${ascll[0]} %c ${ascll[1]} %c ${ascll[2]} %c${ascll[3]}%c ${ascll[4]}%c ${ascll[5]}\n\n%c ${ascll[6]}\n`,
+      "color:#425AEF",
+      "",
+      "color:#425AEF",
+      "color:#425AEF",
+      "",
+      "color:#425AEF",
+      ""
+    )
+  );
+  setTimeout(
+    Log.bind(
+      console,
+      `%c ${ascll2[0]} %c ${ascll2[1]} %c \n${ascll2[2]} %c\n${ascll2[3]}\n`,
+      "color:white; background-color:#4fd953",
+      "",
+      "",
+      'background:url("https://npm.elemecdn.com/anzhiyu-blog@1.1.6/img/post/common/tinggge.gif") no-repeat;font-size:450%'
+    )
+  );
+
+  setTimeout(Log.bind(console, "%c WELCOME %c 你好，小笨蛋.", "color:white; background-color:#4f90d9", ""));
+
+  setTimeout(
+    console.warn.bind(
+      console,
+      "%c ⚡ Powered by 安知鱼 %c 你正在访问 qiuxz 的博客.",
+      "color:white; background-color:#f0ad4e",
+      ""
+    )
+  );
+
+  setTimeout(Log.bind(console, "%c W23-12 %c 你已打开控制台.", "color:white; background-color:#4f90d9", ""));
+
+  setTimeout(
+    console.warn.bind(console, "%c S013-782 %c 你现在正处于监控中.", "color:white; background-color:#d9534f", "")
+  );
+});</script><script async src="/anzhiyu/random.js"></script><div class="js-pjax"><script>if (!window.MathJax) {
+  window.MathJax = {
+    tex: {
+      inlineMath: [['$', '$'], ['\\(', '\\)']],
+      tags: 'ams'
+    },
+    chtml: {
+      scale: 1.1,
+      // MathJax 4 默认从 cdn.jsdelivr.net 取 NewCM 字体，国内直连拿不到，
+      // 公式会退化成缺字形。这里改走 npmmirror（与 mathjax@4.0.0 对应）。
+      fontURL: 'https://registry.npmmirror.com/@mathjax/mathjax-newcm-font/4.0.0/files/chtml/woff2',
+      dynamicPrefix: 'https://registry.npmmirror.com/@mathjax/mathjax-newcm-font/4.0.0/files/chtml/dynamic'
+    },
+    options: {
+      renderActions: {
+        findScript: [10, doc => {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/)
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+            const text = document.createTextNode('')
+            node.parentNode.replaceChild(text, node)
+            math.start = {node: text, delim: '', n: 0}
+            math.end = {node: text, delim: '', n: 0}
+            doc.math.push(math)
+          }
+        }, '']
+      }
+    }
+  }
+  
+  const script = document.createElement('script')
+  script.src = 'https://cdn.cbd.int/mathjax@4.0.0/tex-mml-chtml.js'
+  script.id = 'MathJax-script'
+  script.async = true
+  document.head.appendChild(script)
+} else {
+  MathJax.startup.document.state(0)
+  MathJax.texReset()
+  MathJax.typesetPromise()
+}</script><link rel="stylesheet" type="text/css" href="https://cdn.cbd.int/katex@0.16.25/dist/katex.min.css"><script src="https://cdn.cbd.int/katex@0.16.25/dist/contrib/copy-tex.min.js"></script><script>(() => {
+  document.querySelectorAll('#article-container span.katex-display').forEach(item => {
+    anzhiyu.wrap(item, 'div', { class: 'katex-wrap'})
+  })
+})()</script><input type="hidden" name="page-type" id="page-type" value="post"></div><script>var visitorMail = "";
+</script><script async data-pjax src="https://cdn.cbd.int/anzhiyu-theme-static@1.0.0/waterfall/waterfall.js"></script><script src="https://cdn.cbd.int/qrcodejs@1.0.0/qrcode.min.js"></script><link rel="stylesheet" href="https://cdn.cbd.int/anzhiyu-theme-static@1.1.9/icon/ali_iconfont_css.css"><script src="/js/social-copy.js"></script><script src="/js/column-nav-mobile.js"></script><script src="https://cdn.cbd.int/pjax@0.2.8/pjax.min.js"></script><script>let pjaxSelectors = ["head > title","#config-diff","#body-wrap","#rightside-config-hide","#rightside-config-show",".js-pjax"]
+var pjax = new Pjax({
+  elements: 'a:not([target="_blank"])',
+  selectors: pjaxSelectors,
+  cacheBust: false,
+  analytics: false,
+  scrollRestoration: false
+})
+
+document.addEventListener('pjax:send', function () {
+  // removeEventListener scroll 
+  anzhiyu.removeGlobalFnEvent('pjax')
+  anzhiyu.removeGlobalFnEvent('themeChange')
+
+  document.getElementById('rightside').classList.remove('rightside-show')
+  
+  if (window.aplayers) {
+    for (let i = 0; i < window.aplayers.length; i++) {
+      if (!window.aplayers[i].options.fixed) {
+        window.aplayers[i].destroy()
+      }
+    }
+  }
+
+  typeof typed === 'object' && typed.destroy()
+
+  //reset readmode
+  const $bodyClassList = document.body.classList
+  $bodyClassList.contains('read-mode') && $bodyClassList.remove('read-mode')
+})
+
+document.addEventListener('pjax:complete', function () {
+  window.refreshFn()
+
+  document.querySelectorAll('script[data-pjax]').forEach(item => {
+    const newScript = document.createElement('script')
+    const content = item.text || item.textContent || item.innerHTML || ""
+    Array.from(item.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value))
+    newScript.appendChild(document.createTextNode(content))
+    item.parentNode.replaceChild(newScript, item)
+  })
+
+  GLOBAL_CONFIG.islazyload && window.lazyLoadInstance.update()
+
+  typeof panguInit === 'function' && panguInit()
+
+  // google analytics
+  typeof gtag === 'function' && gtag('config', '', {'page_path': window.location.pathname});
+
+  // baidu analytics
+  typeof _hmt === 'object' && _hmt.push(['_trackPageview',window.location.pathname]);
+
+  typeof loadMeting === 'function' && document.getElementsByClassName('aplayer').length && loadMeting()
+
+  // prismjs
+  typeof Prism === 'object' && Prism.highlightAll()
+})
+
+document.addEventListener('pjax:error', e => {
+  if (e.request.status === 404) {
+    pjax.loadUrl('/404.html')
+  }
+})</script><script charset="UTF-8" src="https://cdn.cbd.int/anzhiyu-theme-static@1.1.5/accesskey/accesskey.js"></script></div><div id="popup-window"><div class="popup-window-title">通知</div><div class="popup-window-divider"></div><div class="popup-window-content"><div class="popup-tip">你好呀</div><div class="popup-link"><i class="anzhiyufont anzhiyu-icon-arrow-circle-right"></i></div></div></div></body></html>

@@ -1,0 +1,694 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no"><title>QUT知识图谱作业解析：第四章 知识融合 | qiuxz's Blog</title><meta name="keywords" content="考试"><meta name="author" content="qiuxz"><meta name="copyright" content="qiuxz"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#f7f9fe"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-touch-fullscreen" content="yes"><meta name="apple-mobile-web-app-title" content="QUT知识图谱作业解析：第四章 知识融合"><meta name="application-name" content="QUT知识图谱作业解析：第四章 知识融合"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="#f7f9fe"><meta property="og:type" content="article"><meta property="og:title" content="QUT知识图谱作业解析：第四章 知识融合"><meta property="og:url" content="https://qiuxzh.github.io/other/QUT/QUT%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E4%BD%9C%E4%B8%9A%E8%A7%A3%E6%9E%90-%E7%AC%AC%E5%9B%9B%E7%AB%A0-%E7%9F%A5%E8%AF%86%E8%9E%8D%E5%90%88/index.html"><meta property="og:site_name" content="qiuxz's Blog"><meta property="og:description" content="第四章 知识融合自测先做一遍，答案和解析在后面。 1. 本体对齐过程中，以下（　）步骤不是必要的。　A. 本体选择　B. 本体预处理　C. 解析本体并进行特征提取　D. 数据正规化 2. 实体对齐可以通过以下（　）实现。　A. 基于 TFIDF 的实体对齐方法　B. 基于概率函数的实体对齐方法　C."><meta property="og:locale" content="zh-CN"><meta property="og:image" content="https://qiuxzh.github.io/img/avatar.jpg"><meta property="article:author" content="qiuxz"><meta property="article:tag"><meta name="twitter:card" content="summary"><meta name="twitter:image" content="https://qiuxzh.github.io/img/avatar.jpg"><meta name="description" content="第四章 知识融合自测先做一遍，答案和解析在后面。 1. 本体对齐过程中，以下（　）步骤不是必要的。　A. 本体选择　B. 本体预处理　C. 解析本体并进行特征提取　D. 数据正规化 2. 实体对齐可以通过以下（　）实现。　A. 基于 TFIDF 的实体对齐方法　B. 基于概率函数的实体对齐方法　C."><link rel="shortcut icon" href="/favicon.ico"><link rel="canonical" href="https://qiuxzh.github.io/other/QUT/QUT%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E4%BD%9C%E4%B8%9A%E8%A7%A3%E6%9E%90-%E7%AC%AC%E5%9B%9B%E7%AB%A0-%E7%9F%A5%E8%AF%86%E8%9E%8D%E5%90%88/"><link rel="preconnect" href="//cdn.cbd.int"/><meta name="google-site-verification" content="xxx"/><meta name="baidu-site-verification" content="code-xxx"/><meta name="msvalidate.01" content="xxx"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.cbd.int/node-snackbar@0.1.16/dist/snackbar.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.cbd.int/@fancyapps/ui@6.1.6/dist/fancybox/fancybox.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  linkPageTop: undefined,
+  peoplecanvas: {"enable":true,"img":"https://upload-bbs.miyoushe.com/upload/2024/07/27/125766904/ba62475f396df9de3316a08ed9e65d86_5680958632268053399..png"},
+  postHeadAiDescription: undefined,
+  diytitle: undefined,
+  LA51: undefined,
+  greetingBox: undefined,
+  twikooEnvId: '',
+  commentBarrageConfig:undefined,
+  music_page_default: "nav_music",
+  root: '/',
+  preloader: {"source":3},
+  friends_vue_info: undefined,
+  navMusic: false,
+  mainTone: undefined,
+  authorStatus: undefined,
+  algolia: undefined,
+  localSearch: undefined,
+  translate: {"defaultEncoding":2,"translateDelay":0,"msgToTraditionalChinese":"繁","msgToSimplifiedChinese":"简","rightMenuMsgToTraditionalChinese":"转为繁体","rightMenuMsgToSimplifiedChinese":"转为简体"},
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":330},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    simplehomepage: true,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: {"copy":true,"copyrightEbable":false,"limitCount":50,"languages":{"author":"作者: qiuxz","link":"链接: ","source":"来源: qiuxz's Blog","info":"著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。","copySuccess":"复制成功，复制和转载请标注本文地址"}},
+  lightbox: 'fancybox',
+  Snackbar: {"chs_to_cht":"你已切换为繁体","cht_to_chs":"你已切换为简体","day_to_night":"你已切换为深色模式","night_to_day":"你已切换为浅色模式","bgLight":"#425AEF","bgDark":"#1f1f1f","position":"top-center"},
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.cbd.int/flickr-justified-gallery@2.2.0/dist/fjGallery.min.js',
+      css: 'https://cdn.cbd.int/flickr-justified-gallery@2.2.0/dist/fjGallery.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: true,
+  isAnchor: false,
+  shortcutKey: undefined,
+  autoDarkmode: true
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  configTitle: 'qiuxz\'s Blog',
+  title: 'QUT知识图谱作业解析：第四章 知识融合',
+  postAI: '',
+  pageFillDescription: '第四章 知识融合, 自测, 第1题, 第2题, 第3题, 第4题, 第5题, 第6题, 第7题, 第8题, 第9题, 第10题, 第11题, 第12题, 第13题, 第14题, 第15题, 第16题, 第17题, 第18题, 第19题, 第20题第四章知识融合自测先做一遍答案和解析在后面本体对齐过程中以下步骤不是必要的本体选择本体预处理解析本体并进行特征提取数据正规化实体对齐可以通过以下实现基于的实体对齐方法基于概率函数的实体对齐方法基于图神经网络的实体嵌入对齐方法所有上述选项知识对齐在知识图谱中主要涉及到以下任务实体识别属性匹配关系对齐所有上述选项属性对齐的主要目的是将不同来源或名字不同但是表征相同的属性进行信息融合将所有属性统一为一个标准格式增加属性的多样性减少属性的数量在合并外部知识库时以下步骤是不必要的获取知识概念匹配实体匹配数据去重实体链接的三个主要模块不包括以下哪项产生候选实体排序候选实体实体消歧无法链接预测在实体链接过程中以下不是解决一词多义问题的方法利用知识库中实体信息进行实体消歧利用多个知识库中的实体信息进行实体消歧忽略上下文信息直接链接使用链接概率识别指称知识合并过程中解决数据层和模式层的合并问题不包括以下技术实体链接冲突检测与消解真值发现转换简述知识对齐在知识图谱中的作用在知识合并过程中如何处理知识冲突问题知识融合的主要目的是什么简述知识融合的流程及核心阶段什么是实体链接它在知识融合中扮演什么角色实体链接过程中的消歧是如何帮助区分不同实体的实体链接的三个主要模块包括哪些简述基于聚合的实体相似度计算方法属性对齐的常用方法有哪些简述本体对齐与实例对齐的区别与联系知识合并的概念是什么它与知识融合有何不同知识合并的常用方法主要有哪些第题本体对齐过程中以下步骤不是必要的本体选择本体预处理解析本体并进行特征提取数据正规化答案本体对齐动的是模式层先挑出要对的本体做预处理再解析结构并抽出概念特征去比这几步都在概念之间建立对应关系数据正规化处理的是实例值的写法属于数据层的清洗工作对本体之间的匹配不起作用第题实体对齐可以通过以下实现基于的实体对齐方法基于概率函数的实体对齐方法基于图神经网络的实体嵌入对齐方法所有上述选项答案基于的做法拿实体描述算文本相似度概率方法把实体对齐概率与关系匹配概率放在一起迭代图神经网络把两个图谱嵌入同一个向量空间后找最近邻三条路线都能单独完成实体对齐选其中一个都会漏掉另外两条第题知识对齐在知识图谱中主要涉及到以下任务实体识别属性匹配关系对齐所有上述选项答案对齐要在两个图谱之间建立等价对应实体识别先把待比对的实体认出来属性匹配处理字段这一层关系对齐处理边这一层三项都落在对齐链路上只做其中一项对应关系就建不全第题属性对齐的主要目的是将不同来源或名字不同但是表征相同的属性进行信息融合将所有属性统一为一个标准格式增加属性的多样性减少属性的数量答案属性名短歧义也大中文名称和中文名说的是同一件事创建时间和更新时间说的不是一回事光看字面容易看错属性对齐把不同来源写法不同但表征相同的属性收到一处合并之后才不会一条记录挂两个字段第题在合并外部知识库时以下步骤是不必要的获取知识概念匹配实体匹配数据去重答案合并外部知识库先抓取外部数据再做概念匹配和实体匹配等价的实体在这一步就合到一起重复项随之消掉单独的数据去重不在流程里它是匹配合并之后的结果不是一道独立工序第题实体链接的三个主要模块不包括以下哪项产生候选实体排序候选实体实体消歧无法链接预测答案流水线只有三段先产生候选实体再排序候选实体最后判断要不要放弃链接消歧落在排序环节靠上下文给候选打分没有单独的一段第题在实体链接过程中以下不是解决一词多义问题的方法利用知识库中实体信息进行实体消歧利用多个知识库中的实体信息进行实体消歧忽略上下文信息直接链接使用链接概率识别指称答案一词多义要靠上下文判断指称落在哪个实体上忽略上下文直接链接等于放弃唯一的判别依据另外几种做法都是拿知识库信息和链接概率来补这个判断第题知识合并过程中解决数据层和模式层的合并问题不包括以下技术实体链接冲突检测与消解真值发现转换答案数据层和模式层的矛盾要在合并前处理掉实体链接把不同来源的指称归到库里同一个实体冲突检测与真值发现在互相矛盾的取值里定一个转换解决的是关系数据库怎么变成图数据属于格式通道不参与矛盾的判定第题简述知识对齐在知识图谱中的作用答案知识对齐把不同图谱里的实体属性和关系对应起来形成一套统一的知识表示两边的命名习惯概念划分和数据格式往往不一致对齐先把这些差异找出来再建立等价映射对齐之后原本互不相通的知识库可以互相引用信息孤岛被打通同一份知识不必在每个库里各存一遍查询和推理面对的是一致的概念体系跨库取数与答案的准确性都跟着提高后续的实体链接与合并也有了可以依赖的对应关系第题在知识合并过程中如何处理知识冲突问题答案冲突处理分两步检测阶段把多个来源的同一属性值摆在一起比取值不一致或相互矛盾的挑出来格式差异先正规化再比和是同一天不能算冲突消解阶段决定留哪个值常用多数投票票数相同时看来源可信度做加权平均拿不准的请专家评估真值发现按数据源的历史准确率给证据加权判不出真值时也可以并列保留多个值各自标注来源和时间下游按场景取用客户自填生日柜台录入生日征信报告生日同名属性取值不一致检测到冲突多数投票与可信度加权按来源历史准确率赋权证据不足就留多值各自标注来源与取值采信其余取值留档可查冲突检测先找出取值矛盾消解再决定采信哪一个证据不足时保留多值第题知识融合的主要目的是什么答案知识融合要解决多源知识对不上的问题不同系统对同一个实体用不同名字对同一个概念给不同定义同一条事实还可能给出互相矛盾的取值融合把这些知识收进一套表示里消掉概念上的混淆清掉重复与错误结果是得到一个准确覆盖面完整的知识体系同一件事在图上只有一条记录取数不必再人工比对推理也不会沿着两条路径得出两个结论第题简述知识融合的流程及核心阶段答案工程流程分五步预处理先做正规化和清洗分块把两两比较的候选压下来记录链接在块内算相似度并判定是否为同一对象负载均衡把计算分发出去最后用查准率召回率和评估结果从概念层面看核心阶段有三个实体链接把文本里的指称接到库里的实体知识对齐在两个图谱之间建立本体实体和属性的等价关系知识合并把对齐后的知识写进同一个库写之前先处理冲突工程流程预处理正规化与清洗分块压缩候选记录链接相似度判定负载均衡分发计算结果评估概念阶段实体链接文本指称接到实体知识对齐两个图谱建等价知识合并对齐后写进同一个库五步工程流程压缩候选与计算量三个概念阶段各自解决一类对应关系第题什么是实体链接它在知识融合中扮演什么角色答案实体链接是把文本里提到的指称映射到知识库中对应实体的过程一篇文章写到郑雯库里有三个郑雯链接要判断指的是哪一个库里没有对应实体时返回空标记不硬配它在融合里承担从文本进入图谱的那一段抽取出来的实体名往往只是字符串链接给每个指称一个确定的实体编号文本知识才能与库内知识接上后续的对齐与合并都建立在实体已经指认清楚的前提上图谱的覆盖面和准确度也随之提高第题实体链接过程中的消歧是如何帮助区分不同实体的答案消歧处理同名不同实体的情况苹果既可以指水果也可以指一家公司光看指称本身分不出来要靠它所在的句子上下文和候选实体的描述来判断做法是给每个候选实体打分把上下文特征与知识库里实体的属性信息放在一起算相似度分数最高的候选被选中知识库里的实体信息越完整分数越能反映真实指向链接结果也越可靠第题实体链接的三个主要模块包括哪些答案第一个模块产生候选实体按指称从知识库里召回一组可能的目标同名词条别名和缩写都算进来这一步宁可多召回先保证不漏第二个模块排序候选实体用上下文与实体描述算相似度把候选按可能性从高到低排取排在最前的一个作为链接结果第三个模块是无法链接预测判断该指称在库里是否根本没有对应实体没有就返回空标记强行链到最像的实体比承认链接不上危害更大文本郑雯毕业于复旦大学产生候选实体从库中召回同名排序候选实体上下文与描述打分无法链接预测判断该不该放弃输出实体没有对应实体则返回先找全再找准最后承认找不到三个模块串成一条流水线链接不上就返回空标记不强行匹配第题简述基于聚合的实体相似度计算方法答案这类方法先算出若干相似性指标再把它们合成一个总分属性值可以比编辑距离名称可以比集合重合度结构可以比邻居的重合情况各指标从不同侧面反映两个实体像不像聚合方式有三种加权平均按指标的重要程度赋权输出加权后的综合相似度手动制定规则靠经验设阈值比如要求姓名相似度高于某个值才判为同一实体分类器把各指标分数当特征用逻辑回归决策树或训练一个判别模型规则法透明好查分类器能拟合指标之间的交互代价是需要标注数据第题属性对齐的常用方法有哪些答案基于相似距离的方法直接比属性值字符串用编辑距离集合用或数值比差值距离越小越可能指同一个属性基于词典匹配的方法借助外部词典和语义资源把同义写法归到一起中文名与中文名称这类差异靠词表就能消掉基于语义相似度的方法把属性名和样例值编码成向量算余弦相似度字面完全不同但语义接近的属性靠这一路才能发现代价是结果不如前两种好解释第题简述本体对齐与实例对齐的区别与联系答案本体对齐作用在模式层判断两个本体里的概念类和关系是不是一个意思输出等价的模式对应实例对齐作用在数据层判断两条记录是否指向现实世界的同一个对象输出等价实例的对应区别在对象和粒度本体对齐比的是定义和结构元素数量少但层次清楚结构信息很值钱实例对齐比的是具体实体数据量大工程压力也大两者有先后本体先对齐实体的类型才有统一的归属属性也才有可比的字段实例对齐在本体给出的框架里进行把等价关系落到具体数据上本体对齐比概念类与关系输出等价模式本体类人物机构本体类等价实例对齐比具体实体输出等价实例实体复旦大学实体同一对象实体比对本体的类型归属先定骨架本体对齐定骨架实例对齐填内容两层的对象和粒度不同第题知识合并的概念是什么它与知识融合有何不同答案知识合并在对齐完成之后进行把已有数据作为输入做整合处理实体之间的相似与差异将实体关系和属性写进同一个知识库建立知识库与实体的直接映射写之前要先发现冲突同名属性取值不一致的要先消解知识融合的范围更宽它从不同来源获取知识开始涵盖概念混淆的消除冗余与错误的清理知识合并只是其中的一个环节融合偏重判断与对齐合并偏重决策与落库两者在同一条链路上前后相接第题知识合并的常用方法主要有哪些答案常见的一条路是合并外部知识库把外部数据抓进来先做概念匹配把本体对齐再做实体匹配把等价实体合到一起最后评估合并质量难点在数据层与模式层的矛盾属性值冲突类型定义不一致都要在处理范围内另一条路是合并关系数据库结构化数据走通道直接映射把表映射成类主键映射成实体标识列映射成属性外键映射成关系需要控制命名和词表时改用写映射规则半结构化数据先转成再走同一套流程',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2026-11-06 10:02:00',
+  postMainColor: '',
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+      win.saveToLocal = {
+        set: (key, value, ttl) => {
+          if (ttl === 0) return
+          const now = Date.now()
+          const expiry = now + ttl * 86400000
+          const item = {
+            value,
+            expiry
+          }
+          localStorage.setItem(key, JSON.stringify(item))
+        },
+      
+        get: key => {
+          const itemStr = localStorage.getItem(key)
+      
+          if (!itemStr) {
+            return undefined
+          }
+          const item = JSON.parse(itemStr)
+          const now = Date.now()
+      
+          if (now > item.expiry) {
+            localStorage.removeItem(key)
+            return undefined
+          }
+          return item.value
+        }
+      }
+    
+      win.getScript = (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        script.onerror = reject
+        script.onload = script.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          script.onload = script.onreadystatechange = null
+          resolve()
+        }
+
+        Object.keys(attr).forEach(key => {
+          script.setAttribute(key, attr[key])
+        })
+
+        document.head.appendChild(script)
+      })
+    
+      win.getCSS = (url, id = false) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onerror = reject
+        link.onload = link.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          link.onload = link.onreadystatechange = null
+          resolve()
+        }
+        document.head.appendChild(link)
+      })
+    
+      win.activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#18171d')
+        }
+      }
+      win.activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#f7f9fe')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          const isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches
+          const isLightMode = window.matchMedia('(prefers-color-scheme: light)').matches
+          const isNotSpecified = window.matchMedia('(prefers-color-scheme: no-preference)').matches
+          const hasNoSupport = !isDarkMode && !isLightMode && !isNotSpecified
+
+          if (t === undefined) {
+            if (isLightMode) activateLightMode()
+            else if (isDarkMode) activateDarkMode()
+            else if (isNotSpecified || hasNoSupport) {
+              const now = new Date()
+              const hour = now.getHours()
+              const isNight = hour <= 6 || hour >= 18
+              isNight ? activateDarkMode() : activateLightMode()
+            }
+            window.matchMedia('(prefers-color-scheme: dark)').addListener(e => {
+              if (saveToLocal.get('theme') === undefined) {
+                e.matches ? activateDarkMode() : activateLightMode()
+              }
+            })
+          } else if (t === 'light') activateLightMode()
+          else activateDarkMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+      const detectApple = () => {
+        if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+          document.documentElement.classList.add('apple')
+        }
+      }
+      detectApple()
+    })(window)</script><meta name="generator" content="Hexo 7.0.0"></head><body data-type="anzhiyu"><div id="web_bg"></div><div id="an_music_bg"></div><div id="loading-box" onclick="document.getElementById(&quot;loading-box&quot;).classList.add(&quot;loaded&quot;)"><div class="loading-bg"><img class="loading-img nolazyload" alt="加载头像" src="/img/avatar.jpg"/><div class="loading-image-dot"></div></div></div><script>const preloader = {
+  endLoading: () => {
+    document.getElementById('loading-box').classList.add("loaded");
+  },
+  initLoading: () => {
+    document.getElementById('loading-box').classList.remove("loaded")
+  }
+}
+window.addEventListener('load',()=> { preloader.endLoading() })
+setTimeout(function(){preloader.endLoading();},10000)
+
+if (true) {
+  document.addEventListener('pjax:send', () => { preloader.initLoading() })
+  document.addEventListener('pjax:complete', () => { preloader.endLoading() })
+}</script><link rel="stylesheet" href="https://cdn.cbd.int/anzhiyu-theme-static@1.1.10/progress_bar/progress_bar.css"/><script async="async" src="https://cdn.cbd.int/pace-js@1.2.4/pace.min.js" data-pace-options="{ &quot;restartOnRequestAfter&quot;:false,&quot;eventLag&quot;:false}"></script><div class="post" id="body-wrap"><header class="not-top-img" id="page-header"><nav id="nav"><div id="nav-group"><span id="blog_name"><a id="site-name" href="/" accesskey="h"><div class="title">qiuxz's Blog</div><i class="anzhiyufont anzhiyu-icon-house-chimney"></i></a></span><div class="mask-name-container"><div id="name-container"><a id="page-name" href="javascript:anzhiyu.scrollToDest(0, 500)">PAGE_NAME</a></div></div><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="javascript:void(0);"><span> 文章</span></a><ul class="menus_item_child"><li><a class="site-page child faa-parent animated-hover" href="/archives/"><i class="anzhiyufont anzhiyu-icon-box-archive faa-tada" style="font-size: 0.9em;"></i><span> 隧道</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><span> 关于</span></a><ul class="menus_item_child"><li><a class="site-page child faa-parent animated-hover" href="/other/about/"><i class="anzhiyufont anzhiyu-icon-paper-plane faa-tada" style="font-size: 0.9em;"></i><span> 关于本人</span></a></li><li><a class="site-page child faa-parent animated-hover" href="javascript:toRandomPost()"><i class="anzhiyufont anzhiyu-icon-shoe-prints1 faa-tada" style="font-size: 0.9em;"></i><span> 随便逛逛</span></a></li></ul></div></div></div><div id="nav-right"><div class="nav-button" id="randomPost_button"><a class="site-page" onclick="toRandomPost()" title="随机前往一个文章" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-dice"></i></a></div><input id="center-console" type="checkbox"/><label class="widget" for="center-console" title="中控台" onclick="anzhiyu.switchConsole();"><i class="left"></i><i class="widget center"></i><i class="widget right"></i></label><div id="console"><div class="console-card-group-reward"><ul class="reward-all console-card"><li class="reward-item"><a href="https://npm.elemecdn.com/anzhiyu-blog@1.1.6/img/post/common/qrcode-weichat.png" target="_blank"><img class="post-qr-code-img" alt="微信" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://npm.elemecdn.com/anzhiyu-blog@1.1.6/img/post/common/qrcode-weichat.png"/></a><div class="post-qr-code-desc">微信</div></li><li class="reward-item"><a href="https://npm.elemecdn.com/anzhiyu-blog@1.1.6/img/post/common/qrcode-alipay.png" target="_blank"><img class="post-qr-code-img" alt="支付宝" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://npm.elemecdn.com/anzhiyu-blog@1.1.6/img/post/common/qrcode-alipay.png"/></a><div class="post-qr-code-desc">支付宝</div></li></ul></div><div class="console-card-group"><div class="console-card-group-left"><div class="console-card" id="card-newest-comments"><div class="card-content"><div class="author-content-item-tips">互动</div><span class="author-content-item-title"> 最新评论</span></div><div class="aside-list"><span>正在加载中...</span></div></div></div><div class="console-card-group-right"><div class="console-card tags"><div class="card-content"><div class="author-content-item-tips">兴趣点</div><span class="author-content-item-title">寻找你感兴趣的领域</span><div class="card-tags"><div class="item-headline"></div><div class="card-tag-cloud"><a href="/tags/YJango%E8%A7%86%E9%A2%91%E6%95%B4%E7%90%86/" style="font-size: 1.05rem;">YJango视频整理<sup>11</sup></a><a href="/tags/%E4%B8%AA%E4%BA%BA%E6%88%90%E9%95%BF/" style="font-size: 1.05rem;">个人成长<sup>3</sup></a><a href="/tags/%E5%AD%A6%E4%B9%A0/" style="font-size: 1.05rem;">学习<sup>13</sup></a><a href="/tags/%E6%84%9F%E6%82%9F/" style="font-size: 1.05rem;">感悟<sup>1</sup></a><a href="/tags/%E6%9C%AA%E5%88%86%E7%B1%BB/" style="font-size: 1.05rem;">未分类<sup>6</sup></a><a href="/tags/%E6%9E%B6%E6%9E%84/" style="font-size: 1.05rem;">架构<sup>1</sup></a><a href="/tags/%E8%80%83%E8%AF%95/" style="font-size: 1.05rem;">考试<sup>5</sup></a></div></div><hr/></div></div><div class="console-card history"><div class="item-headline"><i class="anzhiyufont anzhiyu-icon-box-archiv"></i><span>文章</span></div><div class="card-archives"><div class="item-headline"><i class="anzhiyufont anzhiyu-icon-archive"></i><span>归档</span><a class="card-more-btn" href="/archives/" title="查看更多">
+    <i class="anzhiyufont anzhiyu-icon-angle-right"></i></a></div><ul class="card-archive-list"><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2026/11/"><span class="card-archive-list-date">十一月 2026</span><div class="card-archive-list-count-group"><span class="card-archive-list-count">6</span><span>篇</span></div></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2026/10/"><span class="card-archive-list-date">十月 2026</span><div class="card-archive-list-count-group"><span class="card-archive-list-count">3</span><span>篇</span></div></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2026/09/"><span class="card-archive-list-date">九月 2026</span><div class="card-archive-list-count-group"><span class="card-archive-list-count">15</span><span>篇</span></div></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2026/08/"><span class="card-archive-list-date">八月 2026</span><div class="card-archive-list-count-group"><span class="card-archive-list-count">4</span><span>篇</span></div></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2026/06/"><span class="card-archive-list-date">六月 2026</span><div class="card-archive-list-count-group"><span class="card-archive-list-count">4</span><span>篇</span></div></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2026/05/"><span class="card-archive-list-date">五月 2026</span><div class="card-archive-list-count-group"><span class="card-archive-list-count">1</span><span>篇</span></div></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2026/03/"><span class="card-archive-list-date">三月 2026</span><div class="card-archive-list-count-group"><span class="card-archive-list-count">1</span><span>篇</span></div></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2025/12/"><span class="card-archive-list-date">十二月 2025</span><div class="card-archive-list-count-group"><span class="card-archive-list-count">2</span><span>篇</span></div></a></li></ul></div><hr/></div></div></div><div class="button-group"><div class="console-btn-item"><a class="darkmode_switchbutton" title="显示模式切换" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-moon"></i></a></div><div class="console-btn-item" id="consoleHideAside" onclick="anzhiyu.hideAsideBtn()" title="边栏显示控制"><a class="asideSwitch"><i class="anzhiyufont anzhiyu-icon-arrows-left-right"></i></a></div></div><div class="console-mask" onclick="anzhiyu.hideConsole()" href="javascript:void(0);"></div></div><div class="nav-button" id="nav-totop"><a class="totopbtn" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-arrow-up"></i><span id="percent" onclick="anzhiyu.scrollToDest(0,500)">0</span></a></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);" title="切换"><i class="anzhiyufont anzhiyu-icon-bars"></i></a></div></div></div></nav></header><main id="blog-container"><div class="layout" id="content-inner"><div id="post"><div id="post-info"><div id="post-firstinfo"><div class="meta-firstline"><a class="post-meta-original">原创</a><span class="post-meta-categories"><span class="post-meta-separator"></span><i class="anzhiyufont anzhiyu-icon-inbox post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E6%9C%9F%E6%9C%AB%E8%80%83%E8%AF%95/" itemprop="url">期末考试</a></span><span class="article-meta tags"><a class="article-meta__tags" href="/tags/%E8%80%83%E8%AF%95/" tabindex="-1" itemprop="url"> <span> <i class="anzhiyufont anzhiyu-icon-hashtag"></i>考试</span></a></span></div></div><h1 class="post-title" itemprop="name headline">QUT知识图谱作业解析：第四章 知识融合</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="anzhiyufont anzhiyu-icon-calendar-days post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" itemprop="dateCreated datePublished" datetime="2026-11-06T10:02:00.000Z" title="发表于 2026-11-06 10:02:00">2026-11-06</time><span class="post-meta-separator"></span><i class="anzhiyufont anzhiyu-icon-history post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" itemprop="dateCreated datePublished" datetime="2026-11-06T10:02:00.000Z" title="更新于 2026-11-06 10:02:00">2026-11-06</time></span></div><div class="meta-secondline"></div></div></div><article class="post-content" id="article-container" itemscope itemtype="https://qiuxzh.github.io/other/QUT/QUT%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E4%BD%9C%E4%B8%9A%E8%A7%A3%E6%9E%90-%E7%AC%AC%E5%9B%9B%E7%AB%A0-%E7%9F%A5%E8%AF%86%E8%9E%8D%E5%90%88/"><header><a class="post-meta-categories" href="/categories/%E6%9C%9F%E6%9C%AB%E8%80%83%E8%AF%95/" itemprop="url">期末考试</a><a href="/tags/%E8%80%83%E8%AF%95/" tabindex="-1" itemprop="url">考试</a><h1 id="CrawlerTitle" itemprop="name headline">QUT知识图谱作业解析：第四章 知识融合</h1><span itemprop="author" itemscope itemtype="http://schema.org/Person">qiuxz</span><time itemprop="dateCreated datePublished" datetime="2026-11-06T10:02:00.000Z" title="发表于 2026-11-06 10:02:00">2026-11-06</time><time itemprop="dateCreated datePublished" datetime="2026-11-06T10:02:00.000Z" title="更新于 2026-11-06 10:02:00">2026-11-06</time></header><h2 id="第四章-知识融合"><a href="#第四章-知识融合" class="headerlink" title="第四章 知识融合"></a>第四章 知识融合</h2><h3 id="自测"><a href="#自测" class="headerlink" title="自测"></a>自测</h3><p>先做一遍，答案和解析在后面。</p>
+<p><strong>1.</strong> 本体对齐过程中，以下（　）步骤不是必要的。　A. 本体选择　B. 本体预处理　C. 解析本体并进行特征提取　D. 数据正规化</p>
+<p><strong>2.</strong> 实体对齐可以通过以下（　）实现。　A. 基于 TFIDF 的实体对齐方法　B. 基于概率函数的实体对齐方法　C. 基于图神经网络的实体嵌入对齐方法　D. 所有上述选项</p>
+<p><strong>3.</strong> 知识对齐在知识图谱中主要涉及到以下（　）任务。　A. 实体识别　B. 属性匹配　C. 关系对齐　D. 所有上述选项</p>
+<p><strong>4.</strong> 属性对齐的主要目的是（　）。　A. 将不同来源或名字不同但是表征相同的属性进行信息融合　B. 将所有属性统一为一个标准格式　C. 增加属性的多样性　D. 减少属性的数量</p>
+<p><strong>5.</strong> 在合并外部知识库时，以下（　）步骤是不必要的。　A. 获取知识　B. 概念匹配　C. 实体匹配　D. 数据去重</p>
+<p><strong>6.</strong> 实体链接的三个主要模块不包括以下哪项（　）。　A. 产生候选实体　B. 排序候选实体　C. 实体消歧　D. 无法链接预测</p>
+<p><strong>7.</strong> 在实体链接过程中，以下（　）不是解决一词多义问题的方法。　A. 利用知识库中实体信息进行实体消歧　B. 利用多个知识库中的实体信息进行实体消歧　C. 忽略上下文信息直接链接　D. 使用链接概率识别指称</p>
+<p><strong>8.</strong> 知识合并过程中，解决数据层和模式层的合并问题不包括以下（　）技术。　A. 实体链接　B. 冲突检测与消解　C. 真值发现　D. RDF 转换</p>
+<p><strong>9.</strong> 简述知识对齐在知识图谱中的作用。</p>
+<p><strong>10.</strong> 在知识合并过程中，如何处理知识冲突问题？</p>
+<p><strong>11.</strong> 知识融合的主要目的是什么？</p>
+<p><strong>12.</strong> 简述知识融合的流程及核心阶段。</p>
+<p><strong>13.</strong> 什么是实体链接，它在知识融合中扮演什么角色？</p>
+<p><strong>14.</strong> 实体链接过程中的消歧是如何帮助区分不同实体的？</p>
+<p><strong>15.</strong> 实体链接的三个主要模块包括哪些？</p>
+<p><strong>16.</strong> 简述基于聚合的实体相似度计算方法。</p>
+<p><strong>17.</strong> 属性对齐的常用方法有哪些？</p>
+<p><strong>18.</strong> 简述本体对齐与实例对齐的区别与联系。</p>
+<p><strong>19.</strong> 知识合并的概念是什么，它与知识融合有何不同？</p>
+<p><strong>20.</strong> 知识合并的常用方法主要有哪些？</p>
+<h3 id="第1题"><a href="#第1题" class="headerlink" title="第1题"></a>第1题</h3><p>本体对齐过程中，以下（　）步骤不是必要的。</p>
+<ul>
+<li>A. 本体选择</li>
+<li>B. 本体预处理</li>
+<li>C. 解析本体并进行特征提取</li>
+<li>D. 数据正规化</li>
+</ul>
+<p><strong>答案：D</strong></p>
+<p>本体对齐动的是模式层。先挑出要对的本体，做预处理，再解析结构并抽出概念特征去比，这几步都在概念之间建立对应关系。数据正规化处理的是实例值的写法，属于数据层的清洗工作，对本体之间的匹配不起作用。</p>
+<h3 id="第2题"><a href="#第2题" class="headerlink" title="第2题"></a>第2题</h3><p>实体对齐可以通过以下（　）实现。</p>
+<ul>
+<li>A. 基于 TFIDF 的实体对齐方法</li>
+<li>B. 基于概率函数的实体对齐方法</li>
+<li>C. 基于图神经网络的实体嵌入对齐方法</li>
+<li>D. 所有上述选项</li>
+</ul>
+<p><strong>答案：D</strong></p>
+<p>基于 TF-IDF 的做法拿实体描述算文本相似度，概率方法把实体对齐概率与关系匹配概率放在一起迭代，图神经网络把两个图谱嵌入同一个向量空间后找最近邻。三条路线都能单独完成实体对齐，选其中一个都会漏掉另外两条。</p>
+<h3 id="第3题"><a href="#第3题" class="headerlink" title="第3题"></a>第3题</h3><p>知识对齐在知识图谱中主要涉及到以下（　）任务。</p>
+<ul>
+<li>A. 实体识别</li>
+<li>B. 属性匹配</li>
+<li>C. 关系对齐</li>
+<li>D. 所有上述选项</li>
+</ul>
+<p><strong>答案：D</strong></p>
+<p>对齐要在两个图谱之间建立等价对应。实体识别先把待比对的实体认出来，属性匹配处理字段这一层，关系对齐处理边这一层。三项都落在对齐链路上，只做其中一项，对应关系就建不全。</p>
+<h3 id="第4题"><a href="#第4题" class="headerlink" title="第4题"></a>第4题</h3><p>属性对齐的主要目的是（　）。</p>
+<ul>
+<li>A. 将不同来源或名字不同但是表征相同的属性进行信息融合</li>
+<li>B. 将所有属性统一为一个标准格式</li>
+<li>C. 增加属性的多样性</li>
+<li>D. 减少属性的数量</li>
+</ul>
+<p><strong>答案：A</strong></p>
+<p>属性名短，歧义也大。中文名称和中文名说的是同一件事，创建时间和更新时间说的不是一回事，光看字面容易看错。属性对齐把不同来源、写法不同但表征相同的属性收到一处，合并之后才不会一条记录挂两个字段。</p>
+<h3 id="第5题"><a href="#第5题" class="headerlink" title="第5题"></a>第5题</h3><p>在合并外部知识库时，以下（　）步骤是不必要的。</p>
+<ul>
+<li>A. 获取知识</li>
+<li>B. 概念匹配</li>
+<li>C. 实体匹配</li>
+<li>D. 数据去重</li>
+</ul>
+<p><strong>答案：D</strong></p>
+<p>合并外部知识库先抓取外部数据，再做概念匹配和实体匹配，等价的实体在这一步就合到一起，重复项随之消掉。单独的数据去重不在流程里，它是匹配合并之后的结果，不是一道独立工序。</p>
+<h3 id="第6题"><a href="#第6题" class="headerlink" title="第6题"></a>第6题</h3><p>实体链接的三个主要模块不包括以下哪项（　）。</p>
+<ul>
+<li>A. 产生候选实体</li>
+<li>B. 排序候选实体</li>
+<li>C. 实体消歧</li>
+<li>D. 无法链接预测</li>
+</ul>
+<p><strong>答案：C</strong></p>
+<p>流水线只有三段，先产生候选实体，再排序候选实体，最后判断要不要放弃链接。消歧落在排序环节，靠上下文给候选打分，没有单独的一段。</p>
+<h3 id="第7题"><a href="#第7题" class="headerlink" title="第7题"></a>第7题</h3><p>在实体链接过程中，以下（　）不是解决一词多义问题的方法。</p>
+<ul>
+<li>A. 利用知识库中实体信息进行实体消歧</li>
+<li>B. 利用多个知识库中的实体信息进行实体消歧</li>
+<li>C. 忽略上下文信息直接链接</li>
+<li>D. 使用链接概率识别指称</li>
+</ul>
+<p><strong>答案：C</strong></p>
+<p>一词多义要靠上下文判断指称落在哪个实体上。忽略上下文直接链接，等于放弃唯一的判别依据，另外几种做法都是拿知识库信息和链接概率来补这个判断。</p>
+<h3 id="第8题"><a href="#第8题" class="headerlink" title="第8题"></a>第8题</h3><p>知识合并过程中，解决数据层和模式层的合并问题不包括以下（　）技术。</p>
+<ul>
+<li>A. 实体链接</li>
+<li>B. 冲突检测与消解</li>
+<li>C. 真值发现</li>
+<li>D. RDF 转换</li>
+</ul>
+<p><strong>答案：D</strong></p>
+<p>数据层和模式层的矛盾要在合并前处理掉。实体链接把不同来源的指称归到库里同一个实体，冲突检测与真值发现在互相矛盾的取值里定一个。RDF 转换解决的是关系数据库怎么变成图数据，属于格式通道，不参与矛盾的判定。</p>
+<h3 id="第9题"><a href="#第9题" class="headerlink" title="第9题"></a>第9题</h3><p>简述知识对齐在知识图谱中的作用。</p>
+<p><strong>答案：</strong></p>
+<p>知识对齐把不同图谱里的实体、属性和关系对应起来，形成一套统一的知识表示。两边的命名习惯、概念划分和数据格式往往不一致，对齐先把这些差异找出来，再建立等价映射。</p>
+<p>对齐之后，原本互不相通的知识库可以互相引用，信息孤岛被打通，同一份知识不必在每个库里各存一遍。查询和推理面对的是一致的概念体系，跨库取数与答案的准确性都跟着提高，后续的实体链接与合并也有了可以依赖的对应关系。</p>
+<h3 id="第10题"><a href="#第10题" class="headerlink" title="第10题"></a>第10题</h3><p>在知识合并过程中，如何处理知识冲突问题？</p>
+<p><strong>答案：</strong></p>
+<p>冲突处理分两步。检测阶段把多个来源的同一属性值摆在一起比，取值不一致或相互矛盾的挑出来。格式差异先正规化再比，1991&#x2F;3&#x2F;8 和 1991-03-08 是同一天，不能算冲突。</p>
+<p>消解阶段决定留哪个值。常用多数投票，票数相同时看来源可信度做加权平均，拿不准的请专家评估。真值发现按数据源的历史准确率给证据加权，判不出真值时也可以并列保留多个值，各自标注来源和时间，下游按场景取用。</p>
+<div align="center">
+  <svg viewBox="0 0 720 320" width="100%" style="max-width:720px;height:auto" xmlns="http://www.w3.org/2000/svg" font-family="Segoe UI, 'Microsoft YaHei', sans-serif">
+    <defs>
+      <marker id="c4a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+        <path d="M 0 0 L 10 5 L 0 10 z" fill="#b4552d"/>
+      </marker>
+      <marker id="c4b" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+        <path d="M 0 0 L 10 5 L 0 10 z" fill="#3f7a5a"/>
+      </marker>
+    </defs>
+    <rect x="20" y="22" width="180" height="52" rx="7" fill="#fdf6ec" stroke="#b4552d" stroke-width="1.5"/>
+    <text x="110" y="44" font-size="13" fill="#1f2933" text-anchor="middle">客户自填</text>
+    <text x="110" y="64" font-size="11" fill="#5b6b76" text-anchor="middle">生日 1991-03-08</text>
+    <rect x="270" y="22" width="180" height="52" rx="7" fill="#fdf6ec" stroke="#b4552d" stroke-width="1.5"/>
+    <text x="360" y="44" font-size="13" fill="#1f2933" text-anchor="middle">柜台录入</text>
+    <text x="360" y="64" font-size="11" fill="#5b6b76" text-anchor="middle">生日 1992-03-08</text>
+    <rect x="520" y="22" width="180" height="52" rx="7" fill="#fdf6ec" stroke="#b4552d" stroke-width="1.5"/>
+    <text x="610" y="44" font-size="13" fill="#1f2933" text-anchor="middle">征信报告</text>
+    <text x="610" y="64" font-size="11" fill="#5b6b76" text-anchor="middle">生日 1991-03-08</text>
+    <line x1="110" y1="80" x2="110" y2="96" stroke="#b4552d" stroke-width="1.5" marker-end="url(#c4a)"/>
+    <line x1="360" y1="80" x2="360" y2="96" stroke="#b4552d" stroke-width="1.5" marker-end="url(#c4a)"/>
+    <line x1="610" y1="80" x2="610" y2="96" stroke="#b4552d" stroke-width="1.5" marker-end="url(#c4a)"/>
+    <rect x="60" y="104" width="600" height="48" rx="7" fill="#fdf6ec" stroke="#b4552d" stroke-width="1.5"/>
+    <text x="360" y="133" font-size="13" fill="#1f2933" text-anchor="middle">同名属性取值不一致，检测到冲突</text>
+    <line x1="360" y1="152" x2="360" y2="166" stroke="#3f7a5a" stroke-width="1.5"/>
+    <line x1="200" y1="166" x2="515" y2="166" stroke="#3f7a5a" stroke-width="1.5"/>
+    <line x1="200" y1="166" x2="200" y2="176" stroke="#3f7a5a" stroke-width="1.5" marker-end="url(#c4b)"/>
+    <line x1="515" y1="166" x2="515" y2="176" stroke="#3f7a5a" stroke-width="1.5" marker-end="url(#c4b)"/>
+    <rect x="60" y="182" width="280" height="54" rx="7" fill="#eef6f0" stroke="#3f7a5a" stroke-width="1.5"/>
+    <text x="200" y="204" font-size="13" fill="#1f2933" text-anchor="middle">多数投票与可信度加权</text>
+    <text x="200" y="224" font-size="11" fill="#5b6b76" text-anchor="middle">按来源历史准确率赋权</text>
+    <rect x="370" y="182" width="290" height="54" rx="7" fill="#eef6f0" stroke="#3f7a5a" stroke-width="1.5"/>
+    <text x="515" y="204" font-size="13" fill="#1f2933" text-anchor="middle">证据不足就留多值</text>
+    <text x="515" y="224" font-size="11" fill="#5b6b76" text-anchor="middle">各自标注来源与取值</text>
+    <line x1="200" y1="236" x2="200" y2="250" stroke="#3f7a5a" stroke-width="1.5"/>
+    <line x1="515" y1="236" x2="515" y2="250" stroke="#3f7a5a" stroke-width="1.5"/>
+    <line x1="200" y1="250" x2="515" y2="250" stroke="#3f7a5a" stroke-width="1.5"/>
+    <line x1="360" y1="250" x2="360" y2="258" stroke="#3f7a5a" stroke-width="1.5" marker-end="url(#c4b)"/>
+    <rect x="60" y="264" width="600" height="42" rx="7" fill="#eef6f0" stroke="#3f7a5a" stroke-width="1.5"/>
+    <text x="360" y="290" font-size="13" fill="#1f2933" text-anchor="middle">采信 1991-03-08，其余取值留档可查</text>
+  </svg>
+</div>
+
+<p><em>冲突检测先找出取值矛盾，消解再决定采信哪一个，证据不足时保留多值。</em></p>
+<h3 id="第11题"><a href="#第11题" class="headerlink" title="第11题"></a>第11题</h3><p>知识融合的主要目的是什么？</p>
+<p><strong>答案：</strong></p>
+<p>知识融合要解决多源知识对不上的问题。不同系统对同一个实体用不同名字，对同一个概念给不同定义，同一条事实还可能给出互相矛盾的取值。融合把这些知识收进一套表示里，消掉概念上的混淆，清掉重复与错误。</p>
+<p>结果是得到一个准确、覆盖面完整的知识体系。同一件事在图上只有一条记录，取数不必再人工比对，推理也不会沿着两条路径得出两个结论。</p>
+<h3 id="第12题"><a href="#第12题" class="headerlink" title="第12题"></a>第12题</h3><p>简述知识融合的流程及核心阶段。</p>
+<p><strong>答案：</strong></p>
+<p>工程流程分五步。预处理先做正规化和清洗，分块把两两比较的候选压下来，记录链接在块内算相似度并判定是否为同一对象，负载均衡把计算分发出去，最后用查准率、召回率和 F1 评估结果。</p>
+<p>从概念层面看，核心阶段有三个。实体链接把文本里的指称接到库里的实体，知识对齐在两个图谱之间建立本体、实体和属性的等价关系，知识合并把对齐后的知识写进同一个库，写之前先处理冲突。</p>
+<div align="center">
+  <svg viewBox="0 0 720 232" width="100%" style="max-width:720px;height:auto" xmlns="http://www.w3.org/2000/svg" font-family="Segoe UI, 'Microsoft YaHei', sans-serif">
+    <defs>
+      <marker id="c4c" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+        <path d="M 0 0 L 10 5 L 0 10 z" fill="#2f6f8f"/>
+      </marker>
+      <marker id="c4g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+        <path d="M 0 0 L 10 5 L 0 10 z" fill="#3f7a5a"/>
+      </marker>
+    </defs>
+    <text x="20" y="26" font-size="11" fill="#5b6b76">工程流程</text>
+    <rect x="20" y="38" width="112" height="58" rx="7" fill="#eaf3f7" stroke="#2f6f8f" stroke-width="1.5"/>
+    <text x="76" y="62" font-size="13" fill="#1f2933" text-anchor="middle">预处理</text>
+    <text x="76" y="82" font-size="11" fill="#5b6b76" text-anchor="middle">正规化与清洗</text>
+    <rect x="160" y="38" width="112" height="58" rx="7" fill="#eaf3f7" stroke="#2f6f8f" stroke-width="1.5"/>
+    <text x="216" y="62" font-size="13" fill="#1f2933" text-anchor="middle">分块</text>
+    <text x="216" y="82" font-size="11" fill="#5b6b76" text-anchor="middle">压缩候选</text>
+    <rect x="300" y="38" width="112" height="58" rx="7" fill="#eaf3f7" stroke="#2f6f8f" stroke-width="1.5"/>
+    <text x="356" y="62" font-size="13" fill="#1f2933" text-anchor="middle">记录链接</text>
+    <text x="356" y="82" font-size="11" fill="#5b6b76" text-anchor="middle">相似度判定</text>
+    <rect x="440" y="38" width="112" height="58" rx="7" fill="#eaf3f7" stroke="#2f6f8f" stroke-width="1.5"/>
+    <text x="496" y="62" font-size="13" fill="#1f2933" text-anchor="middle">负载均衡</text>
+    <text x="496" y="82" font-size="11" fill="#5b6b76" text-anchor="middle">分发计算</text>
+    <rect x="580" y="38" width="112" height="58" rx="7" fill="#eaf3f7" stroke="#2f6f8f" stroke-width="1.5"/>
+    <text x="636" y="62" font-size="13" fill="#1f2933" text-anchor="middle">结果评估</text>
+    <text x="636" y="82" font-size="11" fill="#5b6b76" text-anchor="middle">P / R / F1</text>
+    <line x1="140" y1="67" x2="152" y2="67" stroke="#2f6f8f" stroke-width="1.4" marker-end="url(#c4c)"/>
+    <line x1="280" y1="67" x2="292" y2="67" stroke="#2f6f8f" stroke-width="1.4" marker-end="url(#c4c)"/>
+    <line x1="420" y1="67" x2="432" y2="67" stroke="#2f6f8f" stroke-width="1.4" marker-end="url(#c4c)"/>
+    <line x1="560" y1="67" x2="572" y2="67" stroke="#2f6f8f" stroke-width="1.4" marker-end="url(#c4c)"/>
+    <text x="20" y="136" font-size="11" fill="#5b6b76">概念阶段</text>
+    <rect x="20" y="150" width="190" height="62" rx="7" fill="#eef6f0" stroke="#3f7a5a" stroke-width="1.5"/>
+    <text x="115" y="175" font-size="13" fill="#1f2933" text-anchor="middle">实体链接</text>
+    <text x="115" y="196" font-size="11" fill="#5b6b76" text-anchor="middle">文本指称接到实体</text>
+    <rect x="265" y="150" width="190" height="62" rx="7" fill="#eef6f0" stroke="#3f7a5a" stroke-width="1.5"/>
+    <text x="360" y="175" font-size="13" fill="#1f2933" text-anchor="middle">知识对齐</text>
+    <text x="360" y="196" font-size="11" fill="#5b6b76" text-anchor="middle">两个图谱建等价</text>
+    <rect x="510" y="150" width="190" height="62" rx="7" fill="#eef6f0" stroke="#3f7a5a" stroke-width="1.5"/>
+    <text x="605" y="175" font-size="13" fill="#1f2933" text-anchor="middle">知识合并</text>
+    <text x="605" y="196" font-size="11" fill="#5b6b76" text-anchor="middle">对齐后写进同一个库</text>
+    <line x1="218" y1="181" x2="257" y2="181" stroke="#3f7a5a" stroke-width="1.4" marker-end="url(#c4g)"/>
+    <line x1="463" y1="181" x2="502" y2="181" stroke="#3f7a5a" stroke-width="1.4" marker-end="url(#c4g)"/>
+  </svg>
+</div>
+
+<p><em>五步工程流程压缩候选与计算量，三个概念阶段各自解决一类对应关系。</em></p>
+<h3 id="第13题"><a href="#第13题" class="headerlink" title="第13题"></a>第13题</h3><p>什么是实体链接，它在知识融合中扮演什么角色？</p>
+<p><strong>答案：</strong></p>
+<p>实体链接是把文本里提到的指称映射到知识库中对应实体的过程。一篇文章写到郑雯，库里有三个郑雯，链接要判断指的是哪一个，库里没有对应实体时返回空标记，不硬配。</p>
+<p>它在融合里承担从文本进入图谱的那一段。抽取出来的实体名往往只是字符串，链接给每个指称一个确定的实体编号，文本知识才能与库内知识接上。后续的对齐与合并都建立在实体已经指认清楚的前提上，图谱的覆盖面和准确度也随之提高。</p>
+<h3 id="第14题"><a href="#第14题" class="headerlink" title="第14题"></a>第14题</h3><p>实体链接过程中的消歧是如何帮助区分不同实体的？</p>
+<p><strong>答案：</strong></p>
+<p>消歧处理同名不同实体的情况。苹果既可以指水果，也可以指一家公司，光看指称本身分不出来，要靠它所在的句子、上下文和候选实体的描述来判断。</p>
+<p>做法是给每个候选实体打分。把上下文特征与知识库里实体的属性信息放在一起算相似度，分数最高的候选被选中。知识库里的实体信息越完整，分数越能反映真实指向，链接结果也越可靠。</p>
+<h3 id="第15题"><a href="#第15题" class="headerlink" title="第15题"></a>第15题</h3><p>实体链接的三个主要模块包括哪些？</p>
+<p><strong>答案：</strong></p>
+<p>第一个模块产生候选实体。按指称从知识库里召回一组可能的目标，同名词条、别名和缩写都算进来，这一步宁可多召回，先保证不漏。</p>
+<p>第二个模块排序候选实体。用上下文与实体描述算相似度，把候选按可能性从高到低排，取排在最前的一个作为链接结果。</p>
+<p>第三个模块是无法链接预测。判断该指称在库里是否根本没有对应实体，没有就返回空标记。强行链到最像的实体，比承认链接不上危害更大。</p>
+<div align="center">
+  <svg viewBox="0 0 720 250" width="100%" style="max-width:720px;height:auto" xmlns="http://www.w3.org/2000/svg" font-family="Segoe UI, 'Microsoft YaHei', sans-serif">
+    <defs>
+      <marker id="c4d" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+        <path d="M 0 0 L 10 5 L 0 10 z" fill="#2f6f8f"/>
+      </marker>
+      <marker id="c4h" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+        <path d="M 0 0 L 10 5 L 0 10 z" fill="#3f7a5a"/>
+      </marker>
+    </defs>
+    <rect x="20" y="56" width="145" height="56" rx="7" fill="#f6e7c8" stroke="#d9b982" stroke-width="1.4"/>
+    <text x="92" y="78" font-size="13" fill="#1f2933" text-anchor="middle">文本</text>
+    <text x="92" y="98" font-size="11" fill="#5b6b76" text-anchor="middle">郑雯毕业于复旦大学</text>
+    <rect x="205" y="56" width="150" height="56" rx="7" fill="#eaf3f7" stroke="#2f6f8f" stroke-width="1.5"/>
+    <text x="280" y="78" font-size="13" fill="#1f2933" text-anchor="middle">① 产生候选实体</text>
+    <text x="280" y="98" font-size="11" fill="#5b6b76" text-anchor="middle">从库中召回同名</text>
+    <rect x="395" y="56" width="150" height="56" rx="7" fill="#eaf3f7" stroke="#2f6f8f" stroke-width="1.5"/>
+    <text x="470" y="78" font-size="13" fill="#1f2933" text-anchor="middle">② 排序候选实体</text>
+    <text x="470" y="98" font-size="11" fill="#5b6b76" text-anchor="middle">上下文与描述打分</text>
+    <rect x="575" y="56" width="125" height="56" rx="7" fill="#eaf3f7" stroke="#2f6f8f" stroke-width="1.5"/>
+    <text x="637" y="78" font-size="13" fill="#1f2933" text-anchor="middle">③ 无法链接预测</text>
+    <text x="637" y="98" font-size="11" fill="#5b6b76" text-anchor="middle">判断该不该放弃</text>
+    <line x1="173" y1="84" x2="197" y2="84" stroke="#2f6f8f" stroke-width="1.5" marker-end="url(#c4d)"/>
+    <line x1="363" y1="84" x2="387" y2="84" stroke="#2f6f8f" stroke-width="1.5" marker-end="url(#c4d)"/>
+    <line x1="553" y1="84" x2="567" y2="84" stroke="#2f6f8f" stroke-width="1.5" marker-end="url(#c4d)"/>
+    <line x1="637" y1="112" x2="637" y2="164" stroke="#3f7a5a" stroke-width="1.5" marker-end="url(#c4h)"/>
+    <rect x="480" y="170" width="220" height="56" rx="7" fill="#eef6f0" stroke="#3f7a5a" stroke-width="1.5"/>
+    <text x="590" y="194" font-size="13" fill="#1f2933" text-anchor="middle">输出实体 e₁</text>
+    <text x="590" y="214" font-size="11" fill="#5b6b76" text-anchor="middle">没有对应实体则返回 NIL</text>
+    <text x="20" y="200" font-size="12" fill="#5b6b76">先找全，再找准，最后承认找不到</text>
+  </svg>
+</div>
+
+<p><em>三个模块串成一条流水线，链接不上就返回空标记，不强行匹配。</em></p>
+<h3 id="第16题"><a href="#第16题" class="headerlink" title="第16题"></a>第16题</h3><p>简述基于聚合的实体相似度计算方法。</p>
+<p><strong>答案：</strong></p>
+<p>这类方法先算出若干相似性指标，再把它们合成一个总分。属性值可以比编辑距离，名称可以比集合重合度，结构可以比邻居的重合情况，各指标从不同侧面反映两个实体像不像。</p>
+<p>聚合方式有三种。加权平均按指标的重要程度赋权，输出加权后的综合相似度；手动制定规则靠经验设阈值，比如要求姓名相似度高于某个值才判为同一实体；分类器把各指标分数当特征，用逻辑回归、决策树或 SVM 训练一个判别模型。规则法透明好查，分类器能拟合指标之间的交互，代价是需要标注数据。</p>
+<h3 id="第17题"><a href="#第17题" class="headerlink" title="第17题"></a>第17题</h3><p>属性对齐的常用方法有哪些？</p>
+<p><strong>答案：</strong></p>
+<p>基于相似距离的方法直接比属性值。字符串用编辑距离，集合用 Jaccard 或 Dice，数值比差值，距离越小越可能指同一个属性。</p>
+<p>基于词典匹配的方法借助外部词典和语义资源，把同义写法归到一起，中文名与中文名称这类差异靠词表就能消掉。</p>
+<p>基于语义相似度的方法把属性名和样例值编码成向量，算余弦相似度。字面完全不同但语义接近的属性靠这一路才能发现，代价是结果不如前两种好解释。</p>
+<h3 id="第18题"><a href="#第18题" class="headerlink" title="第18题"></a>第18题</h3><p>简述本体对齐与实例对齐的区别与联系。</p>
+<p><strong>答案：</strong></p>
+<p>本体对齐作用在模式层，判断两个本体里的概念、类和关系是不是一个意思，输出等价的模式对应。实例对齐作用在数据层，判断两条记录是否指向现实世界的同一个对象，输出等价实例的对应。</p>
+<p>区别在对象和粒度。本体对齐比的是定义和结构，元素数量少但层次清楚，结构信息很值钱；实例对齐比的是具体实体，数据量大，工程压力也大。</p>
+<p>两者有先后。本体先对齐，实体的类型才有统一的归属，属性也才有可比的字段；实例对齐在本体给出的框架里进行，把等价关系落到具体数据上。</p>
+<div align="center">
+  <svg viewBox="0 0 720 320" width="100%" style="max-width:720px;height:auto" xmlns="http://www.w3.org/2000/svg" font-family="Segoe UI, 'Microsoft YaHei', sans-serif">
+    <defs>
+      <marker id="c4e" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+        <path d="M 0 0 L 10 5 L 0 10 z" fill="#2f6f8f"/>
+      </marker>
+      <marker id="c4f" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+        <path d="M 0 0 L 10 5 L 0 10 z" fill="#3f7a5a"/>
+      </marker>
+    </defs>
+    <rect x="20" y="30" width="680" height="110" rx="8" fill="#fbfdfe" stroke="#cfdde5" stroke-width="1.2"/>
+    <text x="40" y="62" font-size="14" fill="#2f6f8f">本体对齐</text>
+    <text x="40" y="86" font-size="11" fill="#5b6b76">比概念、类与关系</text>
+    <text x="40" y="106" font-size="11" fill="#5b6b76">输出等价模式</text>
+    <rect x="200" y="50" width="200" height="62" rx="7" fill="#eaf3f7" stroke="#2f6f8f" stroke-width="1.5"/>
+    <text x="300" y="76" font-size="13" fill="#1f2933" text-anchor="middle">本体 A</text>
+    <text x="300" y="96" font-size="11" fill="#5b6b76" text-anchor="middle">类 人物 / 机构</text>
+    <rect x="480" y="50" width="200" height="62" rx="7" fill="#eaf3f7" stroke="#2f6f8f" stroke-width="1.5"/>
+    <text x="580" y="76" font-size="13" fill="#1f2933" text-anchor="middle">本体 B</text>
+    <text x="580" y="96" font-size="11" fill="#5b6b76" text-anchor="middle">类 Person / Org</text>
+    <line x1="410" y1="81" x2="472" y2="81" stroke="#3f7a5a" stroke-width="1.5" marker-end="url(#c4f)"/>
+    <text x="441" y="71" font-size="11" fill="#3f7a5a" text-anchor="middle">等价</text>
+    <rect x="20" y="176" width="680" height="120" rx="8" fill="#fbfdfe" stroke="#cfdde5" stroke-width="1.2"/>
+    <text x="40" y="208" font-size="14" fill="#2f6f8f">实例对齐</text>
+    <text x="40" y="232" font-size="11" fill="#5b6b76">比具体实体</text>
+    <text x="40" y="252" font-size="11" fill="#5b6b76">输出等价实例</text>
+    <rect x="200" y="190" width="200" height="62" rx="7" fill="#eef6f0" stroke="#3f7a5a" stroke-width="1.5"/>
+    <text x="300" y="216" font-size="13" fill="#1f2933" text-anchor="middle">实体 e₁</text>
+    <text x="300" y="236" font-size="11" fill="#5b6b76" text-anchor="middle">复旦大学</text>
+    <rect x="480" y="190" width="200" height="62" rx="7" fill="#eef6f0" stroke="#3f7a5a" stroke-width="1.5"/>
+    <text x="580" y="216" font-size="13" fill="#1f2933" text-anchor="middle">实体 e₂</text>
+    <text x="580" y="236" font-size="11" fill="#5b6b76" text-anchor="middle">Fudan University</text>
+    <line x1="410" y1="221" x2="472" y2="221" stroke="#3f7a5a" stroke-width="1.5" marker-end="url(#c4f)"/>
+    <text x="441" y="211" font-size="11" fill="#3f7a5a" text-anchor="middle">同一对象</text>
+    <text x="40" y="278" font-size="11" fill="#5b6b76">实体比对本体的类型归属</text>
+    <line x1="300" y1="140" x2="300" y2="170" stroke="#2f6f8f" stroke-width="1.5" marker-end="url(#c4e)"/>
+    <text x="312" y="162" font-size="11" fill="#5b6b76">先定骨架</text>
+  </svg>
+</div>
+
+<p><em>本体对齐定骨架，实例对齐填内容，两层的对象和粒度不同。</em></p>
+<h3 id="第19题"><a href="#第19题" class="headerlink" title="第19题"></a>第19题</h3><p>知识合并的概念是什么，它与知识融合有何不同？</p>
+<p><strong>答案：</strong></p>
+<p>知识合并在对齐完成之后进行，把已有数据作为输入做整合，处理实体之间的相似与差异，将实体、关系和属性写进同一个知识库，建立知识库与实体的直接映射。写之前要先发现冲突，同名属性取值不一致的要先消解。</p>
+<p>知识融合的范围更宽。它从不同来源获取知识开始，涵盖概念混淆的消除、冗余与错误的清理，知识合并只是其中的一个环节。融合偏重判断与对齐，合并偏重决策与落库，两者在同一条链路上前后相接。</p>
+<h3 id="第20题"><a href="#第20题" class="headerlink" title="第20题"></a>第20题</h3><p>知识合并的常用方法主要有哪些？</p>
+<p><strong>答案：</strong></p>
+<p>常见的一条路是合并外部知识库。把外部数据抓进来，先做概念匹配把本体对齐，再做实体匹配把等价实体合到一起，最后评估合并质量。难点在数据层与模式层的矛盾，属性值冲突、类型定义不一致都要在处理范围内。</p>
+<p>另一条路是合并关系数据库。结构化数据走 RDB2RDF 通道，直接映射把表映射成类，主键映射成实体标识，列映射成属性，外键映射成关系。需要控制命名和词表时改用 R2RML 写映射规则。半结构化数据先转成 RDF，再走同一套流程。</p>
+</article><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/other/QUT/QUT%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E4%BD%9C%E4%B8%9A%E8%A7%A3%E6%9E%90-%E7%AC%AC%E5%85%AD%E7%AB%A0-%E5%9B%BE%E8%A1%A8%E7%A4%BA%E5%AD%A6%E4%B9%A0%E4%B8%8E%E5%9B%BE%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/"><img class="prev-cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">QUT知识图谱作业解析：第六章 图表示学习与图神经网络</div></div></a></div><div class="next-post pull-right"><a href="/other/QUT/QUT%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E4%BD%9C%E4%B8%9A%E8%A7%A3%E6%9E%90-%E7%AC%AC%E4%B8%89%E7%AB%A0-%E7%9F%A5%E8%AF%86%E6%8A%BD%E5%8F%96%E6%8A%80%E6%9C%AF/"><img class="next-cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">QUT知识图谱作业解析：第三章 知识抽取技术</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="anzhiyufont anzhiyu-icon-thumbs-up fa-fw" style="font-size: 1.5rem; margin-right: 4px"></i><span>喜欢这篇文章的人也看了</span></div><div class="relatedPosts-list"><div><a href="/other/QUT/QUT%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E4%BD%9C%E4%B8%9A%E8%A7%A3%E6%9E%90-%E7%AC%AC%E4%B8%80%E7%AB%A0-%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E6%A6%82%E8%BF%B0/" title="QUT知识图谱作业解析：第一章 知识图谱概述"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/" alt="cover"><div class="content is-center"><div class="date"><i class="anzhiyufont anzhiyu-icon-calendar-days fa-fw"></i> 2026-11-06</div><div class="title">QUT知识图谱作业解析：第一章 知识图谱概述</div></div></a></div><div><a href="/other/QUT/QUT%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E4%BD%9C%E4%B8%9A%E8%A7%A3%E6%9E%90-%E7%AC%AC%E4%B8%89%E7%AB%A0-%E7%9F%A5%E8%AF%86%E6%8A%BD%E5%8F%96%E6%8A%80%E6%9C%AF/" title="QUT知识图谱作业解析：第三章 知识抽取技术"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/" alt="cover"><div class="content is-center"><div class="date"><i class="anzhiyufont anzhiyu-icon-calendar-days fa-fw"></i> 2026-11-06</div><div class="title">QUT知识图谱作业解析：第三章 知识抽取技术</div></div></a></div><div><a href="/other/QUT/QUT%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E4%BD%9C%E4%B8%9A%E8%A7%A3%E6%9E%90-%E7%AC%AC%E4%BA%8C%E7%AB%A0-%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E8%A1%A8%E7%A4%BA/" title="QUT知识图谱作业解析：第二章 知识图谱表示"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/" alt="cover"><div class="content is-center"><div class="date"><i class="anzhiyufont anzhiyu-icon-calendar-days fa-fw"></i> 2026-11-06</div><div class="title">QUT知识图谱作业解析：第二章 知识图谱表示</div></div></a></div><div><a href="/other/QUT/QUT%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E4%BD%9C%E4%B8%9A%E8%A7%A3%E6%9E%90-%E7%AC%AC%E5%85%AD%E7%AB%A0-%E5%9B%BE%E8%A1%A8%E7%A4%BA%E5%AD%A6%E4%B9%A0%E4%B8%8E%E5%9B%BE%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/" title="QUT知识图谱作业解析：第六章 图表示学习与图神经网络"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/" alt="cover"><div class="content is-center"><div class="date"><i class="anzhiyufont anzhiyu-icon-calendar-days fa-fw"></i> 2026-11-06</div><div class="title">QUT知识图谱作业解析：第六章 图表示学习与图神经网络</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="card-content"><div class="author-info-avatar"><img class="avatar-img" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/img/avatar.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__description">大三学生，全栈开发者，终身学习者</div><div class="author-info__bottom-group"><a class="author-info__bottom-group-left" href="/"><h1 class="author-info__name">qiuxz</h1><div class="author-info__desc"></div></a><div class="card-info-social-icons is-center"><a class="social-icon faa-parent animated-hover" href="https://github.com/qiuxzh" target="_blank" title="Github"><i class="anzhiyufont anzhiyu-icon-github"></i></a><a class="social-icon faa-parent animated-hover" href="javascript:void(0);" title="QQ" data-copy="1256227507"><i class="anzhiyufont anzhiyu-icon-qq"></i></a><a class="social-icon faa-parent animated-hover" href="javascript:void(0);" title="Email" data-copy="1256227507@qq.com"><i class="anzhiyufont anzhiyu-icon-envelope"></i></a></div></div></div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="anzhiyufont anzhiyu-icon-bars"></i><span>文章目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E5%9B%9B%E7%AB%A0-%E7%9F%A5%E8%AF%86%E8%9E%8D%E5%90%88"><span class="toc-number">1.</span> <span class="toc-text">第四章 知识融合</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%87%AA%E6%B5%8B"><span class="toc-number">1.1.</span> <span class="toc-text">自测</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC1%E9%A2%98"><span class="toc-number">1.2.</span> <span class="toc-text">第1题</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC2%E9%A2%98"><span class="toc-number">1.3.</span> <span class="toc-text">第2题</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC3%E9%A2%98"><span class="toc-number">1.4.</span> <span class="toc-text">第3题</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC4%E9%A2%98"><span class="toc-number">1.5.</span> <span class="toc-text">第4题</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC5%E9%A2%98"><span class="toc-number">1.6.</span> <span class="toc-text">第5题</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC6%E9%A2%98"><span class="toc-number">1.7.</span> <span class="toc-text">第6题</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC7%E9%A2%98"><span class="toc-number">1.8.</span> <span class="toc-text">第7题</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC8%E9%A2%98"><span class="toc-number">1.9.</span> <span class="toc-text">第8题</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC9%E9%A2%98"><span class="toc-number">1.10.</span> <span class="toc-text">第9题</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC10%E9%A2%98"><span class="toc-number">1.11.</span> <span class="toc-text">第10题</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC11%E9%A2%98"><span class="toc-number">1.12.</span> <span class="toc-text">第11题</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC12%E9%A2%98"><span class="toc-number">1.13.</span> <span class="toc-text">第12题</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC13%E9%A2%98"><span class="toc-number">1.14.</span> <span class="toc-text">第13题</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC14%E9%A2%98"><span class="toc-number">1.15.</span> <span class="toc-text">第14题</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC15%E9%A2%98"><span class="toc-number">1.16.</span> <span class="toc-text">第15题</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC16%E9%A2%98"><span class="toc-number">1.17.</span> <span class="toc-text">第16题</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC17%E9%A2%98"><span class="toc-number">1.18.</span> <span class="toc-text">第17题</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC18%E9%A2%98"><span class="toc-number">1.19.</span> <span class="toc-text">第18题</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC19%E9%A2%98"><span class="toc-number">1.20.</span> <span class="toc-text">第19题</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC20%E9%A2%98"><span class="toc-number">1.21.</span> <span class="toc-text">第20题</span></a></li></ol></li></ol></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"></div><div id="footer-bar"><div class="footer-bar-links"><div class="footer-bar-left"><div id="footer-bar-tips"><div class="copyright">&copy;2020 - 2026 By <a class="footer-bar-link" href="/" title="qiuxz" target="_blank">qiuxz</a></div></div><div id="footer-type-tips"></div></div><div class="footer-bar-right"><a class="footer-bar-link" target="_blank" rel="noopener" href="https://github.com/anzhiyu-c/hexo-theme-anzhiyu" title="主题">主题</a></div></div></div></footer></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="sidebar-site-data site-data is-center"><a href="/archives/" title="archive"><div class="headline">文章</div><div class="length-num">39</div></a><a href="/tags/" title="tag"><div class="headline">标签</div><div class="length-num">7</div></a><a href="/categories/" title="category"><div class="headline">分类</div><div class="length-num">9</div></a></div><span class="sidebar-menu-item-title">功能</span><div class="sidebar-menu-item"><a class="darkmode_switchbutton menu-child" href="javascript:void(0);" title="显示模式"><i class="anzhiyufont anzhiyu-icon-circle-half-stroke"></i><span>显示模式</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="javascript:void(0);"><span> 文章</span></a><ul class="menus_item_child"><li><a class="site-page child faa-parent animated-hover" href="/archives/"><i class="anzhiyufont anzhiyu-icon-box-archive faa-tada" style="font-size: 0.9em;"></i><span> 隧道</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><span> 关于</span></a><ul class="menus_item_child"><li><a class="site-page child faa-parent animated-hover" href="/other/about/"><i class="anzhiyufont anzhiyu-icon-paper-plane faa-tada" style="font-size: 0.9em;"></i><span> 关于本人</span></a></li><li><a class="site-page child faa-parent animated-hover" href="javascript:toRandomPost()"><i class="anzhiyufont anzhiyu-icon-shoe-prints1 faa-tada" style="font-size: 0.9em;"></i><span> 随便逛逛</span></a></li></ul></div></div><span class="sidebar-menu-item-title">标签</span><div class="card-tags"><div class="item-headline"></div><div class="card-tag-cloud"><a href="/tags/YJango%E8%A7%86%E9%A2%91%E6%95%B4%E7%90%86/" style="font-size: 0.88rem;">YJango视频整理<sup>11</sup></a><a href="/tags/%E4%B8%AA%E4%BA%BA%E6%88%90%E9%95%BF/" style="font-size: 0.88rem;">个人成长<sup>3</sup></a><a href="/tags/%E5%AD%A6%E4%B9%A0/" style="font-size: 0.88rem;">学习<sup>13</sup></a><a href="/tags/%E6%84%9F%E6%82%9F/" style="font-size: 0.88rem;">感悟<sup>1</sup></a><a href="/tags/%E6%9C%AA%E5%88%86%E7%B1%BB/" style="font-size: 0.88rem;">未分类<sup>6</sup></a><a href="/tags/%E6%9E%B6%E6%9E%84/" style="font-size: 0.88rem;">架构<sup>1</sup></a><a href="/tags/%E8%80%83%E8%AF%95/" style="font-size: 0.88rem;">考试<sup>5</sup></a></div></div><hr/></div></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="anzhiyufont anzhiyu-icon-book-open"></i></button><button id="translateLink" type="button" title="简繁转换">繁</button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="anzhiyufont anzhiyu-icon-circle-half-stroke"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="anzhiyufont anzhiyu-icon-arrows-left-right"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="anzhiyufont anzhiyu-icon-gear"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="anzhiyufont anzhiyu-icon-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><i class="anzhiyufont anzhiyu-icon-arrow-up"></i></button></div></div><div id="rightMenu"><div class="rightMenu-group rightMenu-small"><div class="rightMenu-item" id="menu-backward"><i class="anzhiyufont anzhiyu-icon-arrow-left"></i></div><div class="rightMenu-item" id="menu-forward"><i class="anzhiyufont anzhiyu-icon-arrow-right"></i></div><div class="rightMenu-item" id="menu-refresh"><i class="anzhiyufont anzhiyu-icon-arrow-rotate-right" style="font-size: 1rem;"></i></div><div class="rightMenu-item" id="menu-top"><i class="anzhiyufont anzhiyu-icon-arrow-up"></i></div></div><div class="rightMenu-group rightMenu-line rightMenuPlugin"><div class="rightMenu-item" id="menu-copytext"><i class="anzhiyufont anzhiyu-icon-copy"></i><span>复制选中文本</span></div><div class="rightMenu-item" id="menu-pastetext"><i class="anzhiyufont anzhiyu-icon-paste"></i><span>粘贴文本</span></div><a class="rightMenu-item" id="menu-commenttext"><i class="anzhiyufont anzhiyu-icon-comment-medical"></i><span>引用到评论</span></a><div class="rightMenu-item" id="menu-newwindow"><i class="anzhiyufont anzhiyu-icon-window-restore"></i><span>新窗口打开</span></div><div class="rightMenu-item" id="menu-copylink"><i class="anzhiyufont anzhiyu-icon-link"></i><span>复制链接地址</span></div><div class="rightMenu-item" id="menu-copyimg"><i class="anzhiyufont anzhiyu-icon-images"></i><span>复制此图片</span></div><div class="rightMenu-item" id="menu-downloadimg"><i class="anzhiyufont anzhiyu-icon-download"></i><span>下载此图片</span></div><div class="rightMenu-item" id="menu-newwindowimg"><i class="anzhiyufont anzhiyu-icon-window-restore"></i><span>新窗口打开图片</span></div><div class="rightMenu-item" id="menu-search"><i class="anzhiyufont anzhiyu-icon-magnifying-glass"></i><span>站内搜索</span></div><div class="rightMenu-item" id="menu-searchBaidu"><i class="anzhiyufont anzhiyu-icon-magnifying-glass"></i><span>百度搜索</span></div></div><div class="rightMenu-group rightMenu-line rightMenuOther"><a class="rightMenu-item menu-link" id="menu-randomPost"><i class="anzhiyufont anzhiyu-icon-shuffle"></i><span>随便逛逛</span></a><a class="rightMenu-item menu-link" href="/categories/"><i class="anzhiyufont anzhiyu-icon-cube"></i><span>博客分类</span></a><a class="rightMenu-item menu-link" href="/tags/"><i class="anzhiyufont anzhiyu-icon-tags"></i><span>文章标签</span></a></div><div class="rightMenu-group rightMenu-line rightMenuOther"><a class="rightMenu-item" id="menu-copy" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-copy"></i><span>复制地址</span></a><a class="rightMenu-item" id="menu-commentBarrage" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-message"></i><span class="menu-commentBarrage-text">关闭热评</span></a><a class="rightMenu-item" id="menu-darkmode" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-circle-half-stroke"></i><span class="menu-darkmode-text">深色模式</span></a><a class="rightMenu-item" id="menu-translate" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-language"></i><span>轉為繁體</span></a></div></div><div id="rightmenu-mask"></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="/js/tw_cn.js"></script><script src="https://cdn.cbd.int/@fancyapps/ui@6.1.6/dist/fancybox/fancybox.umd.js"></script><script src="https://cdn.cbd.int/instant.page@5.2.0/instantpage.js" type="module"></script><script src="https://cdn.cbd.int/vanilla-lazyload@19.1.3/dist/lazyload.iife.min.js"></script><script src="https://cdn.cbd.int/node-snackbar@0.1.16/dist/snackbar.min.js"></script><canvas id="universe"></canvas><script async src="https://npm.elemecdn.com/anzhiyu-theme-static@1.0.0/dark/dark.js"></script><script>// 消除控制台打印
+var HoldLog = console.log;
+console.log = function () {};
+let now1 = new Date();
+queueMicrotask(() => {
+  const Log = function () {
+    HoldLog.apply(console, arguments);
+  }; //在恢复前输出日志
+  const grt = new Date("08/08/2026 00:00:00"); //此处修改你的建站时间或者网站上线时间
+  now1.setTime(now1.getTime() + 250);
+  const days = (now1 - grt) / 1000 / 60 / 60 / 24;
+  const dnum = Math.floor(days);
+  const ascll = [
+    `欢迎使用安知鱼!`,
+    `生活明朗, 万物可爱`,
+    `
+        
+       █████╗ ███╗   ██╗███████╗██╗  ██╗██╗██╗   ██╗██╗   ██╗
+      ██╔══██╗████╗  ██║╚══███╔╝██║  ██║██║╚██╗ ██╔╝██║   ██║
+      ███████║██╔██╗ ██║  ███╔╝ ███████║██║ ╚████╔╝ ██║   ██║
+      ██╔══██║██║╚██╗██║ ███╔╝  ██╔══██║██║  ╚██╔╝  ██║   ██║
+      ██║  ██║██║ ╚████║███████╗██║  ██║██║   ██║   ╚██████╔╝
+      ╚═╝  ╚═╝╚═╝  ╚═══╝╚══════╝╚═╝  ╚═╝╚═╝   ╚═╝    ╚═════╝
+        
+        `,
+    "已上线",
+    dnum,
+    "天",
+    "©2020 By 安知鱼 V1.7.1",
+  ];
+  const ascll2 = [`NCC2-036`, `调用前置摄像头拍照成功，识别为【小笨蛋】.`, `Photo captured: `, `🤪`];
+
+  setTimeout(
+    Log.bind(
+      console,
+      `\n%c${ascll[0]} %c ${ascll[1]} %c ${ascll[2]} %c${ascll[3]}%c ${ascll[4]}%c ${ascll[5]}\n\n%c ${ascll[6]}\n`,
+      "color:#425AEF",
+      "",
+      "color:#425AEF",
+      "color:#425AEF",
+      "",
+      "color:#425AEF",
+      ""
+    )
+  );
+  setTimeout(
+    Log.bind(
+      console,
+      `%c ${ascll2[0]} %c ${ascll2[1]} %c \n${ascll2[2]} %c\n${ascll2[3]}\n`,
+      "color:white; background-color:#4fd953",
+      "",
+      "",
+      'background:url("https://npm.elemecdn.com/anzhiyu-blog@1.1.6/img/post/common/tinggge.gif") no-repeat;font-size:450%'
+    )
+  );
+
+  setTimeout(Log.bind(console, "%c WELCOME %c 你好，小笨蛋.", "color:white; background-color:#4f90d9", ""));
+
+  setTimeout(
+    console.warn.bind(
+      console,
+      "%c ⚡ Powered by 安知鱼 %c 你正在访问 qiuxz 的博客.",
+      "color:white; background-color:#f0ad4e",
+      ""
+    )
+  );
+
+  setTimeout(Log.bind(console, "%c W23-12 %c 你已打开控制台.", "color:white; background-color:#4f90d9", ""));
+
+  setTimeout(
+    console.warn.bind(console, "%c S013-782 %c 你现在正处于监控中.", "color:white; background-color:#d9534f", "")
+  );
+});</script><script async src="/anzhiyu/random.js"></script><div class="js-pjax"><script>if (!window.MathJax) {
+  window.MathJax = {
+    tex: {
+      inlineMath: [['$', '$'], ['\\(', '\\)']],
+      tags: 'ams'
+    },
+    chtml: {
+      scale: 1.1,
+      // MathJax 4 默认从 cdn.jsdelivr.net 取 NewCM 字体，国内直连拿不到，
+      // 公式会退化成缺字形。这里改走 npmmirror（与 mathjax@4.0.0 对应）。
+      fontURL: 'https://registry.npmmirror.com/@mathjax/mathjax-newcm-font/4.0.0/files/chtml/woff2',
+      dynamicPrefix: 'https://registry.npmmirror.com/@mathjax/mathjax-newcm-font/4.0.0/files/chtml/dynamic'
+    },
+    options: {
+      renderActions: {
+        findScript: [10, doc => {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/)
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+            const text = document.createTextNode('')
+            node.parentNode.replaceChild(text, node)
+            math.start = {node: text, delim: '', n: 0}
+            math.end = {node: text, delim: '', n: 0}
+            doc.math.push(math)
+          }
+        }, '']
+      }
+    }
+  }
+  
+  const script = document.createElement('script')
+  script.src = 'https://cdn.cbd.int/mathjax@4.0.0/tex-mml-chtml.js'
+  script.id = 'MathJax-script'
+  script.async = true
+  document.head.appendChild(script)
+} else {
+  MathJax.startup.document.state(0)
+  MathJax.texReset()
+  MathJax.typesetPromise()
+}</script><link rel="stylesheet" type="text/css" href="https://cdn.cbd.int/katex@0.16.25/dist/katex.min.css"><script src="https://cdn.cbd.int/katex@0.16.25/dist/contrib/copy-tex.min.js"></script><script>(() => {
+  document.querySelectorAll('#article-container span.katex-display').forEach(item => {
+    anzhiyu.wrap(item, 'div', { class: 'katex-wrap'})
+  })
+})()</script><input type="hidden" name="page-type" id="page-type" value="post"></div><script>var visitorMail = "";
+</script><script async data-pjax src="https://cdn.cbd.int/anzhiyu-theme-static@1.0.0/waterfall/waterfall.js"></script><script src="https://cdn.cbd.int/qrcodejs@1.0.0/qrcode.min.js"></script><link rel="stylesheet" href="https://cdn.cbd.int/anzhiyu-theme-static@1.1.9/icon/ali_iconfont_css.css"><script src="/js/social-copy.js"></script><script src="/js/column-nav-mobile.js"></script><script src="https://cdn.cbd.int/pjax@0.2.8/pjax.min.js"></script><script>let pjaxSelectors = ["head > title","#config-diff","#body-wrap","#rightside-config-hide","#rightside-config-show",".js-pjax"]
+var pjax = new Pjax({
+  elements: 'a:not([target="_blank"])',
+  selectors: pjaxSelectors,
+  cacheBust: false,
+  analytics: false,
+  scrollRestoration: false
+})
+
+document.addEventListener('pjax:send', function () {
+  // removeEventListener scroll 
+  anzhiyu.removeGlobalFnEvent('pjax')
+  anzhiyu.removeGlobalFnEvent('themeChange')
+
+  document.getElementById('rightside').classList.remove('rightside-show')
+  
+  if (window.aplayers) {
+    for (let i = 0; i < window.aplayers.length; i++) {
+      if (!window.aplayers[i].options.fixed) {
+        window.aplayers[i].destroy()
+      }
+    }
+  }
+
+  typeof typed === 'object' && typed.destroy()
+
+  //reset readmode
+  const $bodyClassList = document.body.classList
+  $bodyClassList.contains('read-mode') && $bodyClassList.remove('read-mode')
+})
+
+document.addEventListener('pjax:complete', function () {
+  window.refreshFn()
+
+  document.querySelectorAll('script[data-pjax]').forEach(item => {
+    const newScript = document.createElement('script')
+    const content = item.text || item.textContent || item.innerHTML || ""
+    Array.from(item.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value))
+    newScript.appendChild(document.createTextNode(content))
+    item.parentNode.replaceChild(newScript, item)
+  })
+
+  GLOBAL_CONFIG.islazyload && window.lazyLoadInstance.update()
+
+  typeof panguInit === 'function' && panguInit()
+
+  // google analytics
+  typeof gtag === 'function' && gtag('config', '', {'page_path': window.location.pathname});
+
+  // baidu analytics
+  typeof _hmt === 'object' && _hmt.push(['_trackPageview',window.location.pathname]);
+
+  typeof loadMeting === 'function' && document.getElementsByClassName('aplayer').length && loadMeting()
+
+  // prismjs
+  typeof Prism === 'object' && Prism.highlightAll()
+})
+
+document.addEventListener('pjax:error', e => {
+  if (e.request.status === 404) {
+    pjax.loadUrl('/404.html')
+  }
+})</script><script charset="UTF-8" src="https://cdn.cbd.int/anzhiyu-theme-static@1.1.5/accesskey/accesskey.js"></script></div><div id="popup-window"><div class="popup-window-title">通知</div><div class="popup-window-divider"></div><div class="popup-window-content"><div class="popup-tip">你好呀</div><div class="popup-link"><i class="anzhiyufont anzhiyu-icon-arrow-circle-right"></i></div></div></div></body></html>

@@ -1,0 +1,813 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no"><title>05 知识存储技术 | qiuxz's Blog</title><meta name="keywords" content="知识图谱,教程"><meta name="author" content="qiuxz"><meta name="copyright" content="qiuxz"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#f7f9fe"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-touch-fullscreen" content="yes"><meta name="apple-mobile-web-app-title" content="05 知识存储技术"><meta name="application-name" content="05 知识存储技术"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="#f7f9fe"><meta property="og:type" content="article"><meta property="og:title" content="05 知识存储技术"><meta property="og:url" content="https://qiuxzh.github.io/other/QUT/%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E6%95%99%E7%A8%8B/05-%E7%9F%A5%E8%AF%86%E5%AD%98%E5%82%A8%E6%8A%80%E6%9C%AF/index.html"><meta property="og:site_name" content="qiuxz's Blog"><meta property="og:description" content="同样一批三元组，放进关系库和放进图数据库，能回答的问题一样，付出的代价差很远。这一章讲清楚存储方式如何决定访问路径，以及为什么多跳查询是两种库的分水岭。 同一条查询，两种写法 需求很简单：找出李华的朋友的朋友，前提是这两个人本身不是朋友。 在关系库里，这条需求要写成建临时表、自连接、去重、排除直接好"><meta property="og:locale" content="zh-CN"><meta property="og:image" content="https://qiuxzh.github.io/img/avatar.jpg"><meta property="article:author" content="qiuxz"><meta property="article:tag"><meta name="twitter:card" content="summary"><meta name="twitter:image" content="https://qiuxzh.github.io/img/avatar.jpg"><meta name="description" content="同样一批三元组，放进关系库和放进图数据库，能回答的问题一样，付出的代价差很远。这一章讲清楚存储方式如何决定访问路径，以及为什么多跳查询是两种库的分水岭。 同一条查询，两种写法 需求很简单：找出李华的朋友的朋友，前提是这两个人本身不是朋友。 在关系库里，这条需求要写成建临时表、自连接、去重、排除直接好"><link rel="shortcut icon" href="/favicon.ico"><link rel="canonical" href="https://qiuxzh.github.io/other/QUT/%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E6%95%99%E7%A8%8B/05-%E7%9F%A5%E8%AF%86%E5%AD%98%E5%82%A8%E6%8A%80%E6%9C%AF/"><link rel="preconnect" href="//cdn.cbd.int"/><meta name="google-site-verification" content="xxx"/><meta name="baidu-site-verification" content="code-xxx"/><meta name="msvalidate.01" content="xxx"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.cbd.int/node-snackbar@0.1.16/dist/snackbar.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.cbd.int/@fancyapps/ui@6.1.6/dist/fancybox/fancybox.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  linkPageTop: undefined,
+  peoplecanvas: {"enable":true,"img":"https://upload-bbs.miyoushe.com/upload/2024/07/27/125766904/ba62475f396df9de3316a08ed9e65d86_5680958632268053399..png"},
+  postHeadAiDescription: undefined,
+  diytitle: undefined,
+  LA51: undefined,
+  greetingBox: undefined,
+  twikooEnvId: '',
+  commentBarrageConfig:undefined,
+  music_page_default: "nav_music",
+  root: '/',
+  preloader: {"source":3},
+  friends_vue_info: undefined,
+  navMusic: false,
+  mainTone: undefined,
+  authorStatus: undefined,
+  algolia: undefined,
+  localSearch: undefined,
+  translate: {"defaultEncoding":2,"translateDelay":0,"msgToTraditionalChinese":"繁","msgToSimplifiedChinese":"简","rightMenuMsgToTraditionalChinese":"转为繁体","rightMenuMsgToSimplifiedChinese":"转为简体"},
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":330},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    simplehomepage: true,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: {"copy":true,"copyrightEbable":false,"limitCount":50,"languages":{"author":"作者: qiuxz","link":"链接: ","source":"来源: qiuxz's Blog","info":"著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。","copySuccess":"复制成功，复制和转载请标注本文地址"}},
+  lightbox: 'fancybox',
+  Snackbar: {"chs_to_cht":"你已切换为繁体","cht_to_chs":"你已切换为简体","day_to_night":"你已切换为深色模式","night_to_day":"你已切换为浅色模式","bgLight":"#425AEF","bgDark":"#1f1f1f","position":"top-center"},
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.cbd.int/flickr-justified-gallery@2.2.0/dist/fjGallery.min.js',
+      css: 'https://cdn.cbd.int/flickr-justified-gallery@2.2.0/dist/fjGallery.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: true,
+  isAnchor: false,
+  shortcutKey: undefined,
+  autoDarkmode: true
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  configTitle: 'qiuxz\'s Blog',
+  title: '05 知识存储技术',
+  postAI: '',
+  pageFillDescription: '同一条查询两种写法, 存储到底存什么, 三元组表, 它的三个麻烦, 属性表与二元表, 索引表, 免索引邻接, 物理上怎么放, Cypher, 三代演进, 怎么选, 自测同样一批三元组放进关系库和放进图数据库能回答的问题一样付出的代价差很远这一章讲清楚存储方式如何决定访问路径以及为什么多跳查询是两种库的分水岭同一条查询两种写法需求很简单找出李华的朋友的朋友前提是这两个人本身不是朋友在关系库里这条需求要写成建临时表自连接去重排除直接好友几步在图数据库里它是一行模式匹配关系库把路径翻译成表运算李华朋友李华朋友朋友图库把路径写成图的形状李华直接表示走两条边不用管中间那张临时表两边要做的事完全一样先从李华出发沿朋友边走两步再排除一步能到的人和起点差别在怎么找到下一跳关系库每次都要靠索引重新定位一行图库是顺着指针走过去跳数越多这个差别被放得越大四跳五跳之后的长度和耗时都会失控同一条路径两种表达写法的差异不是语法糖背后是访问路径的差异一个靠索引反复定位一个靠指针直接走过去为什么多跳查询在关系库里会越来越慢而在图库里几乎不变慢关系库每次要回答谁是李华的朋友都得去索引里查一遍再把行拼起来图库把谁是我的邻居这件事直接存在节点里读节点就知道不用查任何索引访问路径决定了这一步要不要绕路存储到底存什么图谱的存储对象就三样实体关系属性基本单元是三元组头实体关系尾实体所有存储方案的区别只在于这三样东西怎么摆到磁盘上一条三元组李华朋友李想头实体关系尾实体存进二维表李华朋友李想李华朋友王平李想父亲李尚存进图结构李华李想王平李尚朋友朋友父亲同样的三元组左边变成行右边变成边存成行的时候关系是两个字段的值存成边的时候关系本身是一个可被访问的对象知识存储跟把数据塞进某个地方是两件事塞进去只管保存存储要管的是结构组织联结维基百科能让人顺着一个条目跳到另一个条目靠的就是分类和链接这两层组织不是靠把文章堆在一个目录里三元组表最直接的做法是把三元组映射成一行三列表里三个字段建表语句只有三行任何关系库都能跑李华朋友李想李华朋友王平李想朋友田英李想朋友刘强李华父亲李尚王平同事丁原这种表有个好处任何三元组都能进来不需要提前知道有哪些关系类型查李华的朋友就是一条索引建在上一次定位索引是这张表能用的前提没有索引每次查询都要全表扫描有了索引按实体或按关系都能快速定位代价是存储变大写入变慢因为每插一行都要维护索引它的三个麻烦三元组表在原型阶段很好用规模上去之后三个问题会依次冒出来第一个是表结构固定三元组表本身很灵活但一旦要给实体加属性就得加列或者另起一张表知识图谱是不断生长的新概念新关系随时出现而关系库的表结构必须在设计时定死第二个是改表图谱每扩展一次可能就是一张新表一批新列一次数据迁移生产环境里改表通常要停机次数一多维护成本就压不住了第三个是多跳查询这是最要命的查询跳数查询开销跳跳跳跳关系库每跳一次索引查找图库每跳一次指针读取起点相近曲线是趋势示意不是实测数据两条线的差距来自访问路径不是引擎实现的好坏一跳的时候两者差不多因为都只需要一次定位跳数增加后关系库每跳都要重新走一遍索引图库只是顺着已有的指针往前挪一步从写法上也能看出成本两跳要自连接三跳要三张表连起来四跳往上基本没法读递归查询虽然标准里有但各家实现差异大优化器也不擅长属性表与二元表三元组表把属性和关系混在一张表里如果按实体类型拆开每类实体一张属性表每类关系一张二元表结构和语义都清楚很多属性表一行一个实体姓名年龄性别城市李华男青岛王平男深圳李想女北京二元表一表一类关系朋友表靠关联不重复存姓名年龄查某人的亲属及其职业先在二元表定位亲属再回属性表取详情代价一表数量爆炸实体类别上千就要上千张表维护成本随类别数线性涨代价二空值同类实体属性参差列只能留空两表协同把实体是什么和实体之间怎样分开存这是关系建模里最成熟的套路它的问题是图谱太杂类别一多表就多属性一参差列就空空值这件事值得细说同一类实体里有的有手机号有的有邮箱有的两者都有有的都没有属性表必须把所有可能出现的属性都建成列用不上的填列一多行很稀疏查询时要跳过大量空位空间和速度都被拖累索引表不管用哪种组织方式真正决定查询快慢的是索引索引表是一种显式的做法单独建一张表一列存查询键一列存主表记录的引用查询姓名李华姓名索引表索引键记录引用李华王平李想田英回表人物主表姓名年龄城市李华青岛王平深圳李想北京田英北京先查索引拿到再按回主表取整行两列的表把找和取拆开了代价索引本身占空间主表每次写入都要同步维护索引写多读少的场景会拖慢选索引键的依据是查询频率高且取值重复度低姓名比性别更适合建索引索引表不改变主表结构只是在旁边加了一条快速通道它解决找到那一行的问题解决不了找到之后要走很多行的问题三种关系库方案各管一段三元组表管灵活属性表和二元表管结构清晰索引表管查询速度它们可以在同一个库里并存按查询模式组合使用但三者共享同一个天花板每次跳转都要经过一次索引查找跳数一多成本按跳数累加免索引邻接关系库里找李华的朋友的朋友每一跳都要查一次索引先定位到李华那一行再从关系表里筛出他的朋友接着对每个朋友重复一遍跳得越深查索引的次数越多图数据库换了个思路既然每次跳转最耗时的部分是查索引找邻居那就把邻居直接记在节点身上关系库每跳都要查一次索引李华查索引李想李想再查索引田英田英第三次查三步三次索引查找每次都从全局结构中定位图库邻居记在节点里李华李想王平李尚指针指针读出节点邻居地址就在里面一跳一次寻址与全图规模无关只看这一个节点有几个邻居免索引邻接的意思是每个节点自己维护着指向邻居的引用像一份只属于自己的微索引定位邻居不必查全局索引所以查询时间只跟局部大小有关这个差别听起来不大但影响是指数级的关系库的成本随跳数线性累加每一跳都要跟全表规模打交道图库的成本只跟这一跳能走到几个邻居有关跟你库里有一亿还是一千亿个节点没关系物理上怎么放要让指针这件事成立存储结构得专门设计主流原生图库把数据分成三类存储块节点关系属性三类存储文件节点存储每个节点定长标签属性指针第一条关系的位置关系存储每条关系一个结构体起点终点类型按起点排序便于扫描属性存储内联或动态见右图内联属性跟着节点走节点标识属性与标识物理连续一次寻址读完适合小且查得频繁的属性动态属性单独放一片节点标识引用属性块可伸缩多一次跳转换来属性可增删选择的依据属性大小访问频率工程上两种并存按属性逐个决定节点定长关系定长是这整套设计成立的前提定长意味着可以用偏移量直接算出位置不必扫描属性长度不定于是分成内联和动态两条路遍历的过程也顺着这个结构走读节点文件定位起点加载标签和属性按策略取邻居预加载缓存到终止条件返回缓存的作用是减少磁盘因为一次预读能把相邻节点一起带进来是的查询语言特点是拿字符把图直接画出来节点用圆括号关系用箭头模式长什么样语法就长什么样写出来的模式圆括号标签关系类型方向对应的图五个常用命令按模式找建节点与关系加条件返回结果删除变长路径用表示两跳表示三到五跳则是有就不建没有才建声明式的意思是只描述要找什么形状的子图不写怎么遍历走法由引擎决定这也是它比手写短的原因几个常用写法记一下建节点和关系按模式定位加过滤返回删除删除有一个坑只删节点本身连着的关系会阻止删除才会把关系一起带走的语义是不存在才创建适合重复执行而不产生副本的场景一个容易忽略的细节的版本和版本必须对得上对不上启动不了要到要要社区版单个实例可以撑到亿节点和关系默认端口初始账号密码都是三代演进图数据库不是一步到位的三代解决的是三个不同的问题单机原生为代表先解决存得对查得快受单机上限约束分布式非原生为代表先解决存得下多跳深链查询变慢至今原生分布式存算兼顾融合大规模并行计算实时图分析成为目标每一代都在补上一代的短板代价是另一样东西原生换效率分布式换规模原生分布式想把两边都拿回来三代的分界线是原生存储和分布式先要原生存储的性能就得上单机先要分布式就得放弃原生两样都要得等到存储引擎重新设计怎么选选型看四件事规模关系复杂度查询模式成本维度关系数据库原生图数据库数据模型行与列三元组映射成记录节点与边与图谱同构关系表达靠外键隐式表示关系本身是可查询的对象多跳查询层层越深越慢顺指针走与全图规模无关结构变更改表要迁移甚至停机加标签加属性即可事务与生态成熟强一致工具齐全较新运维经验少典型场景结构化业务数据报表与对账社交关系风控推荐路径判断的切入点是查询形状业务查询大多是一两跳带强过滤条件要事务保证对账关系库更合适也没必要迁移查询经常要走三步以上看能到谁比如资金流向担保链设备故障传播图库的优势才显出来还有一个现实约束团队图数据库的运维备份监控权限体系跟关系库是两套经验迁移的代价不只在数据搬迁还在人和流程安全这一层两种库都要做传输加密用存储加密有列级加密和透明数据加密两条路后者整库加密读写由引擎自动加解密对应用无感图数据还要额外考虑隐私差分隐私往数据里加噪让攻击者判断不出某条边是否存在随机响应在查询侧加噪按概率分布返回结果两者一个动数据一个动答案常常配合使用自测为什么属性表存知识图谱会表爆炸属性表按实体类型分表一类实体一张表通用图谱的类别可以到几千种于是就是几千张表还要跟着改加上同类实体属性参差每张表还得留一堆空列免索引邻接为什么能让查询时间与全图规模无关因为定位邻居不需要查全局索引节点里直接存着邻居的地址读这个节点就知道往哪走成本只取决于它有几个邻居不取决于图里一共有多少节点三元组表和属性表什么时候选前者关系类型多结构还在变需要快速验证想法的时候三元组表不预设关系种类什么都能塞属性表要求先想清楚有哪些字段适合结构稳定的实体内联存储和动态存储判断依据是什么属性大小乘以访问频率小而常查的放内联读一次就拿到大而不常查的放动态多一次跳转但省空间也让属性集合可以随时增删一个已运行多年的关系库系统多跳查询变慢该不该迁到图库先看多跳查询占比占比低加索引或做物化视图更划算占比高且是核心链路才值得评估迁移迁移成本不只在数据还在团队运维经验的重新积累',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2026-11-07 02:37:15',
+  postMainColor: '',
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+      win.saveToLocal = {
+        set: (key, value, ttl) => {
+          if (ttl === 0) return
+          const now = Date.now()
+          const expiry = now + ttl * 86400000
+          const item = {
+            value,
+            expiry
+          }
+          localStorage.setItem(key, JSON.stringify(item))
+        },
+      
+        get: key => {
+          const itemStr = localStorage.getItem(key)
+      
+          if (!itemStr) {
+            return undefined
+          }
+          const item = JSON.parse(itemStr)
+          const now = Date.now()
+      
+          if (now > item.expiry) {
+            localStorage.removeItem(key)
+            return undefined
+          }
+          return item.value
+        }
+      }
+    
+      win.getScript = (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        script.onerror = reject
+        script.onload = script.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          script.onload = script.onreadystatechange = null
+          resolve()
+        }
+
+        Object.keys(attr).forEach(key => {
+          script.setAttribute(key, attr[key])
+        })
+
+        document.head.appendChild(script)
+      })
+    
+      win.getCSS = (url, id = false) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onerror = reject
+        link.onload = link.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          link.onload = link.onreadystatechange = null
+          resolve()
+        }
+        document.head.appendChild(link)
+      })
+    
+      win.activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#18171d')
+        }
+      }
+      win.activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#f7f9fe')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          const isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches
+          const isLightMode = window.matchMedia('(prefers-color-scheme: light)').matches
+          const isNotSpecified = window.matchMedia('(prefers-color-scheme: no-preference)').matches
+          const hasNoSupport = !isDarkMode && !isLightMode && !isNotSpecified
+
+          if (t === undefined) {
+            if (isLightMode) activateLightMode()
+            else if (isDarkMode) activateDarkMode()
+            else if (isNotSpecified || hasNoSupport) {
+              const now = new Date()
+              const hour = now.getHours()
+              const isNight = hour <= 6 || hour >= 18
+              isNight ? activateDarkMode() : activateLightMode()
+            }
+            window.matchMedia('(prefers-color-scheme: dark)').addListener(e => {
+              if (saveToLocal.get('theme') === undefined) {
+                e.matches ? activateDarkMode() : activateLightMode()
+              }
+            })
+          } else if (t === 'light') activateLightMode()
+          else activateDarkMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+      const detectApple = () => {
+        if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+          document.documentElement.classList.add('apple')
+        }
+      }
+      detectApple()
+    })(window)</script><meta name="generator" content="Hexo 7.0.0"></head><body data-type="anzhiyu"><div id="web_bg"></div><div id="an_music_bg"></div><div id="loading-box" onclick="document.getElementById(&quot;loading-box&quot;).classList.add(&quot;loaded&quot;)"><div class="loading-bg"><img class="loading-img nolazyload" alt="加载头像" src="/img/avatar.jpg"/><div class="loading-image-dot"></div></div></div><script>const preloader = {
+  endLoading: () => {
+    document.getElementById('loading-box').classList.add("loaded");
+  },
+  initLoading: () => {
+    document.getElementById('loading-box').classList.remove("loaded")
+  }
+}
+window.addEventListener('load',()=> { preloader.endLoading() })
+setTimeout(function(){preloader.endLoading();},10000)
+
+if (true) {
+  document.addEventListener('pjax:send', () => { preloader.initLoading() })
+  document.addEventListener('pjax:complete', () => { preloader.endLoading() })
+}</script><link rel="stylesheet" href="https://cdn.cbd.int/anzhiyu-theme-static@1.1.10/progress_bar/progress_bar.css"/><script async="async" src="https://cdn.cbd.int/pace-js@1.2.4/pace.min.js" data-pace-options="{ &quot;restartOnRequestAfter&quot;:false,&quot;eventLag&quot;:false}"></script><div class="post" id="body-wrap"><header class="not-top-img" id="page-header"><nav id="nav"><div id="nav-group"><span id="blog_name"><a id="site-name" href="/" accesskey="h"><div class="title">qiuxz's Blog</div><i class="anzhiyufont anzhiyu-icon-house-chimney"></i></a></span><div class="mask-name-container"><div id="name-container"><a id="page-name" href="javascript:anzhiyu.scrollToDest(0, 500)">PAGE_NAME</a></div></div><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="javascript:void(0);"><span> 文章</span></a><ul class="menus_item_child"><li><a class="site-page child faa-parent animated-hover" href="/archives/"><i class="anzhiyufont anzhiyu-icon-box-archive faa-tada" style="font-size: 0.9em;"></i><span> 隧道</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><span> 关于</span></a><ul class="menus_item_child"><li><a class="site-page child faa-parent animated-hover" href="/other/about/"><i class="anzhiyufont anzhiyu-icon-paper-plane faa-tada" style="font-size: 0.9em;"></i><span> 关于本人</span></a></li><li><a class="site-page child faa-parent animated-hover" href="javascript:toRandomPost()"><i class="anzhiyufont anzhiyu-icon-shoe-prints1 faa-tada" style="font-size: 0.9em;"></i><span> 随便逛逛</span></a></li></ul></div></div></div><div id="nav-right"><div class="nav-button" id="randomPost_button"><a class="site-page" onclick="toRandomPost()" title="随机前往一个文章" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-dice"></i></a></div><input id="center-console" type="checkbox"/><label class="widget" for="center-console" title="中控台" onclick="anzhiyu.switchConsole();"><i class="left"></i><i class="widget center"></i><i class="widget right"></i></label><div id="console"><div class="console-card-group-reward"><ul class="reward-all console-card"><li class="reward-item"><a href="https://npm.elemecdn.com/anzhiyu-blog@1.1.6/img/post/common/qrcode-weichat.png" target="_blank"><img class="post-qr-code-img" alt="微信" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://npm.elemecdn.com/anzhiyu-blog@1.1.6/img/post/common/qrcode-weichat.png"/></a><div class="post-qr-code-desc">微信</div></li><li class="reward-item"><a href="https://npm.elemecdn.com/anzhiyu-blog@1.1.6/img/post/common/qrcode-alipay.png" target="_blank"><img class="post-qr-code-img" alt="支付宝" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://npm.elemecdn.com/anzhiyu-blog@1.1.6/img/post/common/qrcode-alipay.png"/></a><div class="post-qr-code-desc">支付宝</div></li></ul></div><div class="console-card-group"><div class="console-card-group-left"><div class="console-card" id="card-newest-comments"><div class="card-content"><div class="author-content-item-tips">互动</div><span class="author-content-item-title"> 最新评论</span></div><div class="aside-list"><span>正在加载中...</span></div></div></div><div class="console-card-group-right"><div class="console-card tags"><div class="card-content"><div class="author-content-item-tips">兴趣点</div><span class="author-content-item-title">寻找你感兴趣的领域</span><div class="card-tags"><div class="item-headline"></div><div class="card-tag-cloud"><a href="/tags/YJango%E8%A7%86%E9%A2%91%E6%95%B4%E7%90%86/" style="font-size: 1.05rem;">YJango视频整理<sup>11</sup></a><a href="/tags/%E4%B8%AA%E4%BA%BA%E6%88%90%E9%95%BF/" style="font-size: 1.05rem;">个人成长<sup>3</sup></a><a href="/tags/%E5%AD%A6%E4%B9%A0/" style="font-size: 1.05rem;">学习<sup>13</sup></a><a href="/tags/%E6%84%9F%E6%82%9F/" style="font-size: 1.05rem;">感悟<sup>1</sup></a><a href="/tags/%E6%95%99%E7%A8%8B/" style="font-size: 1.05rem;">教程<sup>9</sup></a><a href="/tags/%E6%9C%AA%E5%88%86%E7%B1%BB/" style="font-size: 1.05rem;">未分类<sup>6</sup></a><a href="/tags/%E6%9E%B6%E6%9E%84/" style="font-size: 1.05rem;">架构<sup>1</sup></a><a href="/tags/%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1/" style="font-size: 1.05rem;">知识图谱<sup>9</sup></a><a href="/tags/%E8%80%83%E8%AF%95/" style="font-size: 1.05rem;">考试<sup>5</sup></a></div></div><hr/></div></div><div class="console-card history"><div class="item-headline"><i class="anzhiyufont anzhiyu-icon-box-archiv"></i><span>文章</span></div><div class="card-archives"><div class="item-headline"><i class="anzhiyufont anzhiyu-icon-archive"></i><span>归档</span><a class="card-more-btn" href="/archives/" title="查看更多">
+    <i class="anzhiyufont anzhiyu-icon-angle-right"></i></a></div><ul class="card-archive-list"><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2026/11/"><span class="card-archive-list-date">十一月 2026</span><div class="card-archive-list-count-group"><span class="card-archive-list-count">15</span><span>篇</span></div></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2026/10/"><span class="card-archive-list-date">十月 2026</span><div class="card-archive-list-count-group"><span class="card-archive-list-count">3</span><span>篇</span></div></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2026/09/"><span class="card-archive-list-date">九月 2026</span><div class="card-archive-list-count-group"><span class="card-archive-list-count">15</span><span>篇</span></div></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2026/08/"><span class="card-archive-list-date">八月 2026</span><div class="card-archive-list-count-group"><span class="card-archive-list-count">4</span><span>篇</span></div></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2026/06/"><span class="card-archive-list-date">六月 2026</span><div class="card-archive-list-count-group"><span class="card-archive-list-count">4</span><span>篇</span></div></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2026/05/"><span class="card-archive-list-date">五月 2026</span><div class="card-archive-list-count-group"><span class="card-archive-list-count">1</span><span>篇</span></div></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2026/03/"><span class="card-archive-list-date">三月 2026</span><div class="card-archive-list-count-group"><span class="card-archive-list-count">1</span><span>篇</span></div></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2025/12/"><span class="card-archive-list-date">十二月 2025</span><div class="card-archive-list-count-group"><span class="card-archive-list-count">2</span><span>篇</span></div></a></li></ul></div><hr/></div></div></div><div class="button-group"><div class="console-btn-item"><a class="darkmode_switchbutton" title="显示模式切换" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-moon"></i></a></div><div class="console-btn-item" id="consoleHideAside" onclick="anzhiyu.hideAsideBtn()" title="边栏显示控制"><a class="asideSwitch"><i class="anzhiyufont anzhiyu-icon-arrows-left-right"></i></a></div></div><div class="console-mask" onclick="anzhiyu.hideConsole()" href="javascript:void(0);"></div></div><div class="nav-button" id="nav-totop"><a class="totopbtn" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-arrow-up"></i><span id="percent" onclick="anzhiyu.scrollToDest(0,500)">0</span></a></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);" title="切换"><i class="anzhiyufont anzhiyu-icon-bars"></i></a></div></div></div></nav></header><main id="blog-container"><div class="column-nav"><div class="column-nav-inner"><div class="column-nav-title">知识图谱教程</div><nav class="column-nav-list"><a class="column-link" href="https://qiuxzh.github.io/other/QUT/%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E6%95%99%E7%A8%8B/00-%E6%95%99%E7%A8%8B%E6%80%BB%E8%A7%88/" style="padding-left:8px">00 教程总览</a><a class="column-link" href="https://qiuxzh.github.io/other/QUT/%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E6%95%99%E7%A8%8B/01-%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E6%A6%82%E8%BF%B0/" style="padding-left:8px">01 知识图谱概述</a><a class="column-link" href="https://qiuxzh.github.io/other/QUT/%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E6%95%99%E7%A8%8B/02-%E7%9F%A5%E8%AF%86%E8%A1%A8%E7%A4%BA%E6%8A%80%E6%9C%AF/" style="padding-left:8px">02 知识表示技术</a><a class="column-link" href="https://qiuxzh.github.io/other/QUT/%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E6%95%99%E7%A8%8B/03-%E7%9F%A5%E8%AF%86%E6%8A%BD%E5%8F%96%E6%8A%80%E6%9C%AF/" style="padding-left:8px">03 知识抽取技术</a><a class="column-link" href="https://qiuxzh.github.io/other/QUT/%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E6%95%99%E7%A8%8B/04-%E7%9F%A5%E8%AF%86%E8%9E%8D%E5%90%88%E6%8A%80%E6%9C%AF/" style="padding-left:8px">04 知识融合技术</a><a class="column-link active" href="https://qiuxzh.github.io/other/QUT/%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E6%95%99%E7%A8%8B/05-%E7%9F%A5%E8%AF%86%E5%AD%98%E5%82%A8%E6%8A%80%E6%9C%AF/" style="padding-left:8px">05 知识存储技术</a><a class="column-link" href="https://qiuxzh.github.io/other/QUT/%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E6%95%99%E7%A8%8B/06-%E5%9B%BE%E8%A1%A8%E7%A4%BA%E5%AD%A6%E4%B9%A0%E4%B8%8E%E5%9B%BE%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/" style="padding-left:8px">06 图表示学习与图神经网络</a><a class="column-link" href="https://qiuxzh.github.io/other/QUT/%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E6%95%99%E7%A8%8B/07-%E7%9F%A5%E8%AF%86%E6%8E%A8%E7%90%86%E6%8A%80%E6%9C%AF/" style="padding-left:8px">07 知识推理技术</a><a class="column-link" href="https://qiuxzh.github.io/other/QUT/%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E6%95%99%E7%A8%8B/08-%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E8%A1%8D%E7%94%9F%E6%8A%80%E6%9C%AF/" style="padding-left:8px">08 知识图谱衍生技术</a></nav></div></div><div class="layout" id="content-inner"><div id="post"><div id="post-info"><div id="post-firstinfo"><div class="meta-firstline"><a class="post-meta-original">原创</a><span class="post-meta-categories"><span class="post-meta-separator"></span><i class="anzhiyufont anzhiyu-icon-inbox post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E6%95%99%E7%A8%8B/" itemprop="url">知识图谱教程</a></span><span class="article-meta tags"><a class="article-meta__tags" href="/tags/%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1/" tabindex="-1" itemprop="url"> <span> <i class="anzhiyufont anzhiyu-icon-hashtag"></i>知识图谱</span></a><a class="article-meta__tags" href="/tags/%E6%95%99%E7%A8%8B/" tabindex="-1" itemprop="url"> <span> <i class="anzhiyufont anzhiyu-icon-hashtag"></i>教程</span></a></span></div></div><h1 class="post-title" itemprop="name headline">05 知识存储技术</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="anzhiyufont anzhiyu-icon-calendar-days post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" itemprop="dateCreated datePublished" datetime="2026-11-06T19:04:00.000Z" title="发表于 2026-11-06 19:04:00">2026-11-06</time><span class="post-meta-separator"></span><i class="anzhiyufont anzhiyu-icon-history post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" itemprop="dateCreated datePublished" datetime="2026-11-07T02:37:15.496Z" title="更新于 2026-11-07 02:37:15">2026-11-07</time></span></div><div class="meta-secondline"></div></div></div><article class="post-content" id="article-container" itemscope itemtype="https://qiuxzh.github.io/other/QUT/%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E6%95%99%E7%A8%8B/05-%E7%9F%A5%E8%AF%86%E5%AD%98%E5%82%A8%E6%8A%80%E6%9C%AF/"><header><a class="post-meta-categories" href="/categories/%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E6%95%99%E7%A8%8B/" itemprop="url">知识图谱教程</a><a href="/tags/%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1/" tabindex="-1" itemprop="url">知识图谱</a><a href="/tags/%E6%95%99%E7%A8%8B/" tabindex="-1" itemprop="url">教程</a><h1 id="CrawlerTitle" itemprop="name headline">05 知识存储技术</h1><span itemprop="author" itemscope itemtype="http://schema.org/Person">qiuxz</span><time itemprop="dateCreated datePublished" datetime="2026-11-06T19:04:00.000Z" title="发表于 2026-11-06 19:04:00">2026-11-06</time><time itemprop="dateCreated datePublished" datetime="2026-11-07T02:37:15.496Z" title="更新于 2026-11-07 02:37:15">2026-11-07</time></header><p>同样一批三元组，放进关系库和放进图数据库，能回答的问题一样，付出的代价差很远。这一章讲清楚存储方式如何决定访问路径，以及为什么多跳查询是两种库的分水岭。</p>
+<h2 id="同一条查询，两种写法"><a href="#同一条查询，两种写法" class="headerlink" title="同一条查询，两种写法"></a>同一条查询，两种写法</h2><blockquote>
+<p>需求很简单：找出李华的朋友的朋友，前提是这两个人本身不是朋友。</p>
+<p>在关系库里，这条需求要写成建临时表、自连接、去重、排除直接好友几步。在图数据库里，它是一行模式匹配。</p>
+</blockquote>
+<svg width="100%" style="max-width:860px;height:auto" viewBox="0 0 860 380" role="img" aria-label="同一查询在关系库与图库中的写法对比">
+  <rect width="860" height="380" fill="#fdfbf6"></rect>
+  <text x="40" y="38" font-size="12" font-weight="600" fill="#8a8175">关系库：把路径翻译成表运算</text>
+  <rect x="30" y="50" width="380" height="180" rx="8" fill="#ffffff" stroke="#e4e0d6"></rect>
+  <g font-family="monospace" font-size="9.6" fill="#3d444d">
+    <text x="44" y="72">CREATE TEMPORARY TABLE f1 AS</text>
+    <text x="44" y="88">SELECT Object FROM sn</text>
+    <text x="44" y="104">WHERE Subject='李华'</text>
+    <text x="44" y="120">  AND Predicate='朋友';</text>
+    <text x="44" y="142" fill="#8f3d1c">SELECT DISTINCT sn2.Object</text>
+    <text x="44" y="158">FROM sn sn1 JOIN sn sn2</text>
+    <text x="44" y="174">  ON sn1.Object=sn2.Subject</text>
+    <text x="44" y="190">WHERE sn1.Subject='李华'</text>
+    <text x="44" y="206">  AND sn1.Predicate='朋友'</text>
+    <text x="44" y="222">  AND sn2.Predicate='朋友';</text>
+  </g>
+  <text x="470" y="38" font-size="12" font-weight="600" fill="#1f4d64">图库：把路径写成图的形状</text>
+  <rect x="460" y="50" width="370" height="180" rx="8" fill="#ffffff" stroke="#cfdde4"></rect>
+  <g font-family="monospace" font-size="10.5" fill="#1f4d64">
+    <text x="476" y="80">MATCH (a:Person {name:'李华'})</text>
+    <text x="476" y="100">      -[:FRIEND*2]-&gt;(b)</text>
+    <text x="476" y="120">WHERE NOT (a)-[:FRIEND]-&gt;(b)</text>
+    <text x="476" y="140">  AND b &lt;&gt; a</text>
+    <text x="476" y="160">RETURN DISTINCT b.name</text>
+  </g>
+  <text x="476" y="192" font-size="10.5" fill="#6d747e">FRIEND*2 直接表示“走两条边”，</text>
+  <text x="476" y="212" font-size="10.5" fill="#6d747e">不用管中间那张临时表。</text>
+  <rect x="30" y="256" width="800" height="104" rx="8" fill="#f4f1e9"></rect>
+  <text x="46" y="282" font-size="11.5" fill="#3d444d">两边要做的事完全一样：先从李华出发，沿朋友边走两步，再排除一步能到的人和起点。</text>
+  <text x="46" y="306" font-size="11.5" fill="#8f3d1c">差别在“怎么找到下一跳”。关系库每次都要靠索引重新定位一行，图库是顺着指针走过去。</text>
+  <text x="46" y="332" font-size="11.5" fill="#6d747e">跳数越多，这个差别被放得越大。四跳、五跳之后，SQL 的长度和耗时都会失控。</text>
+</svg>
+
+<p><em>同一条路径，两种表达。写法的差异不是语法糖，背后是访问路径的差异：一个靠索引反复定位，一个靠指针直接走过去。</em></p>
+<blockquote>
+<p><strong>为什么多跳查询在关系库里会越来越慢，而在图库里几乎不变慢？</strong></p>
+<p>关系库每次要回答“谁是李华的朋友”，都得去索引里查一遍，再把行拼起来。图库把“谁是我的邻居”这件事直接存在节点里，读节点就知道，不用查任何索引。<code>访问路径</code>决定了这一步要不要绕路。</p>
+</blockquote>
+<h2 id="存储到底存什么"><a href="#存储到底存什么" class="headerlink" title="存储到底存什么"></a>存储到底存什么</h2><p>图谱的存储对象就三样：实体、关系、属性。基本单元是三元组，头实体、关系、尾实体。所有存储方案的区别，只在于这三样东西怎么摆到磁盘上。</p>
+<svg width="100%" style="max-width:860px;height:auto" viewBox="0 0 860 300" role="img" aria-label="三元组与两种存储结构">
+  <rect width="860" height="300" fill="#fdfbf6"></rect>
+  <text x="40" y="36" font-size="11.5" fill="#6d747e">一条三元组</text>
+  <rect x="56" y="52" width="110" height="46" rx="7" fill="#e9f2f6" stroke="#2f6f8f"></rect>
+  <text x="111" y="80" font-size="13" fill="#1f4d64" text-anchor="middle">李华</text>
+  <rect x="296" y="52" width="110" height="46" rx="7" fill="#f6e7c8" stroke="#c9ad74"></rect>
+  <text x="351" y="80" font-size="13" fill="#6b5320" text-anchor="middle">朋友</text>
+  <rect x="536" y="52" width="110" height="46" rx="7" fill="#e9f2f6" stroke="#2f6f8f"></rect>
+  <text x="591" y="80" font-size="13" fill="#1f4d64" text-anchor="middle">李想</text>
+  <line x1="166" y1="75" x2="292" y2="75" stroke="#2f6f8f" stroke-width="1.6" marker-end="url(#e1)"></line>
+  <line x1="406" y1="75" x2="532" y2="75" stroke="#2f6f8f" stroke-width="1.6" marker-end="url(#e1)"></line>
+  <text x="111" y="116" font-size="10" fill="#6d747e" text-anchor="middle">头实体</text>
+  <text x="351" y="116" font-size="10" fill="#6d747e" text-anchor="middle">关系</text>
+  <text x="591" y="116" font-size="10" fill="#6d747e" text-anchor="middle">尾实体</text>
+  <rect x="56" y="150" width="330" height="126" rx="9" fill="#ffffff" stroke="#e4e0d6"></rect>
+  <text x="72" y="174" font-size="11.5" font-weight="600" fill="#3d444d">存进二维表</text>
+  <rect x="72" y="188" width="298" height="24" fill="#f4f1e9"></rect>
+  <text x="82" y="205" font-size="10" fill="#3d444d">Subject　Predicate　Object</text>
+  <text x="82" y="228" font-size="10" fill="#6d747e">李华　　　朋友　　　　李想</text>
+  <text x="82" y="248" font-size="10" fill="#6d747e">李华　　　朋友　　　　王平</text>
+  <text x="82" y="268" font-size="10" fill="#6d747e">李想　　　父亲　　　　李尚</text>
+  <rect x="474" y="150" width="330" height="126" rx="9" fill="#ffffff" stroke="#cfdde4"></rect>
+  <text x="490" y="174" font-size="11.5" font-weight="600" fill="#1f4d64">存进图结构</text>
+  <circle cx="524" cy="222" r="18" fill="#e9f2f6" stroke="#2f6f8f"></circle>
+  <text x="524" y="227" font-size="10" fill="#1f4d64" text-anchor="middle">李华</text>
+  <circle cx="620" cy="200" r="18" fill="#e9f2f6" stroke="#2f6f8f"></circle>
+  <text x="620" y="205" font-size="10" fill="#1f4d64" text-anchor="middle">李想</text>
+  <circle cx="620" cy="252" r="18" fill="#e9f2f6" stroke="#2f6f8f"></circle>
+  <text x="620" y="257" font-size="10" fill="#1f4d64" text-anchor="middle">王平</text>
+  <circle cx="724" cy="222" r="18" fill="#e9f2f6" stroke="#2f6f8f"></circle>
+  <text x="724" y="227" font-size="10" fill="#1f4d64" text-anchor="middle">李尚</text>
+  <line x1="542" y1="216" x2="602" y2="203" stroke="#2f6f8f" stroke-width="1.3" marker-end="url(#e1)"></line>
+  <line x1="542" y1="228" x2="602" y2="247" stroke="#2f6f8f" stroke-width="1.3" marker-end="url(#e1)"></line>
+  <line x1="638" y1="207" x2="706" y2="218" stroke="#2f6f8f" stroke-width="1.3" marker-end="url(#e1)"></line>
+  <text x="572" y="200" font-size="9" fill="#2f6f8f">朋友</text>
+  <text x="572" y="250" font-size="9" fill="#2f6f8f">朋友</text>
+  <text x="668" y="206" font-size="9" fill="#2f6f8f">父亲</text>
+  <defs><marker id="e1" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#2f6f8f"></path></marker></defs>
+</svg>
+
+<p><em>同样的三元组，左边变成行，右边变成边。存成行的时候，关系是“两个字段的值”；存成边的时候，关系本身是一个可被访问的对象。</em></p>
+<p>知识存储跟“把数据塞进某个地方”是两件事。塞进去只管保存，存储要管的是结构、组织、联结。维基百科能让人顺着一个条目跳到另一个条目，靠的就是分类和链接这两层组织，不是靠把文章堆在一个目录里。</p>
+<h2 id="三元组表"><a href="#三元组表" class="headerlink" title="三元组表"></a>三元组表</h2><p>最直接的做法是把三元组映射成一行三列。表里三个字段：Subject、Predicate、Object。建表语句只有三行，任何关系库都能跑。</p>
+<table>
+<thead>
+<tr>
+<th>Subject</th>
+<th>Predicate</th>
+<th>Object</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>李华</td>
+<td>朋友</td>
+<td>李想</td>
+</tr>
+<tr>
+<td>李华</td>
+<td>朋友</td>
+<td>王平</td>
+</tr>
+<tr>
+<td>李想</td>
+<td>朋友</td>
+<td>田英</td>
+</tr>
+<tr>
+<td>李想</td>
+<td>朋友</td>
+<td>刘强</td>
+</tr>
+<tr>
+<td>李华</td>
+<td>父亲</td>
+<td>李尚</td>
+</tr>
+<tr>
+<td>王平</td>
+<td>同事</td>
+<td>丁原</td>
+</tr>
+</tbody></table>
+<p>这种表有个好处：任何三元组都能进来，不需要提前知道有哪些关系类型。查“李华的朋友”就是一条 WHERE，索引建在 Subject 上，一次定位。</p>
+<p>索引是这张表能用的前提。没有索引，每次查询都要全表扫描；有了索引，按实体或按关系都能快速定位。代价是存储变大、写入变慢，因为每插一行都要维护索引。</p>
+<h2 id="它的三个麻烦"><a href="#它的三个麻烦" class="headerlink" title="它的三个麻烦"></a>它的三个麻烦</h2><p>三元组表在原型阶段很好用，规模上去之后三个问题会依次冒出来。</p>
+<p>第一个是表结构固定。三元组表本身很灵活，但一旦要给实体加属性，就得加列或者另起一张表。知识图谱是不断生长的，新概念、新关系随时出现，而关系库的表结构必须在设计时定死。</p>
+<p>第二个是改表。图谱每扩展一次，可能就是一张新表、一批新列、一次数据迁移。生产环境里改表通常要停机，次数一多，维护成本就压不住了。</p>
+<p>第三个是多跳查询。这是最要命的。</p>
+<svg width="100%" style="max-width:860px;height:auto" viewBox="0 0 860 320" role="img" aria-label="查询开销随跳数增长的趋势">
+  <rect width="860" height="320" fill="#fdfbf6"></rect>
+  <line x1="90" y1="250" x2="700" y2="250" stroke="#cfd6da" stroke-width="1.2"></line>
+  <line x1="90" y1="250" x2="90" y2="50" stroke="#cfd6da" stroke-width="1.2"></line>
+  <text x="395" y="286" font-size="11.5" fill="#6d747e" text-anchor="middle">查询跳数</text>
+  <text x="70" y="150" font-size="11.5" fill="#6d747e" text-anchor="end" transform="rotate(-90 70 150)">查询开销</text>
+  <text x="130" y="266" font-size="10.5" fill="#6d747e" text-anchor="middle">1 跳</text>
+  <text x="280" y="266" font-size="10.5" fill="#6d747e" text-anchor="middle">2 跳</text>
+  <text x="430" y="266" font-size="10.5" fill="#6d747e" text-anchor="middle">3 跳</text>
+  <text x="580" y="266" font-size="10.5" fill="#6d747e" text-anchor="middle">4 跳</text>
+  <path d="M130,238 C240,232 330,196 430,140 C520,92 620,66 680,58" fill="none" stroke="#b4552d" stroke-width="2.4"></path>
+  <path d="M130,238 C240,232 330,222 430,214 C520,208 620,202 680,198" fill="none" stroke="#2f6f8f" stroke-width="2.4"></path>
+  <text x="610" y="44" font-size="11" fill="#b4552d">关系库：每跳一次索引查找</text>
+  <text x="610" y="188" font-size="11" fill="#2f6f8f">图库：每跳一次指针读取</text>
+  <text x="120" y="234" font-size="10" fill="#8a8175">起点相近</text>
+  <rect x="60" y="296" width="740" height="0" fill="none"></rect>
+  <text x="90" y="308" font-size="10.5" fill="#6d747e">曲线是趋势示意，不是实测数据。两条线的差距来自访问路径，不是引擎实现的好坏。</text>
+</svg>
+
+<p><em>一跳的时候两者差不多，因为都只需要一次定位。跳数增加后，关系库每跳都要重新走一遍索引，图库只是顺着已有的指针往前挪一步。</em></p>
+<p>从写法上也能看出成本。两跳要自连接，三跳要三张表连起来，四跳往上 SQL 基本没法读。递归查询虽然 SQL 标准里有，但各家实现差异大，优化器也不擅长。</p>
+<h2 id="属性表与二元表"><a href="#属性表与二元表" class="headerlink" title="属性表与二元表"></a>属性表与二元表</h2><p>三元组表把属性和关系混在一张表里。如果按实体类型拆开，每类实体一张属性表，每类关系一张二元表，结构和语义都清楚很多。</p>
+<svg width="100%" style="max-width:860px;height:auto" viewBox="0 0 860 320" role="img" aria-label="属性表与二元表的协同">
+  <rect width="860" height="320" fill="#fdfbf6"></rect>
+  <text x="40" y="36" font-size="11.5" font-weight="600" fill="#3d444d">属性表：一行一个实体</text>
+  <rect x="30" y="50" width="470" height="120" rx="8" fill="#ffffff" stroke="#e4e0d6"></rect>
+  <rect x="42" y="62" width="446" height="26" fill="#f4f1e9"></rect>
+  <text x="52" y="80" font-size="10" fill="#3d444d">ID　姓名　　年龄　性别　城市</text>
+  <line x1="42" y1="96" x2="488" y2="96" stroke="#e4e0d6"></line>
+  <text x="52" y="116" font-size="10" fill="#6d747e">1　　李华　　17　　男　　青岛</text>
+  <text x="52" y="136" font-size="10" fill="#6d747e">2　　王平　　24　　男　　深圳</text>
+  <text x="52" y="156" font-size="10" fill="#6d747e">3　　李想　　17　　女　　北京</text>
+  <text x="40" y="204" font-size="11.5" font-weight="600" fill="#3d444d">二元表：一表一类关系</text>
+  <rect x="30" y="218" width="470" height="86" rx="8" fill="#ffffff" stroke="#e4e0d6"></rect>
+  <rect x="42" y="230" width="446" height="24" fill="#e9f2f6"></rect>
+  <text x="52" y="247" font-size="10" fill="#1f4d64">朋友表：HeadID　TailID</text>
+  <line x1="42" y1="262" x2="488" y2="262" stroke="#e4e0d6"></line>
+  <text x="52" y="280" font-size="10" fill="#6d747e">1　　2　　　　｜　　1　　3</text>
+  <text x="52" y="298" font-size="10" fill="#6d747e">靠 ID 关联，不重复存姓名年龄</text>
+  <path d="M510,120 L560,120" stroke="#8a8175" stroke-width="1.4" marker-end="url(#e2)"></path>
+  <text x="535" y="110" font-size="10" fill="#8a8175" text-anchor="middle">ID</text>
+  <rect x="582" y="60" width="248" height="76" rx="8" fill="#eaf3ee" stroke="#3f7a5a"></rect>
+  <text x="598" y="84" font-size="11" fill="#2c6a49">查「某人的亲属及其职业」</text>
+  <text x="598" y="106" font-size="10.5" fill="#4b7f61">先在二元表定位亲属 ID</text>
+  <text x="598" y="126" font-size="10.5" fill="#4b7f61">再回属性表取详情</text>
+  <rect x="582" y="152" width="248" height="76" rx="8" fill="#fbeee7" stroke="#f0d5c7"></rect>
+  <text x="598" y="176" font-size="11" fill="#8f3d1c">代价一：表数量爆炸</text>
+  <text x="598" y="198" font-size="10.5" fill="#b4552d">实体类别上千，就要上千张表</text>
+  <text x="598" y="218" font-size="10.5" fill="#b4552d">维护成本随类别数线性涨</text>
+  <rect x="582" y="244" width="248" height="76" rx="8" fill="#fbeee7" stroke="#f0d5c7"></rect>
+  <text x="598" y="268" font-size="11" fill="#8f3d1c">代价二：空值</text>
+  <text x="598" y="290" font-size="10.5" fill="#b4552d">同类实体属性参差，列只能留空</text>
+</svg>
+
+<p><em>两表协同把“实体是什么”和“实体之间怎样”分开存，这是关系建模里最成熟的套路。它的问题是图谱太杂：类别一多，表就多；属性一参差，列就空。</em></p>
+<p>空值这件事值得细说。同一类实体里，有的有手机号，有的有邮箱，有的两者都有，有的都没有。属性表必须把所有可能出现的属性都建成列，用不上的填 NULL。列一多，行很稀疏，查询时要跳过大量空位，空间和速度都被拖累。</p>
+<h2 id="索引表"><a href="#索引表" class="headerlink" title="索引表"></a>索引表</h2><p>不管用哪种组织方式，真正决定查询快慢的是索引。索引表是一种显式的做法：单独建一张表，一列存查询键，一列存主表记录的引用。</p>
+<svg width="100%" style="max-width:860px;height:auto" viewBox="0 0 860 280" role="img" aria-label="索引表的结构">
+  <rect width="860" height="280" fill="#fdfbf6"></rect>
+  <rect x="40" y="60" width="180" height="42" rx="7" fill="#e9f2f6" stroke="#2f6f8f"></rect>
+  <text x="130" y="87" font-size="12" fill="#1f4d64" text-anchor="middle">查询：姓名=李华</text>
+  <path d="M224,81 L296,81" stroke="#8a8175" stroke-width="1.4" marker-end="url(#e2)"></path>
+  <rect x="300" y="46" width="200" height="130" rx="8" fill="#ffffff" stroke="#cfdde4"></rect>
+  <text x="316" y="68" font-size="10.5" font-weight="600" fill="#1f4d64">姓名索引表</text>
+  <rect x="310" y="78" width="180" height="22" fill="#e9f2f6"></rect>
+  <text x="318" y="93" font-size="9.5" fill="#1f4d64">索引键　　记录引用</text>
+  <text x="318" y="114" font-size="9.5" fill="#3d444d">李华　　　→ ID 1</text>
+  <text x="318" y="132" font-size="9.5" fill="#3d444d">王平　　　→ ID 2</text>
+  <text x="318" y="150" font-size="9.5" fill="#3d444d">李想　　　→ ID 3</text>
+  <text x="318" y="168" font-size="9.5" fill="#3d444d">田英　　　→ ID 7</text>
+  <path d="M504,110 L576,110" stroke="#8a8175" stroke-width="1.4" marker-end="url(#e2)"></path>
+  <text x="540" y="100" font-size="10" fill="#8a8175" text-anchor="middle">回表</text>
+  <rect x="580" y="46" width="250" height="130" rx="8" fill="#ffffff" stroke="#e4e0d6"></rect>
+  <text x="596" y="68" font-size="10.5" font-weight="600" fill="#3d444d">人物主表</text>
+  <rect x="590" y="78" width="230" height="22" fill="#f4f1e9"></rect>
+  <text x="598" y="93" font-size="9.5" fill="#3d444d">ID　姓名　年龄　城市</text>
+  <text x="598" y="114" font-size="9.5" fill="#8f3d1c">1　 李华　 17　 青岛</text>
+  <text x="598" y="132" font-size="9.5" fill="#6d747e">2　 王平　 24　 深圳</text>
+  <text x="598" y="150" font-size="9.5" fill="#6d747e">3　 李想　 17　 北京</text>
+  <text x="598" y="168" font-size="9.5" fill="#6d747e">7　 田英　 19　 北京</text>
+  <text x="40" y="216" font-size="11" fill="#3d444d">先查索引拿到 ID，再按 ID 回主表取整行。两列的表把“找”和“取”拆开了。</text>
+  <text x="40" y="240" font-size="11" fill="#8f3d1c">代价：索引本身占空间，主表每次写入都要同步维护索引，写多读少的场景会拖慢。</text>
+  <text x="40" y="264" font-size="11" fill="#6d747e">选索引键的依据是“查询频率高”且“取值重复度低”，姓名比性别更适合建索引。</text>
+  <defs><marker id="e2" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#8a8175"></path></marker></defs>
+</svg>
+
+<p><em>索引表不改变主表结构，只是在旁边加了一条快速通道。它解决“找到那一行”的问题，解决不了“找到之后要走很多行”的问题。</em></p>
+<p>三种关系库方案各管一段：三元组表管灵活，属性表和二元表管结构清晰，索引表管查询速度。它们可以在同一个库里并存，按查询模式组合使用。但三者共享同一个天花板：每次跳转都要经过一次索引查找，跳数一多，成本按跳数累加。</p>
+<h2 id="免索引邻接"><a href="#免索引邻接" class="headerlink" title="免索引邻接"></a>免索引邻接</h2><p>关系库里找“李华的朋友的朋友”，每一跳都要查一次索引：先定位到李华那一行，再从关系表里筛出他的朋友，接着对每个朋友重复一遍。跳得越深，查索引的次数越多。</p>
+<p>图数据库换了个思路。既然每次跳转最耗时的部分是“查索引找邻居”，那就把邻居直接记在节点身上。</p>
+<svg width="100%" style="max-width:860px;height:auto" viewBox="0 0 860 360" role="img" aria-label="索引查找与免索引邻接的对比">
+  <rect width="860" height="360" fill="#fdfbf6"></rect>
+  <text x="40" y="36" font-size="12" font-weight="600" fill="#8a8175">关系库：每跳都要查一次索引</text>
+  <rect x="30" y="50" width="396" height="270" rx="9" fill="#ffffff" stroke="#e4e0d6"></rect>
+  <rect x="48" y="70" width="120" height="34" rx="6" fill="#f4f1e9" stroke="#e2dcc9"></rect>
+  <text x="108" y="92" font-size="10.5" fill="#3d444d" text-anchor="middle">李华</text>
+  <path d="M172,87 L216,87" stroke="#8a8175" stroke-width="1.2" marker-end="url(#e2)"></path>
+  <rect x="220" y="70" width="90" height="34" rx="6" fill="#fbeee7" stroke="#f0d5c7"></rect>
+  <text x="265" y="92" font-size="10" fill="#8f3d1c" text-anchor="middle">查索引</text>
+  <path d="M314,87 L358,87" stroke="#8a8175" stroke-width="1.2" marker-end="url(#e2)"></path>
+  <rect x="362" y="70" width="50" height="34" rx="6" fill="#f4f1e9" stroke="#e2dcc9"></rect>
+  <text x="387" y="92" font-size="10.5" fill="#3d444d" text-anchor="middle">李想</text>
+  <path d="M108,108 L108,150" stroke="#8a8175" stroke-width="1.2" marker-end="url(#e2)"></path>
+  <rect x="48" y="154" width="120" height="34" rx="6" fill="#f4f1e9" stroke="#e2dcc9"></rect>
+  <text x="108" y="176" font-size="10.5" fill="#3d444d" text-anchor="middle">李想</text>
+  <path d="M172,171 L216,171" stroke="#8a8175" stroke-width="1.2" marker-end="url(#e2)"></path>
+  <rect x="220" y="154" width="90" height="34" rx="6" fill="#fbeee7" stroke="#f0d5c7"></rect>
+  <text x="265" y="176" font-size="10" fill="#8f3d1c" text-anchor="middle">再查索引</text>
+  <path d="M314,171 L358,171" stroke="#8a8175" stroke-width="1.2" marker-end="url(#e2)"></path>
+  <rect x="362" y="154" width="50" height="34" rx="6" fill="#f4f1e9" stroke="#e2dcc9"></rect>
+  <text x="387" y="176" font-size="10.5" fill="#3d444d" text-anchor="middle">田英</text>
+  <path d="M108,192 L108,228" stroke="#8a8175" stroke-width="1.2" marker-end="url(#e2)"></path>
+  <rect x="48" y="232" width="120" height="34" rx="6" fill="#f4f1e9" stroke="#e2dcc9"></rect>
+  <text x="108" y="254" font-size="10.5" fill="#3d444d" text-anchor="middle">田英</text>
+  <path d="M172,249 L216,249" stroke="#8a8175" stroke-width="1.2" marker-end="url(#e2)"></path>
+  <rect x="220" y="232" width="90" height="34" rx="6" fill="#fbeee7" stroke="#f0d5c7"></rect>
+  <text x="265" y="254" font-size="10" fill="#8f3d1c" text-anchor="middle">第三次查</text>
+  <text x="48" y="294" font-size="10.5" fill="#8f3d1c">三步三次索引查找，每次都从全局结构中定位</text>
+  <line x1="446" y1="60" x2="446" y2="310" stroke="#e4e0d6" stroke-dasharray="4 4"></line>
+  <text x="474" y="36" font-size="12" font-weight="600" fill="#1f4d64">图库：邻居记在节点里</text>
+  <rect x="464" y="50" width="370" height="270" rx="9" fill="#ffffff" stroke="#cfdde4"></rect>
+  <circle cx="530" cy="176" r="26" fill="#e9f2f6" stroke="#2f6f8f" stroke-width="1.6"></circle>
+  <text x="530" y="181" font-size="11" fill="#1f4d64" text-anchor="middle">李华</text>
+  <circle cx="656" cy="106" r="25" fill="#e9f2f6" stroke="#2f6f8f"></circle>
+  <text x="656" y="111" font-size="10.5" fill="#1f4d64" text-anchor="middle">李想</text>
+  <circle cx="656" cy="246" r="25" fill="#e9f2f6" stroke="#2f6f8f"></circle>
+  <text x="656" y="251" font-size="10.5" fill="#1f4d64" text-anchor="middle">王平</text>
+  <circle cx="776" cy="176" r="25" fill="#e9f2f6" stroke="#2f6f8f"></circle>
+  <text x="776" y="181" font-size="10.5" fill="#1f4d64" text-anchor="middle">李尚</text>
+  <line x1="556" y1="170" x2="630" y2="116" stroke="#2f6f8f" stroke-width="1.6" marker-end="url(#e1)"></line>
+  <line x1="556" y1="182" x2="630" y2="236" stroke="#2f6f8f" stroke-width="1.6" marker-end="url(#e1)"></line>
+  <line x1="548" y1="196" x2="748" y2="182" stroke="#2f6f8f" stroke-width="1.6" marker-end="url(#e1)"></line>
+  <text x="470" y="142" font-size="9" fill="#2f6f8f" text-anchor="end">指针</text>
+  <text x="580" y="256" font-size="9" fill="#2f6f8f">指针</text>
+  <text x="482" y="292" font-size="10.5" fill="#1f4d64">读出节点，邻居地址就在里面，一跳一次寻址</text>
+  <text x="482" y="308" font-size="10" fill="#6d747e">与全图规模无关，只看这一个节点有几个邻居</text>
+</svg>
+
+<p><em>免索引邻接的意思是：每个节点自己维护着指向邻居的引用，像一份只属于自己的微索引。定位邻居不必查全局索引，所以查询时间只跟局部大小有关。</em></p>
+<p>这个差别听起来不大，但影响是指数级的。关系库的成本随跳数线性累加，每一跳都要跟全表规模打交道；图库的成本只跟“这一跳能走到几个邻居”有关，跟你库里有一亿还是一千亿个节点没关系。</p>
+<h2 id="物理上怎么放"><a href="#物理上怎么放" class="headerlink" title="物理上怎么放"></a>物理上怎么放</h2><p>要让指针这件事成立，存储结构得专门设计。主流原生图库把数据分成三类存储块：节点、关系、属性。</p>
+<svg width="100%" style="max-width:860px;height:auto" viewBox="0 0 860 340" role="img" aria-label="原生图库的三类存储块与两种属性存放方式">
+  <rect width="860" height="340" fill="#fdfbf6"></rect>
+  <text x="40" y="36" font-size="11.5" font-weight="600" fill="#3d444d">三类存储文件</text>
+  <rect x="30" y="50" width="240" height="96" rx="8" fill="#e9f2f6" stroke="#2f6f8f"></rect>
+  <text x="46" y="74" font-size="11.5" font-weight="600" fill="#1f4d64">节点存储</text>
+  <text x="46" y="96" font-size="10.5" fill="#3d444d">每个节点定长</text>
+  <text x="46" y="116" font-size="10.5" fill="#3d444d">标签、属性指针</text>
+  <text x="46" y="136" font-size="10.5" fill="#3d444d">第一条关系的位置</text>
+  <rect x="30" y="158" width="240" height="96" rx="8" fill="#f6e7c8" stroke="#c9ad74"></rect>
+  <text x="46" y="182" font-size="11.5" font-weight="600" fill="#6b5320">关系存储</text>
+  <text x="46" y="204" font-size="10.5" fill="#7a5f28">每条关系一个结构体</text>
+  <text x="46" y="224" font-size="10.5" fill="#7a5f28">起点、终点、类型</text>
+  <text x="46" y="244" font-size="10.5" fill="#7a5f28">按起点排序，便于扫描</text>
+  <rect x="30" y="266" width="240" height="60" rx="8" fill="#fbeee7" stroke="#f0d5c7"></rect>
+  <text x="46" y="290" font-size="11.5" font-weight="600" fill="#8f3d1c">属性存储</text>
+  <text x="46" y="312" font-size="10.5" fill="#b4552d">内联或动态，见右图</text>
+  <text x="314" y="70" font-size="11.5" font-weight="600" fill="#1f4d64">内联：属性跟着节点走</text>
+  <rect x="300" y="82" width="520" height="76" rx="8" fill="#ffffff" stroke="#cfdde4"></rect>
+  <rect x="312" y="94" width="150" height="52" rx="5" fill="#e9f2f6" stroke="#2f6f8f"></rect>
+  <text x="387" y="114" font-size="9.5" fill="#1f4d64" text-anchor="middle">节点标识</text>
+  <text x="387" y="134" font-size="9.5" fill="#1f4d64" text-anchor="middle">name / age / city</text>
+  <text x="480" y="114" font-size="10.5" fill="#3d444d">属性与标识物理连续，一次寻址读完</text>
+  <text x="480" y="136" font-size="10" fill="#6d747e">适合小、且查得频繁的属性</text>
+  <text x="314" y="190" font-size="11.5" font-weight="600" fill="#8f3d1c">动态：属性单独放一片</text>
+  <rect x="300" y="202" width="520" height="76" rx="8" fill="#ffffff" stroke="#f0d5c7"></rect>
+  <rect x="312" y="214" width="120" height="52" rx="5" fill="#e9f2f6" stroke="#2f6f8f"></rect>
+  <text x="372" y="240" font-size="9.5" fill="#1f4d64" text-anchor="middle">节点标识</text>
+  <text x="372" y="258" font-size="9.5" fill="#6d747e">+ 引用</text>
+  <path d="M436,240 L492,240" stroke="#b4552d" stroke-width="1.4" marker-end="url(#e3)"></path>
+  <rect x="496" y="214" width="130" height="52" rx="5" fill="#fbeee7" stroke="#f0d5c7"></rect>
+  <text x="561" y="240" font-size="9.5" fill="#8f3d1c" text-anchor="middle">属性块</text>
+  <text x="561" y="258" font-size="9.5" fill="#b4552d" text-anchor="middle">可伸缩</text>
+  <text x="644" y="234" font-size="10.5" fill="#3d444d">多一次跳转，</text>
+  <text x="644" y="254" font-size="10.5" fill="#3d444d">换来属性可增删</text>
+  <text x="314" y="306" font-size="10.5" fill="#6d747e">选择的依据：属性大小 × 访问频率。工程上两种并存，按属性逐个决定。</text>
+  <defs><marker id="e3" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#b4552d"></path></marker></defs>
+</svg>
+
+<p><em>节点定长、关系定长，是这整套设计成立的前提。定长意味着可以用偏移量直接算出位置，不必扫描。属性长度不定，于是分成内联和动态两条路。</em></p>
+<p>遍历的过程也顺着这个结构走：读节点文件、定位起点、加载标签和属性、按策略取邻居、预加载缓存、到终止条件返回。缓存的作用是减少磁盘 I&#x2F;O，因为一次预读能把相邻节点一起带进来。</p>
+<h2 id="Cypher"><a href="#Cypher" class="headerlink" title="Cypher"></a>Cypher</h2><p>Cypher 是 Neo4j 的查询语言，特点是拿 ASCII 字符把图直接画出来。节点用圆括号，关系用箭头，模式长什么样，语法就长什么样。</p>
+<svg width="100%" style="max-width:860px;height:auto" viewBox="0 0 860 330" role="img" aria-label="Cypher 的模式匹配语法">
+  <rect width="860" height="330" fill="#fdfbf6"></rect>
+  <text x="40" y="36" font-size="11.5" fill="#6d747e">写出来的模式</text>
+  <text x="56" y="76" font-size="18" fill="#1f4d64" font-family="monospace">(a:Person)-[:FRIEND]-&gt;(b)</text>
+  <text x="56" y="102" font-size="9.5" fill="#6d747e">圆括号</text>
+  <text x="106" y="102" font-size="9.5" fill="#6d747e">标签</text>
+  <text x="180" y="102" font-size="9.5" fill="#6d747e">关系类型</text>
+  <text x="300" y="102" font-size="9.5" fill="#6d747e">方向</text>
+  <text x="40" y="136" font-size="11.5" fill="#6d747e">对应的图</text>
+  <circle cx="90" cy="182" r="24" fill="#e9f2f6" stroke="#2f6f8f"></circle>
+  <text x="90" y="187" font-size="9.5" fill="#1f4d64" text-anchor="middle">a:Person</text>
+  <circle cx="290" cy="182" r="24" fill="#e9f2f6" stroke="#2f6f8f"></circle>
+  <text x="290" y="187" font-size="9.5" fill="#1f4d64" text-anchor="middle">b</text>
+  <line x1="116" y1="182" x2="262" y2="182" stroke="#2f6f8f" stroke-width="1.8" marker-end="url(#e1)"></line>
+  <text x="189" y="172" font-size="10" fill="#2f6f8f" text-anchor="middle">FRIEND</text>
+  <rect x="40" y="228" width="800" height="88" rx="8" fill="#ffffff" stroke="#e4e0d6"></rect>
+  <text x="56" y="252" font-size="11" font-weight="600" fill="#3d444d">五个常用命令</text>
+  <text x="56" y="276" font-size="10.5" fill="#1f4d64" font-family="monospace">MATCH</text>
+  <text x="120" y="276" font-size="10" fill="#6d747e">按模式找</text>
+  <text x="200" y="276" font-size="10.5" fill="#1f4d64" font-family="monospace">CREATE</text>
+  <text x="264" y="276" font-size="10" fill="#6d747e">建节点与关系</text>
+  <text x="360" y="276" font-size="10.5" fill="#1f4d64" font-family="monospace">WHERE</text>
+  <text x="416" y="276" font-size="10" fill="#6d747e">加条件</text>
+  <text x="486" y="276" font-size="10.5" fill="#1f4d64" font-family="monospace">RETURN</text>
+  <text x="552" y="276" font-size="10" fill="#6d747e">返回结果</text>
+  <text x="632" y="276" font-size="10.5" fill="#1f4d64" font-family="monospace">DELETE</text>
+  <text x="696" y="276" font-size="10" fill="#6d747e">删除</text>
+  <text x="56" y="300" font-size="10" fill="#6d747e">变长路径用 *2 表示两跳，*3..5 表示三到五跳；MERGE 则是“有就不建，没有才建”。</text>
+</svg>
+
+<p><em>声明式的意思是只描述要找什么形状的子图，不写怎么遍历。走法由引擎决定，这也是它比手写 JOIN 短的原因。</em></p>
+<p>几个常用写法记一下。CREATE 建节点和关系，MATCH 按模式定位，WHERE 加过滤，RETURN 返回，DELETE 删除。删除有一个坑：DELETE 只删节点本身，连着的关系会阻止删除；DETACH DELETE 才会把关系一起带走。MERGE 的语义是“不存在才创建”，适合重复执行而不产生副本的场景。</p>
+<blockquote>
+<p><strong>一个容易忽略的细节。</strong>Neo4j 的版本和 JDK 版本必须对得上，对不上启动不了。5.x 要 JDK 17，4.0 到 4.4 要 JDK 11，3.5 要 JDK 8。社区版单个实例可以撑到 320 亿节点和关系，默认端口 7474，初始账号密码都是 neo4j。</p>
+</blockquote>
+<h2 id="三代演进"><a href="#三代演进" class="headerlink" title="三代演进"></a>三代演进</h2><p>图数据库不是一步到位的，三代解决的是三个不同的问题。</p>
+<svg width="100%" style="max-width:860px;height:auto" viewBox="0 0 860 300" role="img" aria-label="图数据库的三代演进">
+  <rect width="860" height="300" fill="#fdfbf6"></rect>
+  <line x1="70" y1="120" x2="800" y2="120" stroke="#cfd6da" stroke-width="2"></line>
+  <circle cx="160" cy="120" r="9" fill="#fff" stroke="#2f6f8f" stroke-width="2"></circle>
+  <text x="160" y="96" font-size="11" fill="#2f6f8f" text-anchor="middle">2002—2010</text>
+  <text x="160" y="148" font-size="12.5" font-weight="600" fill="#1b1d21" text-anchor="middle">单机原生</text>
+  <text x="160" y="172" font-size="10.5" fill="#6d747e" text-anchor="middle">Neo4j 为代表</text>
+  <text x="160" y="194" font-size="10" fill="#6d747e" text-anchor="middle">先解决“存得对、查得快”</text>
+  <text x="160" y="214" font-size="10" fill="#8f3d1c" text-anchor="middle">受单机上限约束</text>
+  <circle cx="430" cy="120" r="9" fill="#fff" stroke="#8a6a2f" stroke-width="2"></circle>
+  <text x="430" y="96" font-size="11" fill="#8a6a2f" text-anchor="middle">2010—2016</text>
+  <text x="430" y="148" font-size="12.5" font-weight="600" fill="#1b1d21" text-anchor="middle">分布式非原生</text>
+  <text x="430" y="172" font-size="10.5" fill="#6d747e" text-anchor="middle">JanusGraph 为代表</text>
+  <text x="430" y="194" font-size="10" fill="#6d747e" text-anchor="middle">先解决“存得下”</text>
+  <text x="430" y="214" font-size="10" fill="#8f3d1c" text-anchor="middle">多跳深链查询变慢</text>
+  <circle cx="700" cy="120" r="10" fill="#eaf3ee" stroke="#3f7a5a" stroke-width="2.2"></circle>
+  <text x="700" y="96" font-size="11" fill="#3f7a5a" text-anchor="middle">2017 至今</text>
+  <text x="700" y="148" font-size="12.5" font-weight="600" fill="#1b1d21" text-anchor="middle">原生分布式</text>
+  <text x="700" y="172" font-size="10.5" fill="#6d747e" text-anchor="middle">存算兼顾，融合 AI</text>
+  <text x="700" y="194" font-size="10" fill="#6d747e" text-anchor="middle">大规模 + 并行计算</text>
+  <text x="700" y="214" font-size="10" fill="#2c6a49" text-anchor="middle">实时图分析成为目标</text>
+  <text x="70" y="256" font-size="11" fill="#6d747e">每一代都在补上一代的短板，代价是另一样东西：</text>
+  <text x="70" y="278" font-size="11" fill="#3d444d">原生换效率，分布式换规模，原生分布式想把两边都拿回来。</text>
+</svg>
+
+<p><em>三代的分界线是“原生存储”和“分布式”。先要原生存储的性能，就得上单机；先要分布式，就得放弃原生；两样都要，得等到存储引擎重新设计。</em></p>
+<h2 id="怎么选"><a href="#怎么选" class="headerlink" title="怎么选"></a>怎么选</h2><p>选型看四件事：规模、关系复杂度、查询模式、成本。</p>
+<table>
+<thead>
+<tr>
+<th>维度</th>
+<th>关系数据库</th>
+<th>原生图数据库</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>数据模型</td>
+<td>行与列，三元组映射成记录</td>
+<td>节点与边，与图谱同构</td>
+</tr>
+<tr>
+<td>关系表达</td>
+<td>靠外键隐式表示</td>
+<td>关系本身是可查询的对象</td>
+</tr>
+<tr>
+<td>多跳查询</td>
+<td>层层 JOIN，越深越慢</td>
+<td>顺指针走，与全图规模无关</td>
+</tr>
+<tr>
+<td>结构变更</td>
+<td>改表要迁移，甚至停机</td>
+<td>加标签加属性即可</td>
+</tr>
+<tr>
+<td>事务与生态</td>
+<td>成熟，强一致，工具齐全</td>
+<td>较新，运维经验少</td>
+</tr>
+<tr>
+<td>典型场景</td>
+<td>结构化业务数据，报表与对账</td>
+<td>社交关系、风控、推荐路径</td>
+</tr>
+</tbody></table>
+<p>判断的切入点是查询形状。业务查询大多是一两跳、带强过滤条件、要事务保证对账，关系库更合适，也没必要迁移。查询经常要“走三步以上看能到谁”，比如资金流向、担保链、设备故障传播，图库的优势才显出来。</p>
+<p>还有一个现实约束：团队。图数据库的运维、备份、监控、权限体系，跟关系库是两套经验。迁移的代价不只在数据搬迁，还在人和流程。</p>
+<p>安全这一层两种库都要做。传输加密用 SSL&#x2F;TLS，存储加密有列级加密和透明数据加密两条路，后者整库加密、读写由引擎自动加解密，对应用无感。图数据还要额外考虑隐私：差分隐私往数据里加噪，让攻击者判断不出某条边是否存在；随机响应在查询侧加噪，按概率分布返回结果。两者一个动数据，一个动答案，常常配合使用。</p>
+<h2 id="自测"><a href="#自测" class="headerlink" title="自测"></a>自测</h2><details><summary>为什么属性表存知识图谱会“表爆炸”？</summary> <p>属性表按实体类型分表，一类实体一张表。通用图谱的类别可以到几千种，于是就是几千张表，还要跟着改。加上同类实体属性参差，每张表还得留一堆空列。</p></details> 
+
+<details><summary>免索引邻接为什么能让查询时间与全图规模无关？</summary> <p>因为定位邻居不需要查全局索引。节点里直接存着邻居的地址，读这个节点就知道往哪走，成本只取决于它有几个邻居，不取决于图里一共有多少节点。</p></details> 
+
+<details><summary>三元组表和属性表，什么时候选前者？</summary> <p>关系类型多、结构还在变、需要快速验证想法的时候。三元组表不预设关系种类，什么都能塞；属性表要求先想清楚有哪些字段，适合结构稳定的实体。</p></details> 
+
+<details><summary>内联存储和动态存储，判断依据是什么？</summary> <p>属性大小乘以访问频率。小而常查的放内联，读一次就拿到；大而不常查的放动态，多一次跳转但省空间，也让属性集合可以随时增删。</p></details> 
+
+<details><summary>一个已运行多年的关系库系统，多跳查询变慢，该不该迁到图库？</summary> <p>先看多跳查询占比。占比低，加索引或做物化视图更划算；占比高且是核心链路，才值得评估迁移。迁移成本不只在数据，还在团队运维经验的重新积累。</p></details> 
+</article><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/other/QUT/%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E6%95%99%E7%A8%8B/06-%E5%9B%BE%E8%A1%A8%E7%A4%BA%E5%AD%A6%E4%B9%A0%E4%B8%8E%E5%9B%BE%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/"><img class="prev-cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">06 图表示学习与图神经网络</div></div></a></div><div class="next-post pull-right"><a href="/other/QUT/%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E6%95%99%E7%A8%8B/04-%E7%9F%A5%E8%AF%86%E8%9E%8D%E5%90%88%E6%8A%80%E6%9C%AF/"><img class="next-cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">04 知识融合技术</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="anzhiyufont anzhiyu-icon-thumbs-up fa-fw" style="font-size: 1.5rem; margin-right: 4px"></i><span>喜欢这篇文章的人也看了</span></div><div class="relatedPosts-list"><div><a href="/other/QUT/%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E6%95%99%E7%A8%8B/00-%E6%95%99%E7%A8%8B%E6%80%BB%E8%A7%88/" title="00 教程总览"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/" alt="cover"><div class="content is-center"><div class="date"><i class="anzhiyufont anzhiyu-icon-calendar-days fa-fw"></i> 2026-11-06</div><div class="title">00 教程总览</div></div></a></div><div><a href="/other/QUT/%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E6%95%99%E7%A8%8B/01-%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E6%A6%82%E8%BF%B0/" title="01 知识图谱概述"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/" alt="cover"><div class="content is-center"><div class="date"><i class="anzhiyufont anzhiyu-icon-calendar-days fa-fw"></i> 2026-11-06</div><div class="title">01 知识图谱概述</div></div></a></div><div><a href="/other/QUT/%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E6%95%99%E7%A8%8B/02-%E7%9F%A5%E8%AF%86%E8%A1%A8%E7%A4%BA%E6%8A%80%E6%9C%AF/" title="02 知识表示技术"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/" alt="cover"><div class="content is-center"><div class="date"><i class="anzhiyufont anzhiyu-icon-calendar-days fa-fw"></i> 2026-11-06</div><div class="title">02 知识表示技术</div></div></a></div><div><a href="/other/QUT/%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E6%95%99%E7%A8%8B/03-%E7%9F%A5%E8%AF%86%E6%8A%BD%E5%8F%96%E6%8A%80%E6%9C%AF/" title="03 知识抽取技术"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/" alt="cover"><div class="content is-center"><div class="date"><i class="anzhiyufont anzhiyu-icon-calendar-days fa-fw"></i> 2026-11-06</div><div class="title">03 知识抽取技术</div></div></a></div><div><a href="/other/QUT/%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E6%95%99%E7%A8%8B/04-%E7%9F%A5%E8%AF%86%E8%9E%8D%E5%90%88%E6%8A%80%E6%9C%AF/" title="04 知识融合技术"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/" alt="cover"><div class="content is-center"><div class="date"><i class="anzhiyufont anzhiyu-icon-calendar-days fa-fw"></i> 2026-11-06</div><div class="title">04 知识融合技术</div></div></a></div><div><a href="/other/QUT/%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E6%95%99%E7%A8%8B/07-%E7%9F%A5%E8%AF%86%E6%8E%A8%E7%90%86%E6%8A%80%E6%9C%AF/" title="07 知识推理技术"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/" alt="cover"><div class="content is-center"><div class="date"><i class="anzhiyufont anzhiyu-icon-calendar-days fa-fw"></i> 2026-11-06</div><div class="title">07 知识推理技术</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="card-content"><div class="author-info-avatar"><img class="avatar-img" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/img/avatar.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__description">大三学生，全栈开发者，终身学习者</div><div class="author-info__bottom-group"><a class="author-info__bottom-group-left" href="/"><h1 class="author-info__name">qiuxz</h1><div class="author-info__desc"></div></a><div class="card-info-social-icons is-center"><a class="social-icon faa-parent animated-hover" href="https://github.com/qiuxzh" target="_blank" title="Github"><i class="anzhiyufont anzhiyu-icon-github"></i></a><a class="social-icon faa-parent animated-hover" href="javascript:void(0);" title="QQ" data-copy="1256227507"><i class="anzhiyufont anzhiyu-icon-qq"></i></a><a class="social-icon faa-parent animated-hover" href="javascript:void(0);" title="Email" data-copy="1256227507@qq.com"><i class="anzhiyufont anzhiyu-icon-envelope"></i></a></div></div></div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="anzhiyufont anzhiyu-icon-bars"></i><span>文章目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%90%8C%E4%B8%80%E6%9D%A1%E6%9F%A5%E8%AF%A2%EF%BC%8C%E4%B8%A4%E7%A7%8D%E5%86%99%E6%B3%95"><span class="toc-number">1.</span> <span class="toc-text">同一条查询，两种写法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AD%98%E5%82%A8%E5%88%B0%E5%BA%95%E5%AD%98%E4%BB%80%E4%B9%88"><span class="toc-number">2.</span> <span class="toc-text">存储到底存什么</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E5%85%83%E7%BB%84%E8%A1%A8"><span class="toc-number">3.</span> <span class="toc-text">三元组表</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%83%E7%9A%84%E4%B8%89%E4%B8%AA%E9%BA%BB%E7%83%A6"><span class="toc-number">4.</span> <span class="toc-text">它的三个麻烦</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B1%9E%E6%80%A7%E8%A1%A8%E4%B8%8E%E4%BA%8C%E5%85%83%E8%A1%A8"><span class="toc-number">5.</span> <span class="toc-text">属性表与二元表</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%B4%A2%E5%BC%95%E8%A1%A8"><span class="toc-number">6.</span> <span class="toc-text">索引表</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%8D%E7%B4%A2%E5%BC%95%E9%82%BB%E6%8E%A5"><span class="toc-number">7.</span> <span class="toc-text">免索引邻接</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%89%A9%E7%90%86%E4%B8%8A%E6%80%8E%E4%B9%88%E6%94%BE"><span class="toc-number">8.</span> <span class="toc-text">物理上怎么放</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Cypher"><span class="toc-number">9.</span> <span class="toc-text">Cypher</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E4%BB%A3%E6%BC%94%E8%BF%9B"><span class="toc-number">10.</span> <span class="toc-text">三代演进</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%80%8E%E4%B9%88%E9%80%89"><span class="toc-number">11.</span> <span class="toc-text">怎么选</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%87%AA%E6%B5%8B"><span class="toc-number">12.</span> <span class="toc-text">自测</span></a></li></ol></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"></div><div id="footer-bar"><div class="footer-bar-links"><div class="footer-bar-left"><div id="footer-bar-tips"><div class="copyright">&copy;2020 - 2026 By <a class="footer-bar-link" href="/" title="qiuxz" target="_blank">qiuxz</a></div></div><div id="footer-type-tips"></div></div><div class="footer-bar-right"><a class="footer-bar-link" target="_blank" rel="noopener" href="https://github.com/anzhiyu-c/hexo-theme-anzhiyu" title="主题">主题</a></div></div></div></footer></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="sidebar-site-data site-data is-center"><a href="/archives/" title="archive"><div class="headline">文章</div><div class="length-num">48</div></a><a href="/tags/" title="tag"><div class="headline">标签</div><div class="length-num">9</div></a><a href="/categories/" title="category"><div class="headline">分类</div><div class="length-num">10</div></a></div><span class="sidebar-menu-item-title">功能</span><div class="sidebar-menu-item"><a class="darkmode_switchbutton menu-child" href="javascript:void(0);" title="显示模式"><i class="anzhiyufont anzhiyu-icon-circle-half-stroke"></i><span>显示模式</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="javascript:void(0);"><span> 文章</span></a><ul class="menus_item_child"><li><a class="site-page child faa-parent animated-hover" href="/archives/"><i class="anzhiyufont anzhiyu-icon-box-archive faa-tada" style="font-size: 0.9em;"></i><span> 隧道</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><span> 关于</span></a><ul class="menus_item_child"><li><a class="site-page child faa-parent animated-hover" href="/other/about/"><i class="anzhiyufont anzhiyu-icon-paper-plane faa-tada" style="font-size: 0.9em;"></i><span> 关于本人</span></a></li><li><a class="site-page child faa-parent animated-hover" href="javascript:toRandomPost()"><i class="anzhiyufont anzhiyu-icon-shoe-prints1 faa-tada" style="font-size: 0.9em;"></i><span> 随便逛逛</span></a></li></ul></div></div><span class="sidebar-menu-item-title">标签</span><div class="card-tags"><div class="item-headline"></div><div class="card-tag-cloud"><a href="/tags/YJango%E8%A7%86%E9%A2%91%E6%95%B4%E7%90%86/" style="font-size: 0.88rem;">YJango视频整理<sup>11</sup></a><a href="/tags/%E4%B8%AA%E4%BA%BA%E6%88%90%E9%95%BF/" style="font-size: 0.88rem;">个人成长<sup>3</sup></a><a href="/tags/%E5%AD%A6%E4%B9%A0/" style="font-size: 0.88rem;">学习<sup>13</sup></a><a href="/tags/%E6%84%9F%E6%82%9F/" style="font-size: 0.88rem;">感悟<sup>1</sup></a><a href="/tags/%E6%95%99%E7%A8%8B/" style="font-size: 0.88rem;">教程<sup>9</sup></a><a href="/tags/%E6%9C%AA%E5%88%86%E7%B1%BB/" style="font-size: 0.88rem;">未分类<sup>6</sup></a><a href="/tags/%E6%9E%B6%E6%9E%84/" style="font-size: 0.88rem;">架构<sup>1</sup></a><a href="/tags/%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1/" style="font-size: 0.88rem;">知识图谱<sup>9</sup></a><a href="/tags/%E8%80%83%E8%AF%95/" style="font-size: 0.88rem;">考试<sup>5</sup></a></div></div><hr/></div></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="anzhiyufont anzhiyu-icon-book-open"></i></button><button id="translateLink" type="button" title="简繁转换">繁</button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="anzhiyufont anzhiyu-icon-circle-half-stroke"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="anzhiyufont anzhiyu-icon-arrows-left-right"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="anzhiyufont anzhiyu-icon-gear"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="anzhiyufont anzhiyu-icon-list-ul"></i></button><button id="mobile-column-button" type="button" title="专栏目录"><i class="anzhiyufont anzhiyu-icon-bars"></i></button><button id="go-up" type="button" title="回到顶部"><i class="anzhiyufont anzhiyu-icon-arrow-up"></i></button></div></div><div id="rightMenu"><div class="rightMenu-group rightMenu-small"><div class="rightMenu-item" id="menu-backward"><i class="anzhiyufont anzhiyu-icon-arrow-left"></i></div><div class="rightMenu-item" id="menu-forward"><i class="anzhiyufont anzhiyu-icon-arrow-right"></i></div><div class="rightMenu-item" id="menu-refresh"><i class="anzhiyufont anzhiyu-icon-arrow-rotate-right" style="font-size: 1rem;"></i></div><div class="rightMenu-item" id="menu-top"><i class="anzhiyufont anzhiyu-icon-arrow-up"></i></div></div><div class="rightMenu-group rightMenu-line rightMenuPlugin"><div class="rightMenu-item" id="menu-copytext"><i class="anzhiyufont anzhiyu-icon-copy"></i><span>复制选中文本</span></div><div class="rightMenu-item" id="menu-pastetext"><i class="anzhiyufont anzhiyu-icon-paste"></i><span>粘贴文本</span></div><a class="rightMenu-item" id="menu-commenttext"><i class="anzhiyufont anzhiyu-icon-comment-medical"></i><span>引用到评论</span></a><div class="rightMenu-item" id="menu-newwindow"><i class="anzhiyufont anzhiyu-icon-window-restore"></i><span>新窗口打开</span></div><div class="rightMenu-item" id="menu-copylink"><i class="anzhiyufont anzhiyu-icon-link"></i><span>复制链接地址</span></div><div class="rightMenu-item" id="menu-copyimg"><i class="anzhiyufont anzhiyu-icon-images"></i><span>复制此图片</span></div><div class="rightMenu-item" id="menu-downloadimg"><i class="anzhiyufont anzhiyu-icon-download"></i><span>下载此图片</span></div><div class="rightMenu-item" id="menu-newwindowimg"><i class="anzhiyufont anzhiyu-icon-window-restore"></i><span>新窗口打开图片</span></div><div class="rightMenu-item" id="menu-search"><i class="anzhiyufont anzhiyu-icon-magnifying-glass"></i><span>站内搜索</span></div><div class="rightMenu-item" id="menu-searchBaidu"><i class="anzhiyufont anzhiyu-icon-magnifying-glass"></i><span>百度搜索</span></div></div><div class="rightMenu-group rightMenu-line rightMenuOther"><a class="rightMenu-item menu-link" id="menu-randomPost"><i class="anzhiyufont anzhiyu-icon-shuffle"></i><span>随便逛逛</span></a><a class="rightMenu-item menu-link" href="/categories/"><i class="anzhiyufont anzhiyu-icon-cube"></i><span>博客分类</span></a><a class="rightMenu-item menu-link" href="/tags/"><i class="anzhiyufont anzhiyu-icon-tags"></i><span>文章标签</span></a></div><div class="rightMenu-group rightMenu-line rightMenuOther"><a class="rightMenu-item" id="menu-copy" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-copy"></i><span>复制地址</span></a><a class="rightMenu-item" id="menu-commentBarrage" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-message"></i><span class="menu-commentBarrage-text">关闭热评</span></a><a class="rightMenu-item" id="menu-darkmode" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-circle-half-stroke"></i><span class="menu-darkmode-text">深色模式</span></a><a class="rightMenu-item" id="menu-translate" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-language"></i><span>轉為繁體</span></a></div></div><div id="rightmenu-mask"></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="/js/tw_cn.js"></script><script src="https://cdn.cbd.int/@fancyapps/ui@6.1.6/dist/fancybox/fancybox.umd.js"></script><script src="https://cdn.cbd.int/instant.page@5.2.0/instantpage.js" type="module"></script><script src="https://cdn.cbd.int/vanilla-lazyload@19.1.3/dist/lazyload.iife.min.js"></script><script src="https://cdn.cbd.int/node-snackbar@0.1.16/dist/snackbar.min.js"></script><canvas id="universe"></canvas><script async src="https://npm.elemecdn.com/anzhiyu-theme-static@1.0.0/dark/dark.js"></script><script>// 消除控制台打印
+var HoldLog = console.log;
+console.log = function () {};
+let now1 = new Date();
+queueMicrotask(() => {
+  const Log = function () {
+    HoldLog.apply(console, arguments);
+  }; //在恢复前输出日志
+  const grt = new Date("08/08/2026 00:00:00"); //此处修改你的建站时间或者网站上线时间
+  now1.setTime(now1.getTime() + 250);
+  const days = (now1 - grt) / 1000 / 60 / 60 / 24;
+  const dnum = Math.floor(days);
+  const ascll = [
+    `欢迎使用安知鱼!`,
+    `生活明朗, 万物可爱`,
+    `
+        
+       █████╗ ███╗   ██╗███████╗██╗  ██╗██╗██╗   ██╗██╗   ██╗
+      ██╔══██╗████╗  ██║╚══███╔╝██║  ██║██║╚██╗ ██╔╝██║   ██║
+      ███████║██╔██╗ ██║  ███╔╝ ███████║██║ ╚████╔╝ ██║   ██║
+      ██╔══██║██║╚██╗██║ ███╔╝  ██╔══██║██║  ╚██╔╝  ██║   ██║
+      ██║  ██║██║ ╚████║███████╗██║  ██║██║   ██║   ╚██████╔╝
+      ╚═╝  ╚═╝╚═╝  ╚═══╝╚══════╝╚═╝  ╚═╝╚═╝   ╚═╝    ╚═════╝
+        
+        `,
+    "已上线",
+    dnum,
+    "天",
+    "©2020 By 安知鱼 V1.7.1",
+  ];
+  const ascll2 = [`NCC2-036`, `调用前置摄像头拍照成功，识别为【小笨蛋】.`, `Photo captured: `, `🤪`];
+
+  setTimeout(
+    Log.bind(
+      console,
+      `\n%c${ascll[0]} %c ${ascll[1]} %c ${ascll[2]} %c${ascll[3]}%c ${ascll[4]}%c ${ascll[5]}\n\n%c ${ascll[6]}\n`,
+      "color:#425AEF",
+      "",
+      "color:#425AEF",
+      "color:#425AEF",
+      "",
+      "color:#425AEF",
+      ""
+    )
+  );
+  setTimeout(
+    Log.bind(
+      console,
+      `%c ${ascll2[0]} %c ${ascll2[1]} %c \n${ascll2[2]} %c\n${ascll2[3]}\n`,
+      "color:white; background-color:#4fd953",
+      "",
+      "",
+      'background:url("https://npm.elemecdn.com/anzhiyu-blog@1.1.6/img/post/common/tinggge.gif") no-repeat;font-size:450%'
+    )
+  );
+
+  setTimeout(Log.bind(console, "%c WELCOME %c 你好，小笨蛋.", "color:white; background-color:#4f90d9", ""));
+
+  setTimeout(
+    console.warn.bind(
+      console,
+      "%c ⚡ Powered by 安知鱼 %c 你正在访问 qiuxz 的博客.",
+      "color:white; background-color:#f0ad4e",
+      ""
+    )
+  );
+
+  setTimeout(Log.bind(console, "%c W23-12 %c 你已打开控制台.", "color:white; background-color:#4f90d9", ""));
+
+  setTimeout(
+    console.warn.bind(console, "%c S013-782 %c 你现在正处于监控中.", "color:white; background-color:#d9534f", "")
+  );
+});</script><script async src="/anzhiyu/random.js"></script><div class="js-pjax"><script>if (!window.MathJax) {
+  window.MathJax = {
+    tex: {
+      inlineMath: [['$', '$'], ['\\(', '\\)']],
+      tags: 'ams'
+    },
+    chtml: {
+      scale: 1.1,
+      // MathJax 4 默认从 cdn.jsdelivr.net 取 NewCM 字体，国内直连拿不到，
+      // 公式会退化成缺字形。这里改走 npmmirror（与 mathjax@4.0.0 对应）。
+      fontURL: 'https://registry.npmmirror.com/@mathjax/mathjax-newcm-font/4.0.0/files/chtml/woff2',
+      dynamicPrefix: 'https://registry.npmmirror.com/@mathjax/mathjax-newcm-font/4.0.0/files/chtml/dynamic'
+    },
+    options: {
+      renderActions: {
+        findScript: [10, doc => {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/)
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+            const text = document.createTextNode('')
+            node.parentNode.replaceChild(text, node)
+            math.start = {node: text, delim: '', n: 0}
+            math.end = {node: text, delim: '', n: 0}
+            doc.math.push(math)
+          }
+        }, '']
+      }
+    }
+  }
+  
+  const script = document.createElement('script')
+  script.src = 'https://cdn.cbd.int/mathjax@4.0.0/tex-mml-chtml.js'
+  script.id = 'MathJax-script'
+  script.async = true
+  document.head.appendChild(script)
+} else {
+  MathJax.startup.document.state(0)
+  MathJax.texReset()
+  MathJax.typesetPromise()
+}</script><link rel="stylesheet" type="text/css" href="https://cdn.cbd.int/katex@0.16.25/dist/katex.min.css"><script src="https://cdn.cbd.int/katex@0.16.25/dist/contrib/copy-tex.min.js"></script><script>(() => {
+  document.querySelectorAll('#article-container span.katex-display').forEach(item => {
+    anzhiyu.wrap(item, 'div', { class: 'katex-wrap'})
+  })
+})()</script><input type="hidden" name="page-type" id="page-type" value="post"></div><script>var visitorMail = "";
+</script><script async data-pjax src="https://cdn.cbd.int/anzhiyu-theme-static@1.0.0/waterfall/waterfall.js"></script><script src="https://cdn.cbd.int/qrcodejs@1.0.0/qrcode.min.js"></script><link rel="stylesheet" href="https://cdn.cbd.int/anzhiyu-theme-static@1.1.9/icon/ali_iconfont_css.css"><script src="/js/social-copy.js"></script><script src="/js/column-nav-mobile.js"></script><script src="https://cdn.cbd.int/pjax@0.2.8/pjax.min.js"></script><script>let pjaxSelectors = ["head > title","#config-diff","#body-wrap","#rightside-config-hide","#rightside-config-show",".js-pjax"]
+var pjax = new Pjax({
+  elements: 'a:not([target="_blank"])',
+  selectors: pjaxSelectors,
+  cacheBust: false,
+  analytics: false,
+  scrollRestoration: false
+})
+
+document.addEventListener('pjax:send', function () {
+  // removeEventListener scroll 
+  anzhiyu.removeGlobalFnEvent('pjax')
+  anzhiyu.removeGlobalFnEvent('themeChange')
+
+  document.getElementById('rightside').classList.remove('rightside-show')
+  
+  if (window.aplayers) {
+    for (let i = 0; i < window.aplayers.length; i++) {
+      if (!window.aplayers[i].options.fixed) {
+        window.aplayers[i].destroy()
+      }
+    }
+  }
+
+  typeof typed === 'object' && typed.destroy()
+
+  //reset readmode
+  const $bodyClassList = document.body.classList
+  $bodyClassList.contains('read-mode') && $bodyClassList.remove('read-mode')
+})
+
+document.addEventListener('pjax:complete', function () {
+  window.refreshFn()
+
+  document.querySelectorAll('script[data-pjax]').forEach(item => {
+    const newScript = document.createElement('script')
+    const content = item.text || item.textContent || item.innerHTML || ""
+    Array.from(item.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value))
+    newScript.appendChild(document.createTextNode(content))
+    item.parentNode.replaceChild(newScript, item)
+  })
+
+  GLOBAL_CONFIG.islazyload && window.lazyLoadInstance.update()
+
+  typeof panguInit === 'function' && panguInit()
+
+  // google analytics
+  typeof gtag === 'function' && gtag('config', '', {'page_path': window.location.pathname});
+
+  // baidu analytics
+  typeof _hmt === 'object' && _hmt.push(['_trackPageview',window.location.pathname]);
+
+  typeof loadMeting === 'function' && document.getElementsByClassName('aplayer').length && loadMeting()
+
+  // prismjs
+  typeof Prism === 'object' && Prism.highlightAll()
+})
+
+document.addEventListener('pjax:error', e => {
+  if (e.request.status === 404) {
+    pjax.loadUrl('/404.html')
+  }
+})</script><script charset="UTF-8" src="https://cdn.cbd.int/anzhiyu-theme-static@1.1.5/accesskey/accesskey.js"></script></div><div id="popup-window"><div class="popup-window-title">通知</div><div class="popup-window-divider"></div><div class="popup-window-content"><div class="popup-tip">你好呀</div><div class="popup-link"><i class="anzhiyufont anzhiyu-icon-arrow-circle-right"></i></div></div></div></body></html>

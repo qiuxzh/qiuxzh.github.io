@@ -1,0 +1,923 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no"><title>01 知识图谱概述 | qiuxz's Blog</title><meta name="keywords" content="知识图谱,教程"><meta name="author" content="qiuxz"><meta name="copyright" content="qiuxz"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#f7f9fe"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-touch-fullscreen" content="yes"><meta name="apple-mobile-web-app-title" content="01 知识图谱概述"><meta name="application-name" content="01 知识图谱概述"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="#f7f9fe"><meta property="og:type" content="article"><meta property="og:title" content="01 知识图谱概述"><meta property="og:url" content="https://qiuxzh.github.io/other/QUT/%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E6%95%99%E7%A8%8B/01-%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E6%A6%82%E8%BF%B0/index.html"><meta property="og:site_name" content="qiuxz's Blog"><meta property="og:description" content="机器要判断一句话在说什么，得先知道世界由哪些东西构成，以及它们之间怎么连着。这一章从这个前提出发，把知识图谱是什么、从哪儿来、由什么组成、能干什么，依次铺开。 一个段子成立的条件 2016 年 9 月，网上流传过一段对话：G20 开会休息时，马云对秘书说“中午帮我买肯德基”，半小时后秘书回话，说买好"><meta property="og:locale" content="zh-CN"><meta property="og:image" content="https://qiuxzh.github.io/img/avatar.jpg"><meta property="article:author" content="qiuxz"><meta property="article:tag"><meta name="twitter:card" content="summary"><meta name="twitter:image" content="https://qiuxzh.github.io/img/avatar.jpg"><meta name="description" content="机器要判断一句话在说什么，得先知道世界由哪些东西构成，以及它们之间怎么连着。这一章从这个前提出发，把知识图谱是什么、从哪儿来、由什么组成、能干什么，依次铺开。 一个段子成立的条件 2016 年 9 月，网上流传过一段对话：G20 开会休息时，马云对秘书说“中午帮我买肯德基”，半小时后秘书回话，说买好"><link rel="shortcut icon" href="/favicon.ico"><link rel="canonical" href="https://qiuxzh.github.io/other/QUT/%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E6%95%99%E7%A8%8B/01-%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E6%A6%82%E8%BF%B0/"><link rel="preconnect" href="//cdn.cbd.int"/><meta name="google-site-verification" content="xxx"/><meta name="baidu-site-verification" content="code-xxx"/><meta name="msvalidate.01" content="xxx"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.cbd.int/node-snackbar@0.1.16/dist/snackbar.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.cbd.int/@fancyapps/ui@6.1.6/dist/fancybox/fancybox.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  linkPageTop: undefined,
+  peoplecanvas: {"enable":true,"img":"https://upload-bbs.miyoushe.com/upload/2024/07/27/125766904/ba62475f396df9de3316a08ed9e65d86_5680958632268053399..png"},
+  postHeadAiDescription: undefined,
+  diytitle: undefined,
+  LA51: undefined,
+  greetingBox: undefined,
+  twikooEnvId: '',
+  commentBarrageConfig:undefined,
+  music_page_default: "nav_music",
+  root: '/',
+  preloader: {"source":3},
+  friends_vue_info: undefined,
+  navMusic: false,
+  mainTone: undefined,
+  authorStatus: undefined,
+  algolia: undefined,
+  localSearch: undefined,
+  translate: {"defaultEncoding":2,"translateDelay":0,"msgToTraditionalChinese":"繁","msgToSimplifiedChinese":"简","rightMenuMsgToTraditionalChinese":"转为繁体","rightMenuMsgToSimplifiedChinese":"转为简体"},
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":330},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    simplehomepage: true,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: {"copy":true,"copyrightEbable":false,"limitCount":50,"languages":{"author":"作者: qiuxz","link":"链接: ","source":"来源: qiuxz's Blog","info":"著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。","copySuccess":"复制成功，复制和转载请标注本文地址"}},
+  lightbox: 'fancybox',
+  Snackbar: {"chs_to_cht":"你已切换为繁体","cht_to_chs":"你已切换为简体","day_to_night":"你已切换为深色模式","night_to_day":"你已切换为浅色模式","bgLight":"#425AEF","bgDark":"#1f1f1f","position":"top-center"},
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.cbd.int/flickr-justified-gallery@2.2.0/dist/fjGallery.min.js',
+      css: 'https://cdn.cbd.int/flickr-justified-gallery@2.2.0/dist/fjGallery.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: true,
+  isAnchor: false,
+  shortcutKey: undefined,
+  autoDarkmode: true
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  configTitle: 'qiuxz\'s Blog',
+  title: '01 知识图谱概述',
+  postAI: '',
+  pageFillDescription: '一个段子成立的条件, 数据和知识差在哪, 两条智能路线, 知识在机器里的三种形态, 五个阶段, 三元组, 项目生态, 一张技术地图, 三种分类角度, 落到行业里, 自测机器要判断一句话在说什么得先知道世界由哪些东西构成以及它们之间怎么连着这一章从这个前提出发把知识图谱是什么从哪儿来由什么组成能干什么依次铺开一个段子成立的条件年月网上流传过一段对话开会休息时马云对秘书说中午帮我买肯德基半小时后秘书回话说买好了一共亿美元问是刷支付宝还是付现金几天前的新闻是另一回事百胜餐饮集团宣布与春华资本蚂蚁金服达成协议两家共同向百胜中国投资亿美元段子之所以好笑是因为买肯德基这四个字在中文里确实指向两样东西一样是街角那家卖炸鸡的店另一样是这家店所属的公司秘书把前者听成了后者一笔几十块的午餐就变成了几十亿美元的并购人听这段对话不会出错因为脑子里存着几件事肯德基是一个餐饮品牌门店卖炸鸡这个品牌归百胜中国管而百胜中国正在接受蚂蚁金服的投资这几件事串起来买就有了两种解释语境挑走了其中一种换成机器麻烦立刻出现如果这台机器读过足够多的新闻认得肯德基百胜蚂蚁金服每一个词它能不能听懂这句话能读懂每个词和能判断整句话在说什么是两件事中间缺的那一层是词与词之间那些没写在句子里的关系它们平时不出现在文本中却决定了文本的含义要读懂这句话机器至少得知道下面这些事实秘书听到的话中午帮我买肯德基买的宾语是哪一个肯德基一个词两个所指快餐店门店卖炸鸡的地方百胜中国公司拥有这个品牌的公司母公司蚂蚁金服投资方投资亿美元没有这张图机器只能按字与字的共现频次去猜猜不出这一层门店买一份炸鸡几十块钱公司收购中国业务亿美元同一个词肯德基在两条关系上分别落到门店和公司关系不在句子里含义却由它决定段子的笑点就是这两种读法之间的落差图里那些才是一个知识图谱的样子方框是实体箭头是关系箭头上的字说明这两个实体怎么关联句子提供入口图谱提供上下文严格来说一门课里给知识下定义时通常要求一个判断同时站得住脚确实为真而且有人相信它这三条把知识和猜测传言分开放到工程上这个定义没那么好用工程师更关心一件事知识要能被组织成结构机器才能拿它做运算知识图谱就是这个结构的一种具体形态数据和知识差在哪把刚才那几条事实存进数据库会得到三张表一张记公司一张记品牌归属一张记投资事件字段齐全一条不缺可机器翻完这三张表也不会笑因为它不知道投资方和被投资方哪个在前也不知道品牌和门店是两回事表格记录的是值人脑记的是关系文本里的词肯德基百胜餐饮蚂蚁金服亿投资快餐店一堆各自成立的词彼此之间没有断言连线图谱里的实体肯德基百胜餐饮蚂蚁金服快餐店母公司投资亿美元词变成了实体词与词之间有了可以被查询的断言左边这批词任何一段文本里都能找到右边的差别只在于多了一层断言机器能拿右边做查询做推理拿左边只能做检索两条智能路线人工智能发展史上有两条主线处理知识的方式完全不同一条从数据出发用大量样本训练网络让它学会分辨模式人脸识别语音转写图像生成走的都是这条路效果在过去十年里提升得很快另一条从符号出发把知识写成规则或结构再用逻辑在上面推导专家系统数据库查询定理证明属于这一类两条路线的长处分得很清楚前者见到没标注过的图像也能给出结果代价是说不清依据后者每走一步都能给出理由代价是需要有人先把知识整理进去号称聪明的系统和号称有学识的系统差别大体就在这儿深度学习路线连接主义从样本里拟合模式看一张图学到边缘纹理部件输出标签猫擅长感知识别生成短板说不清依据改错只能重新训练知识图谱路线符号主义把知识写成结构读一句话落到实体与关系上沿关系推出结论擅长推理与解释短板覆盖有限建库成本高人的认知是两边一起用语言负责把世界说清楚知识负责说明白之后能推出什么两条路线不是替代关系检索增强图神经网络这些做法做的都是把两边接起来现实中的系统很少纯粹站在一边搜索引擎既用文本匹配也用实体识别推荐系统既跑协同过滤也用商品之间的关联开头那个段子的例子已经说明纯文本方法走到歧义面前就停住了需要一份外部知识来帮忙裁决知识在机器里的三种形态机器保存知识历史上试过三种容器第一种是把知识留在文本里谁需要谁去读第二种是拆成实体和关系存进图里第三种是把每个实体压成一串数字让相似的东西在数值空间里挨得近一些三种形态各有各的用法也各有各的漏文本知识图谱向量知识藏在句子里能读不能查知识拆成三元组能查要人先建知识压成数值能算说不清理由三种形态对应三种能力大模型时代常用的检索增强做法是把文本和向量接起来图谱的作用是在需要精确关系的地方补上那一层结构五个阶段知识图谱不是年从零冒出来的概念它前面有将近五十年的积累每一段解决的都是上一段留下的问题专家系统知识库推理机第一次把知识单独存起来知识工程知识变成可施工的流程规模与应用面都在扩大知识本体概念体系的明确规范概念有了可共享的定义语义网用描述网页上的资源知识走向互联网知识图谱用它改造搜索开始跨领域整合全人工编写半自动与自动构建五个阶段的共同线索是知识的形式化程度一步步提高从规则到工程流程到共享的概念体系再到网页上的资源描述构建方式也从纯人工走向半自动年斯坦福的提出专家系统思路是把领域专家的知识写进知识库再用推理机在上面求解年他在第五届国际人工智能会议上提出知识工程把这套做法整理成一套可交付的流程年前后知识本体的概念出现年把它定义为概念体系的明确规范领域知识从此有了可共享的写法年提出语义网希望用资源描述框架把知识表示和推理搬进万维网到年提出知识图谱用它增强搜索结果构建过程开始走向半自动跨领域整合成为这一阶段的标志三元组图谱的最小单位是三元组写成主语谓语宾语拿一家公司举例三条三元组就能勾出一个大概任正非华为深圳创立总部位于成立时间字面值不是实体任正非创立华为华为总部位于深圳华为成立时间两个实体之间两个实体之间实体与值之间前两条连接的是两个实体叫关系第三条把实体接到一个字面值上叫属性图里用虚线区分这个区别在后面讲数据模型时会反复出现三元组里的角色可以拆成几个词实体是现实世界里能被指认的东西一个人一座城市一家公司都算每个实体有一个标识符属性用来描述实体出生日期面积上映时间这类关系连接两个实体类型由边上的标签说明这些概念由本体统一分类和定义通常还带一个层次结构知识库是存放它们的容器具体落到数据库或文件里本体管的是这一整套概念的分类方式快餐店属于餐饮企业餐饮企业属于企业母公司是公司之间的一种关系方向从子公司指向母公司有了这套说法不同来源的数据才有可能对齐第二章讲表示技术时会展开本体的建模方法一个容易混的地方实体和属性值不是一回事深圳可以当一个实体有自己的面积和人口只是一个数字做不了任何展开把该做属性的东西做成实体图会变臃肿把该做实体的东西写成属性图就没法再往下查项目生态过去三十年公开的知识库来源大体分两类一类靠人写学者编社区改专家校对一类靠机器抽从维基百科网页标注结构化数据里自动生成看项目的时候先看它属于哪一类再看它服务什么用途比逐个数规模有用来源产物维基百科网页语义标注社区人工编辑抽取与链接词典与百科融合直接读取持续维护同一条知识可能既有机器抽的版本也有人校的版本两者需要对齐左侧四个来源产出右侧的库机器抽出来的部分覆盖广但噪声多人工维护的部分质量高但规模受人力限制多数大型知识库是两者混用项目起点主要来源规模普林斯顿大学年起人工编纂万词万条语义关系项目年由建议创立众包常识以词间关系为主关系类型多于开发后被收购社区贡献与网页抽取亿实体年关闭并迁入早期语义网项目从维基百科抽取约亿条三元组德国马普研究所融合数亿条三元组带时间与空间维度主流搜索引擎联合发起网页内嵌语义标注个类个关系覆盖约亿网站维基媒体基金会社区编辑许可承接数据规模持续增长多语言词典知识库与维基百科融合种语言亿条三元组中文读者更常用的入口是一个开放的中文知识图谱资源站汇集了各领域公开图谱与工具做实验时从这类开放资源拿数据比从零建库现实得多一张技术地图一个完整的知识图谱系统从原始数据到能回答问题中间要走六步知识抽取实体关系事件知识融合对齐消歧知识表示属性图知识存储图数据库查询知识推理规则逻辑神经应用问答分析第章第章第章第章第章第章输入网页论文病历财报传感器日志格式混杂输出一个能查询能推理能被人和程序同时使用的知识库六步之间不是流水线抽取出错会在融合时暴露融合错了推理就会给出错结论每一步都要能回退技术要素在全书的位置表示和存储决定图能长成什么样抽取和融合决定它能装进什么推理和应用决定它值多少钱三种分类角度见到的知识图谱多了会发现分类有好几套每套回答的问题不一样问这条知识长什么样看模态问它服务多大范围看开放性问人怎么把它建起来看构建方法结构化编号名称成立华为腾讯字段固定可直接查询半结构化华为通信有标签模式不固定非结构化文章图片录音视频同一件事可能同时以三种形态存在知识图谱要做的是把它们收进同一套结构模态说的是知识的载体形态三者的处理成本差别很大抽取技术要解决的核心困难就是把右边两类变成左边的样子通用知识图谱覆盖人类知识各方面跨领域知识图谱跨越领域边界做整合垂直领域知识图谱医学法律农业等企业内部图谱产品客户组织覆盖范围广领域精度高可用性明确越往右概念体系越专建库越依赖领域专家开放性是服务范围的划分跟规模没关系一个几十万三元组的科室图谱在临床决策里的作用可能超过通用图谱构建方法分两种自上而下的做法先定本体把概念层次关系类型定下来再往里填实例适合数据结构稳定规则清晰的场景企业在做内部知识管理医院在建临床路径时常用自下而上的做法反过来先从数据里抽出实体和关系看到新类型再往本体里加适合数据形态一直在变的场景农业消防这类领域通常两种混用先有一版骨架再靠数据补齐自上而下先定本体与模式再填实例数据结构稳定一致性容易保证遇到没见过的东西装不进去自下而上从数据抽实体与关系归纳出模式与本体能跟上数据变化模式容易长歪质量靠清洗多数工程先给一版骨架再让数据长出来两种方法的差别在谁先说话模式先说话还是数据先说话工程上常见的是给一个粗骨架剩下交给抽取元数据的实现方式还有一套分法按图里怎么管结构来分基于模式的结构在构建时定死基于本体的除了结构还有语义和逻辑约束基于标签的不预设结构靠打标签组织这一套在第五章讲存储第二章讲表示时会更具体落到行业里图谱在行业里的用法大体可以归成两类一类是让检索更准用户搜苹果的时候能分清水果和公司另一类是发现藏起来的关系两个看着无关的主体中间连着好几层企业监管是第二类的典型直接关系在工商信息里就能看到麻烦在于间接关联一家公司与另外几十家公司在股权担保共同高管上都有牵连风险沿着这些链条传导靠人工翻资料几乎不可能及时发现把这些关系建成图之后从一个主体出发做几跳的遍历隐藏在中间层的关系就露出来了甲公司乙公司丙公司持股共同高管工商登记里没有这条边但风险会沿两跳传过来直接关系可见中间层是关键间接关联要挖甲乙之间有直接持股乙丙之间只共享高管甲和丙在图上是两跳的关系这个距离在表格里是看不出来的医疗领域偏向第一类病历文献基因数据分散在不同系统里术语写法各异同一个病在两家医院可能有两个名字建图的第一步是把这些来源对齐到同一套概念上之后才能谈辅助诊断临床决策支持系统能给出这个症状可能与哪几种疾病相关靠的就是图上沿着症状检查药物走出来的路径其余场景的用法可以并排看电商把用户商品类目连起来做导购和推荐阿里的商务图谱在这个方向上有百亿级实体千亿级关系边银行把客户账户担保关系连起来识别信贷风险法律把案件事实与判决要素连起来做类案研判农业和消防把领域手册案例文档整理成图谱前者解决知识分散后者面向突发事件的处置建议华为把它用在通信网络的故障定位上从告警日志专家经验里抽出实体沿图推断根因这些场景的共同点在于真正产生价值的是图上的一次遍历或一次推理选型时先问清楚要回答什么问题再看图该建成什么样顺序反了就会建出一个规模很大但回答不了任何问题的库自测为什么机器认得每个词不等于机器懂这句话词的识别解决的是符号匹配句子的含义依赖词与词之间没被写出来的关系肯德基是门店还是公司文本里没有线索得靠外部知识裁决关系三元组和属性三元组差在哪关系三元组两端都是实体可以在图上继续往下查属性三元组一端是字面值到那里就停了做不了任何展开深圳可以为什么知识图谱在年之后才大规模落地前面几十年解决了形式化的问题从规则到本体到语义网真正让规模上去的是构建方式从纯人工转向半自动加上互联网上有足够多的半结构化数据可以抽一个企业风控图谱你会选自上而下还是自下而上先看数据形态工商股权这类结构稳定适合先定本体再填舆情公告这类文本一直在变适合从数据里抽多数项目是骨架加抽取的混合路线',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2026-11-07 02:37:15',
+  postMainColor: '',
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+      win.saveToLocal = {
+        set: (key, value, ttl) => {
+          if (ttl === 0) return
+          const now = Date.now()
+          const expiry = now + ttl * 86400000
+          const item = {
+            value,
+            expiry
+          }
+          localStorage.setItem(key, JSON.stringify(item))
+        },
+      
+        get: key => {
+          const itemStr = localStorage.getItem(key)
+      
+          if (!itemStr) {
+            return undefined
+          }
+          const item = JSON.parse(itemStr)
+          const now = Date.now()
+      
+          if (now > item.expiry) {
+            localStorage.removeItem(key)
+            return undefined
+          }
+          return item.value
+        }
+      }
+    
+      win.getScript = (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        script.onerror = reject
+        script.onload = script.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          script.onload = script.onreadystatechange = null
+          resolve()
+        }
+
+        Object.keys(attr).forEach(key => {
+          script.setAttribute(key, attr[key])
+        })
+
+        document.head.appendChild(script)
+      })
+    
+      win.getCSS = (url, id = false) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onerror = reject
+        link.onload = link.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          link.onload = link.onreadystatechange = null
+          resolve()
+        }
+        document.head.appendChild(link)
+      })
+    
+      win.activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#18171d')
+        }
+      }
+      win.activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#f7f9fe')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          const isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches
+          const isLightMode = window.matchMedia('(prefers-color-scheme: light)').matches
+          const isNotSpecified = window.matchMedia('(prefers-color-scheme: no-preference)').matches
+          const hasNoSupport = !isDarkMode && !isLightMode && !isNotSpecified
+
+          if (t === undefined) {
+            if (isLightMode) activateLightMode()
+            else if (isDarkMode) activateDarkMode()
+            else if (isNotSpecified || hasNoSupport) {
+              const now = new Date()
+              const hour = now.getHours()
+              const isNight = hour <= 6 || hour >= 18
+              isNight ? activateDarkMode() : activateLightMode()
+            }
+            window.matchMedia('(prefers-color-scheme: dark)').addListener(e => {
+              if (saveToLocal.get('theme') === undefined) {
+                e.matches ? activateDarkMode() : activateLightMode()
+              }
+            })
+          } else if (t === 'light') activateLightMode()
+          else activateDarkMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+      const detectApple = () => {
+        if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+          document.documentElement.classList.add('apple')
+        }
+      }
+      detectApple()
+    })(window)</script><meta name="generator" content="Hexo 7.0.0"></head><body data-type="anzhiyu"><div id="web_bg"></div><div id="an_music_bg"></div><div id="loading-box" onclick="document.getElementById(&quot;loading-box&quot;).classList.add(&quot;loaded&quot;)"><div class="loading-bg"><img class="loading-img nolazyload" alt="加载头像" src="/img/avatar.jpg"/><div class="loading-image-dot"></div></div></div><script>const preloader = {
+  endLoading: () => {
+    document.getElementById('loading-box').classList.add("loaded");
+  },
+  initLoading: () => {
+    document.getElementById('loading-box').classList.remove("loaded")
+  }
+}
+window.addEventListener('load',()=> { preloader.endLoading() })
+setTimeout(function(){preloader.endLoading();},10000)
+
+if (true) {
+  document.addEventListener('pjax:send', () => { preloader.initLoading() })
+  document.addEventListener('pjax:complete', () => { preloader.endLoading() })
+}</script><link rel="stylesheet" href="https://cdn.cbd.int/anzhiyu-theme-static@1.1.10/progress_bar/progress_bar.css"/><script async="async" src="https://cdn.cbd.int/pace-js@1.2.4/pace.min.js" data-pace-options="{ &quot;restartOnRequestAfter&quot;:false,&quot;eventLag&quot;:false}"></script><div class="post" id="body-wrap"><header class="not-top-img" id="page-header"><nav id="nav"><div id="nav-group"><span id="blog_name"><a id="site-name" href="/" accesskey="h"><div class="title">qiuxz's Blog</div><i class="anzhiyufont anzhiyu-icon-house-chimney"></i></a></span><div class="mask-name-container"><div id="name-container"><a id="page-name" href="javascript:anzhiyu.scrollToDest(0, 500)">PAGE_NAME</a></div></div><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="javascript:void(0);"><span> 文章</span></a><ul class="menus_item_child"><li><a class="site-page child faa-parent animated-hover" href="/archives/"><i class="anzhiyufont anzhiyu-icon-box-archive faa-tada" style="font-size: 0.9em;"></i><span> 隧道</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><span> 关于</span></a><ul class="menus_item_child"><li><a class="site-page child faa-parent animated-hover" href="/other/about/"><i class="anzhiyufont anzhiyu-icon-paper-plane faa-tada" style="font-size: 0.9em;"></i><span> 关于本人</span></a></li><li><a class="site-page child faa-parent animated-hover" href="javascript:toRandomPost()"><i class="anzhiyufont anzhiyu-icon-shoe-prints1 faa-tada" style="font-size: 0.9em;"></i><span> 随便逛逛</span></a></li></ul></div></div></div><div id="nav-right"><div class="nav-button" id="randomPost_button"><a class="site-page" onclick="toRandomPost()" title="随机前往一个文章" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-dice"></i></a></div><input id="center-console" type="checkbox"/><label class="widget" for="center-console" title="中控台" onclick="anzhiyu.switchConsole();"><i class="left"></i><i class="widget center"></i><i class="widget right"></i></label><div id="console"><div class="console-card-group-reward"><ul class="reward-all console-card"><li class="reward-item"><a href="https://npm.elemecdn.com/anzhiyu-blog@1.1.6/img/post/common/qrcode-weichat.png" target="_blank"><img class="post-qr-code-img" alt="微信" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://npm.elemecdn.com/anzhiyu-blog@1.1.6/img/post/common/qrcode-weichat.png"/></a><div class="post-qr-code-desc">微信</div></li><li class="reward-item"><a href="https://npm.elemecdn.com/anzhiyu-blog@1.1.6/img/post/common/qrcode-alipay.png" target="_blank"><img class="post-qr-code-img" alt="支付宝" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://npm.elemecdn.com/anzhiyu-blog@1.1.6/img/post/common/qrcode-alipay.png"/></a><div class="post-qr-code-desc">支付宝</div></li></ul></div><div class="console-card-group"><div class="console-card-group-left"><div class="console-card" id="card-newest-comments"><div class="card-content"><div class="author-content-item-tips">互动</div><span class="author-content-item-title"> 最新评论</span></div><div class="aside-list"><span>正在加载中...</span></div></div></div><div class="console-card-group-right"><div class="console-card tags"><div class="card-content"><div class="author-content-item-tips">兴趣点</div><span class="author-content-item-title">寻找你感兴趣的领域</span><div class="card-tags"><div class="item-headline"></div><div class="card-tag-cloud"><a href="/tags/YJango%E8%A7%86%E9%A2%91%E6%95%B4%E7%90%86/" style="font-size: 1.05rem;">YJango视频整理<sup>11</sup></a><a href="/tags/%E4%B8%AA%E4%BA%BA%E6%88%90%E9%95%BF/" style="font-size: 1.05rem;">个人成长<sup>3</sup></a><a href="/tags/%E5%AD%A6%E4%B9%A0/" style="font-size: 1.05rem;">学习<sup>13</sup></a><a href="/tags/%E6%84%9F%E6%82%9F/" style="font-size: 1.05rem;">感悟<sup>1</sup></a><a href="/tags/%E6%95%99%E7%A8%8B/" style="font-size: 1.05rem;">教程<sup>9</sup></a><a href="/tags/%E6%9C%AA%E5%88%86%E7%B1%BB/" style="font-size: 1.05rem;">未分类<sup>6</sup></a><a href="/tags/%E6%9E%B6%E6%9E%84/" style="font-size: 1.05rem;">架构<sup>1</sup></a><a href="/tags/%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1/" style="font-size: 1.05rem;">知识图谱<sup>9</sup></a><a href="/tags/%E8%80%83%E8%AF%95/" style="font-size: 1.05rem;">考试<sup>5</sup></a></div></div><hr/></div></div><div class="console-card history"><div class="item-headline"><i class="anzhiyufont anzhiyu-icon-box-archiv"></i><span>文章</span></div><div class="card-archives"><div class="item-headline"><i class="anzhiyufont anzhiyu-icon-archive"></i><span>归档</span><a class="card-more-btn" href="/archives/" title="查看更多">
+    <i class="anzhiyufont anzhiyu-icon-angle-right"></i></a></div><ul class="card-archive-list"><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2026/11/"><span class="card-archive-list-date">十一月 2026</span><div class="card-archive-list-count-group"><span class="card-archive-list-count">15</span><span>篇</span></div></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2026/10/"><span class="card-archive-list-date">十月 2026</span><div class="card-archive-list-count-group"><span class="card-archive-list-count">3</span><span>篇</span></div></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2026/09/"><span class="card-archive-list-date">九月 2026</span><div class="card-archive-list-count-group"><span class="card-archive-list-count">15</span><span>篇</span></div></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2026/08/"><span class="card-archive-list-date">八月 2026</span><div class="card-archive-list-count-group"><span class="card-archive-list-count">4</span><span>篇</span></div></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2026/06/"><span class="card-archive-list-date">六月 2026</span><div class="card-archive-list-count-group"><span class="card-archive-list-count">4</span><span>篇</span></div></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2026/05/"><span class="card-archive-list-date">五月 2026</span><div class="card-archive-list-count-group"><span class="card-archive-list-count">1</span><span>篇</span></div></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2026/03/"><span class="card-archive-list-date">三月 2026</span><div class="card-archive-list-count-group"><span class="card-archive-list-count">1</span><span>篇</span></div></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2025/12/"><span class="card-archive-list-date">十二月 2025</span><div class="card-archive-list-count-group"><span class="card-archive-list-count">2</span><span>篇</span></div></a></li></ul></div><hr/></div></div></div><div class="button-group"><div class="console-btn-item"><a class="darkmode_switchbutton" title="显示模式切换" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-moon"></i></a></div><div class="console-btn-item" id="consoleHideAside" onclick="anzhiyu.hideAsideBtn()" title="边栏显示控制"><a class="asideSwitch"><i class="anzhiyufont anzhiyu-icon-arrows-left-right"></i></a></div></div><div class="console-mask" onclick="anzhiyu.hideConsole()" href="javascript:void(0);"></div></div><div class="nav-button" id="nav-totop"><a class="totopbtn" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-arrow-up"></i><span id="percent" onclick="anzhiyu.scrollToDest(0,500)">0</span></a></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);" title="切换"><i class="anzhiyufont anzhiyu-icon-bars"></i></a></div></div></div></nav></header><main id="blog-container"><div class="column-nav"><div class="column-nav-inner"><div class="column-nav-title">知识图谱教程</div><nav class="column-nav-list"><a class="column-link" href="https://qiuxzh.github.io/other/QUT/%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E6%95%99%E7%A8%8B/00-%E6%95%99%E7%A8%8B%E6%80%BB%E8%A7%88/" style="padding-left:8px">00 教程总览</a><a class="column-link active" href="https://qiuxzh.github.io/other/QUT/%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E6%95%99%E7%A8%8B/01-%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E6%A6%82%E8%BF%B0/" style="padding-left:8px">01 知识图谱概述</a><a class="column-link" href="https://qiuxzh.github.io/other/QUT/%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E6%95%99%E7%A8%8B/02-%E7%9F%A5%E8%AF%86%E8%A1%A8%E7%A4%BA%E6%8A%80%E6%9C%AF/" style="padding-left:8px">02 知识表示技术</a><a class="column-link" href="https://qiuxzh.github.io/other/QUT/%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E6%95%99%E7%A8%8B/03-%E7%9F%A5%E8%AF%86%E6%8A%BD%E5%8F%96%E6%8A%80%E6%9C%AF/" style="padding-left:8px">03 知识抽取技术</a><a class="column-link" href="https://qiuxzh.github.io/other/QUT/%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E6%95%99%E7%A8%8B/04-%E7%9F%A5%E8%AF%86%E8%9E%8D%E5%90%88%E6%8A%80%E6%9C%AF/" style="padding-left:8px">04 知识融合技术</a><a class="column-link" href="https://qiuxzh.github.io/other/QUT/%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E6%95%99%E7%A8%8B/05-%E7%9F%A5%E8%AF%86%E5%AD%98%E5%82%A8%E6%8A%80%E6%9C%AF/" style="padding-left:8px">05 知识存储技术</a><a class="column-link" href="https://qiuxzh.github.io/other/QUT/%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E6%95%99%E7%A8%8B/06-%E5%9B%BE%E8%A1%A8%E7%A4%BA%E5%AD%A6%E4%B9%A0%E4%B8%8E%E5%9B%BE%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/" style="padding-left:8px">06 图表示学习与图神经网络</a><a class="column-link" href="https://qiuxzh.github.io/other/QUT/%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E6%95%99%E7%A8%8B/07-%E7%9F%A5%E8%AF%86%E6%8E%A8%E7%90%86%E6%8A%80%E6%9C%AF/" style="padding-left:8px">07 知识推理技术</a><a class="column-link" href="https://qiuxzh.github.io/other/QUT/%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E6%95%99%E7%A8%8B/08-%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E8%A1%8D%E7%94%9F%E6%8A%80%E6%9C%AF/" style="padding-left:8px">08 知识图谱衍生技术</a></nav></div></div><div class="layout" id="content-inner"><div id="post"><div id="post-info"><div id="post-firstinfo"><div class="meta-firstline"><a class="post-meta-original">原创</a><span class="post-meta-categories"><span class="post-meta-separator"></span><i class="anzhiyufont anzhiyu-icon-inbox post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E6%95%99%E7%A8%8B/" itemprop="url">知识图谱教程</a></span><span class="article-meta tags"><a class="article-meta__tags" href="/tags/%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1/" tabindex="-1" itemprop="url"> <span> <i class="anzhiyufont anzhiyu-icon-hashtag"></i>知识图谱</span></a><a class="article-meta__tags" href="/tags/%E6%95%99%E7%A8%8B/" tabindex="-1" itemprop="url"> <span> <i class="anzhiyufont anzhiyu-icon-hashtag"></i>教程</span></a></span></div></div><h1 class="post-title" itemprop="name headline">01 知识图谱概述</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="anzhiyufont anzhiyu-icon-calendar-days post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" itemprop="dateCreated datePublished" datetime="2026-11-06T19:08:00.000Z" title="发表于 2026-11-06 19:08:00">2026-11-06</time><span class="post-meta-separator"></span><i class="anzhiyufont anzhiyu-icon-history post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" itemprop="dateCreated datePublished" datetime="2026-11-07T02:37:15.495Z" title="更新于 2026-11-07 02:37:15">2026-11-07</time></span></div><div class="meta-secondline"></div></div></div><article class="post-content" id="article-container" itemscope itemtype="https://qiuxzh.github.io/other/QUT/%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E6%95%99%E7%A8%8B/01-%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E6%A6%82%E8%BF%B0/"><header><a class="post-meta-categories" href="/categories/%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E6%95%99%E7%A8%8B/" itemprop="url">知识图谱教程</a><a href="/tags/%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1/" tabindex="-1" itemprop="url">知识图谱</a><a href="/tags/%E6%95%99%E7%A8%8B/" tabindex="-1" itemprop="url">教程</a><h1 id="CrawlerTitle" itemprop="name headline">01 知识图谱概述</h1><span itemprop="author" itemscope itemtype="http://schema.org/Person">qiuxz</span><time itemprop="dateCreated datePublished" datetime="2026-11-06T19:08:00.000Z" title="发表于 2026-11-06 19:08:00">2026-11-06</time><time itemprop="dateCreated datePublished" datetime="2026-11-07T02:37:15.495Z" title="更新于 2026-11-07 02:37:15">2026-11-07</time></header><p>机器要判断一句话在说什么，得先知道世界由哪些东西构成，以及它们之间怎么连着。这一章从这个前提出发，把知识图谱是什么、从哪儿来、由什么组成、能干什么，依次铺开。</p>
+<h2 id="一个段子成立的条件"><a href="#一个段子成立的条件" class="headerlink" title="一个段子成立的条件"></a>一个段子成立的条件</h2><blockquote>
+<p>2016 年 9 月，网上流传过一段对话：G20 开会休息时，马云对秘书说“中午帮我买肯德基”，半小时后秘书回话，说买好了，一共 4.6 亿美元，问是刷支付宝还是付现金。</p>
+<p>几天前的新闻是另一回事：百胜餐饮集团宣布与春华资本、蚂蚁金服达成协议，两家共同向百胜中国投资 4.6 亿美元。</p>
+</blockquote>
+<p>段子之所以好笑，是因为“买肯德基”这四个字在中文里确实指向两样东西。一样是街角那家卖炸鸡的店，另一样是这家店所属的公司。秘书把前者听成了后者，一笔几十块的午餐就变成了几十亿美元的并购。</p>
+<p>人听这段对话不会出错，因为脑子里存着几件事：肯德基是一个餐饮品牌，门店卖炸鸡；这个品牌归百胜中国管；而百胜中国正在接受蚂蚁金服的投资。这几件事串起来，“买”就有了两种解释，语境挑走了其中一种。换成机器，麻烦立刻出现。</p>
+<blockquote>
+<p><strong>如果这台机器读过足够多的新闻，认得“肯德基”“百胜”“蚂蚁金服”每一个词，它能不能听懂这句话？</strong></p>
+<p>能读懂每个词，和能判断整句话在说什么，是两件事。中间缺的那一层，是词与词之间那些没写在句子里的关系。它们平时不出现在文本中，却决定了文本的含义。</p>
+</blockquote>
+<svg width="100%" style="max-width:860px;height:auto" viewBox="0 0 860 440" role="img" aria-label="理解“买肯德基”所需的知识网络">
+  <rect width="860" height="440" fill="#fdfbf6"></rect>
+  <text x="30" y="62" font-size="13" fill="#6d747e">要读懂这句话</text>
+  <text x="30" y="84" font-size="13" fill="#6d747e">机器至少得知道下面这些事实</text>
+  <!-- 输入 -->
+  <rect x="28" y="120" width="238" height="88" rx="8" fill="#ffffff" stroke="#e4e0d6"></rect>
+  <text x="44" y="146" font-size="11" fill="#6d747e">秘书听到的话</text>
+  <text x="44" y="176" font-size="16" fill="#1b1d21">中午帮我买肯德基</text>
+  <text x="44" y="197" font-size="11.5" fill="#b4552d">“买”的宾语是哪一个？</text>
+  <line x1="266" y1="164" x2="316" y2="164" stroke="#2f6f8f" stroke-width="1.6" marker-end="url(#ar1)"></line>
+  <!-- 中心实体 -->
+  <rect x="320" y="138" width="146" height="54" rx="8" fill="#fbeee7" stroke="#b4552d" stroke-width="1.8"></rect>
+  <text x="393" y="162" font-size="15" font-weight="600" fill="#8f3d1c" text-anchor="middle">肯德基 KFC</text>
+  <text x="393" y="181" font-size="11" fill="#b4552d" text-anchor="middle">一个词，两个所指</text>
+  <!-- 上支 -->
+  <rect x="536" y="64" width="152" height="48" rx="8" fill="#eaf3ee" stroke="#3f7a5a"></rect>
+  <text x="612" y="84" font-size="14" fill="#2c5c42" text-anchor="middle">快餐店 · 门店</text>
+  <text x="612" y="102" font-size="11" fill="#4b7f61" text-anchor="middle">① 卖炸鸡的地方</text>
+  <line x1="466" y1="150" x2="532" y2="112" stroke="#3f7a5a" stroke-width="1.5" marker-end="url(#ar2)"></line>
+  <text x="492" y="128" font-size="11" fill="#3f7a5a">isa</text>
+  <!-- 下支 -->
+  <rect x="536" y="244" width="152" height="48" rx="8" fill="#e9f2f6" stroke="#2f6f8f"></rect>
+  <text x="612" y="264" font-size="14" fill="#1f4d64" text-anchor="middle">百胜中国 · 公司</text>
+  <text x="612" y="282" font-size="11" fill="#3d6d84" text-anchor="middle">② 拥有这个品牌的公司</text>
+  <line x1="466" y1="180" x2="532" y2="250" stroke="#2f6f8f" stroke-width="1.5" marker-end="url(#ar1)"></line>
+  <text x="478" y="232" font-size="11" fill="#2f6f8f">母公司</text>
+  <rect x="736" y="244" width="96" height="48" rx="8" fill="#ffffff" stroke="#2f6f8f"></rect>
+  <text x="784" y="264" font-size="13" fill="#1b1d21" text-anchor="middle">蚂蚁金服</text>
+  <text x="784" y="281" font-size="10.5" fill="#6d747e" text-anchor="middle">投资方</text>
+  <line x1="736" y1="268" x2="692" y2="268" stroke="#2f6f8f" stroke-width="1.5" marker-end="url(#ar1)"></line>
+  <text x="714" y="260" font-size="10" fill="#2f6f8f" text-anchor="middle">投资</text>
+  <text x="784" y="310" font-size="10.5" fill="#6d747e" text-anchor="middle">4.6 亿美元</text>
+  <text x="28" y="300" font-size="11.5" fill="#8a8175">没有这张图，机器只能按字与字</text>
+  <text x="28" y="320" font-size="11.5" fill="#8a8175">的共现频次去猜，猜不出这一层。</text>
+  <!-- 两种读法 -->
+  <rect x="290" y="346" width="252" height="62" rx="8" fill="#ffffff" stroke="#d8e4da"></rect>
+  <text x="308" y="370" font-size="12.5" fill="#3f7a5a">① 门店</text>
+  <text x="308" y="392" font-size="14" fill="#1b1d21">买一份炸鸡，几十块钱</text>
+  <rect x="570" y="346" width="260" height="62" rx="8" fill="#ffffff" stroke="#cfdde4"></rect>
+  <text x="588" y="370" font-size="12.5" fill="#2f6f8f">② 公司</text>
+  <text x="588" y="392" font-size="14" fill="#1b1d21">收购中国业务，4.6 亿美元</text>
+  <defs>
+    <marker id="ar1" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#2f6f8f"></path>
+    </marker>
+    <marker id="ar2" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#3f7a5a"></path>
+    </marker>
+  </defs>
+</svg>
+
+<p><em>同一个词“肯德基”，在两条关系上分别落到门店和公司。关系不在句子里，含义却由它决定。段子的笑点，就是这两种读法之间的落差。</em></p>
+<p>图里那些才是一个知识图谱的样子。方框是实体，箭头是关系，箭头上的字说明这两个实体怎么关联。句子提供入口，图谱提供上下文。</p>
+<p>严格来说，一门课里给“知识”下定义时，通常要求一个判断同时站得住脚、确实为真、而且有人相信它。这三条把知识和“猜测”“传言”分开。放到工程上，这个定义没那么好用，工程师更关心一件事：知识要能被组织成结构，机器才能拿它做运算。知识图谱就是这个“结构”的一种具体形态。</p>
+<h2 id="数据和知识差在哪"><a href="#数据和知识差在哪" class="headerlink" title="数据和知识差在哪"></a>数据和知识差在哪</h2><p>把刚才那几条事实存进数据库，会得到三张表。一张记公司，一张记品牌归属，一张记投资事件。字段齐全，一条不缺，可机器翻完这三张表也不会笑，因为它不知道“投资方”和“被投资方”哪个在前，也不知道“品牌”和“门店”是两回事。表格记录的是值，人脑记的是关系。</p>
+<svg width="100%" style="max-width:860px;height:auto" viewBox="0 0 860 330" role="img" aria-label="同一批词有无连线时的差别">
+  <rect width="860" height="330" fill="#fdfbf6"></rect>
+  <text x="46" y="52" font-size="13.5" font-weight="600" fill="#6d747e">文本里的词</text>
+  <rect x="30" y="66" width="370" height="224" rx="10" fill="#f4f1e9" stroke="#e4e0d6"></rect>
+  <rect x="60" y="96" width="86" height="32" rx="6" fill="#ffffff" stroke="#cfd6da"></rect>
+  <text x="103" y="117" font-size="13" fill="#6d747e" text-anchor="middle">肯德基</text>
+  <rect x="190" y="96" width="86" height="32" rx="6" fill="#ffffff" stroke="#cfd6da"></rect>
+  <text x="233" y="117" font-size="13" fill="#6d747e" text-anchor="middle">百胜餐饮</text>
+  <rect x="60" y="152" width="86" height="32" rx="6" fill="#ffffff" stroke="#cfd6da"></rect>
+  <text x="103" y="173" font-size="13" fill="#6d747e" text-anchor="middle">蚂蚁金服</text>
+  <rect x="196" y="152" width="70" height="32" rx="6" fill="#ffffff" stroke="#cfd6da"></rect>
+  <text x="231" y="173" font-size="13" fill="#6d747e" text-anchor="middle">4.6 亿</text>
+  <rect x="72" y="212" width="60" height="32" rx="6" fill="#ffffff" stroke="#cfd6da"></rect>
+  <text x="102" y="233" font-size="13" fill="#6d747e" text-anchor="middle">投资</text>
+  <rect x="188" y="212" width="86" height="32" rx="6" fill="#ffffff" stroke="#cfd6da"></rect>
+  <text x="231" y="233" font-size="13" fill="#6d747e" text-anchor="middle">快餐店</text>
+  <text x="215" y="272" font-size="12" fill="#8a8175" text-anchor="middle">一堆各自成立的词，彼此之间没有断言</text>
+  <line x1="410" y1="178" x2="448" y2="178" stroke="#b4552d" stroke-width="1.8" marker-end="url(#ar3)"></line>
+  <text x="429" y="166" font-size="11" fill="#b4552d" text-anchor="middle">连线</text>
+  <text x="476" y="52" font-size="13.5" font-weight="600" fill="#1f4d64">图谱里的实体</text>
+  <rect x="460" y="66" width="370" height="224" rx="10" fill="#ffffff" stroke="#cfdde4"></rect>
+  <rect x="492" y="104" width="100" height="32" rx="6" fill="#fbeee7" stroke="#b4552d"></rect>
+  <text x="542" y="125" font-size="13" fill="#8f3d1c" text-anchor="middle">肯德基</text>
+  <rect x="690" y="104" width="100" height="32" rx="6" fill="#e9f2f6" stroke="#2f6f8f"></rect>
+  <text x="740" y="125" font-size="13" fill="#1f4d64" text-anchor="middle">百胜餐饮</text>
+  <rect x="690" y="199" width="100" height="32" rx="6" fill="#e9f2f6" stroke="#2f6f8f"></rect>
+  <text x="740" y="220" font-size="13" fill="#1f4d64" text-anchor="middle">蚂蚁金服</text>
+  <rect x="492" y="199" width="100" height="32" rx="6" fill="#eaf3ee" stroke="#3f7a5a"></rect>
+  <text x="542" y="220" font-size="13" fill="#2c5c42" text-anchor="middle">快餐店</text>
+  <line x1="592" y1="120" x2="686" y2="120" stroke="#2f6f8f" stroke-width="1.5" marker-end="url(#ar4)"></line>
+  <text x="639" y="112" font-size="10.5" fill="#2f6f8f" text-anchor="middle">母公司</text>
+  <line x1="542" y1="136" x2="542" y2="195" stroke="#3f7a5a" stroke-width="1.5" marker-end="url(#ar5)"></line>
+  <text x="550" y="170" font-size="10.5" fill="#3f7a5a">isa</text>
+  <line x1="740" y1="199" x2="740" y2="140" stroke="#2f6f8f" stroke-width="1.5" marker-end="url(#ar4)"></line>
+  <text x="732" y="176" font-size="10.5" fill="#2f6f8f" text-anchor="end">投资 4.6 亿美元</text>
+  <text x="645" y="272" font-size="12" fill="#6d747e" text-anchor="middle">词变成了实体，词与词之间有了可以被查询的断言</text>
+  <defs>
+    <marker id="ar3" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#b4552d"></path></marker>
+    <marker id="ar4" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#2f6f8f"></path></marker>
+    <marker id="ar5" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#3f7a5a"></path></marker>
+  </defs>
+</svg>
+
+<p><em>左边这批词，任何一段文本里都能找到；右边的差别只在于多了一层断言。机器能拿右边做查询、做推理，拿左边只能做检索。</em></p>
+<h2 id="两条智能路线"><a href="#两条智能路线" class="headerlink" title="两条智能路线"></a>两条智能路线</h2><p>人工智能发展史上有两条主线，处理知识的方式完全不同。一条从数据出发，用大量样本训练网络，让它学会分辨模式。人脸识别、语音转写、图像生成走的都是这条路，效果在过去十年里提升得很快。另一条从符号出发，把知识写成规则或结构，再用逻辑在上面推导。专家系统、数据库查询、定理证明属于这一类。</p>
+<p>两条路线的长处分得很清楚。前者见到没标注过的图像也能给出结果，代价是说不清依据；后者每走一步都能给出理由，代价是需要有人先把知识整理进去。号称“聪明”的系统和号称“有学识”的系统，差别大体就在这儿。</p>
+<svg width="100%" style="max-width:860px;height:auto" viewBox="0 0 860 400" role="img" aria-label="深度学习路线与知识图谱路线对比">
+  <rect width="860" height="400" fill="#fdfbf6"></rect>
+  <rect x="30" y="40" width="386" height="256" rx="10" fill="#ffffff" stroke="#e4e0d6"></rect>
+  <text x="52" y="70" font-size="14" font-weight="600" fill="#1b1d21">深度学习路线</text>
+  <text x="52" y="89" font-size="11" fill="#6d747e">连接主义 · 从样本里拟合模式</text>
+  <rect x="60" y="106" width="200" height="42" rx="7" fill="#f4f1e9" stroke="#cfd6da"></rect>
+  <text x="160" y="132" font-size="13.5" fill="#3d444d" text-anchor="middle">看一张图</text>
+  <line x1="160" y1="148" x2="160" y2="170" stroke="#8a8175" stroke-width="1.4" marker-end="url(#ar6)"></line>
+  <rect x="60" y="172" width="200" height="42" rx="7" fill="#f4f1e9" stroke="#cfd6da"></rect>
+  <text x="160" y="198" font-size="13.5" fill="#3d444d" text-anchor="middle">学到边缘、纹理、部件</text>
+  <line x1="160" y1="214" x2="160" y2="236" stroke="#8a8175" stroke-width="1.4" marker-end="url(#ar6)"></line>
+  <rect x="60" y="238" width="200" height="42" rx="7" fill="#f4f1e9" stroke="#cfd6da"></rect>
+  <text x="160" y="264" font-size="13.5" fill="#3d444d" text-anchor="middle">输出标签：猫</text>
+  <text x="286" y="130" font-size="12" fill="#6d747e">擅长</text>
+  <text x="286" y="150" font-size="12" fill="#3d444d">感知、识别、生成</text>
+  <text x="286" y="182" font-size="12" fill="#6d747e">短板</text>
+  <text x="286" y="202" font-size="12" fill="#3d444d">说不清依据</text>
+  <text x="286" y="222" font-size="12" fill="#3d444d">改错只能重新训练</text>
+  <line x1="432" y1="60" x2="432" y2="292" stroke="#e4e0d6" stroke-dasharray="4 4"></line>
+  <rect x="446" y="40" width="386" height="256" rx="10" fill="#ffffff" stroke="#cfdde4"></rect>
+  <text x="468" y="70" font-size="14" font-weight="600" fill="#1f4d64">知识图谱路线</text>
+  <text x="468" y="89" font-size="11" fill="#6d747e">符号主义 · 把知识写成结构</text>
+  <rect x="476" y="106" width="200" height="42" rx="7" fill="#e9f2f6" stroke="#cfd6da"></rect>
+  <text x="576" y="132" font-size="13.5" fill="#1f4d64" text-anchor="middle">读一句话</text>
+  <line x1="576" y1="148" x2="576" y2="170" stroke="#2f6f8f" stroke-width="1.4" marker-end="url(#ar7)"></line>
+  <rect x="476" y="172" width="200" height="42" rx="7" fill="#e9f2f6" stroke="#cfd6da"></rect>
+  <text x="576" y="198" font-size="13.5" fill="#1f4d64" text-anchor="middle">落到实体与关系上</text>
+  <line x1="576" y1="214" x2="576" y2="236" stroke="#2f6f8f" stroke-width="1.4" marker-end="url(#ar7)"></line>
+  <rect x="476" y="238" width="200" height="42" rx="7" fill="#e9f2f6" stroke="#cfd6da"></rect>
+  <text x="576" y="264" font-size="13.5" fill="#1f4d64" text-anchor="middle">沿关系推出结论</text>
+  <text x="702" y="130" font-size="12" fill="#6d747e">擅长</text>
+  <text x="702" y="150" font-size="12" fill="#3d444d">推理与解释</text>
+  <text x="702" y="182" font-size="12" fill="#6d747e">短板</text>
+  <text x="702" y="202" font-size="12" fill="#3d444d">覆盖有限</text>
+  <text x="702" y="222" font-size="12" fill="#3d444d">建库成本高</text>
+  <rect x="30" y="322" width="802" height="52" rx="8" fill="#f6e7c8" stroke="#e2cfa0"></rect>
+  <text x="431" y="353" font-size="13.5" fill="#6b5320" text-anchor="middle">人的认知是两边一起用：语言负责把世界说清楚，知识负责说明白之后能推出什么。</text>
+  <defs>
+    <marker id="ar6" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#8a8175"></path></marker>
+    <marker id="ar7" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#2f6f8f"></path></marker>
+  </defs>
+</svg>
+
+<p><em>两条路线不是替代关系。检索增强、图神经网络这些做法，做的都是把两边接起来。</em></p>
+<p>现实中的系统很少纯粹站在一边。搜索引擎既用文本匹配，也用实体识别；推荐系统既跑协同过滤，也用商品之间的关联。开头那个段子的例子已经说明，纯文本方法走到歧义面前就停住了，需要一份外部知识来帮忙裁决。</p>
+<h2 id="知识在机器里的三种形态"><a href="#知识在机器里的三种形态" class="headerlink" title="知识在机器里的三种形态"></a>知识在机器里的三种形态</h2><p>机器保存知识，历史上试过三种容器。第一种是把知识留在文本里，谁需要谁去读。第二种是拆成实体和关系存进图里。第三种是把每个实体压成一串数字，让相似的东西在数值空间里挨得近一些。三种形态各有各的用法，也各有各的漏。</p>
+<svg width="100%" style="max-width:860px;height:auto" viewBox="0 0 860 300" role="img" aria-label="文本、知识图谱、向量三种知识载体">
+  <rect width="860" height="300" fill="#fdfbf6"></rect>
+  <rect x="30" y="42" width="240" height="170" rx="10" fill="#f4f1e9" stroke="#e4e0d6"></rect>
+  <text x="46" y="68" font-size="13.5" font-weight="600" fill="#3d444d">文本</text>
+  <line x1="46" y1="96" x2="240" y2="96" stroke="#cfc8b8" stroke-width="5" stroke-linecap="round"></line>
+  <line x1="46" y1="116" x2="252" y2="116" stroke="#cfc8b8" stroke-width="5" stroke-linecap="round"></line>
+  <line x1="46" y1="136" x2="200" y2="136" stroke="#cfc8b8" stroke-width="5" stroke-linecap="round"></line>
+  <line x1="46" y1="156" x2="246" y2="156" stroke="#cfc8b8" stroke-width="5" stroke-linecap="round"></line>
+  <line x1="46" y1="176" x2="160" y2="176" stroke="#cfc8b8" stroke-width="5" stroke-linecap="round"></line>
+  <rect x="310" y="42" width="240" height="170" rx="10" fill="#ffffff" stroke="#cfdde4"></rect>
+  <text x="326" y="68" font-size="13.5" font-weight="600" fill="#1f4d64">知识图谱</text>
+  <circle cx="366" cy="120" r="15" fill="#e9f2f6" stroke="#2f6f8f"></circle>
+  <circle cx="468" cy="106" r="15" fill="#e9f2f6" stroke="#2f6f8f"></circle>
+  <circle cx="452" cy="176" r="15" fill="#e9f2f6" stroke="#2f6f8f"></circle>
+  <circle cx="526" cy="152" r="15" fill="#e9f2f6" stroke="#2f6f8f"></circle>
+  <line x1="381" y1="118" x2="453" y2="108" stroke="#2f6f8f" stroke-width="1.4"></line>
+  <line x1="370" y1="134" x2="446" y2="165" stroke="#2f6f8f" stroke-width="1.4"></line>
+  <line x1="467" y1="165" x2="516" y2="156" stroke="#2f6f8f" stroke-width="1.4"></line>
+  <rect x="590" y="42" width="240" height="170" rx="10" fill="#fbeee7" stroke="#f0d5c7"></rect>
+  <text x="606" y="68" font-size="13.5" font-weight="600" fill="#8f3d1c">向量</text>
+  <g fill="#b4552d">
+    <rect x="612" y="96" width="14" height="14" rx="2" opacity=".85"></rect>
+    <rect x="632" y="96" width="14" height="14" rx="2" opacity=".35"></rect>
+    <rect x="652" y="96" width="14" height="14" rx="2" opacity=".6"></rect>
+    <rect x="672" y="96" width="14" height="14" rx="2" opacity=".2"></rect>
+    <rect x="692" y="96" width="14" height="14" rx="2" opacity=".75"></rect>
+    <rect x="712" y="96" width="14" height="14" rx="2" opacity=".45"></rect>
+    <rect x="732" y="96" width="14" height="14" rx="2" opacity=".9"></rect>
+    <rect x="752" y="96" width="14" height="14" rx="2" opacity=".3"></rect>
+    <rect x="612" y="120" width="14" height="14" rx="2" opacity=".4"></rect>
+    <rect x="632" y="120" width="14" height="14" rx="2" opacity=".8"></rect>
+    <rect x="652" y="120" width="14" height="14" rx="2" opacity=".25"></rect>
+    <rect x="672" y="120" width="14" height="14" rx="2" opacity=".65"></rect>
+    <rect x="692" y="120" width="14" height="14" rx="2" opacity=".5"></rect>
+    <rect x="712" y="120" width="14" height="14" rx="2" opacity=".15"></rect>
+    <rect x="732" y="120" width="14" height="14" rx="2" opacity=".7"></rect>
+    <rect x="752" y="120" width="14" height="14" rx="2" opacity=".55"></rect>
+  </g>
+  <text x="796" y="146" font-size="11" fill="#b4552d" text-anchor="middle">…</text>
+  <text x="150" y="242" font-size="12" fill="#6d747e" text-anchor="middle">知识藏在句子里</text>
+  <text x="150" y="264" font-size="12" fill="#3d444d" text-anchor="middle">能读，不能查</text>
+  <text x="430" y="242" font-size="12" fill="#6d747e" text-anchor="middle">知识拆成三元组</text>
+  <text x="430" y="264" font-size="12" fill="#3d444d" text-anchor="middle">能查，要人先建</text>
+  <text x="710" y="242" font-size="12" fill="#6d747e" text-anchor="middle">知识压成数值</text>
+  <text x="710" y="264" font-size="12" fill="#3d444d" text-anchor="middle">能算，说不清理由</text>
+</svg>
+
+<p><em>三种形态对应三种能力。大模型时代常用的检索增强，做法是把文本和向量接起来；图谱的作用，是在需要精确关系的地方补上那一层结构。</em></p>
+<h2 id="五个阶段"><a href="#五个阶段" class="headerlink" title="五个阶段"></a>五个阶段</h2><p>知识图谱不是 2012 年从零冒出来的概念。它前面有将近五十年的积累，每一段解决的都是上一段留下的问题。</p>
+<svg width="100%" style="max-width:860px;height:auto" viewBox="0 0 860 268" role="img" aria-label="知识图谱发展的五个阶段">
+  <rect width="860" height="268" fill="#fdfbf6"></rect>
+  <line x1="70" y1="92" x2="800" y2="92" stroke="#cfd6da" stroke-width="2"></line>
+  <circle cx="100" cy="92" r="8" fill="#fff" stroke="#8a8175" stroke-width="2"></circle>
+  <text x="100" y="66" font-size="14" font-weight="600" fill="#8a8175" text-anchor="middle">1965</text>
+  <text x="100" y="124" font-size="13" font-weight="600" fill="#1b1d21" text-anchor="middle">专家系统</text>
+  <text x="100" y="148" font-size="11" fill="#6d747e" text-anchor="middle">知识库 + 推理机</text>
+  <text x="100" y="166" font-size="11" fill="#6d747e" text-anchor="middle">第一次把知识单独存起来</text>
+  <circle cx="275" cy="92" r="8" fill="#fff" stroke="#8a8175" stroke-width="2"></circle>
+  <text x="275" y="66" font-size="14" font-weight="600" fill="#8a8175" text-anchor="middle">1977</text>
+  <text x="275" y="124" font-size="13" font-weight="600" fill="#1b1d21" text-anchor="middle">知识工程</text>
+  <text x="275" y="148" font-size="11" fill="#6d747e" text-anchor="middle">知识变成可施工的流程</text>
+  <text x="275" y="166" font-size="11" fill="#6d747e" text-anchor="middle">规模与应用面都在扩大</text>
+  <circle cx="450" cy="92" r="8" fill="#fff" stroke="#2f6f8f" stroke-width="2"></circle>
+  <text x="450" y="66" font-size="14" font-weight="600" fill="#2f6f8f" text-anchor="middle">1991—1993</text>
+  <text x="450" y="124" font-size="13" font-weight="600" fill="#1b1d21" text-anchor="middle">知识本体</text>
+  <text x="450" y="148" font-size="11" fill="#6d747e" text-anchor="middle">Gruber：概念体系的明确规范</text>
+  <text x="450" y="166" font-size="11" fill="#6d747e" text-anchor="middle">概念有了可共享的定义</text>
+  <circle cx="625" cy="92" r="8" fill="#fff" stroke="#2f6f8f" stroke-width="2"></circle>
+  <text x="625" y="66" font-size="14" font-weight="600" fill="#2f6f8f" text-anchor="middle">1998</text>
+  <text x="625" y="124" font-size="13" font-weight="600" fill="#1b1d21" text-anchor="middle">语义网</text>
+  <text x="625" y="148" font-size="11" fill="#6d747e" text-anchor="middle">用 RDF 描述网页上的资源</text>
+  <text x="625" y="166" font-size="11" fill="#6d747e" text-anchor="middle">知识走向互联网</text>
+  <circle cx="790" cy="92" r="9" fill="#fbeee7" stroke="#b4552d" stroke-width="2.2"></circle>
+  <text x="790" y="66" font-size="14" font-weight="600" fill="#b4552d" text-anchor="middle">2012</text>
+  <text x="790" y="124" font-size="13" font-weight="600" fill="#8f3d1c" text-anchor="middle">知识图谱</text>
+  <text x="790" y="148" font-size="11" fill="#6d747e" text-anchor="middle">Google 用它改造搜索</text>
+  <text x="790" y="166" font-size="11" fill="#6d747e" text-anchor="middle">开始跨领域整合</text>
+  <text x="70" y="214" font-size="11.5" fill="#8a8175">全人工编写</text>
+  <text x="800" y="214" font-size="11.5" fill="#8a8175" text-anchor="end">半自动与自动构建</text>
+  <line x1="70" y1="226" x2="800" y2="226" stroke="#cfd6da" stroke-width="1.4" marker-end="url(#ar8)"></line>
+  <defs><marker id="ar8" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#cfd6da"></path></marker></defs>
+</svg>
+
+<p><em>五个阶段的共同线索是知识的形式化程度一步步提高：从规则，到工程流程，到共享的概念体系，再到网页上的资源描述。构建方式也从纯人工走向半自动。</em></p>
+<p>1965 年，斯坦福的 Edward Feigenbaum 提出专家系统，思路是把领域专家的知识写进知识库，再用推理机在上面求解。1977 年，他在第五届国际人工智能会议上提出知识工程，把这套做法整理成一套可交付的流程。1991 年前后，知识本体的概念出现，1993 年 Gruber 把它定义为“概念体系的明确规范”，领域知识从此有了可共享的写法。1998 年，Tim Berners-Lee 提出语义网，希望用资源描述框架把知识表示和推理搬进万维网。到 2012 年，Google 提出知识图谱，用它增强搜索结果，构建过程开始走向半自动，跨领域整合成为这一阶段的标志。</p>
+<h2 id="三元组"><a href="#三元组" class="headerlink" title="三元组"></a>三元组</h2><p>图谱的最小单位是三元组，写成（主语，谓语，宾语）。拿一家公司举例，三条三元组就能勾出一个大概。</p>
+<svg width="100%" style="max-width:860px;height:auto" viewBox="0 0 860 370" role="img" aria-label="从图到三元组的拆解">
+  <rect width="860" height="370" fill="#fdfbf6"></rect>
+  <rect x="90" y="46" width="110" height="46" rx="8" fill="#e9f2f6" stroke="#2f6f8f"></rect>
+  <text x="145" y="75" font-size="14" fill="#1f4d64" text-anchor="middle">任正非</text>
+  <rect x="330" y="46" width="110" height="46" rx="8" fill="#fbeee7" stroke="#b4552d" stroke-width="1.6"></rect>
+  <text x="385" y="75" font-size="14" fill="#8f3d1c" text-anchor="middle">华为</text>
+  <rect x="560" y="46" width="110" height="46" rx="8" fill="#e9f2f6" stroke="#2f6f8f"></rect>
+  <text x="615" y="75" font-size="14" fill="#1f4d64" text-anchor="middle">深圳</text>
+  <line x1="200" y1="69" x2="326" y2="69" stroke="#2f6f8f" stroke-width="1.6" marker-end="url(#ar9)"></line>
+  <text x="263" y="60" font-size="11" fill="#2f6f8f" text-anchor="middle">创立</text>
+  <line x1="440" y1="69" x2="556" y2="69" stroke="#2f6f8f" stroke-width="1.6" marker-end="url(#ar9)"></line>
+  <text x="498" y="60" font-size="11" fill="#2f6f8f" text-anchor="middle">总部位于</text>
+  <rect x="330" y="160" width="110" height="46" rx="8" fill="#ffffff" stroke="#b4552d" stroke-dasharray="5 4"></rect>
+  <text x="385" y="189" font-size="14" fill="#b4552d" text-anchor="middle">1987</text>
+  <line x1="385" y1="92" x2="385" y2="156" stroke="#b4552d" stroke-width="1.4" stroke-dasharray="5 4" marker-end="url(#ar10)"></line>
+  <text x="395" y="128" font-size="11" fill="#b4552d">成立时间</text>
+  <text x="452" y="192" font-size="11.5" fill="#8f3d1c">字面值，不是实体</text>
+  <line x1="60" y1="238" x2="800" y2="238" stroke="#e4e0d6" stroke-dasharray="3 5"></line>
+  <rect x="50" y="262" width="238" height="44" rx="7" fill="#ffffff" stroke="#cfdde4"></rect>
+  <text x="169" y="289" font-size="12.5" fill="#1f4d64" text-anchor="middle">任正非　创立　华为</text>
+  <rect x="310" y="262" width="238" height="44" rx="7" fill="#ffffff" stroke="#cfdde4"></rect>
+  <text x="429" y="289" font-size="12.5" fill="#1f4d64" text-anchor="middle">华为　总部位于　深圳</text>
+  <rect x="570" y="262" width="238" height="44" rx="7" fill="#ffffff" stroke="#f0d5c7"></rect>
+  <text x="689" y="289" font-size="12.5" fill="#8f3d1c" text-anchor="middle">华为　成立时间　1987</text>
+  <text x="169" y="330" font-size="11" fill="#6d747e" text-anchor="middle">两个实体之间</text>
+  <text x="429" y="330" font-size="11" fill="#6d747e" text-anchor="middle">两个实体之间</text>
+  <text x="689" y="330" font-size="11" fill="#6d747e" text-anchor="middle">实体与值之间</text>
+  <defs>
+    <marker id="ar9" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#2f6f8f"></path></marker>
+    <marker id="ar10" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#b4552d"></path></marker>
+  </defs>
+</svg>
+
+<p><em>前两条连接的是两个实体，叫关系；第三条把实体接到一个字面值上，叫属性。图里用虚线区分，这个区别在后面讲数据模型时会反复出现。</em></p>
+<p>三元组里的角色可以拆成几个词。实体是现实世界里能被指认的东西，一个人、一座城市、一家公司都算，每个实体有一个标识符。属性用来描述实体，出生日期、面积、上映时间这类。关系连接两个实体，类型由边上的标签说明。这些概念由本体统一分类和定义，通常还带一个层次结构。知识库是存放它们的容器，具体落到数据库或文件里。</p>
+<p>本体管的是这一整套概念的分类方式：快餐店属于餐饮企业，餐饮企业属于企业；母公司是公司之间的一种关系，方向从子公司指向母公司。有了这套说法，不同来源的数据才有可能对齐。第二章讲表示技术时，会展开本体的建模方法。</p>
+<blockquote>
+<p><strong>一个容易混的地方。</strong>“实体”和“属性值”不是一回事。深圳可以当一个实体，有自己的面积和人口；1987 只是一个数字，做不了任何展开。把该做属性的东西做成实体，图会变臃肿；把该做实体的东西写成属性，图就没法再往下查。</p>
+</blockquote>
+<h2 id="项目生态"><a href="#项目生态" class="headerlink" title="项目生态"></a>项目生态</h2><p>过去三十年公开的知识库，来源大体分两类。一类靠人写，学者编、社区改、专家校对；一类靠机器抽，从维基百科、网页标注、结构化数据里自动生成。看项目的时候先看它属于哪一类，再看它服务什么用途，比逐个数规模有用。</p>
+<svg width="100%" style="max-width:860px;height:auto" viewBox="0 0 860 330" role="img" aria-label="知识库的两种来源">
+  <rect width="860" height="330" fill="#fdfbf6"></rect>
+  <text x="30" y="40" font-size="12" font-weight="600" fill="#8a8175">来源</text>
+  <text x="600" y="40" font-size="12" font-weight="600" fill="#8a8175">产物</text>
+  <rect x="30" y="60" width="170" height="44" rx="7" fill="#f4f1e9" stroke="#cfd6da"></rect>
+  <text x="115" y="87" font-size="13" fill="#3d444d" text-anchor="middle">维基百科</text>
+  <rect x="30" y="120" width="170" height="44" rx="7" fill="#f4f1e9" stroke="#cfd6da"></rect>
+  <text x="115" y="147" font-size="13" fill="#3d444d" text-anchor="middle">WordNet</text>
+  <rect x="30" y="180" width="170" height="44" rx="7" fill="#f4f1e9" stroke="#cfd6da"></rect>
+  <text x="115" y="207" font-size="13" fill="#3d444d" text-anchor="middle">网页语义标注</text>
+  <rect x="30" y="240" width="170" height="44" rx="7" fill="#f4f1e9" stroke="#cfd6da"></rect>
+  <text x="115" y="267" font-size="13" fill="#3d444d" text-anchor="middle">社区人工编辑</text>
+  <rect x="600" y="60" width="170" height="44" rx="7" fill="#e9f2f6" stroke="#2f6f8f"></rect>
+  <text x="685" y="87" font-size="13" fill="#1f4d64" text-anchor="middle">DBpedia / YAGO</text>
+  <rect x="600" y="120" width="170" height="44" rx="7" fill="#e9f2f6" stroke="#2f6f8f"></rect>
+  <text x="685" y="147" font-size="13" fill="#1f4d64" text-anchor="middle">BabelNet</text>
+  <rect x="600" y="180" width="170" height="44" rx="7" fill="#e9f2f6" stroke="#2f6f8f"></rect>
+  <text x="685" y="207" font-size="13" fill="#1f4d64" text-anchor="middle">Schema.org</text>
+  <rect x="600" y="240" width="170" height="44" rx="7" fill="#fbeee7" stroke="#b4552d"></rect>
+  <text x="685" y="267" font-size="13" fill="#8f3d1c" text-anchor="middle">Freebase / Wikidata</text>
+  <line x1="204" y1="82" x2="596" y2="82" stroke="#cfd6da" stroke-width="1.2"></line>
+  <line x1="204" y1="142" x2="596" y2="142" stroke="#cfd6da" stroke-width="1.2"></line>
+  <line x1="204" y1="202" x2="596" y2="202" stroke="#cfd6da" stroke-width="1.2"></line>
+  <line x1="204" y1="262" x2="596" y2="262" stroke="#cfd6da" stroke-width="1.2"></line>
+  <text x="400" y="76" font-size="11" fill="#8a8175" text-anchor="middle">抽取与链接</text>
+  <text x="400" y="136" font-size="11" fill="#8a8175" text-anchor="middle">词典与百科融合</text>
+  <text x="400" y="196" font-size="11" fill="#8a8175" text-anchor="middle">直接读取</text>
+  <text x="400" y="256" font-size="11" fill="#8a8175" text-anchor="middle">持续维护</text>
+  <text x="400" y="312" font-size="11.5" fill="#6d747e" text-anchor="middle">同一条知识，可能既有机器抽的版本，也有人校的版本，两者需要对齐</text>
+</svg>
+
+<p><em>左侧四个来源产出右侧的库。机器抽出来的部分覆盖广但噪声多，人工维护的部分质量高但规模受人力限制，多数大型知识库是两者混用。</em></p>
+<table>
+<thead>
+<tr>
+<th>项目</th>
+<th>起点</th>
+<th>主要来源</th>
+<th>规模</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>WordNet</td>
+<td>普林斯顿大学，1985 年起</td>
+<td>人工编纂</td>
+<td>15 万词，20 万条语义关系</td>
+</tr>
+<tr>
+<td>ConceptNet</td>
+<td>MIT Open Mind 项目，1999 年由 Minsky 建议创立</td>
+<td>众包常识</td>
+<td>以词间关系为主，关系类型多于 WordNet</td>
+</tr>
+<tr>
+<td>Freebase</td>
+<td>MetaWeb 开发，后被 Google 收购</td>
+<td>社区贡献与网页抽取</td>
+<td>2.5 亿实体，2016 年关闭并迁入 Wikidata</td>
+</tr>
+<tr>
+<td>DBpedia</td>
+<td>早期语义网项目</td>
+<td>从维基百科抽取</td>
+<td>约 30 亿条 RDF 三元组</td>
+</tr>
+<tr>
+<td>YAGO</td>
+<td>德国马普研究所</td>
+<td>融合 Wikipedia、WordNet、GeoNames</td>
+<td>数亿条三元组，带时间与空间维度</td>
+</tr>
+<tr>
+<td>Schema.org</td>
+<td>主流搜索引擎联合发起</td>
+<td>网页内嵌语义标注</td>
+<td>642 个类、992 个关系，覆盖约 1.2 亿网站</td>
+</tr>
+<tr>
+<td>Wikidata</td>
+<td>维基媒体基金会</td>
+<td>社区编辑，CC0 许可</td>
+<td>承接 Freebase 数据，规模持续增长</td>
+</tr>
+<tr>
+<td>BabelNet</td>
+<td>多语言词典知识库</td>
+<td>WordNet 与维基百科融合</td>
+<td>271 种语言，19 亿条 RDF 三元组</td>
+</tr>
+</tbody></table>
+<p>中文读者更常用的入口是 OpenKG，一个开放的中文知识图谱资源站，汇集了各领域公开图谱与工具。做实验时，从这类开放资源拿数据比从零建库现实得多。</p>
+<h2 id="一张技术地图"><a href="#一张技术地图" class="headerlink" title="一张技术地图"></a>一张技术地图</h2><p>一个完整的知识图谱系统，从原始数据到能回答问题，中间要走六步。</p>
+<svg width="100%" style="max-width:860px;height:auto" viewBox="0 0 860 340" role="img" aria-label="知识图谱技术流程与各环节位置">
+  <rect width="860" height="340" fill="#fdfbf6"></rect>
+  <rect x="28" y="70" width="112" height="64" rx="8" fill="#ffffff" stroke="#b4552d" stroke-width="1.4"></rect>
+  <text x="84" y="98" font-size="14" font-weight="600" fill="#8f3d1c" text-anchor="middle">知识抽取</text>
+  <text x="84" y="118" font-size="10.5" fill="#b4552d" text-anchor="middle">实体·关系·事件</text>
+  <rect x="167" y="70" width="112" height="64" rx="8" fill="#ffffff" stroke="#b4552d" stroke-width="1.4"></rect>
+  <text x="223" y="98" font-size="14" font-weight="600" fill="#8f3d1c" text-anchor="middle">知识融合</text>
+  <text x="223" y="118" font-size="10.5" fill="#b4552d" text-anchor="middle">对齐·消歧</text>
+  <rect x="306" y="70" width="112" height="64" rx="8" fill="#ffffff" stroke="#2f6f8f" stroke-width="1.4"></rect>
+  <text x="362" y="98" font-size="14" font-weight="600" fill="#1f4d64" text-anchor="middle">知识表示</text>
+  <text x="362" y="118" font-size="10.5" fill="#2f6f8f" text-anchor="middle">RDF·属性图</text>
+  <rect x="445" y="70" width="112" height="64" rx="8" fill="#ffffff" stroke="#2f6f8f" stroke-width="1.4"></rect>
+  <text x="501" y="98" font-size="14" font-weight="600" fill="#1f4d64" text-anchor="middle">知识存储</text>
+  <text x="501" y="118" font-size="10.5" fill="#2f6f8f" text-anchor="middle">图数据库·查询</text>
+  <rect x="584" y="70" width="112" height="64" rx="8" fill="#ffffff" stroke="#3f7a5a" stroke-width="1.4"></rect>
+  <text x="640" y="98" font-size="14" font-weight="600" fill="#2c5c42" text-anchor="middle">知识推理</text>
+  <text x="640" y="118" font-size="10.5" fill="#3f7a5a" text-anchor="middle">规则·逻辑·神经</text>
+  <rect x="723" y="70" width="112" height="64" rx="8" fill="#ffffff" stroke="#3f7a5a" stroke-width="1.4"></rect>
+  <text x="779" y="98" font-size="14" font-weight="600" fill="#2c5c42" text-anchor="middle">应用</text>
+  <text x="779" y="118" font-size="10.5" fill="#3f7a5a" text-anchor="middle">问答·分析</text>
+  <line x1="143" y1="102" x2="164" y2="102" stroke="#8a8175" stroke-width="1.4" marker-end="url(#ar11)"></line>
+  <line x1="282" y1="102" x2="303" y2="102" stroke="#8a8175" stroke-width="1.4" marker-end="url(#ar11)"></line>
+  <line x1="421" y1="102" x2="442" y2="102" stroke="#8a8175" stroke-width="1.4" marker-end="url(#ar11)"></line>
+  <line x1="560" y1="102" x2="581" y2="102" stroke="#8a8175" stroke-width="1.4" marker-end="url(#ar11)"></line>
+  <line x1="699" y1="102" x2="720" y2="102" stroke="#8a8175" stroke-width="1.4" marker-end="url(#ar11)"></line>
+  <text x="84" y="160" font-size="10.5" fill="#6d747e" text-anchor="middle">第 3 章</text>
+  <text x="223" y="160" font-size="10.5" fill="#6d747e" text-anchor="middle">第 4 章</text>
+  <text x="362" y="160" font-size="10.5" fill="#6d747e" text-anchor="middle">第 2 章</text>
+  <text x="501" y="160" font-size="10.5" fill="#6d747e" text-anchor="middle">第 5 章</text>
+  <text x="640" y="160" font-size="10.5" fill="#6d747e" text-anchor="middle">第 7 章</text>
+  <text x="779" y="160" font-size="10.5" fill="#6d747e" text-anchor="middle">第 6、8 章</text>
+  <rect x="28" y="196" width="802" height="52" rx="8" fill="#f4f1e9"></rect>
+  <text x="46" y="218" font-size="12" fill="#6d747e">输入</text>
+  <text x="98" y="218" font-size="12.5" fill="#3d444d">网页、论文、病历、财报、传感器日志，格式混杂</text>
+  <text x="46" y="238" font-size="12" fill="#6d747e">输出</text>
+  <text x="98" y="238" font-size="12.5" fill="#3d444d">一个能查询、能推理、能被人和程序同时使用的知识库</text>
+  <rect x="28" y="270" width="802" height="46" rx="8" fill="#e9f2f6"></rect>
+  <text x="429" y="298" font-size="12.5" fill="#1f4d64" text-anchor="middle">六步之间不是流水线，抽取出错会在融合时暴露，融合错了推理就会给出错结论，每一步都要能回退。</text>
+  <defs><marker id="ar11" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#8a8175"></path></marker></defs>
+</svg>
+
+<p><em>技术要素在全书的位置。表示和存储决定图能长成什么样，抽取和融合决定它能装进什么，推理和应用决定它值多少钱。</em></p>
+<h2 id="三种分类角度"><a href="#三种分类角度" class="headerlink" title="三种分类角度"></a>三种分类角度</h2><p>见到的知识图谱多了会发现分类有好几套，每套回答的问题不一样。问“这条知识长什么样”，看模态；问“它服务多大范围”，看开放性；问“人怎么把它建起来”，看构建方法。</p>
+<svg width="100%" style="max-width:860px;height:auto" viewBox="0 0 860 270" role="img" aria-label="结构化、半结构化、非结构化三种知识模态">
+  <rect width="860" height="270" fill="#fdfbf6"></rect>
+  <rect x="30" y="40" width="252" height="180" rx="10" fill="#ffffff" stroke="#cfdde4"></rect>
+  <text x="46" y="66" font-size="13.5" font-weight="600" fill="#1f4d64">结构化</text>
+  <rect x="46" y="82" width="220" height="26" fill="#e9f2f6"></rect>
+  <text x="56" y="100" font-size="10.5" fill="#1f4d64">编号　名称　　成立</text>
+  <line x1="46" y1="116" x2="266" y2="116" stroke="#e4e0d6"></line>
+  <text x="56" y="134" font-size="10.5" fill="#6d747e">001　华为　　1987</text>
+  <line x1="46" y1="144" x2="266" y2="144" stroke="#e4e0d6"></line>
+  <text x="56" y="162" font-size="10.5" fill="#6d747e">002　腾讯　　1998</text>
+  <line x1="46" y1="172" x2="266" y2="172" stroke="#e4e0d6"></line>
+  <text x="46" y="204" font-size="11" fill="#3d444d">字段固定，可直接查询</text>
+  <rect x="304" y="40" width="252" height="180" rx="10" fill="#ffffff" stroke="#e2dcc9"></rect>
+  <text x="320" y="66" font-size="13.5" font-weight="600" fill="#8a6a2f">半结构化</text>
+  <text x="320" y="94" font-size="11" fill="#6d747e" font-family="monospace">{</text>
+  <text x="336" y="112" font-size="11" fill="#6d747e" font-family="monospace">"name": "华为",</text>
+  <text x="336" y="130" font-size="11" fill="#6d747e" font-family="monospace">"founded": 1987,</text>
+  <text x="336" y="148" font-size="11" fill="#6d747e" font-family="monospace">"tags": ["通信"]</text>
+  <text x="320" y="166" font-size="11" fill="#6d747e" font-family="monospace">}</text>
+  <text x="320" y="204" font-size="11" fill="#3d444d">有标签，模式不固定</text>
+  <rect x="578" y="40" width="252" height="180" rx="10" fill="#ffffff" stroke="#e8ddd3"></rect>
+  <text x="594" y="66" font-size="13.5" font-weight="600" fill="#8f3d1c">非结构化</text>
+  <line x1="594" y1="92" x2="800" y2="92" stroke="#d9d2c6" stroke-width="5" stroke-linecap="round"></line>
+  <line x1="594" y1="110" x2="812" y2="110" stroke="#d9d2c6" stroke-width="5" stroke-linecap="round"></line>
+  <line x1="594" y1="128" x2="760" y2="128" stroke="#d9d2c6" stroke-width="5" stroke-linecap="round"></line>
+  <line x1="594" y1="146" x2="806" y2="146" stroke="#d9d2c6" stroke-width="5" stroke-linecap="round"></line>
+  <line x1="594" y1="164" x2="700" y2="164" stroke="#d9d2c6" stroke-width="5" stroke-linecap="round"></line>
+  <text x="594" y="204" font-size="11" fill="#3d444d">文章、图片、录音、视频</text>
+  <text x="430" y="248" font-size="11.5" fill="#6d747e" text-anchor="middle">同一件事，可能同时以三种形态存在；知识图谱要做的是把它们收进同一套结构</text>
+</svg>
+
+<p><em>模态说的是知识的载体形态。三者的处理成本差别很大，抽取技术要解决的核心困难，就是把右边两类变成左边的样子。</em></p>
+<svg width="100%" style="max-width:860px;height:auto" viewBox="0 0 860 210" role="img" aria-label="按领域开放性分类">
+  <rect width="860" height="210" fill="#fdfbf6"></rect>
+  <rect x="40" y="52" width="166" height="60" rx="8" fill="#e9f2f6" stroke="#2f6f8f"></rect>
+  <text x="123" y="78" font-size="13" fill="#1f4d64" text-anchor="middle">通用知识图谱</text>
+  <text x="123" y="97" font-size="10.5" fill="#3d6d84" text-anchor="middle">覆盖人类知识各方面</text>
+  <rect x="246" y="52" width="166" height="60" rx="8" fill="#e9f2f6" stroke="#2f6f8f"></rect>
+  <text x="329" y="78" font-size="13" fill="#1f4d64" text-anchor="middle">跨领域知识图谱</text>
+  <text x="329" y="97" font-size="10.5" fill="#3d6d84" text-anchor="middle">跨越领域边界做整合</text>
+  <rect x="452" y="52" width="166" height="60" rx="8" fill="#f6e7c8" stroke="#c9ad74"></rect>
+  <text x="535" y="78" font-size="13" fill="#6b5320" text-anchor="middle">垂直领域知识图谱</text>
+  <text x="535" y="97" font-size="10.5" fill="#8a6a2f" text-anchor="middle">医学、法律、农业等</text>
+  <rect x="658" y="52" width="166" height="60" rx="8" fill="#fbeee7" stroke="#b4552d"></rect>
+  <text x="741" y="78" font-size="13" fill="#8f3d1c" text-anchor="middle">企业内部图谱</text>
+  <text x="741" y="97" font-size="10.5" fill="#b4552d" text-anchor="middle">产品、客户、组织</text>
+  <line x1="60" y1="146" x2="800" y2="146" stroke="#cfd6da" stroke-width="1.6" marker-end="url(#ar12)"></line>
+  <text x="60" y="172" font-size="11.5" fill="#8a8175">覆盖范围广</text>
+  <text x="800" y="172" font-size="11.5" fill="#8a8175" text-anchor="end">领域精度高、可用性明确</text>
+  <text x="430" y="196" font-size="11.5" fill="#6d747e" text-anchor="middle">越往右，概念体系越专，建库越依赖领域专家</text>
+  <defs><marker id="ar12" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#cfd6da"></path></marker></defs>
+</svg>
+
+<p><em>开放性是服务范围的划分，跟规模没关系。一个几十万三元组的科室图谱，在临床决策里的作用可能超过通用图谱。</em></p>
+<p>构建方法分两种。自上而下的做法先定本体，把概念层次、关系类型定下来，再往里填实例，适合数据结构稳定、规则清晰的场景，企业在做内部知识管理、医院在建临床路径时常用。自下而上的做法反过来，先从数据里抽出实体和关系，看到新类型再往本体里加，适合数据形态一直在变的场景。农业、消防这类领域通常两种混用，先有一版骨架，再靠数据补齐。</p>
+<svg width="100%" style="max-width:860px;height:auto" viewBox="0 0 860 250" role="img" aria-label="自上而下与自下而上的构建方法">
+  <rect width="860" height="250" fill="#fdfbf6"></rect>
+  <text x="150" y="36" font-size="12.5" font-weight="600" fill="#1f4d64" text-anchor="middle">自上而下</text>
+  <rect x="60" y="50" width="180" height="42" rx="7" fill="#e9f2f6" stroke="#2f6f8f"></rect>
+  <text x="150" y="77" font-size="12.5" fill="#1f4d64" text-anchor="middle">先定本体与模式</text>
+  <line x1="150" y1="92" x2="150" y2="126" stroke="#2f6f8f" stroke-width="1.4" marker-end="url(#ar13)"></line>
+  <rect x="60" y="128" width="180" height="42" rx="7" fill="#ffffff" stroke="#cfdde4"></rect>
+  <text x="150" y="155" font-size="12.5" fill="#3d444d" text-anchor="middle">再填实例数据</text>
+  <text x="150" y="196" font-size="11" fill="#6d747e" text-anchor="middle">结构稳定，一致性容易保证</text>
+  <text x="150" y="214" font-size="11" fill="#6d747e" text-anchor="middle">遇到没见过的东西装不进去</text>
+  <line x1="300" y1="40" x2="300" y2="226" stroke="#e4e0d6" stroke-dasharray="4 4"></line>
+  <text x="560" y="36" font-size="12.5" font-weight="600" fill="#8f3d1c" text-anchor="middle">自下而上</text>
+  <rect x="470" y="50" width="180" height="42" rx="7" fill="#fbeee7" stroke="#b4552d"></rect>
+  <text x="560" y="77" font-size="12.5" fill="#8f3d1c" text-anchor="middle">从数据抽实体与关系</text>
+  <line x1="560" y1="92" x2="560" y2="126" stroke="#b4552d" stroke-width="1.4" marker-end="url(#ar14)"></line>
+  <rect x="470" y="128" width="180" height="42" rx="7" fill="#ffffff" stroke="#f0d5c7"></rect>
+  <text x="560" y="155" font-size="12.5" fill="#3d444d" text-anchor="middle">归纳出模式与本体</text>
+  <text x="560" y="196" font-size="11" fill="#6d747e" text-anchor="middle">能跟上数据变化</text>
+  <text x="560" y="214" font-size="11" fill="#6d747e" text-anchor="middle">模式容易长歪，质量靠清洗</text>
+  <rect x="690" y="74" width="140" height="76" rx="8" fill="#f4f1e9"></rect>
+  <text x="760" y="100" font-size="11.5" fill="#6d747e" text-anchor="middle">多数工程</text>
+  <text x="760" y="120" font-size="11.5" fill="#3d444d" text-anchor="middle">先给一版骨架</text>
+  <text x="760" y="138" font-size="11.5" fill="#3d444d" text-anchor="middle">再让数据长出来</text>
+  <defs>
+    <marker id="ar13" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#2f6f8f"></path></marker>
+    <marker id="ar14" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#b4552d"></path></marker>
+  </defs>
+</svg>
+
+<p><em>两种方法的差别在谁先说话：模式先说话，还是数据先说话。工程上常见的是给一个粗骨架，剩下交给抽取。</em></p>
+<p>元数据的实现方式还有一套分法，按图里怎么管结构来分：基于模式的，结构在构建时定死；基于本体的，除了结构还有语义和逻辑约束；基于标签的，不预设结构，靠打标签组织。这一套在第五章讲存储、第二章讲表示时会更具体。</p>
+<h2 id="落到行业里"><a href="#落到行业里" class="headerlink" title="落到行业里"></a>落到行业里</h2><p>图谱在行业里的用法，大体可以归成两类。一类是让检索更准，用户搜“苹果”的时候能分清水果和公司。另一类是发现藏起来的关系，两个看着无关的主体，中间连着好几层。</p>
+<p>企业监管是第二类的典型。直接关系在工商信息里就能看到，麻烦在于间接关联。一家公司与另外几十家公司在股权、担保、共同高管上都有牵连，风险沿着这些链条传导，靠人工翻资料几乎不可能及时发现。把这些关系建成图之后，从一个主体出发做几跳的遍历，隐藏在中间层的关系就露出来了。</p>
+<svg width="100%" style="max-width:860px;height:auto" viewBox="0 0 860 260" role="img" aria-label="企业之间的直接关系与间接关联">
+  <rect width="860" height="260" fill="#fdfbf6"></rect>
+  <rect x="90" y="80" width="140" height="48" rx="8" fill="#ffffff" stroke="#2f6f8f"></rect>
+  <text x="160" y="110" font-size="13" fill="#1f4d64" text-anchor="middle">甲公司</text>
+  <rect x="360" y="80" width="140" height="48" rx="8" fill="#ffffff" stroke="#2f6f8f"></rect>
+  <text x="430" y="110" font-size="13" fill="#1f4d64" text-anchor="middle">乙公司</text>
+  <rect x="630" y="80" width="140" height="48" rx="8" fill="#ffffff" stroke="#2f6f8f"></rect>
+  <text x="700" y="110" font-size="13" fill="#1f4d64" text-anchor="middle">丙公司</text>
+  <line x1="230" y1="104" x2="356" y2="104" stroke="#2f6f8f" stroke-width="1.6" marker-end="url(#ar15)"></line>
+  <text x="293" y="96" font-size="11" fill="#2f6f8f" text-anchor="middle">持股 40%</text>
+  <line x1="500" y1="104" x2="626" y2="104" stroke="#2f6f8f" stroke-width="1.6" marker-end="url(#ar15)"></line>
+  <text x="563" y="96" font-size="11" fill="#2f6f8f" text-anchor="middle">共同高管</text>
+  <path d="M160,128 C160,196 700,196 700,132" fill="none" stroke="#b4552d" stroke-width="1.6" stroke-dasharray="6 4"></path>
+  <text x="430" y="196" font-size="11.5" fill="#b4552d" text-anchor="middle">工商登记里没有这条边，但风险会沿两跳传过来</text>
+  <text x="160" y="222" font-size="11" fill="#6d747e" text-anchor="middle">直接关系可见</text>
+  <text x="430" y="222" font-size="11" fill="#6d747e" text-anchor="middle">中间层是关键</text>
+  <text x="700" y="222" font-size="11" fill="#6d747e" text-anchor="middle">间接关联要挖</text>
+  <defs><marker id="ar15" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#2f6f8f"></path></marker></defs>
+</svg>
+
+<p><em>甲乙之间有直接持股，乙丙之间只共享高管。甲和丙在图上是两跳的关系，这个距离在表格里是看不出来的。</em></p>
+<p>医疗领域偏向第一类。病历、文献、基因数据分散在不同系统里，术语写法各异，同一个病在两家医院可能有两个名字。建图的第一步是把这些来源对齐到同一套概念上，之后才能谈辅助诊断。临床决策支持系统能给出“这个症状可能与哪几种疾病相关”，靠的就是图上沿着症状、检查、药物走出来的路径。</p>
+<p>其余场景的用法可以并排看：电商把用户、商品、类目连起来做导购和推荐，阿里的商务图谱在这个方向上有百亿级实体、千亿级关系边；银行把客户、账户、担保关系连起来识别信贷风险；法律把案件事实与判决要素连起来做类案研判；农业和消防把领域手册、案例文档整理成图谱，前者解决知识分散，后者面向突发事件的处置建议；华为把它用在通信网络的故障定位上，从告警、日志、专家经验里抽出实体，沿图推断根因。</p>
+<p>这些场景的共同点在于，真正产生价值的是图上的一次遍历或一次推理。选型时先问清楚要回答什么问题，再看图该建成什么样，顺序反了就会建出一个规模很大但回答不了任何问题的库。</p>
+<h2 id="自测"><a href="#自测" class="headerlink" title="自测"></a>自测</h2><details><summary>为什么“机器认得每个词”不等于“机器懂这句话”？</summary> <p>词的识别解决的是符号匹配，句子的含义依赖词与词之间没被写出来的关系。肯德基是门店还是公司，文本里没有线索，得靠外部知识裁决。</p></details> 
+
+<details> <summary>关系三元组和属性三元组差在哪？</summary> <p>关系三元组两端都是实体，可以在图上继续往下查；属性三元组一端是字面值，到那里就停了。1987 做不了任何展开，深圳可以。</p></details> 
+
+<details><summary>为什么知识图谱在 2012 年之后才大规模落地？</summary> <p>前面几十年解决了形式化的问题，从规则到本体到语义网。真正让规模上去的是构建方式从纯人工转向半自动，加上互联网上有足够多的半结构化数据可以抽。</p></details> 
+
+<details><summary>一个企业风控图谱，你会选自上而下还是自下而上？</summary> <p>先看数据形态。工商、股权这类结构稳定，适合先定本体再填；舆情、公告这类文本一直在变，适合从数据里抽。多数项目是骨架加抽取的混合路线。</p></details> 
+</article><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/other/QUT/%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E6%95%99%E7%A8%8B/02-%E7%9F%A5%E8%AF%86%E8%A1%A8%E7%A4%BA%E6%8A%80%E6%9C%AF/"><img class="prev-cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">02 知识表示技术</div></div></a></div><div class="next-post pull-right"><a href="/other/QUT/%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E6%95%99%E7%A8%8B/00-%E6%95%99%E7%A8%8B%E6%80%BB%E8%A7%88/"><img class="next-cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">00 教程总览</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="anzhiyufont anzhiyu-icon-thumbs-up fa-fw" style="font-size: 1.5rem; margin-right: 4px"></i><span>喜欢这篇文章的人也看了</span></div><div class="relatedPosts-list"><div><a href="/other/QUT/%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E6%95%99%E7%A8%8B/00-%E6%95%99%E7%A8%8B%E6%80%BB%E8%A7%88/" title="00 教程总览"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/" alt="cover"><div class="content is-center"><div class="date"><i class="anzhiyufont anzhiyu-icon-calendar-days fa-fw"></i> 2026-11-06</div><div class="title">00 教程总览</div></div></a></div><div><a href="/other/QUT/%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E6%95%99%E7%A8%8B/02-%E7%9F%A5%E8%AF%86%E8%A1%A8%E7%A4%BA%E6%8A%80%E6%9C%AF/" title="02 知识表示技术"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/" alt="cover"><div class="content is-center"><div class="date"><i class="anzhiyufont anzhiyu-icon-calendar-days fa-fw"></i> 2026-11-06</div><div class="title">02 知识表示技术</div></div></a></div><div><a href="/other/QUT/%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E6%95%99%E7%A8%8B/03-%E7%9F%A5%E8%AF%86%E6%8A%BD%E5%8F%96%E6%8A%80%E6%9C%AF/" title="03 知识抽取技术"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/" alt="cover"><div class="content is-center"><div class="date"><i class="anzhiyufont anzhiyu-icon-calendar-days fa-fw"></i> 2026-11-06</div><div class="title">03 知识抽取技术</div></div></a></div><div><a href="/other/QUT/%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E6%95%99%E7%A8%8B/04-%E7%9F%A5%E8%AF%86%E8%9E%8D%E5%90%88%E6%8A%80%E6%9C%AF/" title="04 知识融合技术"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/" alt="cover"><div class="content is-center"><div class="date"><i class="anzhiyufont anzhiyu-icon-calendar-days fa-fw"></i> 2026-11-06</div><div class="title">04 知识融合技术</div></div></a></div><div><a href="/other/QUT/%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E6%95%99%E7%A8%8B/05-%E7%9F%A5%E8%AF%86%E5%AD%98%E5%82%A8%E6%8A%80%E6%9C%AF/" title="05 知识存储技术"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/" alt="cover"><div class="content is-center"><div class="date"><i class="anzhiyufont anzhiyu-icon-calendar-days fa-fw"></i> 2026-11-06</div><div class="title">05 知识存储技术</div></div></a></div><div><a href="/other/QUT/%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E6%95%99%E7%A8%8B/07-%E7%9F%A5%E8%AF%86%E6%8E%A8%E7%90%86%E6%8A%80%E6%9C%AF/" title="07 知识推理技术"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/" alt="cover"><div class="content is-center"><div class="date"><i class="anzhiyufont anzhiyu-icon-calendar-days fa-fw"></i> 2026-11-06</div><div class="title">07 知识推理技术</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="card-content"><div class="author-info-avatar"><img class="avatar-img" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/img/avatar.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__description">大三学生，全栈开发者，终身学习者</div><div class="author-info__bottom-group"><a class="author-info__bottom-group-left" href="/"><h1 class="author-info__name">qiuxz</h1><div class="author-info__desc"></div></a><div class="card-info-social-icons is-center"><a class="social-icon faa-parent animated-hover" href="https://github.com/qiuxzh" target="_blank" title="Github"><i class="anzhiyufont anzhiyu-icon-github"></i></a><a class="social-icon faa-parent animated-hover" href="javascript:void(0);" title="QQ" data-copy="1256227507"><i class="anzhiyufont anzhiyu-icon-qq"></i></a><a class="social-icon faa-parent animated-hover" href="javascript:void(0);" title="Email" data-copy="1256227507@qq.com"><i class="anzhiyufont anzhiyu-icon-envelope"></i></a></div></div></div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="anzhiyufont anzhiyu-icon-bars"></i><span>文章目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E4%B8%AA%E6%AE%B5%E5%AD%90%E6%88%90%E7%AB%8B%E7%9A%84%E6%9D%A1%E4%BB%B6"><span class="toc-number">1.</span> <span class="toc-text">一个段子成立的条件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E5%92%8C%E7%9F%A5%E8%AF%86%E5%B7%AE%E5%9C%A8%E5%93%AA"><span class="toc-number">2.</span> <span class="toc-text">数据和知识差在哪</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%A4%E6%9D%A1%E6%99%BA%E8%83%BD%E8%B7%AF%E7%BA%BF"><span class="toc-number">3.</span> <span class="toc-text">两条智能路线</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%9F%A5%E8%AF%86%E5%9C%A8%E6%9C%BA%E5%99%A8%E9%87%8C%E7%9A%84%E4%B8%89%E7%A7%8D%E5%BD%A2%E6%80%81"><span class="toc-number">4.</span> <span class="toc-text">知识在机器里的三种形态</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%94%E4%B8%AA%E9%98%B6%E6%AE%B5"><span class="toc-number">5.</span> <span class="toc-text">五个阶段</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E5%85%83%E7%BB%84"><span class="toc-number">6.</span> <span class="toc-text">三元组</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%A1%B9%E7%9B%AE%E7%94%9F%E6%80%81"><span class="toc-number">7.</span> <span class="toc-text">项目生态</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E5%BC%A0%E6%8A%80%E6%9C%AF%E5%9C%B0%E5%9B%BE"><span class="toc-number">8.</span> <span class="toc-text">一张技术地图</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E7%A7%8D%E5%88%86%E7%B1%BB%E8%A7%92%E5%BA%A6"><span class="toc-number">9.</span> <span class="toc-text">三种分类角度</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%90%BD%E5%88%B0%E8%A1%8C%E4%B8%9A%E9%87%8C"><span class="toc-number">10.</span> <span class="toc-text">落到行业里</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%87%AA%E6%B5%8B"><span class="toc-number">11.</span> <span class="toc-text">自测</span></a></li></ol></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"></div><div id="footer-bar"><div class="footer-bar-links"><div class="footer-bar-left"><div id="footer-bar-tips"><div class="copyright">&copy;2020 - 2026 By <a class="footer-bar-link" href="/" title="qiuxz" target="_blank">qiuxz</a></div></div><div id="footer-type-tips"></div></div><div class="footer-bar-right"><a class="footer-bar-link" target="_blank" rel="noopener" href="https://github.com/anzhiyu-c/hexo-theme-anzhiyu" title="主题">主题</a></div></div></div></footer></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="sidebar-site-data site-data is-center"><a href="/archives/" title="archive"><div class="headline">文章</div><div class="length-num">48</div></a><a href="/tags/" title="tag"><div class="headline">标签</div><div class="length-num">9</div></a><a href="/categories/" title="category"><div class="headline">分类</div><div class="length-num">10</div></a></div><span class="sidebar-menu-item-title">功能</span><div class="sidebar-menu-item"><a class="darkmode_switchbutton menu-child" href="javascript:void(0);" title="显示模式"><i class="anzhiyufont anzhiyu-icon-circle-half-stroke"></i><span>显示模式</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="javascript:void(0);"><span> 文章</span></a><ul class="menus_item_child"><li><a class="site-page child faa-parent animated-hover" href="/archives/"><i class="anzhiyufont anzhiyu-icon-box-archive faa-tada" style="font-size: 0.9em;"></i><span> 隧道</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><span> 关于</span></a><ul class="menus_item_child"><li><a class="site-page child faa-parent animated-hover" href="/other/about/"><i class="anzhiyufont anzhiyu-icon-paper-plane faa-tada" style="font-size: 0.9em;"></i><span> 关于本人</span></a></li><li><a class="site-page child faa-parent animated-hover" href="javascript:toRandomPost()"><i class="anzhiyufont anzhiyu-icon-shoe-prints1 faa-tada" style="font-size: 0.9em;"></i><span> 随便逛逛</span></a></li></ul></div></div><span class="sidebar-menu-item-title">标签</span><div class="card-tags"><div class="item-headline"></div><div class="card-tag-cloud"><a href="/tags/YJango%E8%A7%86%E9%A2%91%E6%95%B4%E7%90%86/" style="font-size: 0.88rem;">YJango视频整理<sup>11</sup></a><a href="/tags/%E4%B8%AA%E4%BA%BA%E6%88%90%E9%95%BF/" style="font-size: 0.88rem;">个人成长<sup>3</sup></a><a href="/tags/%E5%AD%A6%E4%B9%A0/" style="font-size: 0.88rem;">学习<sup>13</sup></a><a href="/tags/%E6%84%9F%E6%82%9F/" style="font-size: 0.88rem;">感悟<sup>1</sup></a><a href="/tags/%E6%95%99%E7%A8%8B/" style="font-size: 0.88rem;">教程<sup>9</sup></a><a href="/tags/%E6%9C%AA%E5%88%86%E7%B1%BB/" style="font-size: 0.88rem;">未分类<sup>6</sup></a><a href="/tags/%E6%9E%B6%E6%9E%84/" style="font-size: 0.88rem;">架构<sup>1</sup></a><a href="/tags/%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1/" style="font-size: 0.88rem;">知识图谱<sup>9</sup></a><a href="/tags/%E8%80%83%E8%AF%95/" style="font-size: 0.88rem;">考试<sup>5</sup></a></div></div><hr/></div></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="anzhiyufont anzhiyu-icon-book-open"></i></button><button id="translateLink" type="button" title="简繁转换">繁</button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="anzhiyufont anzhiyu-icon-circle-half-stroke"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="anzhiyufont anzhiyu-icon-arrows-left-right"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="anzhiyufont anzhiyu-icon-gear"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="anzhiyufont anzhiyu-icon-list-ul"></i></button><button id="mobile-column-button" type="button" title="专栏目录"><i class="anzhiyufont anzhiyu-icon-bars"></i></button><button id="go-up" type="button" title="回到顶部"><i class="anzhiyufont anzhiyu-icon-arrow-up"></i></button></div></div><div id="rightMenu"><div class="rightMenu-group rightMenu-small"><div class="rightMenu-item" id="menu-backward"><i class="anzhiyufont anzhiyu-icon-arrow-left"></i></div><div class="rightMenu-item" id="menu-forward"><i class="anzhiyufont anzhiyu-icon-arrow-right"></i></div><div class="rightMenu-item" id="menu-refresh"><i class="anzhiyufont anzhiyu-icon-arrow-rotate-right" style="font-size: 1rem;"></i></div><div class="rightMenu-item" id="menu-top"><i class="anzhiyufont anzhiyu-icon-arrow-up"></i></div></div><div class="rightMenu-group rightMenu-line rightMenuPlugin"><div class="rightMenu-item" id="menu-copytext"><i class="anzhiyufont anzhiyu-icon-copy"></i><span>复制选中文本</span></div><div class="rightMenu-item" id="menu-pastetext"><i class="anzhiyufont anzhiyu-icon-paste"></i><span>粘贴文本</span></div><a class="rightMenu-item" id="menu-commenttext"><i class="anzhiyufont anzhiyu-icon-comment-medical"></i><span>引用到评论</span></a><div class="rightMenu-item" id="menu-newwindow"><i class="anzhiyufont anzhiyu-icon-window-restore"></i><span>新窗口打开</span></div><div class="rightMenu-item" id="menu-copylink"><i class="anzhiyufont anzhiyu-icon-link"></i><span>复制链接地址</span></div><div class="rightMenu-item" id="menu-copyimg"><i class="anzhiyufont anzhiyu-icon-images"></i><span>复制此图片</span></div><div class="rightMenu-item" id="menu-downloadimg"><i class="anzhiyufont anzhiyu-icon-download"></i><span>下载此图片</span></div><div class="rightMenu-item" id="menu-newwindowimg"><i class="anzhiyufont anzhiyu-icon-window-restore"></i><span>新窗口打开图片</span></div><div class="rightMenu-item" id="menu-search"><i class="anzhiyufont anzhiyu-icon-magnifying-glass"></i><span>站内搜索</span></div><div class="rightMenu-item" id="menu-searchBaidu"><i class="anzhiyufont anzhiyu-icon-magnifying-glass"></i><span>百度搜索</span></div></div><div class="rightMenu-group rightMenu-line rightMenuOther"><a class="rightMenu-item menu-link" id="menu-randomPost"><i class="anzhiyufont anzhiyu-icon-shuffle"></i><span>随便逛逛</span></a><a class="rightMenu-item menu-link" href="/categories/"><i class="anzhiyufont anzhiyu-icon-cube"></i><span>博客分类</span></a><a class="rightMenu-item menu-link" href="/tags/"><i class="anzhiyufont anzhiyu-icon-tags"></i><span>文章标签</span></a></div><div class="rightMenu-group rightMenu-line rightMenuOther"><a class="rightMenu-item" id="menu-copy" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-copy"></i><span>复制地址</span></a><a class="rightMenu-item" id="menu-commentBarrage" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-message"></i><span class="menu-commentBarrage-text">关闭热评</span></a><a class="rightMenu-item" id="menu-darkmode" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-circle-half-stroke"></i><span class="menu-darkmode-text">深色模式</span></a><a class="rightMenu-item" id="menu-translate" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-language"></i><span>轉為繁體</span></a></div></div><div id="rightmenu-mask"></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="/js/tw_cn.js"></script><script src="https://cdn.cbd.int/@fancyapps/ui@6.1.6/dist/fancybox/fancybox.umd.js"></script><script src="https://cdn.cbd.int/instant.page@5.2.0/instantpage.js" type="module"></script><script src="https://cdn.cbd.int/vanilla-lazyload@19.1.3/dist/lazyload.iife.min.js"></script><script src="https://cdn.cbd.int/node-snackbar@0.1.16/dist/snackbar.min.js"></script><canvas id="universe"></canvas><script async src="https://npm.elemecdn.com/anzhiyu-theme-static@1.0.0/dark/dark.js"></script><script>// 消除控制台打印
+var HoldLog = console.log;
+console.log = function () {};
+let now1 = new Date();
+queueMicrotask(() => {
+  const Log = function () {
+    HoldLog.apply(console, arguments);
+  }; //在恢复前输出日志
+  const grt = new Date("08/08/2026 00:00:00"); //此处修改你的建站时间或者网站上线时间
+  now1.setTime(now1.getTime() + 250);
+  const days = (now1 - grt) / 1000 / 60 / 60 / 24;
+  const dnum = Math.floor(days);
+  const ascll = [
+    `欢迎使用安知鱼!`,
+    `生活明朗, 万物可爱`,
+    `
+        
+       █████╗ ███╗   ██╗███████╗██╗  ██╗██╗██╗   ██╗██╗   ██╗
+      ██╔══██╗████╗  ██║╚══███╔╝██║  ██║██║╚██╗ ██╔╝██║   ██║
+      ███████║██╔██╗ ██║  ███╔╝ ███████║██║ ╚████╔╝ ██║   ██║
+      ██╔══██║██║╚██╗██║ ███╔╝  ██╔══██║██║  ╚██╔╝  ██║   ██║
+      ██║  ██║██║ ╚████║███████╗██║  ██║██║   ██║   ╚██████╔╝
+      ╚═╝  ╚═╝╚═╝  ╚═══╝╚══════╝╚═╝  ╚═╝╚═╝   ╚═╝    ╚═════╝
+        
+        `,
+    "已上线",
+    dnum,
+    "天",
+    "©2020 By 安知鱼 V1.7.1",
+  ];
+  const ascll2 = [`NCC2-036`, `调用前置摄像头拍照成功，识别为【小笨蛋】.`, `Photo captured: `, `🤪`];
+
+  setTimeout(
+    Log.bind(
+      console,
+      `\n%c${ascll[0]} %c ${ascll[1]} %c ${ascll[2]} %c${ascll[3]}%c ${ascll[4]}%c ${ascll[5]}\n\n%c ${ascll[6]}\n`,
+      "color:#425AEF",
+      "",
+      "color:#425AEF",
+      "color:#425AEF",
+      "",
+      "color:#425AEF",
+      ""
+    )
+  );
+  setTimeout(
+    Log.bind(
+      console,
+      `%c ${ascll2[0]} %c ${ascll2[1]} %c \n${ascll2[2]} %c\n${ascll2[3]}\n`,
+      "color:white; background-color:#4fd953",
+      "",
+      "",
+      'background:url("https://npm.elemecdn.com/anzhiyu-blog@1.1.6/img/post/common/tinggge.gif") no-repeat;font-size:450%'
+    )
+  );
+
+  setTimeout(Log.bind(console, "%c WELCOME %c 你好，小笨蛋.", "color:white; background-color:#4f90d9", ""));
+
+  setTimeout(
+    console.warn.bind(
+      console,
+      "%c ⚡ Powered by 安知鱼 %c 你正在访问 qiuxz 的博客.",
+      "color:white; background-color:#f0ad4e",
+      ""
+    )
+  );
+
+  setTimeout(Log.bind(console, "%c W23-12 %c 你已打开控制台.", "color:white; background-color:#4f90d9", ""));
+
+  setTimeout(
+    console.warn.bind(console, "%c S013-782 %c 你现在正处于监控中.", "color:white; background-color:#d9534f", "")
+  );
+});</script><script async src="/anzhiyu/random.js"></script><div class="js-pjax"><script>if (!window.MathJax) {
+  window.MathJax = {
+    tex: {
+      inlineMath: [['$', '$'], ['\\(', '\\)']],
+      tags: 'ams'
+    },
+    chtml: {
+      scale: 1.1,
+      // MathJax 4 默认从 cdn.jsdelivr.net 取 NewCM 字体，国内直连拿不到，
+      // 公式会退化成缺字形。这里改走 npmmirror（与 mathjax@4.0.0 对应）。
+      fontURL: 'https://registry.npmmirror.com/@mathjax/mathjax-newcm-font/4.0.0/files/chtml/woff2',
+      dynamicPrefix: 'https://registry.npmmirror.com/@mathjax/mathjax-newcm-font/4.0.0/files/chtml/dynamic'
+    },
+    options: {
+      renderActions: {
+        findScript: [10, doc => {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/)
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+            const text = document.createTextNode('')
+            node.parentNode.replaceChild(text, node)
+            math.start = {node: text, delim: '', n: 0}
+            math.end = {node: text, delim: '', n: 0}
+            doc.math.push(math)
+          }
+        }, '']
+      }
+    }
+  }
+  
+  const script = document.createElement('script')
+  script.src = 'https://cdn.cbd.int/mathjax@4.0.0/tex-mml-chtml.js'
+  script.id = 'MathJax-script'
+  script.async = true
+  document.head.appendChild(script)
+} else {
+  MathJax.startup.document.state(0)
+  MathJax.texReset()
+  MathJax.typesetPromise()
+}</script><link rel="stylesheet" type="text/css" href="https://cdn.cbd.int/katex@0.16.25/dist/katex.min.css"><script src="https://cdn.cbd.int/katex@0.16.25/dist/contrib/copy-tex.min.js"></script><script>(() => {
+  document.querySelectorAll('#article-container span.katex-display').forEach(item => {
+    anzhiyu.wrap(item, 'div', { class: 'katex-wrap'})
+  })
+})()</script><input type="hidden" name="page-type" id="page-type" value="post"></div><script>var visitorMail = "";
+</script><script async data-pjax src="https://cdn.cbd.int/anzhiyu-theme-static@1.0.0/waterfall/waterfall.js"></script><script src="https://cdn.cbd.int/qrcodejs@1.0.0/qrcode.min.js"></script><link rel="stylesheet" href="https://cdn.cbd.int/anzhiyu-theme-static@1.1.9/icon/ali_iconfont_css.css"><script src="/js/social-copy.js"></script><script src="/js/column-nav-mobile.js"></script><script src="https://cdn.cbd.int/pjax@0.2.8/pjax.min.js"></script><script>let pjaxSelectors = ["head > title","#config-diff","#body-wrap","#rightside-config-hide","#rightside-config-show",".js-pjax"]
+var pjax = new Pjax({
+  elements: 'a:not([target="_blank"])',
+  selectors: pjaxSelectors,
+  cacheBust: false,
+  analytics: false,
+  scrollRestoration: false
+})
+
+document.addEventListener('pjax:send', function () {
+  // removeEventListener scroll 
+  anzhiyu.removeGlobalFnEvent('pjax')
+  anzhiyu.removeGlobalFnEvent('themeChange')
+
+  document.getElementById('rightside').classList.remove('rightside-show')
+  
+  if (window.aplayers) {
+    for (let i = 0; i < window.aplayers.length; i++) {
+      if (!window.aplayers[i].options.fixed) {
+        window.aplayers[i].destroy()
+      }
+    }
+  }
+
+  typeof typed === 'object' && typed.destroy()
+
+  //reset readmode
+  const $bodyClassList = document.body.classList
+  $bodyClassList.contains('read-mode') && $bodyClassList.remove('read-mode')
+})
+
+document.addEventListener('pjax:complete', function () {
+  window.refreshFn()
+
+  document.querySelectorAll('script[data-pjax]').forEach(item => {
+    const newScript = document.createElement('script')
+    const content = item.text || item.textContent || item.innerHTML || ""
+    Array.from(item.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value))
+    newScript.appendChild(document.createTextNode(content))
+    item.parentNode.replaceChild(newScript, item)
+  })
+
+  GLOBAL_CONFIG.islazyload && window.lazyLoadInstance.update()
+
+  typeof panguInit === 'function' && panguInit()
+
+  // google analytics
+  typeof gtag === 'function' && gtag('config', '', {'page_path': window.location.pathname});
+
+  // baidu analytics
+  typeof _hmt === 'object' && _hmt.push(['_trackPageview',window.location.pathname]);
+
+  typeof loadMeting === 'function' && document.getElementsByClassName('aplayer').length && loadMeting()
+
+  // prismjs
+  typeof Prism === 'object' && Prism.highlightAll()
+})
+
+document.addEventListener('pjax:error', e => {
+  if (e.request.status === 404) {
+    pjax.loadUrl('/404.html')
+  }
+})</script><script charset="UTF-8" src="https://cdn.cbd.int/anzhiyu-theme-static@1.1.5/accesskey/accesskey.js"></script></div><div id="popup-window"><div class="popup-window-title">通知</div><div class="popup-window-divider"></div><div class="popup-window-content"><div class="popup-tip">你好呀</div><div class="popup-link"><i class="anzhiyufont anzhiyu-icon-arrow-circle-right"></i></div></div></div></body></html>

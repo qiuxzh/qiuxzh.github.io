@@ -1,0 +1,837 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no"><title>08 知识图谱衍生技术 | qiuxz's Blog</title><meta name="keywords" content="知识图谱,教程"><meta name="author" content="qiuxz"><meta name="copyright" content="qiuxz"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#f7f9fe"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-touch-fullscreen" content="yes"><meta name="apple-mobile-web-app-title" content="08 知识图谱衍生技术"><meta name="application-name" content="08 知识图谱衍生技术"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="#f7f9fe"><meta property="og:type" content="article"><meta property="og:title" content="08 知识图谱衍生技术"><meta property="og:url" content="https://qiuxzh.github.io/other/QUT/%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E6%95%99%E7%A8%8B/08-%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E8%A1%8D%E7%94%9F%E6%8A%80%E6%9C%AF/index.html"><meta property="og:site_name" content="qiuxz's Blog"><meta property="og:description" content="前七章的图谱只装实体：谁、是什么、和谁有关系。这一章处理它答不了的三类问题，一件事为什么发生，一张图里是什么，去年这个时候是什么样。 三个答不上来的问题 第一个问题：这家公司的股价为什么连续下跌？图谱里有股东、有子公司、有担保关系，能答出它和谁绑在一起，答不出“为什么”。 第二个问题：照片里这栋楼是"><meta property="og:locale" content="zh-CN"><meta property="og:image" content="https://qiuxzh.github.io/img/avatar.jpg"><meta property="article:author" content="qiuxz"><meta property="article:tag"><meta name="twitter:card" content="summary"><meta name="twitter:image" content="https://qiuxzh.github.io/img/avatar.jpg"><meta name="description" content="前七章的图谱只装实体：谁、是什么、和谁有关系。这一章处理它答不了的三类问题，一件事为什么发生，一张图里是什么，去年这个时候是什么样。 三个答不上来的问题 第一个问题：这家公司的股价为什么连续下跌？图谱里有股东、有子公司、有担保关系，能答出它和谁绑在一起，答不出“为什么”。 第二个问题：照片里这栋楼是"><link rel="shortcut icon" href="/favicon.ico"><link rel="canonical" href="https://qiuxzh.github.io/other/QUT/%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E6%95%99%E7%A8%8B/08-%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E8%A1%8D%E7%94%9F%E6%8A%80%E6%9C%AF/"><link rel="preconnect" href="//cdn.cbd.int"/><meta name="google-site-verification" content="xxx"/><meta name="baidu-site-verification" content="code-xxx"/><meta name="msvalidate.01" content="xxx"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.cbd.int/node-snackbar@0.1.16/dist/snackbar.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.cbd.int/@fancyapps/ui@6.1.6/dist/fancybox/fancybox.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  linkPageTop: undefined,
+  peoplecanvas: {"enable":true,"img":"https://upload-bbs.miyoushe.com/upload/2024/07/27/125766904/ba62475f396df9de3316a08ed9e65d86_5680958632268053399..png"},
+  postHeadAiDescription: undefined,
+  diytitle: undefined,
+  LA51: undefined,
+  greetingBox: undefined,
+  twikooEnvId: '',
+  commentBarrageConfig:undefined,
+  music_page_default: "nav_music",
+  root: '/',
+  preloader: {"source":3},
+  friends_vue_info: undefined,
+  navMusic: false,
+  mainTone: undefined,
+  authorStatus: undefined,
+  algolia: undefined,
+  localSearch: undefined,
+  translate: {"defaultEncoding":2,"translateDelay":0,"msgToTraditionalChinese":"繁","msgToSimplifiedChinese":"简","rightMenuMsgToTraditionalChinese":"转为繁体","rightMenuMsgToSimplifiedChinese":"转为简体"},
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":330},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    simplehomepage: true,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: {"copy":true,"copyrightEbable":false,"limitCount":50,"languages":{"author":"作者: qiuxz","link":"链接: ","source":"来源: qiuxz's Blog","info":"著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。","copySuccess":"复制成功，复制和转载请标注本文地址"}},
+  lightbox: 'fancybox',
+  Snackbar: {"chs_to_cht":"你已切换为繁体","cht_to_chs":"你已切换为简体","day_to_night":"你已切换为深色模式","night_to_day":"你已切换为浅色模式","bgLight":"#425AEF","bgDark":"#1f1f1f","position":"top-center"},
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.cbd.int/flickr-justified-gallery@2.2.0/dist/fjGallery.min.js',
+      css: 'https://cdn.cbd.int/flickr-justified-gallery@2.2.0/dist/fjGallery.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: true,
+  isAnchor: false,
+  shortcutKey: undefined,
+  autoDarkmode: true
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  configTitle: 'qiuxz\'s Blog',
+  title: '08 知识图谱衍生技术',
+  postAI: '',
+  pageFillDescription: '三个答不上来的问题, 节点换成事件, 七种逻辑关系, 三种形状, 四种演化操作, 事理图谱能干什么, 给图谱装上眼睛, 两种挂法, 多模态的用处与难处, 给每条事实加一个时间, 动态图谱怎么用, 动手：把两条支路拼起来, 自测前七章的图谱只装实体谁是什么和谁有关系这一章处理它答不了的三类问题一件事为什么发生一张图里是什么去年这个时候是什么样三个答不上来的问题第一个问题这家公司的股价为什么连续下跌图谱里有股东有子公司有担保关系能答出它和谁绑在一起答不出为什么第二个问题照片里这栋楼是哪家公司的总部图谱里全是文字没有一张图认不出来第三个问题年的时候张三在哪家公司图谱里只存了现在的答案去年的事查不到三个问题三种缺口缺的分别是因果感官和时间这三处缺口由传统图谱的设计前提带来它把世界描述成实体和关系假设每条事实长期有效假设信息以文字形式存在三个假设在大多数业务里都成立可一旦越过去图谱就哑了本章讲三个方向一个方向补一处缺口它们共用同一套底子仍然是有节点有边的图改的是节点是什么边上挂什么以及每条事实有没有期限改节点加模态加时间为什么不能合成一个全能图谱因为每一次扩展都会把构建成本抬高一截事件比实体难抽图像比文字难对齐时间戳比静态入库难维护工程上通常分开做哪个缺口最痛就先补哪个节点换成事件先看第一处传统图谱的节点是实体人公司城市事理图谱的节点换成了事件离职上市地震买房边换成了逻辑关系因果顺承条件事件的表示有三类写法最简单的是一个谓词性词或词组比如跑步离职上市再完整一点是三元组主体事件词客体比如张三离职公司更完整的还会补上时间地点这些附加要素主体和客体都可以省略但事件词不能省它是标志事件发生的核心没有它就不成其为一个事件元首出访省略了客体购买机票省略了主体都是正常的传统知识图谱节点是人就职于张三公司年龄成立年能答张三在哪家公司事理图谱节点是事因果顺承离职创业融资能答为什么走下一步干什么同一段事实两种切法左边切的是谁右边切的是发生了什么以及接下来会发生什么节点换了边上能挂的东西也换了从属性变成逻辑同一段材料两种图左边的图能回答他在哪右边的图能回答他为什么走走完会怎样这就是为什么事理图谱的边长得不一样结构上事理图谱是有向有环图有向因为因果和顺承都有方向导致不等于导致有环因为结果会回流成新的原因金融里的追涨杀跌就是个闭环维度事理图谱传统知识图谱研究对象谓词性事件及其关系实体及其关系描述的知识逻辑与演化万物本体回答的问题知识确定性演化关系多数不确定实体关系多数确定知识状态动态相对静态变化缓慢构建难点事件的表示抽取与融合本体搭建抽取与融合表里最值得留意的是确定性那一行实体关系大多是确定的张三就职于公司要么是要么不是演化关系很少这么干脆离职之后一定会创业吗不一定只是一个概率偏高的后继所以事理图谱的边常常要带概率不再是纯粹的是非判断七种逻辑关系边上的关系分两大类一类是分类关系也就是上下位与传统图谱一致说的是地震是地质灾害的一种另一类是非分类关系是事理图谱特有的描述事件之间的动态联系关系类型含义形式化例子因果事理某一事件导致另一事件发生导致地震房屋倒塌条件事理某条件下另一事件发生如果那么放宽增产反转事理两个事件形成对立虽然但是起步晚发展快顺承事理某事件紧接着另一事件接着去旅游买火车票上下位事理一个是另一个的上位或下位是的一类地震地质灾害组成事理一个是另一个的组成部分组成灭火火灾救援并发事理两个事件同时发生同时睡觉闭眼七种里因果和顺承最常用也最容易混顺承只要求时间上接着因果要求前者是后者的原因买票之后取票是顺承地震之后房屋倒塌是因果混用的时候推理链读起来顺每一步的依据却是空的反转事理比较特殊它记的是看上去该相反其实成立的那种关系起步晚却发展快这类知识在舆情分析和商业分析里价值很高因为它恰好是人容易判断错的地方三种形状把大量事件关系拼起来会形成三种典型形状链状看电影买票取票入场观影离场单线推进树状结婚订婚订亲请客酒席婚礼一个前因多个分支结果环状金融上涨追涨下跌泡沫结果回流成新的原因真实的事理图谱通常是三种形状的混合体一段是链一段分叉某处又绕回来链状是最常见的一件事接着一件树状出现在一个原因有多种可能后果的地方环状最难处理因为推理会绕圈必须防止无限循环形状决定能做什么推理链状适合预测下一步树状适合分析影响范围环状适合识别自我强化的过程泡沫就是这么滚起来的四种演化操作图建好之后人在上面做四件事前向演化从已知事件往前推接下来会发生什么依据因果条件顺序一步接一步往下推反向演化从结果往回溯可能是哪个原因造成的更早的因箭头反过来问的是为什么越溯越远向上抽象把一堆具体事件归纳成一件事小冲突小冲突声明摩擦地区紧张局势向下分裂把一件抽象的事拆成具体的子事件地区紧张局势武装冲突政治声明外交抗议经济制裁上下两个方向配合着用抽象层用来检索具体层用来推理前两个是横向的沿着时间或因果走后两个是纵向的在抽象层次之间跳四种操作合起来才让一张图既能看远也能看细这四种操作不是四个独立功能真正有用的是配合先在抽象层检索到地区紧张局势再向下分裂看具体是哪几件事然后前向演化推测后续最后反向演化找根因一条完整的分析链就是这么走下来的事理图谱能干什么能落地的方向有六个其中三个最能说明它的独特价值事件预测给定上文从候选里挑出最可能的下一个事件业内叫脚本事件预测金融领域的价格走势预测社会领域的选举与社会运动趋势都属这一类常识推理按人的认知过程一步步推并且把推理路径给出来法律领域的条文与案例集成医疗的病情发展都靠这个消费意图挖掘去旅行逛街这类意图显著的节点往往触发一串后续消费事件把这条链画出来推荐就不再是猜另外三个是对话生成问答系统和辅助决策对话生成用在触发话题上聊到某件事时主动提它的前提或后继回复会自然很多问答系统补的是和类问题辅助决策是把不同选择下的演化路径摆出来让人自己看后果能解释为什么是它区别于传统图谱的地方传统图谱回答事实事理图谱回答因果而因果恰好是人和机器之间最难对齐的那部分难处也在这儿构建一张像样的事理图谱要跨四道坎语料不够事件标注比实体标注贵得多粒度还要从词级一路做到篇章级数据源不规范同一件事在不同新闻里的说法差别很大跨领域融合复杂金融的因果规律搬到医疗上未必成立最后是图谱之间的融合怎么把几张事理图谱并成一张目前还没有成熟做法给图谱装上眼睛第二处缺口是模态传统图谱里一个实体只有名字和关系它长什么样听起来什么声音一概没有图像音频这些信息在以文字为主的图谱里长期缺席多模态知识图谱要做的是把这些模态挂进来并且挂得能被机器关联起来形式化一点它是个六元组前三项和传统图谱一样实体关系属性后三项是新增的多模态属性多模态属性值以及两类新的三元组引入模态带来的直接好处是描述变全面了文字说不清的东西一张图能说清间接的好处更大不同模态在描述同一个对象时会互相补充做表示学习的时候两路信息合起来比单路强两种挂法图像到底怎么挂到图上有两种做法区别在于图里多不多一个节点图挂在属性上苹果外观属性值图像一张苹果的照片图是实体的一个属性值不是图里独立的节点属这一类图自己也是节点苹果图像图相似青苹果图像本身是图里的一个节点节点之间还能有相似关系属这一类两种挂法各有取舍挂在属性上简单图片之间连不起来做成节点复杂但可以表达这两张图很像差别只在一处图像是属性值还是节点前者建模简单查询快后者能表达图像之间的关系代价是图会大一圈两种做法的适用场景不同如果只是给实体配一张代表图就够了如果要做找相似图片按图搜商品这类任务图必须是节点否则连不起来规模上已经有了相当成熟的数据资源有万张图片组同义词是深度学习那一波浪潮的起点收万实体亿条信息有万实体万张图像是目前图像量最大的一个中文这边有万实体万三元组比较特别它给万张图像之间建了亿条相似关系正好是那种挂法的典型多模态的用处与难处已经落地的方向主要是三类推荐视觉问答知识分析预测加上这两年的大模型应用推荐系统是最直接的受益者冷启动问题的本质是图谱里有知识模型却看不见新上架的商品没有交互记录但它的图片能说明风格品类适用场景把视觉特征接进去冷启动就能缓解一大截视觉问答是另一种价值用户问这是什么建筑只回一句文字答案体验很干配上图片标注出方位用户得到的是一种感官式的理解医疗领域更明显影像本身就是诊断依据没有图像的图谱在医疗场景里基本用不上难处集中在四处数据质量与对齐同一个实体在不同模态里的指称要能对上这一步错一步错到底可解释性模型给出一个多模态答案很难说清是看了图还是读了文字实时更新图像数据的增长比文本快增量处理框架跟不上评测多模态任务缺少公认指标没有度量就没有改进方向一条出路是拿高质量的数据去做指令式微调让大模型学会看图说话时调用图谱知识这个方向这两年被讨论得很多但还谈不上成熟给每条事实加一个时间第三处缺口是时间传统图谱默认知识入库之后长期有效可现实里实体有出生和死亡属性在变关系在建立和删除补的办法很朴素给每条事实加一个时间戳三元组变成四元组读法是在时刻头实体与尾实体之间有关系事实只在某个时刻为真年张三就职于公司位于青岛两条边年张三就职于公司位于北京换公司换城市年张三就职于公司居住于北京城市的关系从公司挪到了人三个时点三张不同形状的图实体没变边在变旧的删掉新的长出来有的还改变了挂靠的对象如果不存历史只留最后一张图那么张三年在哪这个问题就永远查不到了同样三个人和两家公司年年年长出了三种结构动态图谱要做的事就是把这三次都留住而不是只留最后一次构建的时候要处理四件事实体的出生与死亡什么时候进入图谱什么时候退出属性的变化同一属性在不同时段取值不同历史要保留关系的创建与删除关系的有效期本身就是知识最后是把这些信息都挂到时间轴上才能支持演化推理知识要答的是何时为是表示方法有两条常见思路一条是时间注意力给不同时间点上的实体分配权重权重反映那一刻对当前任务有多重要另一条是流形学习把高维数据映射到低维空间并保持结构用低维空间承载演化轨迹前者管哪一刻更重要后者管变化怎么表示动态图谱怎么用四个方向已经有落地案例金融监管是其中最成熟的一个把企业交易市场动态整合成一张动态网络然后做两类分析横向看关系网络工商关联担保关联资金流转任意时点都能还原当时的真实结构纵向看时序异动企业突然大量成立分支机构人员忽然聚集到同一地点图谱结构短时间内剧烈变化后者尤其有用结构短期剧烈变化往往就是风险信号另外三个是城市交通管理船舶分段制造和企业风险管理交通那边做流量分析和拥堵预测交通流本身就是时序数据天然适合船舶制造融合时序知识与静态资源知识用来提升质控企业风控做潜在客户挖掘反欺诈风险识别与预警四个方向的共同点是数据在持续变化答案必须跟着时间走这也决定了它的四个挑战依赖连锁改一条事实可能要连带更新一大片边界在哪很难判定噪声时间戳本身可能不准概率更新可信度是随证据流持续刷新的分值资源优化实时更新和查询性能之间的平衡动手把两条支路拼起来一个能跑的小实验可以说明这件事把文本和图像两条支路的特征拼起来文本文本向量图像去掉分类层只留特征图像向量拼接文本图像自检只有一条打印融合后的维度看它是不是正好等于文本维度加图像维度数量也要对上图像必须和文本一一对应多一张少一张都拼不起来两条支路各抽各的特征最后在维度上拼起来整段流程最该盯的是维度对不对数量配不配流程是四步文本先做再送得到词向量图像送进把设成去掉最后的分类层只留特征提取两路输出按维度拼接拼接结果拿去做下游任务为什么要去掉分类层分类层输出的是类的概率那是为的分类任务准备的跟你的业务无关去掉它之后网络输出的是倒数第二层的高维特征这才是能迁移到别处的表示小样本演示的数据通常很小跑出来的指标不好看重点在流程能不能跑通判断跑通的标准就是那两条自检维度对得上说明两条支路都通数量对得上说明样本没配错这段代码是骨架换成别的文本模型别的视觉模型结构不变真正费工夫的地方不在拼接那一步而在前面文本怎么清洗图像怎么对齐到实体模态缺失的时候怎么补这些活儿在示例里都被跳过了自测事理图谱的节点和边与传统图谱分别差在哪节点从实体换成了事件边从属性关系换成了逻辑关系传统图谱的节点是人公司城市边说的是是什么和谁有关事理图谱的节点是离职上市地震边说导致接着如果虽然换完之后能回答的问题也从谁在哪变成了为什么和接下来会怎样顺承和因果为什么必须分清顺承只要求时间上接着因果要求前者是后者的原因买票之后取票是顺承地震之后房屋倒塌是因果如果混用推理链通顺却站不住把先后发生当成因此发生是这类图谱最常见的错误来源事理图谱为什么是有环图环会带来什么麻烦因为结果会回流成新的原因金融里的追涨泡沫下跌再追涨就是一个闭环麻烦在于推理会绕圈沿着边走可能永远停不下来所以做路径搜索时必须记录访问过的节点或者给路径长度设上限和的差别落到查询上是什么把图像当成实体的属性值图里不多节点查询这个实体的图很快但查不了图像之间的关系把图像本身作为节点能表达这两张图很像也就能做以图搜图代价是图的规模变大构建更复杂为什么加了时间戳之后构建成本会明显上升因为每条事实都要判断有效期而有效期往往没人写下来一条关系什么时候开始什么时候结束通常得靠间接证据推加上更新要处理依赖连锁改一条可能牵动一大片边界还很难判定多模态融合那段代码为什么要打印维度因为维度对不上是这类代码最常见的错误而它不会报错只会让后面的模型默默学不到东西打印出来一看融合后的维度必须正好等于文本维度加图像维度对上了才说明两条支路都真的通了三个方向里哪一个最难落地说说理由事理图谱另外两个方向的难点在工程上多模态要对齐和存储动态要处理更新和性能都是可以靠工程手段逐步解决的事理图谱的难点在标注本身事件边界的划定关系类型的判定都要领域专家参与而且跨领域的规律常常不能直接搬',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2026-11-07 02:37:15',
+  postMainColor: '',
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+      win.saveToLocal = {
+        set: (key, value, ttl) => {
+          if (ttl === 0) return
+          const now = Date.now()
+          const expiry = now + ttl * 86400000
+          const item = {
+            value,
+            expiry
+          }
+          localStorage.setItem(key, JSON.stringify(item))
+        },
+      
+        get: key => {
+          const itemStr = localStorage.getItem(key)
+      
+          if (!itemStr) {
+            return undefined
+          }
+          const item = JSON.parse(itemStr)
+          const now = Date.now()
+      
+          if (now > item.expiry) {
+            localStorage.removeItem(key)
+            return undefined
+          }
+          return item.value
+        }
+      }
+    
+      win.getScript = (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        script.onerror = reject
+        script.onload = script.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          script.onload = script.onreadystatechange = null
+          resolve()
+        }
+
+        Object.keys(attr).forEach(key => {
+          script.setAttribute(key, attr[key])
+        })
+
+        document.head.appendChild(script)
+      })
+    
+      win.getCSS = (url, id = false) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onerror = reject
+        link.onload = link.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          link.onload = link.onreadystatechange = null
+          resolve()
+        }
+        document.head.appendChild(link)
+      })
+    
+      win.activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#18171d')
+        }
+      }
+      win.activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#f7f9fe')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          const isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches
+          const isLightMode = window.matchMedia('(prefers-color-scheme: light)').matches
+          const isNotSpecified = window.matchMedia('(prefers-color-scheme: no-preference)').matches
+          const hasNoSupport = !isDarkMode && !isLightMode && !isNotSpecified
+
+          if (t === undefined) {
+            if (isLightMode) activateLightMode()
+            else if (isDarkMode) activateDarkMode()
+            else if (isNotSpecified || hasNoSupport) {
+              const now = new Date()
+              const hour = now.getHours()
+              const isNight = hour <= 6 || hour >= 18
+              isNight ? activateDarkMode() : activateLightMode()
+            }
+            window.matchMedia('(prefers-color-scheme: dark)').addListener(e => {
+              if (saveToLocal.get('theme') === undefined) {
+                e.matches ? activateDarkMode() : activateLightMode()
+              }
+            })
+          } else if (t === 'light') activateLightMode()
+          else activateDarkMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+      const detectApple = () => {
+        if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+          document.documentElement.classList.add('apple')
+        }
+      }
+      detectApple()
+    })(window)</script><meta name="generator" content="Hexo 7.0.0"></head><body data-type="anzhiyu"><div id="web_bg"></div><div id="an_music_bg"></div><div id="loading-box" onclick="document.getElementById(&quot;loading-box&quot;).classList.add(&quot;loaded&quot;)"><div class="loading-bg"><img class="loading-img nolazyload" alt="加载头像" src="/img/avatar.jpg"/><div class="loading-image-dot"></div></div></div><script>const preloader = {
+  endLoading: () => {
+    document.getElementById('loading-box').classList.add("loaded");
+  },
+  initLoading: () => {
+    document.getElementById('loading-box').classList.remove("loaded")
+  }
+}
+window.addEventListener('load',()=> { preloader.endLoading() })
+setTimeout(function(){preloader.endLoading();},10000)
+
+if (true) {
+  document.addEventListener('pjax:send', () => { preloader.initLoading() })
+  document.addEventListener('pjax:complete', () => { preloader.endLoading() })
+}</script><link rel="stylesheet" href="https://cdn.cbd.int/anzhiyu-theme-static@1.1.10/progress_bar/progress_bar.css"/><script async="async" src="https://cdn.cbd.int/pace-js@1.2.4/pace.min.js" data-pace-options="{ &quot;restartOnRequestAfter&quot;:false,&quot;eventLag&quot;:false}"></script><div class="post" id="body-wrap"><header class="not-top-img" id="page-header"><nav id="nav"><div id="nav-group"><span id="blog_name"><a id="site-name" href="/" accesskey="h"><div class="title">qiuxz's Blog</div><i class="anzhiyufont anzhiyu-icon-house-chimney"></i></a></span><div class="mask-name-container"><div id="name-container"><a id="page-name" href="javascript:anzhiyu.scrollToDest(0, 500)">PAGE_NAME</a></div></div><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="javascript:void(0);"><span> 文章</span></a><ul class="menus_item_child"><li><a class="site-page child faa-parent animated-hover" href="/archives/"><i class="anzhiyufont anzhiyu-icon-box-archive faa-tada" style="font-size: 0.9em;"></i><span> 隧道</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><span> 关于</span></a><ul class="menus_item_child"><li><a class="site-page child faa-parent animated-hover" href="/other/about/"><i class="anzhiyufont anzhiyu-icon-paper-plane faa-tada" style="font-size: 0.9em;"></i><span> 关于本人</span></a></li><li><a class="site-page child faa-parent animated-hover" href="javascript:toRandomPost()"><i class="anzhiyufont anzhiyu-icon-shoe-prints1 faa-tada" style="font-size: 0.9em;"></i><span> 随便逛逛</span></a></li></ul></div></div></div><div id="nav-right"><div class="nav-button" id="randomPost_button"><a class="site-page" onclick="toRandomPost()" title="随机前往一个文章" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-dice"></i></a></div><input id="center-console" type="checkbox"/><label class="widget" for="center-console" title="中控台" onclick="anzhiyu.switchConsole();"><i class="left"></i><i class="widget center"></i><i class="widget right"></i></label><div id="console"><div class="console-card-group-reward"><ul class="reward-all console-card"><li class="reward-item"><a href="https://npm.elemecdn.com/anzhiyu-blog@1.1.6/img/post/common/qrcode-weichat.png" target="_blank"><img class="post-qr-code-img" alt="微信" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://npm.elemecdn.com/anzhiyu-blog@1.1.6/img/post/common/qrcode-weichat.png"/></a><div class="post-qr-code-desc">微信</div></li><li class="reward-item"><a href="https://npm.elemecdn.com/anzhiyu-blog@1.1.6/img/post/common/qrcode-alipay.png" target="_blank"><img class="post-qr-code-img" alt="支付宝" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://npm.elemecdn.com/anzhiyu-blog@1.1.6/img/post/common/qrcode-alipay.png"/></a><div class="post-qr-code-desc">支付宝</div></li></ul></div><div class="console-card-group"><div class="console-card-group-left"><div class="console-card" id="card-newest-comments"><div class="card-content"><div class="author-content-item-tips">互动</div><span class="author-content-item-title"> 最新评论</span></div><div class="aside-list"><span>正在加载中...</span></div></div></div><div class="console-card-group-right"><div class="console-card tags"><div class="card-content"><div class="author-content-item-tips">兴趣点</div><span class="author-content-item-title">寻找你感兴趣的领域</span><div class="card-tags"><div class="item-headline"></div><div class="card-tag-cloud"><a href="/tags/YJango%E8%A7%86%E9%A2%91%E6%95%B4%E7%90%86/" style="font-size: 1.05rem;">YJango视频整理<sup>11</sup></a><a href="/tags/%E4%B8%AA%E4%BA%BA%E6%88%90%E9%95%BF/" style="font-size: 1.05rem;">个人成长<sup>3</sup></a><a href="/tags/%E5%AD%A6%E4%B9%A0/" style="font-size: 1.05rem;">学习<sup>13</sup></a><a href="/tags/%E6%84%9F%E6%82%9F/" style="font-size: 1.05rem;">感悟<sup>1</sup></a><a href="/tags/%E6%95%99%E7%A8%8B/" style="font-size: 1.05rem;">教程<sup>9</sup></a><a href="/tags/%E6%9C%AA%E5%88%86%E7%B1%BB/" style="font-size: 1.05rem;">未分类<sup>6</sup></a><a href="/tags/%E6%9E%B6%E6%9E%84/" style="font-size: 1.05rem;">架构<sup>1</sup></a><a href="/tags/%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1/" style="font-size: 1.05rem;">知识图谱<sup>9</sup></a><a href="/tags/%E8%80%83%E8%AF%95/" style="font-size: 1.05rem;">考试<sup>5</sup></a></div></div><hr/></div></div><div class="console-card history"><div class="item-headline"><i class="anzhiyufont anzhiyu-icon-box-archiv"></i><span>文章</span></div><div class="card-archives"><div class="item-headline"><i class="anzhiyufont anzhiyu-icon-archive"></i><span>归档</span><a class="card-more-btn" href="/archives/" title="查看更多">
+    <i class="anzhiyufont anzhiyu-icon-angle-right"></i></a></div><ul class="card-archive-list"><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2026/11/"><span class="card-archive-list-date">十一月 2026</span><div class="card-archive-list-count-group"><span class="card-archive-list-count">15</span><span>篇</span></div></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2026/10/"><span class="card-archive-list-date">十月 2026</span><div class="card-archive-list-count-group"><span class="card-archive-list-count">3</span><span>篇</span></div></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2026/09/"><span class="card-archive-list-date">九月 2026</span><div class="card-archive-list-count-group"><span class="card-archive-list-count">15</span><span>篇</span></div></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2026/08/"><span class="card-archive-list-date">八月 2026</span><div class="card-archive-list-count-group"><span class="card-archive-list-count">4</span><span>篇</span></div></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2026/06/"><span class="card-archive-list-date">六月 2026</span><div class="card-archive-list-count-group"><span class="card-archive-list-count">4</span><span>篇</span></div></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2026/05/"><span class="card-archive-list-date">五月 2026</span><div class="card-archive-list-count-group"><span class="card-archive-list-count">1</span><span>篇</span></div></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2026/03/"><span class="card-archive-list-date">三月 2026</span><div class="card-archive-list-count-group"><span class="card-archive-list-count">1</span><span>篇</span></div></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2025/12/"><span class="card-archive-list-date">十二月 2025</span><div class="card-archive-list-count-group"><span class="card-archive-list-count">2</span><span>篇</span></div></a></li></ul></div><hr/></div></div></div><div class="button-group"><div class="console-btn-item"><a class="darkmode_switchbutton" title="显示模式切换" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-moon"></i></a></div><div class="console-btn-item" id="consoleHideAside" onclick="anzhiyu.hideAsideBtn()" title="边栏显示控制"><a class="asideSwitch"><i class="anzhiyufont anzhiyu-icon-arrows-left-right"></i></a></div></div><div class="console-mask" onclick="anzhiyu.hideConsole()" href="javascript:void(0);"></div></div><div class="nav-button" id="nav-totop"><a class="totopbtn" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-arrow-up"></i><span id="percent" onclick="anzhiyu.scrollToDest(0,500)">0</span></a></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);" title="切换"><i class="anzhiyufont anzhiyu-icon-bars"></i></a></div></div></div></nav></header><main id="blog-container"><div class="column-nav"><div class="column-nav-inner"><div class="column-nav-title">知识图谱教程</div><nav class="column-nav-list"><a class="column-link" href="https://qiuxzh.github.io/other/QUT/%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E6%95%99%E7%A8%8B/00-%E6%95%99%E7%A8%8B%E6%80%BB%E8%A7%88/" style="padding-left:8px">00 教程总览</a><a class="column-link" href="https://qiuxzh.github.io/other/QUT/%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E6%95%99%E7%A8%8B/01-%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E6%A6%82%E8%BF%B0/" style="padding-left:8px">01 知识图谱概述</a><a class="column-link" href="https://qiuxzh.github.io/other/QUT/%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E6%95%99%E7%A8%8B/02-%E7%9F%A5%E8%AF%86%E8%A1%A8%E7%A4%BA%E6%8A%80%E6%9C%AF/" style="padding-left:8px">02 知识表示技术</a><a class="column-link" href="https://qiuxzh.github.io/other/QUT/%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E6%95%99%E7%A8%8B/03-%E7%9F%A5%E8%AF%86%E6%8A%BD%E5%8F%96%E6%8A%80%E6%9C%AF/" style="padding-left:8px">03 知识抽取技术</a><a class="column-link" href="https://qiuxzh.github.io/other/QUT/%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E6%95%99%E7%A8%8B/04-%E7%9F%A5%E8%AF%86%E8%9E%8D%E5%90%88%E6%8A%80%E6%9C%AF/" style="padding-left:8px">04 知识融合技术</a><a class="column-link" href="https://qiuxzh.github.io/other/QUT/%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E6%95%99%E7%A8%8B/05-%E7%9F%A5%E8%AF%86%E5%AD%98%E5%82%A8%E6%8A%80%E6%9C%AF/" style="padding-left:8px">05 知识存储技术</a><a class="column-link" href="https://qiuxzh.github.io/other/QUT/%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E6%95%99%E7%A8%8B/06-%E5%9B%BE%E8%A1%A8%E7%A4%BA%E5%AD%A6%E4%B9%A0%E4%B8%8E%E5%9B%BE%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/" style="padding-left:8px">06 图表示学习与图神经网络</a><a class="column-link" href="https://qiuxzh.github.io/other/QUT/%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E6%95%99%E7%A8%8B/07-%E7%9F%A5%E8%AF%86%E6%8E%A8%E7%90%86%E6%8A%80%E6%9C%AF/" style="padding-left:8px">07 知识推理技术</a><a class="column-link active" href="https://qiuxzh.github.io/other/QUT/%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E6%95%99%E7%A8%8B/08-%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E8%A1%8D%E7%94%9F%E6%8A%80%E6%9C%AF/" style="padding-left:8px">08 知识图谱衍生技术</a></nav></div></div><div class="layout" id="content-inner"><div id="post"><div id="post-info"><div id="post-firstinfo"><div class="meta-firstline"><a class="post-meta-original">原创</a><span class="post-meta-categories"><span class="post-meta-separator"></span><i class="anzhiyufont anzhiyu-icon-inbox post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E6%95%99%E7%A8%8B/" itemprop="url">知识图谱教程</a></span><span class="article-meta tags"><a class="article-meta__tags" href="/tags/%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1/" tabindex="-1" itemprop="url"> <span> <i class="anzhiyufont anzhiyu-icon-hashtag"></i>知识图谱</span></a><a class="article-meta__tags" href="/tags/%E6%95%99%E7%A8%8B/" tabindex="-1" itemprop="url"> <span> <i class="anzhiyufont anzhiyu-icon-hashtag"></i>教程</span></a></span></div></div><h1 class="post-title" itemprop="name headline">08 知识图谱衍生技术</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="anzhiyufont anzhiyu-icon-calendar-days post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" itemprop="dateCreated datePublished" datetime="2026-11-06T19:01:00.000Z" title="发表于 2026-11-06 19:01:00">2026-11-06</time><span class="post-meta-separator"></span><i class="anzhiyufont anzhiyu-icon-history post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" itemprop="dateCreated datePublished" datetime="2026-11-07T02:37:15.496Z" title="更新于 2026-11-07 02:37:15">2026-11-07</time></span></div><div class="meta-secondline"></div></div></div><article class="post-content" id="article-container" itemscope itemtype="https://qiuxzh.github.io/other/QUT/%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E6%95%99%E7%A8%8B/08-%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E8%A1%8D%E7%94%9F%E6%8A%80%E6%9C%AF/"><header><a class="post-meta-categories" href="/categories/%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E6%95%99%E7%A8%8B/" itemprop="url">知识图谱教程</a><a href="/tags/%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1/" tabindex="-1" itemprop="url">知识图谱</a><a href="/tags/%E6%95%99%E7%A8%8B/" tabindex="-1" itemprop="url">教程</a><h1 id="CrawlerTitle" itemprop="name headline">08 知识图谱衍生技术</h1><span itemprop="author" itemscope itemtype="http://schema.org/Person">qiuxz</span><time itemprop="dateCreated datePublished" datetime="2026-11-06T19:01:00.000Z" title="发表于 2026-11-06 19:01:00">2026-11-06</time><time itemprop="dateCreated datePublished" datetime="2026-11-07T02:37:15.496Z" title="更新于 2026-11-07 02:37:15">2026-11-07</time></header><p>前七章的图谱只装实体：谁、是什么、和谁有关系。这一章处理它答不了的三类问题，一件事为什么发生，一张图里是什么，去年这个时候是什么样。</p>
+<h2 id="三个答不上来的问题"><a href="#三个答不上来的问题" class="headerlink" title="三个答不上来的问题"></a>三个答不上来的问题</h2><blockquote>
+<p>第一个问题：这家公司的股价为什么连续下跌？图谱里有股东、有子公司、有担保关系，能答出它和谁绑在一起，答不出“为什么”。</p>
+<p>第二个问题：照片里这栋楼是哪家公司的总部？图谱里全是文字，没有一张图，认不出来。</p>
+<p>第三个问题：2020 年的时候，张三在哪家公司？图谱里只存了现在的答案，去年的事查不到。</p>
+<p>三个问题，三种缺口。缺的分别是因果、感官和时间。</p>
+</blockquote>
+<p>这三处缺口由传统图谱的设计前提带来。它把世界描述成实体和关系，假设每条事实长期有效，假设信息以文字形式存在。三个假设在大多数业务里都成立，可一旦越过去，图谱就哑了。</p>
+<p>本章讲三个方向，一个方向补一处缺口。它们共用同一套底子，仍然是有节点有边的图，改的是节点是什么、边上挂什么、以及每条事实有没有期限。</p>
+<blockquote>
+<p><strong>改节点、加模态、加时间，为什么不能合成一个“全能图谱”？</strong></p>
+<p>因为每一次扩展都会把构建成本抬高一截。事件比实体难抽，图像比文字难对齐，时间戳比静态入库难维护。工程上通常分开做，哪个缺口最痛就先补哪个。</p>
+</blockquote>
+<h2 id="节点换成事件"><a href="#节点换成事件" class="headerlink" title="节点换成事件"></a>节点换成事件</h2><p>先看第一处。传统图谱的节点是实体，人、公司、城市。事理图谱的节点换成了事件，离职、上市、地震、买房。边换成了逻辑关系，因果、顺承、条件。</p>
+<p>事件的表示有三类写法。最简单的是一个谓词性词或词组，比如“跑步”“离职”“上市”。再完整一点是三元组（主体，事件词，客体），比如（张三，离职，A 公司）。更完整的还会补上时间、地点这些附加要素。</p>
+<p>主体和客体都可以省略，但事件词不能省。它是标志事件发生的核心，没有它就不成其为一个事件。“元首出访”省略了客体，“购买机票”省略了主体，都是正常的。</p>
+<svg width="100%" style="max-width:860px;height:auto" viewBox="0 0 860 300" role="img" aria-label="同一段事实在传统知识图谱与事理图谱中的两种画法">
+  <rect width="860" height="300" fill="#fdfbf6"></rect>
+  <text x="30" y="32" font-size="11.5" font-weight="600" fill="#8a8175">传统知识图谱：节点是人</text>
+  <rect x="30" y="46" width="370" height="180" rx="10" fill="#ffffff" stroke="#e4e0d6"></rect>
+  <line x1="150" y1="140" x2="266" y2="140" stroke="#2f6f8f" stroke-width="1.8"></line>
+  <text x="208" y="130" font-size="9.5" fill="#6d747e" text-anchor="middle">就职于</text>
+  <circle cx="130" cy="140" r="24" fill="#1f4d64"></circle>
+  <text x="130" y="145" font-size="11" fill="#ffffff" text-anchor="middle">张三</text>
+  <circle cx="290" cy="140" r="24" fill="#e9f2f6" stroke="#2f6f8f"></circle>
+  <text x="290" y="145" font-size="11" fill="#1f4d64" text-anchor="middle">A 公司</text>
+  <text x="130" y="188" font-size="9" fill="#6d747e" text-anchor="middle">年龄 34</text>
+  <text x="290" y="188" font-size="9" fill="#6d747e" text-anchor="middle">成立 2010 年</text>
+  <text x="46" y="212" font-size="10" fill="#8a8175">能答：张三在哪家公司</text>
+  <text x="460" y="32" font-size="11.5" font-weight="600" fill="#8f3d1c">事理图谱：节点是事</text>
+  <rect x="460" y="46" width="370" height="180" rx="10" fill="#ffffff" stroke="#f0d5c7"></rect>
+  <line x1="570" y1="118" x2="686" y2="118" stroke="#b4552d" stroke-width="1.8"></line>
+  <text x="628" y="108" font-size="9.5" fill="#8f3d1c" text-anchor="middle">因果</text>
+  <line x1="736" y1="140" x2="736" y2="176" stroke="#b4552d" stroke-width="1.8"></line>
+  <text x="748" y="164" font-size="9.5" fill="#8f3d1c">顺承</text>
+  <rect x="500" y="96" width="90" height="44" rx="8" fill="#fbeee7" stroke="#b4552d"></rect>
+  <text x="545" y="124" font-size="11" fill="#8f3d1c" text-anchor="middle">离职</text>
+  <rect x="680" y="96" width="90" height="44" rx="8" fill="#fbeee7" stroke="#b4552d"></rect>
+  <text x="725" y="124" font-size="11" fill="#8f3d1c" text-anchor="middle">创业</text>
+  <rect x="680" y="180" width="90" height="44" rx="8" fill="#fbeee7" stroke="#b4552d"></rect>
+  <text x="725" y="208" font-size="11" fill="#8f3d1c" text-anchor="middle">融资</text>
+  <text x="476" y="212" font-size="10" fill="#8a8175">能答：为什么走，下一步干什么</text>
+  <text x="30" y="266" font-size="10.5" fill="#3d444d">同一段事实，两种切法。左边切的是“谁”，右边切的是“发生了什么”，以及“接下来会发生什么”。</text>
+  <text x="30" y="290" font-size="10.5" fill="#8f3d1c">节点换了，边上能挂的东西也换了：从属性变成逻辑。</text>
+</svg>
+
+<p><em>同一段材料，两种图。左边的图能回答“他在哪”，右边的图能回答“他为什么走、走完会怎样”。这就是为什么事理图谱的边长得不一样。</em></p>
+<p>结构上，事理图谱是有向有环图。有向，因为因果和顺承都有方向，A 导致 B 不等于 B 导致 A。有环，因为结果会回流成新的原因，金融里的追涨杀跌就是个闭环。</p>
+<table>
+<thead>
+<tr>
+<th>维度</th>
+<th>事理图谱</th>
+<th>传统知识图谱</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>研究对象</td>
+<td>谓词性事件及其关系</td>
+<td>实体及其关系</td>
+</tr>
+<tr>
+<td>描述的知识</td>
+<td>逻辑与演化</td>
+<td>万物本体</td>
+</tr>
+<tr>
+<td>回答的问题</td>
+<td>Why &#x2F; How</td>
+<td>When &#x2F; Who &#x2F; What &#x2F; Where</td>
+</tr>
+<tr>
+<td>知识确定性</td>
+<td>演化关系多数不确定</td>
+<td>实体关系多数确定</td>
+</tr>
+<tr>
+<td>知识状态</td>
+<td>动态</td>
+<td>相对静态，变化缓慢</td>
+</tr>
+<tr>
+<td>构建难点</td>
+<td>事件的表示、抽取与融合</td>
+<td>本体搭建、抽取与融合</td>
+</tr>
+</tbody></table>
+<p>表里最值得留意的是“确定性”那一行。实体关系大多是确定的，张三就职于 A 公司，要么是，要么不是。演化关系很少这么干脆，离职之后一定会创业吗？不一定，只是一个概率偏高的后继。所以事理图谱的边常常要带概率，不再是纯粹的是非判断。</p>
+<h2 id="七种逻辑关系"><a href="#七种逻辑关系" class="headerlink" title="七种逻辑关系"></a>七种逻辑关系</h2><p>边上的关系分两大类。一类是分类关系，也就是上下位，与传统图谱一致，说的是“地震是地质灾害的一种”。另一类是非分类关系，是事理图谱特有的，描述事件之间的动态联系。</p>
+<table>
+<thead>
+<tr>
+<th>关系类型</th>
+<th>含义</th>
+<th>形式化</th>
+<th>例子</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>因果事理</td>
+<td>某一事件导致另一事件发生</td>
+<td>A 导致 B</td>
+<td>地震 → 房屋倒塌</td>
+</tr>
+<tr>
+<td>条件事理</td>
+<td>某条件下另一事件发生</td>
+<td>如果 A 那么 B</td>
+<td>放宽 → 增产</td>
+</tr>
+<tr>
+<td>反转事理</td>
+<td>两个事件形成对立</td>
+<td>虽然 A 但是 B</td>
+<td>起步晚 → 发展快</td>
+</tr>
+<tr>
+<td>顺承事理</td>
+<td>某事件紧接着另一事件</td>
+<td>A 接着 B</td>
+<td>去旅游 → 买火车票</td>
+</tr>
+<tr>
+<td>上下位事理</td>
+<td>一个是另一个的上位或下位</td>
+<td>A 是 B 的一类</td>
+<td>地震 → 地质灾害</td>
+</tr>
+<tr>
+<td>组成事理</td>
+<td>一个是另一个的组成部分</td>
+<td>A 组成 B</td>
+<td>灭火 → 火灾救援</td>
+</tr>
+<tr>
+<td>并发事理</td>
+<td>两个事件同时发生</td>
+<td>A 同时 B</td>
+<td>睡觉 → 闭眼</td>
+</tr>
+</tbody></table>
+<p>七种里，因果和顺承最常用，也最容易混。顺承只要求时间上接着，因果要求前者是后者的原因。买票之后取票，是顺承；地震之后房屋倒塌，是因果。混用的时候，推理链读起来顺，每一步的依据却是空的。</p>
+<p>反转事理比较特殊。它记的是“看上去该相反，其实成立”的那种关系，起步晚却发展快。这类知识在舆情分析和商业分析里价值很高，因为它恰好是人容易判断错的地方。</p>
+<h2 id="三种形状"><a href="#三种形状" class="headerlink" title="三种形状"></a>三种形状</h2><p>把大量事件关系拼起来，会形成三种典型形状。</p>
+<svg width="100%" style="max-width:860px;height:auto" viewBox="0 0 860 330" role="img" aria-label="事理图谱的链状、树状、环状三种拓扑">
+  <rect width="860" height="330" fill="#fdfbf6"></rect>
+  <defs>
+    <marker id="m82" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#8a8175"></path>
+    </marker>
+  </defs>
+  <text x="30" y="30" font-size="11" font-weight="600" fill="#1f4d64">链状 · 看电影</text>
+  <g fill="#e9f2f6" stroke="#2f6f8f">
+    <rect x="86" y="46" width="76" height="34" rx="6"></rect><rect x="86" y="104" width="76" height="34" rx="6"></rect>
+    <rect x="86" y="162" width="76" height="34" rx="6"></rect><rect x="86" y="220" width="76" height="34" rx="6"></rect>
+    <rect x="86" y="278" width="76" height="34" rx="6"></rect>
+  </g>
+  <g font-size="10" fill="#1f4d64" text-anchor="middle">
+    <text x="124" y="68">买票</text><text x="124" y="126">取票</text>
+    <text x="124" y="184">入场</text><text x="124" y="242">观影</text>
+    <text x="124" y="300">离场</text>
+  </g>
+  <g stroke="#8a8175" stroke-width="1.3" marker-end="url(#m82)">
+    <line x1="124" y1="80" x2="124" y2="100"></line>
+    <line x1="124" y1="138" x2="124" y2="158"></line>
+    <line x1="124" y1="196" x2="124" y2="216"></line>
+    <line x1="124" y1="254" x2="124" y2="274"></line>
+  </g>
+  <text x="196" y="184" font-size="9.5" fill="#6d747e">单线推进</text>
+  <text x="320" y="30" font-size="11" font-weight="600" fill="#1f4d64">树状 · 结婚</text>
+  <rect x="404" y="46" width="76" height="34" rx="6" fill="#e9f2f6" stroke="#2f6f8f"></rect>
+  <text x="442" y="68" font-size="10" fill="#1f4d64" text-anchor="middle">订婚</text>
+  <g fill="#ffffff" stroke="#2f6f8f">
+    <rect x="330" y="150" width="60" height="32" rx="6"></rect>
+    <rect x="396" y="150" width="60" height="32" rx="6"></rect>
+    <rect x="462" y="150" width="60" height="32" rx="6"></rect>
+  </g>
+  <g font-size="9.5" fill="#1f4d64" text-anchor="middle">
+    <text x="360" y="171">订亲</text><text x="426" y="171">请客</text><text x="492" y="171">酒席</text>
+  </g>
+  <g stroke="#8a8175" stroke-width="1.3" marker-end="url(#m82)">
+    <line x1="424" y1="80" x2="370" y2="146"></line>
+    <line x1="440" y1="80" x2="428" y2="146"></line>
+    <line x1="460" y1="80" x2="484" y2="146"></line>
+  </g>
+  <rect x="396" y="222" width="66" height="32" rx="6" fill="#eaf3ee" stroke="#3f7a5a"></rect>
+  <text x="429" y="243" font-size="9.5" fill="#2e5c44" text-anchor="middle">婚礼</text>
+  <g stroke="#8a8175" stroke-width="1.3" marker-end="url(#m82)">
+    <line x1="360" y1="182" x2="408" y2="218"></line>
+    <line x1="429" y1="182" x2="429" y2="218"></line>
+    <line x1="492" y1="182" x2="450" y2="218"></line>
+  </g>
+  <text x="430" y="286" font-size="9.5" fill="#6d747e" text-anchor="middle">一个前因，多个分支结果</text>
+  <text x="600" y="30" font-size="11" font-weight="600" fill="#8f3d1c">环状 · 金融</text>
+  <g fill="#fbeee7" stroke="#b4552d">
+    <rect x="650" y="46" width="80" height="32" rx="6"></rect>
+    <rect x="752" y="120" width="78" height="32" rx="6"></rect>
+    <rect x="650" y="194" width="80" height="32" rx="6"></rect>
+    <rect x="540" y="120" width="80" height="32" rx="6"></rect>
+  </g>
+  <g font-size="10" fill="#8f3d1c" text-anchor="middle">
+    <text x="690" y="67">上涨</text><text x="791" y="141">追涨</text>
+    <text x="690" y="215">下跌</text><text x="580" y="141">泡沫</text>
+  </g>
+  <g stroke="#b4552d" stroke-width="1.3" marker-end="url(#m82)">
+    <line x1="726" y1="78" x2="756" y2="114"></line>
+    <line x1="788" y1="152" x2="730" y2="190"></line>
+    <line x1="654" y1="206" x2="622" y2="152"></line>
+    <line x1="598" y1="120" x2="646" y2="78"></line>
+  </g>
+  <text x="690" y="286" font-size="9.5" fill="#6d747e" text-anchor="middle">结果回流成新的原因</text>
+  <text x="30" y="320" font-size="10" fill="#6d747e">真实的事理图谱通常是三种形状的混合体，一段是链，一段分叉，某处又绕回来。</text>
+</svg>
+
+<p><em>链状是最常见的，一件事接着一件。树状出现在一个原因有多种可能后果的地方。环状最难处理，因为推理会绕圈，必须防止无限循环。</em></p>
+<p>形状决定能做什么推理。链状适合预测下一步，树状适合分析影响范围，环状适合识别自我强化的过程，泡沫就是这么滚起来的。</p>
+<h2 id="四种演化操作"><a href="#四种演化操作" class="headerlink" title="四种演化操作"></a>四种演化操作</h2><p>图建好之后，人在上面做四件事。</p>
+<svg width="100%" style="max-width:860px;height:auto" viewBox="0 0 860 340" role="img" aria-label="前向演化、反向演化、向上抽象、向下分裂四种操作">
+  <rect width="860" height="340" fill="#fdfbf6"></rect>
+  <defs>
+    <marker id="m83" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#2f6f8f"></path>
+    </marker>
+    <marker id="m83b" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#b4552d"></path>
+    </marker>
+  </defs>
+  <text x="30" y="30" font-size="11" font-weight="600" fill="#1f4d64">① 前向演化</text>
+  <text x="30" y="52" font-size="10" fill="#6d747e">从已知事件往前推，接下来会发生什么</text>
+  <rect x="30" y="66" width="80" height="34" rx="6" fill="#e9f2f6" stroke="#2f6f8f"></rect>
+  <text x="70" y="88" font-size="10" fill="#1f4d64" text-anchor="middle">A</text>
+  <line x1="114" y1="83" x2="152" y2="83" stroke="#2f6f8f" stroke-width="1.6" marker-end="url(#m83)"></line>
+  <rect x="156" y="66" width="80" height="34" rx="6" fill="#ffffff" stroke="#2f6f8f"></rect>
+  <text x="196" y="88" font-size="10" fill="#1f4d64" text-anchor="middle">B</text>
+  <line x1="240" y1="83" x2="278" y2="83" stroke="#2f6f8f" stroke-width="1.6" marker-end="url(#m83)"></line>
+  <rect x="282" y="66" width="80" height="34" rx="6" fill="#ffffff" stroke="#cfd6da" stroke-dasharray="5 4"></rect>
+  <text x="322" y="88" font-size="10" fill="#8a8175" text-anchor="middle">C</text>
+  <text x="30" y="128" font-size="9.5" fill="#6d747e">依据因果、条件、顺序，一步接一步往下推</text>
+  <text x="440" y="30" font-size="11" font-weight="600" fill="#8f3d1c">② 反向演化</text>
+  <text x="440" y="52" font-size="10" fill="#6d747e">从结果往回溯，可能是哪个原因造成的</text>
+  <rect x="700" y="66" width="80" height="34" rx="6" fill="#fbeee7" stroke="#b4552d"></rect>
+  <text x="740" y="88" font-size="10" fill="#8f3d1c" text-anchor="middle">B</text>
+  <line x1="696" y1="83" x2="658" y2="83" stroke="#b4552d" stroke-width="1.6" marker-end="url(#m83b)"></line>
+  <rect x="574" y="66" width="80" height="34" rx="6" fill="#ffffff" stroke="#b4552d"></rect>
+  <text x="614" y="88" font-size="10" fill="#8f3d1c" text-anchor="middle">A</text>
+  <line x1="570" y1="83" x2="532" y2="83" stroke="#b4552d" stroke-width="1.6" marker-end="url(#m83b)"></line>
+  <rect x="448" y="66" width="80" height="34" rx="6" fill="#ffffff" stroke="#cfd6da" stroke-dasharray="5 4"></rect>
+  <text x="488" y="88" font-size="10" fill="#8a8175" text-anchor="middle">更早的因</text>
+  <text x="440" y="128" font-size="9.5" fill="#6d747e">箭头反过来，问的是“为什么”，越溯越远</text>
+  <line x1="30" y1="154" x2="830" y2="154" stroke="#e4e0d6"></line>
+  <text x="30" y="186" font-size="11" font-weight="600" fill="#1f4d64">③ 向上抽象</text>
+  <text x="30" y="208" font-size="10" fill="#6d747e">把一堆具体事件归纳成一件事</text>
+  <g fill="#ffffff" stroke="#cfd6da">
+    <rect x="30" y="222" width="70" height="28" rx="5"></rect><rect x="30" y="256" width="70" height="28" rx="5"></rect>
+    <rect x="110" y="222" width="70" height="28" rx="5"></rect><rect x="110" y="256" width="70" height="28" rx="5"></rect>
+  </g>
+  <g font-size="9" fill="#6d747e" text-anchor="middle">
+    <text x="65" y="240">小冲突</text><text x="65" y="274">小冲突</text>
+    <text x="145" y="240">声明</text><text x="145" y="274">摩擦</text>
+  </g>
+  <line x1="186" y1="254" x2="222" y2="254" stroke="#2f6f8f" stroke-width="1.6" marker-end="url(#m83)"></line>
+  <rect x="226" y="232" width="150" height="44" rx="6" fill="#e9f2f6" stroke="#2f6f8f"></rect>
+  <text x="301" y="259" font-size="10" fill="#1f4d64" text-anchor="middle">地区紧张局势</text>
+  <text x="440" y="186" font-size="11" font-weight="600" fill="#8f3d1c">④ 向下分裂</text>
+  <text x="440" y="208" font-size="10" fill="#6d747e">把一件抽象的事拆成具体的子事件</text>
+  <rect x="440" y="232" width="150" height="44" rx="6" fill="#fbeee7" stroke="#b4552d"></rect>
+  <text x="515" y="259" font-size="10" fill="#8f3d1c" text-anchor="middle">地区紧张局势</text>
+  <line x1="594" y1="254" x2="630" y2="254" stroke="#b4552d" stroke-width="1.6" marker-end="url(#m83b)"></line>
+  <g fill="#ffffff" stroke="#cfd6da">
+    <rect x="634" y="222" width="86" height="28" rx="5"></rect><rect x="634" y="256" width="86" height="28" rx="5"></rect>
+    <rect x="730" y="222" width="86" height="28" rx="5"></rect><rect x="730" y="256" width="86" height="28" rx="5"></rect>
+  </g>
+  <g font-size="9" fill="#6d747e" text-anchor="middle">
+    <text x="677" y="240">武装冲突</text><text x="677" y="274">政治声明</text>
+    <text x="773" y="240">外交抗议</text><text x="773" y="274">经济制裁</text>
+  </g>
+  <text x="30" y="320" font-size="10" fill="#6d747e">上下两个方向配合着用：抽象层用来检索，具体层用来推理。</text>
+</svg>
+
+<p><em>前两个是横向的，沿着时间或因果走；后两个是纵向的，在抽象层次之间跳。四种操作合起来，才让一张图既能看远也能看细。</em></p>
+<p>这四种操作不是四个独立功能。真正有用的是配合：先在抽象层检索到“地区紧张局势”，再向下分裂看具体是哪几件事，然后前向演化推测后续，最后反向演化找根因。一条完整的分析链就是这么走下来的。</p>
+<h2 id="事理图谱能干什么"><a href="#事理图谱能干什么" class="headerlink" title="事理图谱能干什么"></a>事理图谱能干什么</h2><p>能落地的方向有六个，其中三个最能说明它的独特价值。</p>
+<ul>
+<li><strong>事件预测</strong>：给定上文，从候选里挑出最可能的下一个事件，业内叫脚本事件预测。金融领域的价格走势预测、社会领域的选举与社会运动趋势，都属这一类。</li>
+<li><strong>常识推理</strong>：按人的认知过程一步步推，并且把推理路径给出来。法律领域的条文与案例集成、医疗的病情发展，都靠这个。</li>
+<li><strong>消费意图挖掘</strong>：“去旅行”“逛街”这类意图显著的节点，往往触发一串后续消费事件。把这条链画出来，推荐就不再是猜。</li>
+</ul>
+<p>另外三个是对话生成、问答系统和辅助决策。对话生成用在触发话题上，聊到某件事时主动提它的前提或后继，回复会自然很多。问答系统补的是 how 和 why 类问题。辅助决策是把不同选择下的演化路径摆出来，让人自己看后果。</p>
+<p>“能解释为什么”是它区别于传统图谱的地方。传统图谱回答事实，事理图谱回答因果，而因果恰好是人和机器之间最难对齐的那部分。</p>
+<p>难处也在这儿。构建一张像样的事理图谱，要跨四道坎。语料不够，事件标注比实体标注贵得多，粒度还要从词级一路做到篇章级；数据源不规范，同一件事在不同新闻里的说法差别很大；跨领域融合复杂，金融的因果规律搬到医疗上未必成立；最后是图谱之间的融合，怎么把几张事理图谱并成一张，目前还没有成熟做法。</p>
+<h2 id="给图谱装上眼睛"><a href="#给图谱装上眼睛" class="headerlink" title="给图谱装上眼睛"></a>给图谱装上眼睛</h2><p>第二处缺口是模态。传统图谱里，一个实体只有名字和关系，它长什么样、听起来什么声音，一概没有。图像、音频这些信息在以文字为主的图谱里长期缺席。</p>
+<p>多模态知识图谱（MMKG）要做的，是把这些模态挂进来，并且挂得能被机器关联起来。形式化一点，它是个六元组 G &#x3D; { E, R, A, V, T<sub>R</sub>, T<sub>A</sub> }。前三项和传统图谱一样，实体、关系、属性；后三项是新增的，多模态属性、多模态属性值，以及两类新的三元组。</p>
+<p>引入模态带来的直接好处是描述变全面了。文字说不清的东西，一张图能说清。间接的好处更大：不同模态在描述同一个对象时会互相补充，做表示学习的时候，两路信息合起来比单路强。</p>
+<h2 id="两种挂法"><a href="#两种挂法" class="headerlink" title="两种挂法"></a>两种挂法</h2><p>图像到底怎么挂到图上，有两种做法，区别在于图里多不多一个节点。</p>
+<svg width="100%" style="max-width:860px;height:auto" viewBox="0 0 860 280" role="img" aria-label="A-MMKG 与 N-MMKG 两种多模态知识图谱的表示方式">
+  <rect width="860" height="280" fill="#fdfbf6"></rect>
+  <text x="30" y="30" font-size="11.5" font-weight="600" fill="#1f4d64">A-MMKG：图挂在属性上</text>
+  <rect x="30" y="44" width="370" height="180" rx="10" fill="#ffffff" stroke="#e4e0d6"></rect>
+  <circle cx="120" cy="110" r="26" fill="#1f4d64"></circle>
+  <text x="120" y="115" font-size="11" fill="#ffffff" text-anchor="middle">苹果</text>
+  <line x1="146" y1="110" x2="196" y2="110" stroke="#2f6f8f" stroke-width="1.5"></line>
+  <text x="171" y="102" font-size="9" fill="#6d747e" text-anchor="middle">外观</text>
+  <rect x="200" y="86" width="80" height="48" rx="6" fill="#f4f1e9" stroke="#c9c2b2"></rect>
+  <text x="240" y="106" font-size="9" fill="#6b5320" text-anchor="middle">属性值</text>
+  <text x="240" y="122" font-size="9" fill="#8a8175" text-anchor="middle">图像</text>
+  <rect x="300" y="86" width="80" height="48" rx="6" fill="#e9f2f6" stroke="#2f6f8f" stroke-dasharray="5 4"></rect>
+  <text x="340" y="106" font-size="9" fill="#1f4d64" text-anchor="middle">一张苹果</text>
+  <text x="340" y="122" font-size="9" fill="#1f4d64" text-anchor="middle">的照片</text>
+  <line x1="282" y1="110" x2="296" y2="110" stroke="#2f6f8f" stroke-width="1.2" stroke-dasharray="3 3"></line>
+  <text x="46" y="168" font-size="10" fill="#6d747e">图是实体的一个属性值，</text>
+  <text x="46" y="188" font-size="10" fill="#6d747e">不是图里独立的节点。</text>
+  <text x="46" y="210" font-size="9.5" fill="#8a8175">ImageNet、DBpedia、MMpedia 属这一类</text>
+  <text x="460" y="30" font-size="11.5" font-weight="600" fill="#8f3d1c">N-MMKG：图自己也是节点</text>
+  <rect x="460" y="44" width="370" height="180" rx="10" fill="#ffffff" stroke="#f0d5c7"></rect>
+  <circle cx="540" cy="110" r="26" fill="#b4552d"></circle>
+  <text x="540" y="115" font-size="11" fill="#ffffff" text-anchor="middle">苹果</text>
+  <line x1="566" y1="110" x2="646" y2="110" stroke="#b4552d" stroke-width="1.5"></line>
+  <text x="606" y="102" font-size="9" fill="#8f3d1c" text-anchor="middle">图像</text>
+  <circle cx="674" cy="110" r="28" fill="#fbeee7" stroke="#b4552d"></circle>
+  <text x="674" y="107" font-size="9" fill="#8f3d1c" text-anchor="middle">apple</text>
+  <text x="674" y="120" font-size="9" fill="#8f3d1c" text-anchor="middle">图</text>
+  <line x1="702" y1="110" x2="756" y2="110" stroke="#b4552d" stroke-width="1.5"></line>
+  <text x="729" y="102" font-size="8.5" fill="#8f3d1c" text-anchor="middle">相似</text>
+  <circle cx="780" cy="110" r="22" fill="#ffffff" stroke="#b4552d" stroke-dasharray="5 4"></circle>
+  <text x="780" y="114" font-size="9" fill="#8f3d1c" text-anchor="middle">青苹果</text>
+  <text x="476" y="168" font-size="10" fill="#6d747e">图像本身是图里的一个节点，</text>
+  <text x="476" y="188" font-size="10" fill="#6d747e">节点之间还能有相似关系。</text>
+  <text x="476" y="210" font-size="9.5" fill="#8a8175">IMGpedia、Richpedia、MarKG 属这一类</text>
+  <text x="30" y="256" font-size="10" fill="#6d747e">两种挂法各有取舍：挂在属性上简单，图片之间连不起来；做成节点复杂，但可以表达“这两张图很像”。</text>
+</svg>
+
+<p><em>差别只在一处：图像是属性值，还是节点。前者建模简单、查询快；后者能表达图像之间的关系，代价是图会大一圈。</em></p>
+<p>两种做法的适用场景不同。如果只是给实体配一张代表图，A-MMKG 就够了。如果要做“找相似图片”“按图搜商品”这类任务，图必须是节点，否则连不起来。</p>
+<p>规模上已经有了相当成熟的数据资源。ImageNet 有 1419 万张图片、21841 组同义词，是深度学习那一波浪潮的起点；DBpedia 收 458 万实体、30 亿条信息；MMpedia 有 266 万实体、1949 万张图像，是目前图像量最大的一个；中文这边 CN-DBpedia 有 900 万实体、6700 万三元组。IMGpedia 比较特别，它给 1500 万张图像之间建了 4.5 亿条相似关系，正好是 N-MMKG 那种挂法的典型。</p>
+<h2 id="多模态的用处与难处"><a href="#多模态的用处与难处" class="headerlink" title="多模态的用处与难处"></a>多模态的用处与难处</h2><p>已经落地的方向主要是三类：推荐、视觉问答、知识分析预测，加上这两年的大模型应用。</p>
+<p>推荐系统是最直接的受益者。冷启动问题的本质是“图谱里有知识，模型却看不见”。新上架的商品没有交互记录，但它的图片能说明风格、品类、适用场景，把视觉特征接进去，冷启动就能缓解一大截。</p>
+<p>视觉问答是另一种价值。用户问“这是什么建筑”，只回一句文字答案，体验很干；配上图片、标注出方位，用户得到的是一种感官式的理解。医疗领域更明显，影像本身就是诊断依据，没有图像的图谱在医疗场景里基本用不上。</p>
+<p>难处集中在四处。数据质量与对齐，同一个实体在不同模态里的指称要能对上，这一步错一步错到底；可解释性，模型给出一个多模态答案，很难说清是看了图还是读了文字；实时更新，图像数据的增长比文本快，增量处理框架跟不上；评测，多模态任务缺少公认指标，没有度量就没有改进方向。</p>
+<p>一条出路是拿高质量的 MMKG 数据去做指令式微调，让大模型学会“看图说话时调用图谱知识”。这个方向这两年被讨论得很多，但还谈不上成熟。</p>
+<h2 id="给每条事实加一个时间"><a href="#给每条事实加一个时间" class="headerlink" title="给每条事实加一个时间"></a>给每条事实加一个时间</h2><p>第三处缺口是时间。传统图谱默认知识入库之后长期有效，可现实里实体有出生和死亡，属性在变，关系在建立和删除。</p>
+<p>补的办法很朴素：给每条事实加一个时间戳。三元组变成四元组（h, r, t, τ），读法是“在时刻 τ，头实体 h 与尾实体 t 之间有关系 r”。事实只在某个时刻为真。</p>
+<svg width="100%" style="max-width:860px;height:auto" viewBox="0 0 860 320" role="img" aria-label="同一组实体在三个时间点上的结构变化">
+  <rect width="860" height="320" fill="#fdfbf6"></rect>
+  <text x="150" y="30" font-size="11" font-weight="600" fill="#8a8175" text-anchor="middle">2020 年</text>
+  <rect x="30" y="44" width="240" height="200" rx="10" fill="#ffffff" stroke="#e4e0d6"></rect>
+  <circle cx="90" cy="100" r="22" fill="#e9f2f6" stroke="#2f6f8f"></circle>
+  <text x="90" y="105" font-size="10" fill="#1f4d64" text-anchor="middle">张三</text>
+  <line x1="112" y1="100" x2="176" y2="100" stroke="#2f6f8f" stroke-width="1.5"></line>
+  <text x="144" y="92" font-size="8.5" fill="#6d747e" text-anchor="middle">就职于</text>
+  <circle cx="200" cy="100" r="22" fill="#e9f2f6" stroke="#2f6f8f"></circle>
+  <text x="200" y="105" font-size="10" fill="#1f4d64" text-anchor="middle">A 公司</text>
+  <line x1="200" y1="122" x2="200" y2="166" stroke="#2f6f8f" stroke-width="1.5"></line>
+  <text x="212" y="148" font-size="8.5" fill="#6d747e">位于</text>
+  <circle cx="200" cy="188" r="22" fill="#e9f2f6" stroke="#2f6f8f"></circle>
+  <text x="200" y="193" font-size="10" fill="#1f4d64" text-anchor="middle">青岛</text>
+  <text x="46" y="234" font-size="9" fill="#8a8175">两条边</text>
+  <text x="430" y="30" font-size="11" font-weight="600" fill="#8a8175" text-anchor="middle">2022 年</text>
+  <rect x="310" y="44" width="240" height="200" rx="10" fill="#ffffff" stroke="#e4e0d6"></rect>
+  <circle cx="370" cy="100" r="22" fill="#e9f2f6" stroke="#2f6f8f"></circle>
+  <text x="370" y="105" font-size="10" fill="#1f4d64" text-anchor="middle">张三</text>
+  <line x1="392" y1="100" x2="456" y2="100" stroke="#b4552d" stroke-width="1.8"></line>
+  <text x="424" y="92" font-size="8.5" fill="#8f3d1c" text-anchor="middle">就职于</text>
+  <circle cx="480" cy="100" r="22" fill="#fbeee7" stroke="#b4552d"></circle>
+  <text x="480" y="105" font-size="10" fill="#8f3d1c" text-anchor="middle">B 公司</text>
+  <line x1="480" y1="122" x2="480" y2="166" stroke="#2f6f8f" stroke-width="1.5"></line>
+  <text x="492" y="148" font-size="8.5" fill="#6d747e">位于</text>
+  <circle cx="480" cy="188" r="22" fill="#e9f2f6" stroke="#2f6f8f"></circle>
+  <text x="480" y="193" font-size="10" fill="#1f4d64" text-anchor="middle">北京</text>
+  <text x="326" y="234" font-size="9" fill="#8f3d1c">换公司，换城市</text>
+  <text x="710" y="30" font-size="11" font-weight="600" fill="#8a8175" text-anchor="middle">2024 年</text>
+  <rect x="590" y="44" width="240" height="200" rx="10" fill="#ffffff" stroke="#e4e0d6"></rect>
+  <circle cx="650" cy="100" r="22" fill="#e9f2f6" stroke="#2f6f8f"></circle>
+  <text x="650" y="105" font-size="10" fill="#1f4d64" text-anchor="middle">张三</text>
+  <line x1="672" y1="100" x2="736" y2="100" stroke="#2f6f8f" stroke-width="1.5"></line>
+  <text x="704" y="92" font-size="8.5" fill="#6d747e" text-anchor="middle">就职于</text>
+  <circle cx="760" cy="100" r="22" fill="#e9f2f6" stroke="#2f6f8f"></circle>
+  <text x="760" y="105" font-size="10" fill="#1f4d64" text-anchor="middle">B 公司</text>
+  <line x1="650" y1="122" x2="650" y2="166" stroke="#b4552d" stroke-width="1.8"></line>
+  <text x="662" y="148" font-size="8.5" fill="#8f3d1c">居住于</text>
+  <circle cx="650" cy="188" r="22" fill="#fbeee7" stroke="#b4552d"></circle>
+  <text x="650" y="193" font-size="10" fill="#8f3d1c" text-anchor="middle">北京</text>
+  <text x="606" y="234" font-size="9" fill="#8f3d1c">城市的关系从公司挪到了人</text>
+  <text x="30" y="282" font-size="10.5" fill="#3d444d">三个时点，三张不同形状的图。实体没变，边在变：旧的删掉，新的长出来，有的还改变了挂靠的对象。</text>
+  <text x="30" y="306" font-size="10.5" fill="#6d747e">如果不存历史，只留最后一张图，那么“张三 2020 年在哪”这个问题就永远查不到了。</text>
+</svg>
+
+<p><em>同样三个人和两家公司，2020 年、2022 年、2024 年长出了三种结构。动态图谱要做的事，就是把这三次都留住，而不是只留最后一次。</em></p>
+<p>构建的时候要处理四件事。实体的出生与死亡，什么时候进入图谱、什么时候退出；属性的变化，同一属性在不同时段取值不同，历史要保留；关系的创建与删除，关系的有效期本身就是知识；最后是把这些信息都挂到时间轴上，才能支持演化推理。</p>
+<p>知识要答的是“何时为是”。</p>
+<p>表示方法有两条常见思路。一条是时间注意力，给不同时间点上的实体分配权重，权重反映那一刻对当前任务有多重要。另一条是流形学习，把高维数据映射到低维空间并保持结构，用低维空间承载演化轨迹。前者管“哪一刻更重要”，后者管“变化怎么表示”。</p>
+<h2 id="动态图谱怎么用"><a href="#动态图谱怎么用" class="headerlink" title="动态图谱怎么用"></a>动态图谱怎么用</h2><p>四个方向已经有落地案例。</p>
+<p>金融监管是其中最成熟的一个。把企业、交易、市场动态整合成一张动态网络，然后做两类分析。横向看关系网络，工商关联、担保关联、资金流转，任意时点都能还原当时的真实结构；纵向看时序异动，企业突然大量成立分支机构、人员忽然聚集到同一地点、图谱结构短时间内剧烈变化。后者尤其有用，结构短期剧烈变化，往往就是风险信号。</p>
+<p>另外三个是城市交通管理、船舶分段制造和企业风险管理。交通那边做流量分析和拥堵预测，交通流本身就是时序数据，天然适合；船舶制造融合时序知识与静态资源知识，用来提升质控；企业风控做潜在客户挖掘、反欺诈、风险识别与预警。</p>
+<p>四个方向的共同点是数据在持续变化，答案必须跟着时间走。这也决定了它的四个挑战：依赖连锁，改一条事实可能要连带更新一大片，边界在哪很难判定；噪声，时间戳本身可能不准；概率更新，可信度是随证据流持续刷新的分值；资源优化，实时更新和查询性能之间的平衡。</p>
+<h2 id="动手：把两条支路拼起来"><a href="#动手：把两条支路拼起来" class="headerlink" title="动手：把两条支路拼起来"></a>动手：把两条支路拼起来</h2><p>一个能跑的小实验可以说明这件事，把文本和图像两条支路的特征拼起来。</p>
+<svg width="100%" style="max-width:860px;height:auto" viewBox="0 0 860 320" role="img" aria-label="文本与图像两条特征支路的融合流程">
+  <rect width="860" height="320" fill="#fdfbf6"></rect>
+  <defs>
+    <marker id="m86" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#8a8175"></path>
+    </marker>
+  </defs>
+  <rect x="30" y="52" width="110" height="40" rx="7" fill="#e9f2f6" stroke="#2f6f8f"></rect>
+  <text x="85" y="77" font-size="10.5" fill="#1f4d64" text-anchor="middle">文本</text>
+  <line x1="140" y1="72" x2="176" y2="72" stroke="#8a8175" stroke-width="1.4" marker-end="url(#m86)"></line>
+  <rect x="180" y="52" width="110" height="40" rx="7" fill="#ffffff" stroke="#cfd6da"></rect>
+  <text x="235" y="77" font-size="10.5" fill="#3d444d" text-anchor="middle">TF-IDF</text>
+  <line x1="290" y1="72" x2="326" y2="72" stroke="#8a8175" stroke-width="1.4" marker-end="url(#m86)"></line>
+  <rect x="330" y="52" width="130" height="40" rx="7" fill="#ffffff" stroke="#cfd6da"></rect>
+  <text x="395" y="77" font-size="10.5" fill="#3d444d" text-anchor="middle">Word2Vec</text>
+  <line x1="460" y1="72" x2="516" y2="72" stroke="#8a8175" stroke-width="1.4" marker-end="url(#m86)"></line>
+  <rect x="520" y="52" width="110" height="40" rx="7" fill="#e9f2f6" stroke="#2f6f8f"></rect>
+  <text x="575" y="77" font-size="10.5" fill="#1f4d64" text-anchor="middle">文本向量</text>
+  <rect x="30" y="170" width="110" height="40" rx="7" fill="#fbeee7" stroke="#b4552d"></rect>
+  <text x="85" y="195" font-size="10.5" fill="#8f3d1c" text-anchor="middle">图像</text>
+  <line x1="140" y1="190" x2="176" y2="190" stroke="#8a8175" stroke-width="1.4" marker-end="url(#m86)"></line>
+  <rect x="180" y="170" width="280" height="40" rx="7" fill="#ffffff" stroke="#cfd6da"></rect>
+  <text x="320" y="188" font-size="10.5" fill="#3d444d" text-anchor="middle">VGG16（include_top = False）</text>
+  <text x="320" y="203" font-size="8.5" fill="#8a8175" text-anchor="middle">去掉分类层，只留特征</text>
+  <line x1="460" y1="190" x2="516" y2="190" stroke="#8a8175" stroke-width="1.4" marker-end="url(#m86)"></line>
+  <rect x="520" y="170" width="110" height="40" rx="7" fill="#fbeee7" stroke="#b4552d"></rect>
+  <text x="575" y="195" font-size="10.5" fill="#8f3d1c" text-anchor="middle">图像向量</text>
+  <path d="M630,72 H680 V150 M630,190 H680 V150" fill="none" stroke="#8a8175" stroke-width="1.4"></path>
+  <line x1="680" y1="150" x2="712" y2="150" stroke="#8a8175" stroke-width="1.4" marker-end="url(#m86)"></line>
+  <rect x="716" y="118" width="114" height="64" rx="8" fill="#eaf3ee" stroke="#3f7a5a"></rect>
+  <text x="773" y="144" font-size="10.5" fill="#2e5c44" text-anchor="middle">拼接</text>
+  <text x="773" y="164" font-size="9" fill="#3f7a5a" text-anchor="middle">d 文本 + d 图像</text>
+  <rect x="30" y="238" width="800" height="66" rx="8" fill="#f4f1e9"></rect>
+  <text x="46" y="262" font-size="11" fill="#3d444d">自检只有一条：打印融合后的维度，看它是不是正好等于文本维度加图像维度。</text>
+  <text x="46" y="286" font-size="11" fill="#8f3d1c">数量也要对上，图像必须和文本一一对应，多一张少一张都拼不起来。</text>
+</svg>
+
+<p><em>两条支路各抽各的特征，最后在维度上拼起来。整段流程最该盯的是维度对不对、数量配不配。</em></p>
+<p>流程是四步。文本先做 TF-IDF，再送 Word2Vec 得到词向量；图像送进 VGG16，把 <code>include_top</code> 设成 False，去掉最后的分类层，只留特征提取；两路输出按维度拼接；拼接结果拿去做下游任务。</p>
+<p>为什么 VGG16 要去掉分类层。分类层输出的是 1000 类的概率，那是为 ImageNet 的分类任务准备的，跟你的业务无关。去掉它之后，网络输出的是倒数第二层的高维特征，这才是能迁移到别处的表示。</p>
+<p>小样本演示的数据通常很小，跑出来的指标不好看。重点在流程能不能跑通。判断跑通的标准就是那两条自检：维度对得上，说明两条支路都通；数量对得上，说明样本没配错。</p>
+<blockquote>
+<p><strong>这段代码是骨架。</strong>换成别的文本模型、别的视觉模型，结构不变。真正费工夫的地方不在拼接那一步，而在前面：文本怎么清洗、图像怎么对齐到实体、模态缺失的时候怎么补。这些活儿在示例里都被跳过了。</p>
+</blockquote>
+<h2 id="自测"><a href="#自测" class="headerlink" title="自测"></a>自测</h2><details><summary>事理图谱的节点和边，与传统图谱分别差在哪？</summary> <p>节点从实体换成了事件，边从属性关系换成了逻辑关系。传统图谱的节点是人、公司、城市，边说的是“是什么、和谁有关”；事理图谱的节点是离职、上市、地震，边说“导致、接着、如果、虽然”。换完之后能回答的问题也从“谁在哪”变成了“为什么”和“接下来会怎样”。</p></details>  
+
+<details><summary>顺承和因果，为什么必须分清？</summary> <p>顺承只要求时间上接着，因果要求前者是后者的原因。买票之后取票是顺承，地震之后房屋倒塌是因果。如果混用，推理链通顺却站不住：把“先后发生”当成“因此发生”，是这类图谱最常见的错误来源。</p></details>  
+
+<details><summary>事理图谱为什么是有环图，环会带来什么麻烦？</summary> <p>因为结果会回流成新的原因。金融里的追涨、泡沫、下跌、再追涨，就是一个闭环。麻烦在于推理会绕圈，沿着边走可能永远停不下来，所以做路径搜索时必须记录访问过的节点，或者给路径长度设上限。</p></details>  
+
+<details><summary>A-MMKG 和 N-MMKG 的差别，落到查询上是什么？</summary> <p>A-MMKG 把图像当成实体的属性值，图里不多节点，查询“这个实体的图”很快，但查不了图像之间的关系。N-MMKG 把图像本身作为节点，能表达“这两张图很像”，也就能做以图搜图，代价是图的规模变大、构建更复杂。</p></details>  
+
+<details><summary>为什么加了时间戳之后，构建成本会明显上升？</summary> <p>因为每条事实都要判断有效期，而有效期往往没人写下来。一条关系什么时候开始、什么时候结束，通常得靠间接证据推。加上更新要处理依赖连锁，改一条可能牵动一大片，边界还很难判定。</p></details>  
+
+<details><summary>多模态融合那段代码，为什么要打印维度？</summary> <p>因为维度对不上是这类代码最常见的错误，而它不会报错，只会让后面的模型默默学不到东西。打印出来一看，融合后的维度必须正好等于文本维度加图像维度，对上了才说明两条支路都真的通了。</p></details>  
+
+<details><summary>三个方向里，哪一个最难落地？说说理由。</summary> <p>事理图谱。另外两个方向的难点在工程上，多模态要对齐和存储，动态要处理更新和性能，都是可以靠工程手段逐步解决的。事理图谱的难点在标注本身：事件边界的划定、关系类型的判定，都要领域专家参与，而且跨领域的规律常常不能直接搬。</p></details> 
+</article><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/other/QUT/%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E4%BD%9C%E4%B8%9A/QUT%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E4%BD%9C%E4%B8%9A%E8%A7%A3%E6%9E%90-%E7%AC%AC%E4%B8%80%E7%AB%A0-%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E6%A6%82%E8%BF%B0/"><img class="prev-cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">QUT知识图谱作业解析：第一章 知识图谱概述</div></div></a></div><div class="next-post pull-right"><a href="/other/QUT/%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E6%95%99%E7%A8%8B/07-%E7%9F%A5%E8%AF%86%E6%8E%A8%E7%90%86%E6%8A%80%E6%9C%AF/"><img class="next-cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">07 知识推理技术</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="anzhiyufont anzhiyu-icon-thumbs-up fa-fw" style="font-size: 1.5rem; margin-right: 4px"></i><span>喜欢这篇文章的人也看了</span></div><div class="relatedPosts-list"><div><a href="/other/QUT/%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E6%95%99%E7%A8%8B/00-%E6%95%99%E7%A8%8B%E6%80%BB%E8%A7%88/" title="00 教程总览"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/" alt="cover"><div class="content is-center"><div class="date"><i class="anzhiyufont anzhiyu-icon-calendar-days fa-fw"></i> 2026-11-06</div><div class="title">00 教程总览</div></div></a></div><div><a href="/other/QUT/%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E6%95%99%E7%A8%8B/01-%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E6%A6%82%E8%BF%B0/" title="01 知识图谱概述"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/" alt="cover"><div class="content is-center"><div class="date"><i class="anzhiyufont anzhiyu-icon-calendar-days fa-fw"></i> 2026-11-06</div><div class="title">01 知识图谱概述</div></div></a></div><div><a href="/other/QUT/%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E6%95%99%E7%A8%8B/02-%E7%9F%A5%E8%AF%86%E8%A1%A8%E7%A4%BA%E6%8A%80%E6%9C%AF/" title="02 知识表示技术"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/" alt="cover"><div class="content is-center"><div class="date"><i class="anzhiyufont anzhiyu-icon-calendar-days fa-fw"></i> 2026-11-06</div><div class="title">02 知识表示技术</div></div></a></div><div><a href="/other/QUT/%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E6%95%99%E7%A8%8B/03-%E7%9F%A5%E8%AF%86%E6%8A%BD%E5%8F%96%E6%8A%80%E6%9C%AF/" title="03 知识抽取技术"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/" alt="cover"><div class="content is-center"><div class="date"><i class="anzhiyufont anzhiyu-icon-calendar-days fa-fw"></i> 2026-11-06</div><div class="title">03 知识抽取技术</div></div></a></div><div><a href="/other/QUT/%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E6%95%99%E7%A8%8B/04-%E7%9F%A5%E8%AF%86%E8%9E%8D%E5%90%88%E6%8A%80%E6%9C%AF/" title="04 知识融合技术"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/" alt="cover"><div class="content is-center"><div class="date"><i class="anzhiyufont anzhiyu-icon-calendar-days fa-fw"></i> 2026-11-06</div><div class="title">04 知识融合技术</div></div></a></div><div><a href="/other/QUT/%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E6%95%99%E7%A8%8B/05-%E7%9F%A5%E8%AF%86%E5%AD%98%E5%82%A8%E6%8A%80%E6%9C%AF/" title="05 知识存储技术"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/" alt="cover"><div class="content is-center"><div class="date"><i class="anzhiyufont anzhiyu-icon-calendar-days fa-fw"></i> 2026-11-06</div><div class="title">05 知识存储技术</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="card-content"><div class="author-info-avatar"><img class="avatar-img" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/img/avatar.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__description">大三学生，全栈开发者，终身学习者</div><div class="author-info__bottom-group"><a class="author-info__bottom-group-left" href="/"><h1 class="author-info__name">qiuxz</h1><div class="author-info__desc"></div></a><div class="card-info-social-icons is-center"><a class="social-icon faa-parent animated-hover" href="https://github.com/qiuxzh" target="_blank" title="Github"><i class="anzhiyufont anzhiyu-icon-github"></i></a><a class="social-icon faa-parent animated-hover" href="javascript:void(0);" title="QQ" data-copy="1256227507"><i class="anzhiyufont anzhiyu-icon-qq"></i></a><a class="social-icon faa-parent animated-hover" href="javascript:void(0);" title="Email" data-copy="1256227507@qq.com"><i class="anzhiyufont anzhiyu-icon-envelope"></i></a></div></div></div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="anzhiyufont anzhiyu-icon-bars"></i><span>文章目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E4%B8%AA%E7%AD%94%E4%B8%8D%E4%B8%8A%E6%9D%A5%E7%9A%84%E9%97%AE%E9%A2%98"><span class="toc-number">1.</span> <span class="toc-text">三个答不上来的问题</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%8A%82%E7%82%B9%E6%8D%A2%E6%88%90%E4%BA%8B%E4%BB%B6"><span class="toc-number">2.</span> <span class="toc-text">节点换成事件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%83%E7%A7%8D%E9%80%BB%E8%BE%91%E5%85%B3%E7%B3%BB"><span class="toc-number">3.</span> <span class="toc-text">七种逻辑关系</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E7%A7%8D%E5%BD%A2%E7%8A%B6"><span class="toc-number">4.</span> <span class="toc-text">三种形状</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9B%E7%A7%8D%E6%BC%94%E5%8C%96%E6%93%8D%E4%BD%9C"><span class="toc-number">5.</span> <span class="toc-text">四种演化操作</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8B%E7%90%86%E5%9B%BE%E8%B0%B1%E8%83%BD%E5%B9%B2%E4%BB%80%E4%B9%88"><span class="toc-number">6.</span> <span class="toc-text">事理图谱能干什么</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BB%99%E5%9B%BE%E8%B0%B1%E8%A3%85%E4%B8%8A%E7%9C%BC%E7%9D%9B"><span class="toc-number">7.</span> <span class="toc-text">给图谱装上眼睛</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%A4%E7%A7%8D%E6%8C%82%E6%B3%95"><span class="toc-number">8.</span> <span class="toc-text">两种挂法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A4%9A%E6%A8%A1%E6%80%81%E7%9A%84%E7%94%A8%E5%A4%84%E4%B8%8E%E9%9A%BE%E5%A4%84"><span class="toc-number">9.</span> <span class="toc-text">多模态的用处与难处</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BB%99%E6%AF%8F%E6%9D%A1%E4%BA%8B%E5%AE%9E%E5%8A%A0%E4%B8%80%E4%B8%AA%E6%97%B6%E9%97%B4"><span class="toc-number">10.</span> <span class="toc-text">给每条事实加一个时间</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8A%A8%E6%80%81%E5%9B%BE%E8%B0%B1%E6%80%8E%E4%B9%88%E7%94%A8"><span class="toc-number">11.</span> <span class="toc-text">动态图谱怎么用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8A%A8%E6%89%8B%EF%BC%9A%E6%8A%8A%E4%B8%A4%E6%9D%A1%E6%94%AF%E8%B7%AF%E6%8B%BC%E8%B5%B7%E6%9D%A5"><span class="toc-number">12.</span> <span class="toc-text">动手：把两条支路拼起来</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%87%AA%E6%B5%8B"><span class="toc-number">13.</span> <span class="toc-text">自测</span></a></li></ol></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"></div><div id="footer-bar"><div class="footer-bar-links"><div class="footer-bar-left"><div id="footer-bar-tips"><div class="copyright">&copy;2020 - 2026 By <a class="footer-bar-link" href="/" title="qiuxz" target="_blank">qiuxz</a></div></div><div id="footer-type-tips"></div></div><div class="footer-bar-right"><a class="footer-bar-link" target="_blank" rel="noopener" href="https://github.com/anzhiyu-c/hexo-theme-anzhiyu" title="主题">主题</a></div></div></div></footer></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="sidebar-site-data site-data is-center"><a href="/archives/" title="archive"><div class="headline">文章</div><div class="length-num">48</div></a><a href="/tags/" title="tag"><div class="headline">标签</div><div class="length-num">9</div></a><a href="/categories/" title="category"><div class="headline">分类</div><div class="length-num">10</div></a></div><span class="sidebar-menu-item-title">功能</span><div class="sidebar-menu-item"><a class="darkmode_switchbutton menu-child" href="javascript:void(0);" title="显示模式"><i class="anzhiyufont anzhiyu-icon-circle-half-stroke"></i><span>显示模式</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="javascript:void(0);"><span> 文章</span></a><ul class="menus_item_child"><li><a class="site-page child faa-parent animated-hover" href="/archives/"><i class="anzhiyufont anzhiyu-icon-box-archive faa-tada" style="font-size: 0.9em;"></i><span> 隧道</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><span> 关于</span></a><ul class="menus_item_child"><li><a class="site-page child faa-parent animated-hover" href="/other/about/"><i class="anzhiyufont anzhiyu-icon-paper-plane faa-tada" style="font-size: 0.9em;"></i><span> 关于本人</span></a></li><li><a class="site-page child faa-parent animated-hover" href="javascript:toRandomPost()"><i class="anzhiyufont anzhiyu-icon-shoe-prints1 faa-tada" style="font-size: 0.9em;"></i><span> 随便逛逛</span></a></li></ul></div></div><span class="sidebar-menu-item-title">标签</span><div class="card-tags"><div class="item-headline"></div><div class="card-tag-cloud"><a href="/tags/YJango%E8%A7%86%E9%A2%91%E6%95%B4%E7%90%86/" style="font-size: 0.88rem;">YJango视频整理<sup>11</sup></a><a href="/tags/%E4%B8%AA%E4%BA%BA%E6%88%90%E9%95%BF/" style="font-size: 0.88rem;">个人成长<sup>3</sup></a><a href="/tags/%E5%AD%A6%E4%B9%A0/" style="font-size: 0.88rem;">学习<sup>13</sup></a><a href="/tags/%E6%84%9F%E6%82%9F/" style="font-size: 0.88rem;">感悟<sup>1</sup></a><a href="/tags/%E6%95%99%E7%A8%8B/" style="font-size: 0.88rem;">教程<sup>9</sup></a><a href="/tags/%E6%9C%AA%E5%88%86%E7%B1%BB/" style="font-size: 0.88rem;">未分类<sup>6</sup></a><a href="/tags/%E6%9E%B6%E6%9E%84/" style="font-size: 0.88rem;">架构<sup>1</sup></a><a href="/tags/%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1/" style="font-size: 0.88rem;">知识图谱<sup>9</sup></a><a href="/tags/%E8%80%83%E8%AF%95/" style="font-size: 0.88rem;">考试<sup>5</sup></a></div></div><hr/></div></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="anzhiyufont anzhiyu-icon-book-open"></i></button><button id="translateLink" type="button" title="简繁转换">繁</button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="anzhiyufont anzhiyu-icon-circle-half-stroke"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="anzhiyufont anzhiyu-icon-arrows-left-right"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="anzhiyufont anzhiyu-icon-gear"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="anzhiyufont anzhiyu-icon-list-ul"></i></button><button id="mobile-column-button" type="button" title="专栏目录"><i class="anzhiyufont anzhiyu-icon-bars"></i></button><button id="go-up" type="button" title="回到顶部"><i class="anzhiyufont anzhiyu-icon-arrow-up"></i></button></div></div><div id="rightMenu"><div class="rightMenu-group rightMenu-small"><div class="rightMenu-item" id="menu-backward"><i class="anzhiyufont anzhiyu-icon-arrow-left"></i></div><div class="rightMenu-item" id="menu-forward"><i class="anzhiyufont anzhiyu-icon-arrow-right"></i></div><div class="rightMenu-item" id="menu-refresh"><i class="anzhiyufont anzhiyu-icon-arrow-rotate-right" style="font-size: 1rem;"></i></div><div class="rightMenu-item" id="menu-top"><i class="anzhiyufont anzhiyu-icon-arrow-up"></i></div></div><div class="rightMenu-group rightMenu-line rightMenuPlugin"><div class="rightMenu-item" id="menu-copytext"><i class="anzhiyufont anzhiyu-icon-copy"></i><span>复制选中文本</span></div><div class="rightMenu-item" id="menu-pastetext"><i class="anzhiyufont anzhiyu-icon-paste"></i><span>粘贴文本</span></div><a class="rightMenu-item" id="menu-commenttext"><i class="anzhiyufont anzhiyu-icon-comment-medical"></i><span>引用到评论</span></a><div class="rightMenu-item" id="menu-newwindow"><i class="anzhiyufont anzhiyu-icon-window-restore"></i><span>新窗口打开</span></div><div class="rightMenu-item" id="menu-copylink"><i class="anzhiyufont anzhiyu-icon-link"></i><span>复制链接地址</span></div><div class="rightMenu-item" id="menu-copyimg"><i class="anzhiyufont anzhiyu-icon-images"></i><span>复制此图片</span></div><div class="rightMenu-item" id="menu-downloadimg"><i class="anzhiyufont anzhiyu-icon-download"></i><span>下载此图片</span></div><div class="rightMenu-item" id="menu-newwindowimg"><i class="anzhiyufont anzhiyu-icon-window-restore"></i><span>新窗口打开图片</span></div><div class="rightMenu-item" id="menu-search"><i class="anzhiyufont anzhiyu-icon-magnifying-glass"></i><span>站内搜索</span></div><div class="rightMenu-item" id="menu-searchBaidu"><i class="anzhiyufont anzhiyu-icon-magnifying-glass"></i><span>百度搜索</span></div></div><div class="rightMenu-group rightMenu-line rightMenuOther"><a class="rightMenu-item menu-link" id="menu-randomPost"><i class="anzhiyufont anzhiyu-icon-shuffle"></i><span>随便逛逛</span></a><a class="rightMenu-item menu-link" href="/categories/"><i class="anzhiyufont anzhiyu-icon-cube"></i><span>博客分类</span></a><a class="rightMenu-item menu-link" href="/tags/"><i class="anzhiyufont anzhiyu-icon-tags"></i><span>文章标签</span></a></div><div class="rightMenu-group rightMenu-line rightMenuOther"><a class="rightMenu-item" id="menu-copy" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-copy"></i><span>复制地址</span></a><a class="rightMenu-item" id="menu-commentBarrage" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-message"></i><span class="menu-commentBarrage-text">关闭热评</span></a><a class="rightMenu-item" id="menu-darkmode" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-circle-half-stroke"></i><span class="menu-darkmode-text">深色模式</span></a><a class="rightMenu-item" id="menu-translate" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-language"></i><span>轉為繁體</span></a></div></div><div id="rightmenu-mask"></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="/js/tw_cn.js"></script><script src="https://cdn.cbd.int/@fancyapps/ui@6.1.6/dist/fancybox/fancybox.umd.js"></script><script src="https://cdn.cbd.int/instant.page@5.2.0/instantpage.js" type="module"></script><script src="https://cdn.cbd.int/vanilla-lazyload@19.1.3/dist/lazyload.iife.min.js"></script><script src="https://cdn.cbd.int/node-snackbar@0.1.16/dist/snackbar.min.js"></script><canvas id="universe"></canvas><script async src="https://npm.elemecdn.com/anzhiyu-theme-static@1.0.0/dark/dark.js"></script><script>// 消除控制台打印
+var HoldLog = console.log;
+console.log = function () {};
+let now1 = new Date();
+queueMicrotask(() => {
+  const Log = function () {
+    HoldLog.apply(console, arguments);
+  }; //在恢复前输出日志
+  const grt = new Date("08/08/2026 00:00:00"); //此处修改你的建站时间或者网站上线时间
+  now1.setTime(now1.getTime() + 250);
+  const days = (now1 - grt) / 1000 / 60 / 60 / 24;
+  const dnum = Math.floor(days);
+  const ascll = [
+    `欢迎使用安知鱼!`,
+    `生活明朗, 万物可爱`,
+    `
+        
+       █████╗ ███╗   ██╗███████╗██╗  ██╗██╗██╗   ██╗██╗   ██╗
+      ██╔══██╗████╗  ██║╚══███╔╝██║  ██║██║╚██╗ ██╔╝██║   ██║
+      ███████║██╔██╗ ██║  ███╔╝ ███████║██║ ╚████╔╝ ██║   ██║
+      ██╔══██║██║╚██╗██║ ███╔╝  ██╔══██║██║  ╚██╔╝  ██║   ██║
+      ██║  ██║██║ ╚████║███████╗██║  ██║██║   ██║   ╚██████╔╝
+      ╚═╝  ╚═╝╚═╝  ╚═══╝╚══════╝╚═╝  ╚═╝╚═╝   ╚═╝    ╚═════╝
+        
+        `,
+    "已上线",
+    dnum,
+    "天",
+    "©2020 By 安知鱼 V1.7.1",
+  ];
+  const ascll2 = [`NCC2-036`, `调用前置摄像头拍照成功，识别为【小笨蛋】.`, `Photo captured: `, `🤪`];
+
+  setTimeout(
+    Log.bind(
+      console,
+      `\n%c${ascll[0]} %c ${ascll[1]} %c ${ascll[2]} %c${ascll[3]}%c ${ascll[4]}%c ${ascll[5]}\n\n%c ${ascll[6]}\n`,
+      "color:#425AEF",
+      "",
+      "color:#425AEF",
+      "color:#425AEF",
+      "",
+      "color:#425AEF",
+      ""
+    )
+  );
+  setTimeout(
+    Log.bind(
+      console,
+      `%c ${ascll2[0]} %c ${ascll2[1]} %c \n${ascll2[2]} %c\n${ascll2[3]}\n`,
+      "color:white; background-color:#4fd953",
+      "",
+      "",
+      'background:url("https://npm.elemecdn.com/anzhiyu-blog@1.1.6/img/post/common/tinggge.gif") no-repeat;font-size:450%'
+    )
+  );
+
+  setTimeout(Log.bind(console, "%c WELCOME %c 你好，小笨蛋.", "color:white; background-color:#4f90d9", ""));
+
+  setTimeout(
+    console.warn.bind(
+      console,
+      "%c ⚡ Powered by 安知鱼 %c 你正在访问 qiuxz 的博客.",
+      "color:white; background-color:#f0ad4e",
+      ""
+    )
+  );
+
+  setTimeout(Log.bind(console, "%c W23-12 %c 你已打开控制台.", "color:white; background-color:#4f90d9", ""));
+
+  setTimeout(
+    console.warn.bind(console, "%c S013-782 %c 你现在正处于监控中.", "color:white; background-color:#d9534f", "")
+  );
+});</script><script async src="/anzhiyu/random.js"></script><div class="js-pjax"><script>if (!window.MathJax) {
+  window.MathJax = {
+    tex: {
+      inlineMath: [['$', '$'], ['\\(', '\\)']],
+      tags: 'ams'
+    },
+    chtml: {
+      scale: 1.1,
+      // MathJax 4 默认从 cdn.jsdelivr.net 取 NewCM 字体，国内直连拿不到，
+      // 公式会退化成缺字形。这里改走 npmmirror（与 mathjax@4.0.0 对应）。
+      fontURL: 'https://registry.npmmirror.com/@mathjax/mathjax-newcm-font/4.0.0/files/chtml/woff2',
+      dynamicPrefix: 'https://registry.npmmirror.com/@mathjax/mathjax-newcm-font/4.0.0/files/chtml/dynamic'
+    },
+    options: {
+      renderActions: {
+        findScript: [10, doc => {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/)
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+            const text = document.createTextNode('')
+            node.parentNode.replaceChild(text, node)
+            math.start = {node: text, delim: '', n: 0}
+            math.end = {node: text, delim: '', n: 0}
+            doc.math.push(math)
+          }
+        }, '']
+      }
+    }
+  }
+  
+  const script = document.createElement('script')
+  script.src = 'https://cdn.cbd.int/mathjax@4.0.0/tex-mml-chtml.js'
+  script.id = 'MathJax-script'
+  script.async = true
+  document.head.appendChild(script)
+} else {
+  MathJax.startup.document.state(0)
+  MathJax.texReset()
+  MathJax.typesetPromise()
+}</script><link rel="stylesheet" type="text/css" href="https://cdn.cbd.int/katex@0.16.25/dist/katex.min.css"><script src="https://cdn.cbd.int/katex@0.16.25/dist/contrib/copy-tex.min.js"></script><script>(() => {
+  document.querySelectorAll('#article-container span.katex-display').forEach(item => {
+    anzhiyu.wrap(item, 'div', { class: 'katex-wrap'})
+  })
+})()</script><input type="hidden" name="page-type" id="page-type" value="post"></div><script>var visitorMail = "";
+</script><script async data-pjax src="https://cdn.cbd.int/anzhiyu-theme-static@1.0.0/waterfall/waterfall.js"></script><script src="https://cdn.cbd.int/qrcodejs@1.0.0/qrcode.min.js"></script><link rel="stylesheet" href="https://cdn.cbd.int/anzhiyu-theme-static@1.1.9/icon/ali_iconfont_css.css"><script src="/js/social-copy.js"></script><script src="/js/column-nav-mobile.js"></script><script src="https://cdn.cbd.int/pjax@0.2.8/pjax.min.js"></script><script>let pjaxSelectors = ["head > title","#config-diff","#body-wrap","#rightside-config-hide","#rightside-config-show",".js-pjax"]
+var pjax = new Pjax({
+  elements: 'a:not([target="_blank"])',
+  selectors: pjaxSelectors,
+  cacheBust: false,
+  analytics: false,
+  scrollRestoration: false
+})
+
+document.addEventListener('pjax:send', function () {
+  // removeEventListener scroll 
+  anzhiyu.removeGlobalFnEvent('pjax')
+  anzhiyu.removeGlobalFnEvent('themeChange')
+
+  document.getElementById('rightside').classList.remove('rightside-show')
+  
+  if (window.aplayers) {
+    for (let i = 0; i < window.aplayers.length; i++) {
+      if (!window.aplayers[i].options.fixed) {
+        window.aplayers[i].destroy()
+      }
+    }
+  }
+
+  typeof typed === 'object' && typed.destroy()
+
+  //reset readmode
+  const $bodyClassList = document.body.classList
+  $bodyClassList.contains('read-mode') && $bodyClassList.remove('read-mode')
+})
+
+document.addEventListener('pjax:complete', function () {
+  window.refreshFn()
+
+  document.querySelectorAll('script[data-pjax]').forEach(item => {
+    const newScript = document.createElement('script')
+    const content = item.text || item.textContent || item.innerHTML || ""
+    Array.from(item.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value))
+    newScript.appendChild(document.createTextNode(content))
+    item.parentNode.replaceChild(newScript, item)
+  })
+
+  GLOBAL_CONFIG.islazyload && window.lazyLoadInstance.update()
+
+  typeof panguInit === 'function' && panguInit()
+
+  // google analytics
+  typeof gtag === 'function' && gtag('config', '', {'page_path': window.location.pathname});
+
+  // baidu analytics
+  typeof _hmt === 'object' && _hmt.push(['_trackPageview',window.location.pathname]);
+
+  typeof loadMeting === 'function' && document.getElementsByClassName('aplayer').length && loadMeting()
+
+  // prismjs
+  typeof Prism === 'object' && Prism.highlightAll()
+})
+
+document.addEventListener('pjax:error', e => {
+  if (e.request.status === 404) {
+    pjax.loadUrl('/404.html')
+  }
+})</script><script charset="UTF-8" src="https://cdn.cbd.int/anzhiyu-theme-static@1.1.5/accesskey/accesskey.js"></script></div><div id="popup-window"><div class="popup-window-title">通知</div><div class="popup-window-divider"></div><div class="popup-window-content"><div class="popup-tip">你好呀</div><div class="popup-link"><i class="anzhiyufont anzhiyu-icon-arrow-circle-right"></i></div></div></div></body></html>

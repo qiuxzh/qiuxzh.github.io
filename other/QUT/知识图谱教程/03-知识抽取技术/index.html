@@ -1,0 +1,805 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no"><title>03 知识抽取技术 | qiuxz's Blog</title><meta name="keywords" content="知识图谱,教程"><meta name="author" content="qiuxz"><meta name="copyright" content="qiuxz"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#f7f9fe"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-touch-fullscreen" content="yes"><meta name="apple-mobile-web-app-title" content="03 知识抽取技术"><meta name="application-name" content="03 知识抽取技术"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="#f7f9fe"><meta property="og:type" content="article"><meta property="og:title" content="03 知识抽取技术"><meta property="og:url" content="https://qiuxzh.github.io/other/QUT/%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E6%95%99%E7%A8%8B/03-%E7%9F%A5%E8%AF%86%E6%8A%BD%E5%8F%96%E6%8A%80%E6%9C%AF/index.html"><meta property="og:site_name" content="qiuxz's Blog"><meta property="og:description" content="图谱里的三元组不会自己出现，得从文本、表格、数据库里一条条捞出来。这一章按“先找实体、再判关系、最后抽事件”的顺序，讲清楚机器在每一步上卡在哪里，以及各代方法分别怎么绕过去。 一句话里的三层信息 一条新闻里写着：王思聪是万达集团董事长王健林的独子。 人读完，脑子里自动装进了两个人名和一条关系。要把这"><meta property="og:locale" content="zh-CN"><meta property="og:image" content="https://qiuxzh.github.io/img/avatar.jpg"><meta property="article:author" content="qiuxz"><meta property="article:tag"><meta name="twitter:card" content="summary"><meta name="twitter:image" content="https://qiuxzh.github.io/img/avatar.jpg"><meta name="description" content="图谱里的三元组不会自己出现，得从文本、表格、数据库里一条条捞出来。这一章按“先找实体、再判关系、最后抽事件”的顺序，讲清楚机器在每一步上卡在哪里，以及各代方法分别怎么绕过去。 一句话里的三层信息 一条新闻里写着：王思聪是万达集团董事长王健林的独子。 人读完，脑子里自动装进了两个人名和一条关系。要把这"><link rel="shortcut icon" href="/favicon.ico"><link rel="canonical" href="https://qiuxzh.github.io/other/QUT/%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E6%95%99%E7%A8%8B/03-%E7%9F%A5%E8%AF%86%E6%8A%BD%E5%8F%96%E6%8A%80%E6%9C%AF/"><link rel="preconnect" href="//cdn.cbd.int"/><meta name="google-site-verification" content="xxx"/><meta name="baidu-site-verification" content="code-xxx"/><meta name="msvalidate.01" content="xxx"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.cbd.int/node-snackbar@0.1.16/dist/snackbar.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.cbd.int/@fancyapps/ui@6.1.6/dist/fancybox/fancybox.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  linkPageTop: undefined,
+  peoplecanvas: {"enable":true,"img":"https://upload-bbs.miyoushe.com/upload/2024/07/27/125766904/ba62475f396df9de3316a08ed9e65d86_5680958632268053399..png"},
+  postHeadAiDescription: undefined,
+  diytitle: undefined,
+  LA51: undefined,
+  greetingBox: undefined,
+  twikooEnvId: '',
+  commentBarrageConfig:undefined,
+  music_page_default: "nav_music",
+  root: '/',
+  preloader: {"source":3},
+  friends_vue_info: undefined,
+  navMusic: false,
+  mainTone: undefined,
+  authorStatus: undefined,
+  algolia: undefined,
+  localSearch: undefined,
+  translate: {"defaultEncoding":2,"translateDelay":0,"msgToTraditionalChinese":"繁","msgToSimplifiedChinese":"简","rightMenuMsgToTraditionalChinese":"转为繁体","rightMenuMsgToSimplifiedChinese":"转为简体"},
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":330},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    simplehomepage: true,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: {"copy":true,"copyrightEbable":false,"limitCount":50,"languages":{"author":"作者: qiuxz","link":"链接: ","source":"来源: qiuxz's Blog","info":"著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。","copySuccess":"复制成功，复制和转载请标注本文地址"}},
+  lightbox: 'fancybox',
+  Snackbar: {"chs_to_cht":"你已切换为繁体","cht_to_chs":"你已切换为简体","day_to_night":"你已切换为深色模式","night_to_day":"你已切换为浅色模式","bgLight":"#425AEF","bgDark":"#1f1f1f","position":"top-center"},
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.cbd.int/flickr-justified-gallery@2.2.0/dist/fjGallery.min.js',
+      css: 'https://cdn.cbd.int/flickr-justified-gallery@2.2.0/dist/fjGallery.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: true,
+  isAnchor: false,
+  shortcutKey: undefined,
+  autoDarkmode: true
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  configTitle: 'qiuxz\'s Blog',
+  title: '03 知识抽取技术',
+  postAI: '',
+  pageFillDescription: '一句话里的三层信息, 抽取的五个阶段, 实体抽取：先切边界, 规则法, 统计模型进来之后, 深度模型与 BiLSTM-CRF, 关系抽取, 标注不够用的时候, 事件抽取, 自测图谱里的三元组不会自己出现得从文本表格数据库里一条条捞出来这一章按先找实体再判关系最后抽事件的顺序讲清楚机器在每一步上卡在哪里以及各代方法分别怎么绕过去一句话里的三层信息一条新闻里写着王思聪是万达集团董事长王健林的独子人读完脑子里自动装进了两个人名和一条关系要把这句话变成图谱里的一条三元组王健林父子王思聪机器得依次做完三件事王思聪是万达集团董事长王健林的独子原文第一步找实体哪些字是人名机构名边界在哪是什么类型第二步判关系这两个实体之间是什么关系独子指向父子第三步归一关系在库里叫什么名字对齐到已有王健林父子王思聪三步里最难的不是第三步关系类型有现成的表可查实体边界有语料可学真正麻烦的是中文那句话里万达集团董事长王健林这一串字该从哪里断开英文有空格机器把词切开就行中文没有万达集团董事长王健林这一串边界在哪人靠语义切分知道董事长是头衔王健林才是人机器拿到的是连续的字它得靠上下文特征判断哪个位置该断这一步算错后面的关系全得跟着错知识抽取要解决的正是这件事把非结构化的文本变成结构化的三元组这个概念在上世纪七十年代后期出现在自然语言处理的文献里年把它用在搜索结果上之后才真正变成工程问题抽取的五个阶段一个完整的抽取工程从原始数据到可用的三元组要经过五道工序课本把它们排成流水线实际做的时候它们互相咬合前一道的输出就是后一道的输入错一处会一路传下去预处理收集清洗标注实体抽取识别扩展关系抽取模式分类事件抽取触发词论元校验评估准确率召回率输入纯文本网页表格半结构化数据库与链接数据实体错了关系必然错关系错了事件就抽不全评估放在最后但要能回退到任何一步输出是一批三元组再交给第四章的融合处理同义冲突重复预处理阶段常被低估数据来自哪里标注规范怎么定直接决定后面模型能学到什么标注标准不一致模型学到的就是噪声预处理里三件事收集清洗标注收集要定范围和来源清洗要去重去噪纠错标注要给实体和关系打上标签供模型学习标注最费人力也最容易出偏差两个人对同一句话标出不同结果模型就学不会实体抽取先切边界实体抽取也叫命名实体识别任务定义很窄找出实体在文本中的起止位置再判断它属于哪一类定位和分类是两件事前者决定输出几个字符后者决定这个字符串叫什么一句张三在上海工作机器要输出四段东西张三从第个字到第个字类型是人名上海从第个字到第个字类型是地名中间那个在和工作不属于任何实体输入字序列张三在上海工作输出标签序列开始内部不在实体里结束单字实体与的组合决定了边界遇到就开一个新实体遇到就收尾标签体系越细区分能力越强训练也越慢中文任务里常用这一套把识别任务改写成给每个字打一个标签问题就变成了序列标注这个转换很关键后面所有模型都建立在它上面这个改写让任务变得可计算也带来了一个新约束标签之间不能随便组合前面必须是或不能凭空冒出个这条约束在独立预测每个位置的模型里靠不住后面层要解决的正是它规则法最早的做法不需要训练人先观察语料总结出模式机构名常以大学医院集团收尾人名常出现在某某说某某老师里把这些模式写成正则或模板拿文本去匹配匹配上就标成实体规则制定正则词典模板文本解析分词词性句法规则匹配冲突消解实体输出位置类型属性模式举例大学医院老师说省优点准有些实体只有规则能抓比如固定格式的编号文号药品规格代价写规则要语言学知识规则一多就互相打架换一个领域整套重写规则法的准确率可以做到很高代价是覆盖率靠人一条条堆它到今天仍然有用通常作为模型的第一层过滤或者用来处理模型学不会的格式类实体规则法在专业领域活得很好医疗文本里的药品规格检验指标法律文书里的案号格式固定正则一句话就够模型反而不划算它的软肋在于可移植性一套写给病历的规则搬到财报上几乎全部失效统计模型进来之后规则堆不动的时候思路转向从数据里学做法是先人工定义一批特征词本身词性前后缀是否数字是否姓氏把每个位置的上下文编码成一个特征向量再训练一个分类器判断这个位置该打什么标签是这条路线上最早的一个它把标签序列当隐状态把词当观测用两组概率描述整个过程状态之间怎么转移某个状态下会生成什么词给定观测序列找最可能的状态序列就是找最可能的标签序列隐状态标签序列转移转移转移发射观测字张三在上转移矩阵发射矩阵初始概率假设当前位置的输出只依赖当前标签看不到更远的下文描述的是标签怎么生成词转移概率来自标签之间的搭配习惯发射概率来自某类实体常出现哪些字解码用维特比算法找一条概率最大的路径的短板在图里已经能看出来每个位置独立发射标签之间只靠前一个状态牵连一句话里前面的张如果是姓氏后面的三几乎必然是名这种长距离的相互约束表达不了就是在这一点上动的手它不建模联合概率直接建模条件概率然后对整个序列做全局归一化这样每个位置的标签可以依赖整段输入而不只是前一个状态副作用是训练慢一些标注时要考虑全局最优路径每个的条件都建立在整条上而不是只看前一个状态整条路径一起打分再统一归一化转移特征管相邻标签状态特征管当前位置线性链的结构两条边的颜色分开横向是标签之间的转移纵向是输入到标签的状态特征这个结构后来被原样搬进的最后一层同期的走另一条路把每个词当独立样本分类用核函数把特征映射到高维再找最大间隔超平面它在小样本上稳但丢掉了序列信息做序列标注反而不如深度模型与统计模型的天花板在于特征是人挑的挑得好效果就好换个语种换个领域又得重新挑深度学习把这个环节也交给了模型输入词向量让网络自己学该看什么四个模型常被放在一起讲用卷积核在句子窗口上滑动擅长抓局部片段训练快按顺序读入把前文压进隐状态天然适合序列但长句子会梯度消失用做双向编码先在海量文本上预训练再到具体任务上微调把上下文这件事做到了当时的极限实际做中文时用得最多的是它的结构可以拆成三段先把每个字变成向量用从前往后从后往前各读一遍把两段输出拼起来再把拼好的表示送进层让在全局上挑一条合法且分数最高的标签路径输出标签层给整条标签路径打分挑出全局最优的一条前向从左往右读后向从右往左读两个方向拼接后送入字向量上下文表示预训练或随机初始化张三在上海输入分工很清楚负责看上下文负责保证标签序列合法少了模型可能输出后面直接跟这种边界断裂的结果这套结构之后主流做法换成了预训练模型轻量分类头那一段被替掉结构在变两件事没变一是要有上下文表示二是要有约束保证标签序列合法中文到现在仍有两个硬骨头一是缺少天然分词词的边界本身就有争议二是新词不断出现训练集里没有的实体只能靠上下文猜关系抽取实体找出来之后下一步是判断它们之间有什么关系这个任务年在会议上被正式提出比实体抽取难得多难在同一个意思有很多种说法是的父亲是的儿子老来得子都要归到同一条关系上猫抓老鼠这类句子依存句法能帮上忙句法分析把句子拆成一棵依存树主语宾语修饰关系都标出来实体对之间的关系路径就落在树上沿着猫主谓抓动宾老鼠这条路径走动作关系就出来了句法路径也常被当成特征喂给后面的分类器猫抓老鼠主谓动宾核心谓词两个实体之间的最短依存路径路径上的信息被当成特征谓词是什么抓买任职于两端实体的类型人动物机构路径长度与方向同一棵树换个视角就能抽出一批关系模板句法只在句子结构规整时好使口语长句跨句指代一多依存树本身就不可靠后面的判断跟着失准按标注量分类关系抽取有三条路线监督学习用人工标好的句子训练分类器效果最稳成本最高半监督用少量种子去撬动大量未标注文本无监督完全不看标签靠聚类把表达同一关系的句子聚到一起聚出来的簇还得人来看是什么意思路线监督学习半监督无监督标签来源人工逐句标注种子远程知识库无标签靠聚类代表方法特征向量法核函数法远程监督等聚类优势准确率高规模大成本低能发现新关系主要问题标注贵覆盖窄噪声多语义漂移结果需人工解释标注不够用的时候关系抽取最缺的是标注数据一句一句标一万人年也标不完于是有了远程监督它押一个假设如果知识库里已经写着两个实体有某种关系那么所有同时提到这两个实体的句子都可能表达这种关系于是拿知识库当词典去海量文本里自动对齐一夜之间就有了百万级训练集已有知识库王健林父子王思聪关系已经确定只是没有句子支撑对齐全库检索凡是同时提到这两个名字的句子王思聪是王健林的独子王健林携子王思聪出席活动王健林与王思聪共同投资了这家公司王思聪否认父亲王健林曾注资后两句也会被打上父子标签但它们说的不是这件事噪声从这里进来标签由知识库决定句子未必在讲那条关系后续要靠降噪多示例学习句子级注意力来筛远程监督的假设很粗糙但它把标注成本压到了近乎零工程上的做法是先拿它铺量再用小规模人工标注去校准和降噪走的是另一条路给几个种子实例从包含它们的句子里学模板用模板去抽新实例新实例再回来学新模板如此迭代风险是语义漂移第一轮抽到苹果公司第二轮可能抽到苹果第三轮就跑到水果上去了深度学习时代的框架变得统一把句子编码成词向量同时给每个词加上距离头实体多远距离尾实体多远的位置向量两者拼起来送进或抽特征最后接一个分类层输出关系类型位置向量这一步很关键它让网络知道当前这个词离两个实体各有多远事件抽取三元组描述的是静态事实事件描述的是发生了什么同样一段话实体和关系都抽对了事件信息还可能漏掉一大半年日本大地震后的一段报道地震发生后许多建筑物倒塌造成大量人员伤亡救援人员迅速展开紧急救援许多国家也向日本提供了援助这段话里有三个事件地震是起因救援是响应国际援助是后续每个事件都有自己的时间地点参与方和结果事件抽取要做两件事先找到触发词判断这里发生了一个什么类型的事件再把论元填进槽位时间地点参与者伤亡数字各归各位地震发生后许多建筑物倒塌造成大量人员伤亡触发词倒塌决定了事件类型是灾害而不是建设事件一地震触发词地震时间年地点日本东京后果建筑倒塌人员伤亡事件二国际援助触发词提供援助施动方多个国家受动方日本时序地震之后同一段文字里可以并存多个事件它们往往共用触发词之外的所有要素论元填不全事件就不完整后面拿去做推理会缺条件结构上有两种做法管道式先做触发词识别再做论元抽取两阶段串行简单但前一阶段的错误会累积联合式把两件事放进一个模型一起学共享底层表示能缓解误差传递代价是模型复杂调参麻烦再往上还有篇章级句子级抽取只能看到一句话跨句的信息抓不到篇章级要解决两个新问题关键事件检测判断整篇文档里哪些段落提到了重要事件论元补足把分散在不同段落里的事件要素拼成完整结构上面那段报道里地震救援行动国际援助三个关键事件就是把全文读完才能确定它们的关系的事件抽取的现状和实体抽取不太一样深度模型在标准数据集上分数很高换到真实业务就掉得厉害原因是事件类型定义往往跟业务强绑定公开数据集的类型体系套不上领域自适应和低资源事件抽取目前仍是活跃的研究方向自测为什么实体抽取要被改写成序列标注因为找边界本身不好直接优化而给每个位置打一个标签可以逐位置计算损失这套标签把边界信息编码进标签里边界和类型一次输出里层不能省的理由是什么独立给每个位置打分可能输出后面跟这种非法序列建模相邻标签的转移并在整条路径上做全局归一化保证输出的标签序列合法且整体最优远程监督为什么一定会引入噪声它的假设是两个实体有关系则提到它们的句子就在讲这个关系这个假设过强同一对实体出现在完全不同语境的句子里也会被强行打上标签管道式和联合式事件抽取各自适合什么场景类型体系稳定要快速上线用管道式每个模块可以单独调论元跨句严重误差传递影响大用联合式共享表示能减少前后不一致',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2026-11-07 02:37:15',
+  postMainColor: '',
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+      win.saveToLocal = {
+        set: (key, value, ttl) => {
+          if (ttl === 0) return
+          const now = Date.now()
+          const expiry = now + ttl * 86400000
+          const item = {
+            value,
+            expiry
+          }
+          localStorage.setItem(key, JSON.stringify(item))
+        },
+      
+        get: key => {
+          const itemStr = localStorage.getItem(key)
+      
+          if (!itemStr) {
+            return undefined
+          }
+          const item = JSON.parse(itemStr)
+          const now = Date.now()
+      
+          if (now > item.expiry) {
+            localStorage.removeItem(key)
+            return undefined
+          }
+          return item.value
+        }
+      }
+    
+      win.getScript = (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        script.onerror = reject
+        script.onload = script.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          script.onload = script.onreadystatechange = null
+          resolve()
+        }
+
+        Object.keys(attr).forEach(key => {
+          script.setAttribute(key, attr[key])
+        })
+
+        document.head.appendChild(script)
+      })
+    
+      win.getCSS = (url, id = false) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onerror = reject
+        link.onload = link.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          link.onload = link.onreadystatechange = null
+          resolve()
+        }
+        document.head.appendChild(link)
+      })
+    
+      win.activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#18171d')
+        }
+      }
+      win.activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#f7f9fe')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          const isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches
+          const isLightMode = window.matchMedia('(prefers-color-scheme: light)').matches
+          const isNotSpecified = window.matchMedia('(prefers-color-scheme: no-preference)').matches
+          const hasNoSupport = !isDarkMode && !isLightMode && !isNotSpecified
+
+          if (t === undefined) {
+            if (isLightMode) activateLightMode()
+            else if (isDarkMode) activateDarkMode()
+            else if (isNotSpecified || hasNoSupport) {
+              const now = new Date()
+              const hour = now.getHours()
+              const isNight = hour <= 6 || hour >= 18
+              isNight ? activateDarkMode() : activateLightMode()
+            }
+            window.matchMedia('(prefers-color-scheme: dark)').addListener(e => {
+              if (saveToLocal.get('theme') === undefined) {
+                e.matches ? activateDarkMode() : activateLightMode()
+              }
+            })
+          } else if (t === 'light') activateLightMode()
+          else activateDarkMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+      const detectApple = () => {
+        if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+          document.documentElement.classList.add('apple')
+        }
+      }
+      detectApple()
+    })(window)</script><meta name="generator" content="Hexo 7.0.0"></head><body data-type="anzhiyu"><div id="web_bg"></div><div id="an_music_bg"></div><div id="loading-box" onclick="document.getElementById(&quot;loading-box&quot;).classList.add(&quot;loaded&quot;)"><div class="loading-bg"><img class="loading-img nolazyload" alt="加载头像" src="/img/avatar.jpg"/><div class="loading-image-dot"></div></div></div><script>const preloader = {
+  endLoading: () => {
+    document.getElementById('loading-box').classList.add("loaded");
+  },
+  initLoading: () => {
+    document.getElementById('loading-box').classList.remove("loaded")
+  }
+}
+window.addEventListener('load',()=> { preloader.endLoading() })
+setTimeout(function(){preloader.endLoading();},10000)
+
+if (true) {
+  document.addEventListener('pjax:send', () => { preloader.initLoading() })
+  document.addEventListener('pjax:complete', () => { preloader.endLoading() })
+}</script><link rel="stylesheet" href="https://cdn.cbd.int/anzhiyu-theme-static@1.1.10/progress_bar/progress_bar.css"/><script async="async" src="https://cdn.cbd.int/pace-js@1.2.4/pace.min.js" data-pace-options="{ &quot;restartOnRequestAfter&quot;:false,&quot;eventLag&quot;:false}"></script><div class="post" id="body-wrap"><header class="not-top-img" id="page-header"><nav id="nav"><div id="nav-group"><span id="blog_name"><a id="site-name" href="/" accesskey="h"><div class="title">qiuxz's Blog</div><i class="anzhiyufont anzhiyu-icon-house-chimney"></i></a></span><div class="mask-name-container"><div id="name-container"><a id="page-name" href="javascript:anzhiyu.scrollToDest(0, 500)">PAGE_NAME</a></div></div><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="javascript:void(0);"><span> 文章</span></a><ul class="menus_item_child"><li><a class="site-page child faa-parent animated-hover" href="/archives/"><i class="anzhiyufont anzhiyu-icon-box-archive faa-tada" style="font-size: 0.9em;"></i><span> 隧道</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><span> 关于</span></a><ul class="menus_item_child"><li><a class="site-page child faa-parent animated-hover" href="/other/about/"><i class="anzhiyufont anzhiyu-icon-paper-plane faa-tada" style="font-size: 0.9em;"></i><span> 关于本人</span></a></li><li><a class="site-page child faa-parent animated-hover" href="javascript:toRandomPost()"><i class="anzhiyufont anzhiyu-icon-shoe-prints1 faa-tada" style="font-size: 0.9em;"></i><span> 随便逛逛</span></a></li></ul></div></div></div><div id="nav-right"><div class="nav-button" id="randomPost_button"><a class="site-page" onclick="toRandomPost()" title="随机前往一个文章" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-dice"></i></a></div><input id="center-console" type="checkbox"/><label class="widget" for="center-console" title="中控台" onclick="anzhiyu.switchConsole();"><i class="left"></i><i class="widget center"></i><i class="widget right"></i></label><div id="console"><div class="console-card-group-reward"><ul class="reward-all console-card"><li class="reward-item"><a href="https://npm.elemecdn.com/anzhiyu-blog@1.1.6/img/post/common/qrcode-weichat.png" target="_blank"><img class="post-qr-code-img" alt="微信" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://npm.elemecdn.com/anzhiyu-blog@1.1.6/img/post/common/qrcode-weichat.png"/></a><div class="post-qr-code-desc">微信</div></li><li class="reward-item"><a href="https://npm.elemecdn.com/anzhiyu-blog@1.1.6/img/post/common/qrcode-alipay.png" target="_blank"><img class="post-qr-code-img" alt="支付宝" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://npm.elemecdn.com/anzhiyu-blog@1.1.6/img/post/common/qrcode-alipay.png"/></a><div class="post-qr-code-desc">支付宝</div></li></ul></div><div class="console-card-group"><div class="console-card-group-left"><div class="console-card" id="card-newest-comments"><div class="card-content"><div class="author-content-item-tips">互动</div><span class="author-content-item-title"> 最新评论</span></div><div class="aside-list"><span>正在加载中...</span></div></div></div><div class="console-card-group-right"><div class="console-card tags"><div class="card-content"><div class="author-content-item-tips">兴趣点</div><span class="author-content-item-title">寻找你感兴趣的领域</span><div class="card-tags"><div class="item-headline"></div><div class="card-tag-cloud"><a href="/tags/YJango%E8%A7%86%E9%A2%91%E6%95%B4%E7%90%86/" style="font-size: 1.05rem;">YJango视频整理<sup>11</sup></a><a href="/tags/%E4%B8%AA%E4%BA%BA%E6%88%90%E9%95%BF/" style="font-size: 1.05rem;">个人成长<sup>3</sup></a><a href="/tags/%E5%AD%A6%E4%B9%A0/" style="font-size: 1.05rem;">学习<sup>13</sup></a><a href="/tags/%E6%84%9F%E6%82%9F/" style="font-size: 1.05rem;">感悟<sup>1</sup></a><a href="/tags/%E6%95%99%E7%A8%8B/" style="font-size: 1.05rem;">教程<sup>9</sup></a><a href="/tags/%E6%9C%AA%E5%88%86%E7%B1%BB/" style="font-size: 1.05rem;">未分类<sup>6</sup></a><a href="/tags/%E6%9E%B6%E6%9E%84/" style="font-size: 1.05rem;">架构<sup>1</sup></a><a href="/tags/%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1/" style="font-size: 1.05rem;">知识图谱<sup>9</sup></a><a href="/tags/%E8%80%83%E8%AF%95/" style="font-size: 1.05rem;">考试<sup>5</sup></a></div></div><hr/></div></div><div class="console-card history"><div class="item-headline"><i class="anzhiyufont anzhiyu-icon-box-archiv"></i><span>文章</span></div><div class="card-archives"><div class="item-headline"><i class="anzhiyufont anzhiyu-icon-archive"></i><span>归档</span><a class="card-more-btn" href="/archives/" title="查看更多">
+    <i class="anzhiyufont anzhiyu-icon-angle-right"></i></a></div><ul class="card-archive-list"><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2026/11/"><span class="card-archive-list-date">十一月 2026</span><div class="card-archive-list-count-group"><span class="card-archive-list-count">15</span><span>篇</span></div></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2026/10/"><span class="card-archive-list-date">十月 2026</span><div class="card-archive-list-count-group"><span class="card-archive-list-count">3</span><span>篇</span></div></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2026/09/"><span class="card-archive-list-date">九月 2026</span><div class="card-archive-list-count-group"><span class="card-archive-list-count">15</span><span>篇</span></div></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2026/08/"><span class="card-archive-list-date">八月 2026</span><div class="card-archive-list-count-group"><span class="card-archive-list-count">4</span><span>篇</span></div></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2026/06/"><span class="card-archive-list-date">六月 2026</span><div class="card-archive-list-count-group"><span class="card-archive-list-count">4</span><span>篇</span></div></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2026/05/"><span class="card-archive-list-date">五月 2026</span><div class="card-archive-list-count-group"><span class="card-archive-list-count">1</span><span>篇</span></div></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2026/03/"><span class="card-archive-list-date">三月 2026</span><div class="card-archive-list-count-group"><span class="card-archive-list-count">1</span><span>篇</span></div></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2025/12/"><span class="card-archive-list-date">十二月 2025</span><div class="card-archive-list-count-group"><span class="card-archive-list-count">2</span><span>篇</span></div></a></li></ul></div><hr/></div></div></div><div class="button-group"><div class="console-btn-item"><a class="darkmode_switchbutton" title="显示模式切换" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-moon"></i></a></div><div class="console-btn-item" id="consoleHideAside" onclick="anzhiyu.hideAsideBtn()" title="边栏显示控制"><a class="asideSwitch"><i class="anzhiyufont anzhiyu-icon-arrows-left-right"></i></a></div></div><div class="console-mask" onclick="anzhiyu.hideConsole()" href="javascript:void(0);"></div></div><div class="nav-button" id="nav-totop"><a class="totopbtn" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-arrow-up"></i><span id="percent" onclick="anzhiyu.scrollToDest(0,500)">0</span></a></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);" title="切换"><i class="anzhiyufont anzhiyu-icon-bars"></i></a></div></div></div></nav></header><main id="blog-container"><div class="column-nav"><div class="column-nav-inner"><div class="column-nav-title">知识图谱教程</div><nav class="column-nav-list"><a class="column-link" href="https://qiuxzh.github.io/other/QUT/%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E6%95%99%E7%A8%8B/00-%E6%95%99%E7%A8%8B%E6%80%BB%E8%A7%88/" style="padding-left:8px">00 教程总览</a><a class="column-link" href="https://qiuxzh.github.io/other/QUT/%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E6%95%99%E7%A8%8B/01-%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E6%A6%82%E8%BF%B0/" style="padding-left:8px">01 知识图谱概述</a><a class="column-link" href="https://qiuxzh.github.io/other/QUT/%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E6%95%99%E7%A8%8B/02-%E7%9F%A5%E8%AF%86%E8%A1%A8%E7%A4%BA%E6%8A%80%E6%9C%AF/" style="padding-left:8px">02 知识表示技术</a><a class="column-link active" href="https://qiuxzh.github.io/other/QUT/%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E6%95%99%E7%A8%8B/03-%E7%9F%A5%E8%AF%86%E6%8A%BD%E5%8F%96%E6%8A%80%E6%9C%AF/" style="padding-left:8px">03 知识抽取技术</a><a class="column-link" href="https://qiuxzh.github.io/other/QUT/%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E6%95%99%E7%A8%8B/04-%E7%9F%A5%E8%AF%86%E8%9E%8D%E5%90%88%E6%8A%80%E6%9C%AF/" style="padding-left:8px">04 知识融合技术</a><a class="column-link" href="https://qiuxzh.github.io/other/QUT/%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E6%95%99%E7%A8%8B/05-%E7%9F%A5%E8%AF%86%E5%AD%98%E5%82%A8%E6%8A%80%E6%9C%AF/" style="padding-left:8px">05 知识存储技术</a><a class="column-link" href="https://qiuxzh.github.io/other/QUT/%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E6%95%99%E7%A8%8B/06-%E5%9B%BE%E8%A1%A8%E7%A4%BA%E5%AD%A6%E4%B9%A0%E4%B8%8E%E5%9B%BE%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/" style="padding-left:8px">06 图表示学习与图神经网络</a><a class="column-link" href="https://qiuxzh.github.io/other/QUT/%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E6%95%99%E7%A8%8B/07-%E7%9F%A5%E8%AF%86%E6%8E%A8%E7%90%86%E6%8A%80%E6%9C%AF/" style="padding-left:8px">07 知识推理技术</a><a class="column-link" href="https://qiuxzh.github.io/other/QUT/%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E6%95%99%E7%A8%8B/08-%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E8%A1%8D%E7%94%9F%E6%8A%80%E6%9C%AF/" style="padding-left:8px">08 知识图谱衍生技术</a></nav></div></div><div class="layout" id="content-inner"><div id="post"><div id="post-info"><div id="post-firstinfo"><div class="meta-firstline"><a class="post-meta-original">原创</a><span class="post-meta-categories"><span class="post-meta-separator"></span><i class="anzhiyufont anzhiyu-icon-inbox post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E6%95%99%E7%A8%8B/" itemprop="url">知识图谱教程</a></span><span class="article-meta tags"><a class="article-meta__tags" href="/tags/%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1/" tabindex="-1" itemprop="url"> <span> <i class="anzhiyufont anzhiyu-icon-hashtag"></i>知识图谱</span></a><a class="article-meta__tags" href="/tags/%E6%95%99%E7%A8%8B/" tabindex="-1" itemprop="url"> <span> <i class="anzhiyufont anzhiyu-icon-hashtag"></i>教程</span></a></span></div></div><h1 class="post-title" itemprop="name headline">03 知识抽取技术</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="anzhiyufont anzhiyu-icon-calendar-days post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" itemprop="dateCreated datePublished" datetime="2026-11-06T19:06:00.000Z" title="发表于 2026-11-06 19:06:00">2026-11-06</time><span class="post-meta-separator"></span><i class="anzhiyufont anzhiyu-icon-history post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" itemprop="dateCreated datePublished" datetime="2026-11-07T02:37:15.496Z" title="更新于 2026-11-07 02:37:15">2026-11-07</time></span></div><div class="meta-secondline"></div></div></div><article class="post-content" id="article-container" itemscope itemtype="https://qiuxzh.github.io/other/QUT/%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E6%95%99%E7%A8%8B/03-%E7%9F%A5%E8%AF%86%E6%8A%BD%E5%8F%96%E6%8A%80%E6%9C%AF/"><header><a class="post-meta-categories" href="/categories/%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E6%95%99%E7%A8%8B/" itemprop="url">知识图谱教程</a><a href="/tags/%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1/" tabindex="-1" itemprop="url">知识图谱</a><a href="/tags/%E6%95%99%E7%A8%8B/" tabindex="-1" itemprop="url">教程</a><h1 id="CrawlerTitle" itemprop="name headline">03 知识抽取技术</h1><span itemprop="author" itemscope itemtype="http://schema.org/Person">qiuxz</span><time itemprop="dateCreated datePublished" datetime="2026-11-06T19:06:00.000Z" title="发表于 2026-11-06 19:06:00">2026-11-06</time><time itemprop="dateCreated datePublished" datetime="2026-11-07T02:37:15.496Z" title="更新于 2026-11-07 02:37:15">2026-11-07</time></header><p>图谱里的三元组不会自己出现，得从文本、表格、数据库里一条条捞出来。这一章按“先找实体、再判关系、最后抽事件”的顺序，讲清楚机器在每一步上卡在哪里，以及各代方法分别怎么绕过去。</p>
+<h2 id="一句话里的三层信息"><a href="#一句话里的三层信息" class="headerlink" title="一句话里的三层信息"></a>一句话里的三层信息</h2><blockquote>
+<p>一条新闻里写着：王思聪是万达集团董事长王健林的独子。</p>
+<p>人读完，脑子里自动装进了两个人名和一条关系。要把这句话变成图谱里的一条三元组（王健林，父子，王思聪），机器得依次做完三件事。</p>
+</blockquote>
+<svg width="100%" style="max-width:860px;height:auto" viewBox="0 0 860 320" role="img" aria-label="从一句话到一条三元组">
+  <rect width="860" height="320" fill="#fdfbf6"></rect>
+  <rect x="30" y="40" width="800" height="52" rx="8" fill="#ffffff" stroke="#e4e0d6"></rect>
+  <text x="48" y="72" font-size="15" fill="#1b1d21">王思聪是万达集团董事长王健林的独子。</text>
+  <text x="430" y="106" font-size="11" fill="#6d747e" text-anchor="middle">原文</text>
+  <path d="M200,116 L200,144" stroke="#8a8175" stroke-width="1.4" marker-end="url(#c1)"></path>
+  <path d="M430,116 L430,144" stroke="#8a8175" stroke-width="1.4" marker-end="url(#c1)"></path>
+  <path d="M660,116 L660,144" stroke="#8a8175" stroke-width="1.4" marker-end="url(#c1)"></path>
+  <rect x="90" y="150" width="220" height="76" rx="8" fill="#e9f2f6" stroke="#2f6f8f"></rect>
+  <text x="200" y="174" font-size="11.5" fill="#1f4d64" text-anchor="middle">第一步 · 找实体</text>
+  <text x="200" y="196" font-size="12.5" fill="#3d444d" text-anchor="middle">哪些字是人名、机构名</text>
+  <text x="200" y="216" font-size="11" fill="#b4552d" text-anchor="middle">边界在哪，是什么类型</text>
+  <rect x="320" y="150" width="220" height="76" rx="8" fill="#fbeee7" stroke="#b4552d"></rect>
+  <text x="430" y="174" font-size="11.5" fill="#8f3d1c" text-anchor="middle">第二步 · 判关系</text>
+  <text x="430" y="196" font-size="12.5" fill="#3d444d" text-anchor="middle">这两个实体之间是什么关系</text>
+  <text x="430" y="216" font-size="11" fill="#b4552d" text-anchor="middle">“独子”指向父子</text>
+  <rect x="550" y="150" width="220" height="76" rx="8" fill="#eaf3ee" stroke="#3f7a5a"></rect>
+  <text x="660" y="174" font-size="11.5" fill="#2c5c42" text-anchor="middle">第三步 · 归一</text>
+  <text x="660" y="196" font-size="12.5" fill="#3d444d" text-anchor="middle">关系在库里叫什么名字</text>
+  <text x="660" y="216" font-size="11" fill="#b4552d" text-anchor="middle">对齐到已有 schema</text>
+  <rect x="250" y="258" width="360" height="44" rx="8" fill="#ffffff" stroke="#2f6f8f" stroke-width="1.6"></rect>
+  <text x="430" y="286" font-size="13.5" fill="#1f4d64" text-anchor="middle">（王健林，父子，王思聪）</text>
+  <path d="M430,226 L430,254" stroke="#2f6f8f" stroke-width="1.4" marker-end="url(#c2)"></path>
+  <defs>
+    <marker id="c1" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#8a8175"></path></marker>
+    <marker id="c2" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#2f6f8f"></path></marker>
+  </defs>
+</svg>
+
+<p><em>三步里最难的不是第三步。关系类型有现成的表可查，实体边界有语料可学，真正麻烦的是中文那句话里“万达集团董事长王健林”这一串字该从哪里断开。</em></p>
+<blockquote>
+<p><strong>英文有空格，机器把词切开就行。中文没有，”万达集团董事长王健林”这一串，边界在哪？</strong></p>
+<p>人靠语义切分，知道“董事长”是头衔、“王健林”才是人。机器拿到的是连续的字，它得靠上下文特征判断哪个位置该断。这一步算错，后面的关系全得跟着错。</p>
+</blockquote>
+<p>知识抽取要解决的正是这件事：把非结构化的文本变成结构化的三元组。这个概念在上世纪七十年代后期出现在自然语言处理的文献里，2012 年 Google 把它用在搜索结果上之后，才真正变成工程问题。</p>
+<h2 id="抽取的五个阶段"><a href="#抽取的五个阶段" class="headerlink" title="抽取的五个阶段"></a>抽取的五个阶段</h2><p>一个完整的抽取工程，从原始数据到可用的三元组，要经过五道工序。课本把它们排成流水线，实际做的时候它们互相咬合，前一道的输出就是后一道的输入，错一处会一路传下去。</p>
+<svg width="100%" style="max-width:860px;height:auto" viewBox="0 0 860 300" role="img" aria-label="知识抽取的五个阶段">
+  <rect width="860" height="300" fill="#fdfbf6"></rect>
+  <rect x="24" y="46" width="152" height="70" rx="8" fill="#f4f1e9" stroke="#e2dcc9"></rect>
+  <text x="100" y="74" font-size="13" font-weight="600" fill="#8a6a2f" text-anchor="middle">预处理</text>
+  <text x="100" y="94" font-size="10" fill="#6d747e" text-anchor="middle">收集 清洗 标注</text>
+  <rect x="190" y="46" width="152" height="70" rx="8" fill="#ffffff" stroke="#2f6f8f"></rect>
+  <text x="266" y="74" font-size="13" font-weight="600" fill="#1f4d64" text-anchor="middle">实体抽取</text>
+  <text x="266" y="94" font-size="10" fill="#6d747e" text-anchor="middle">识别 扩展</text>
+  <rect x="356" y="46" width="152" height="70" rx="8" fill="#ffffff" stroke="#2f6f8f"></rect>
+  <text x="432" y="74" font-size="13" font-weight="600" fill="#1f4d64" text-anchor="middle">关系抽取</text>
+  <text x="432" y="94" font-size="10" fill="#6d747e" text-anchor="middle">模式 分类</text>
+  <rect x="522" y="46" width="152" height="70" rx="8" fill="#ffffff" stroke="#b4552d"></rect>
+  <text x="598" y="74" font-size="13" font-weight="600" fill="#8f3d1c" text-anchor="middle">事件抽取</text>
+  <text x="598" y="94" font-size="10" fill="#6d747e" text-anchor="middle">触发词 论元</text>
+  <rect x="688" y="46" width="148" height="70" rx="8" fill="#eaf3ee" stroke="#3f7a5a"></rect>
+  <text x="762" y="74" font-size="13" font-weight="600" fill="#2c5c42" text-anchor="middle">校验评估</text>
+  <text x="762" y="94" font-size="10" fill="#6d747e" text-anchor="middle">准确率 召回率</text>
+  <line x1="176" y1="81" x2="186" y2="81" stroke="#8a8175" stroke-width="1.4" marker-end="url(#c3)"></line>
+  <line x1="342" y1="81" x2="352" y2="81" stroke="#8a8175" stroke-width="1.4" marker-end="url(#c3)"></line>
+  <line x1="508" y1="81" x2="518" y2="81" stroke="#8a8175" stroke-width="1.4" marker-end="url(#c3)"></line>
+  <line x1="674" y1="81" x2="684" y2="81" stroke="#8a8175" stroke-width="1.4" marker-end="url(#c3)"></line>
+  <text x="24" y="152" font-size="11.5" fill="#6d747e">输入</text>
+  <rect x="70" y="136" width="200" height="30" rx="5" fill="#ffffff" stroke="#e4e0d6"></rect>
+  <text x="170" y="156" font-size="11" fill="#3d444d" text-anchor="middle">纯文本 · 网页 · 表格</text>
+  <rect x="284" y="136" width="180" height="30" rx="5" fill="#ffffff" stroke="#e4e0d6"></rect>
+  <text x="374" y="156" font-size="11" fill="#3d444d" text-anchor="middle">半结构化 JSON</text>
+  <rect x="478" y="136" width="180" height="30" rx="5" fill="#ffffff" stroke="#e4e0d6"></rect>
+  <text x="568" y="156" font-size="11" fill="#3d444d" text-anchor="middle">数据库与链接数据</text>
+  <rect x="24" y="190" width="812" height="42" rx="7" fill="#fbeee7"></rect>
+  <text x="40" y="216" font-size="11.5" fill="#8f3d1c">实体错了，关系必然错；关系错了，事件就抽不全。评估放在最后，但要能回退到任何一步。</text>
+  <rect x="24" y="246" width="812" height="42" rx="7" fill="#e9f2f6"></rect>
+  <text x="40" y="272" font-size="11.5" fill="#1f4d64">输出是一批三元组，再交给第四章的融合，处理同义、冲突、重复。</text>
+  <defs><marker id="c3" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#8a8175"></path></marker></defs>
+</svg>
+
+<p><em>预处理阶段常被低估。数据来自哪里、标注规范怎么定，直接决定后面模型能学到什么。标注标准不一致，模型学到的就是噪声。</em></p>
+<p>预处理里三件事：收集、清洗、标注。收集要定范围和来源，清洗要去重、去噪、纠错，标注要给实体和关系打上标签供模型学习。标注最费人力，也最容易出偏差，两个人对同一句话标出不同结果，模型就学不会。</p>
+<h2 id="实体抽取：先切边界"><a href="#实体抽取：先切边界" class="headerlink" title="实体抽取：先切边界"></a>实体抽取：先切边界</h2><p>实体抽取也叫命名实体识别，任务定义很窄：找出实体在文本中的起止位置，再判断它属于哪一类。定位和分类是两件事，前者决定输出几个字符，后者决定这个字符串叫什么。</p>
+<p>一句“张三在上海工作”，机器要输出四段东西：张三从第 1 个字到第 2 个字，类型是人名；上海从第 4 个字到第 5 个字，类型是地名。中间那个“在”和“工作”不属于任何实体。</p>
+<svg width="100%" style="max-width:860px;height:auto" viewBox="0 0 860 300" role="img" aria-label="序列标注与 BIOES 标签体系">
+  <rect width="860" height="300" fill="#fdfbf6"></rect>
+  <text x="60" y="52" font-size="11.5" fill="#6d747e">输入（字序列）</text>
+  <rect x="60" y="64" width="64" height="44" rx="6" fill="#ffffff" stroke="#cfd6da"></rect>
+  <text x="92" y="93" font-size="17" fill="#1b1d21" text-anchor="middle">张</text>
+  <rect x="132" y="64" width="64" height="44" rx="6" fill="#ffffff" stroke="#cfd6da"></rect>
+  <text x="164" y="93" font-size="17" fill="#1b1d21" text-anchor="middle">三</text>
+  <rect x="204" y="64" width="64" height="44" rx="6" fill="#ffffff" stroke="#cfd6da"></rect>
+  <text x="236" y="93" font-size="17" fill="#1b1d21" text-anchor="middle">在</text>
+  <rect x="276" y="64" width="64" height="44" rx="6" fill="#ffffff" stroke="#cfd6da"></rect>
+  <text x="308" y="93" font-size="17" fill="#1b1d21" text-anchor="middle">上</text>
+  <rect x="348" y="64" width="64" height="44" rx="6" fill="#ffffff" stroke="#cfd6da"></rect>
+  <text x="380" y="93" font-size="17" fill="#1b1d21" text-anchor="middle">海</text>
+  <rect x="420" y="64" width="64" height="44" rx="6" fill="#ffffff" stroke="#cfd6da"></rect>
+  <text x="452" y="93" font-size="17" fill="#1b1d21" text-anchor="middle">工</text>
+  <rect x="492" y="64" width="64" height="44" rx="6" fill="#ffffff" stroke="#cfd6da"></rect>
+  <text x="524" y="93" font-size="17" fill="#1b1d21" text-anchor="middle">作</text>
+  <path d="M60,120 L60,134 L188,134 L188,120" fill="none" stroke="#2f6f8f" stroke-width="1.2"></path>
+  <path d="M276,120 L276,134 L412,134 L412,120" fill="none" stroke="#3f7a5a" stroke-width="1.2"></path>
+  <text x="60" y="168" font-size="11.5" fill="#6d747e">输出（标签序列）</text>
+  <rect x="60" y="180" width="64" height="36" rx="5" fill="#e9f2f6" stroke="#2f6f8f"></rect>
+  <text x="92" y="203" font-size="10.5" fill="#1f4d64" text-anchor="middle">B-PER</text>
+  <rect x="132" y="180" width="64" height="36" rx="5" fill="#e9f2f6" stroke="#2f6f8f"></rect>
+  <text x="164" y="203" font-size="10.5" fill="#1f4d64" text-anchor="middle">I-PER</text>
+  <rect x="204" y="180" width="64" height="36" rx="5" fill="#f4f1e9" stroke="#e2dcc9"></rect>
+  <text x="236" y="203" font-size="10.5" fill="#8a8175" text-anchor="middle">O</text>
+  <rect x="276" y="180" width="64" height="36" rx="5" fill="#eaf3ee" stroke="#3f7a5a"></rect>
+  <text x="308" y="203" font-size="10.5" fill="#2c5c42" text-anchor="middle">B-LOC</text>
+  <rect x="348" y="180" width="64" height="36" rx="5" fill="#eaf3ee" stroke="#3f7a5a"></rect>
+  <text x="380" y="203" font-size="10.5" fill="#2c5c42" text-anchor="middle">I-LOC</text>
+  <rect x="420" y="180" width="64" height="36" rx="5" fill="#f4f1e9" stroke="#e2dcc9"></rect>
+  <text x="452" y="203" font-size="10.5" fill="#8a8175" text-anchor="middle">O</text>
+  <rect x="492" y="180" width="64" height="36" rx="5" fill="#f4f1e9" stroke="#e2dcc9"></rect>
+  <text x="524" y="203" font-size="10.5" fill="#8a8175" text-anchor="middle">O</text>
+  <text x="600" y="88" font-size="12" fill="#1f4d64">B 开始</text>
+  <text x="600" y="110" font-size="12" fill="#1f4d64">I 内部</text>
+  <text x="600" y="132" font-size="12" fill="#8a8175">O 不在实体里</text>
+  <text x="600" y="154" font-size="12" fill="#3f7a5a">E 结束</text>
+  <text x="600" y="176" font-size="12" fill="#3f7a5a">S 单字实体</text>
+  <text x="60" y="256" font-size="11.5" fill="#3d444d">B 与 I 的组合决定了边界：遇到 B 就开一个新实体，遇到 O 就收尾。</text>
+  <text x="60" y="278" font-size="11.5" fill="#6d747e">标签体系越细，区分能力越强，训练也越慢。中文任务里常用 BIOES 这一套。</text>
+</svg>
+
+<p><em>把识别任务改写成“给每个字打一个标签”，问题就变成了序列标注。这个转换很关键，后面所有模型都建立在它上面。</em></p>
+<p>这个改写让任务变得可计算，也带来了一个新约束：标签之间不能随便组合。“I-PER”前面必须是“B-PER”或“I-PER”，不能凭空冒出个“I”。这条约束在独立预测每个位置的模型里靠不住，后面 CRF 层要解决的正是它。</p>
+<h2 id="规则法"><a href="#规则法" class="headerlink" title="规则法"></a>规则法</h2><p>最早的做法不需要训练。人先观察语料，总结出模式：机构名常以“大学”“医院”“集团”收尾，人名常出现在“某某说”“某某老师”里。把这些模式写成正则或模板，拿文本去匹配，匹配上就标成实体。</p>
+<svg width="100%" style="max-width:860px;height:auto" viewBox="0 0 860 250" role="img" aria-label="规则式抽取的流程">
+  <rect width="860" height="250" fill="#fdfbf6"></rect>
+  <rect x="24" y="60" width="150" height="56" rx="8" fill="#f4f1e9" stroke="#e2dcc9"></rect>
+  <text x="99" y="84" font-size="12" fill="#8a6a2f" text-anchor="middle">规则制定</text>
+  <text x="99" y="103" font-size="10" fill="#6d747e" text-anchor="middle">正则 词典 模板</text>
+  <rect x="190" y="60" width="150" height="56" rx="8" fill="#ffffff" stroke="#cfd6da"></rect>
+  <text x="265" y="84" font-size="12" fill="#3d444d" text-anchor="middle">文本解析</text>
+  <text x="265" y="103" font-size="10" fill="#6d747e" text-anchor="middle">分词 词性 句法</text>
+  <rect x="356" y="60" width="150" height="56" rx="8" fill="#ffffff" stroke="#cfd6da"></rect>
+  <text x="431" y="84" font-size="12" fill="#3d444d" text-anchor="middle">规则匹配</text>
+  <text x="431" y="103" font-size="10" fill="#6d747e" text-anchor="middle">冲突消解</text>
+  <rect x="522" y="60" width="150" height="56" rx="8" fill="#e9f2f6" stroke="#2f6f8f"></rect>
+  <text x="597" y="84" font-size="12" fill="#1f4d64" text-anchor="middle">实体输出</text>
+  <text x="597" y="103" font-size="10" fill="#6d747e" text-anchor="middle">位置 类型 属性</text>
+  <line x1="174" y1="88" x2="186" y2="88" stroke="#8a8175" stroke-width="1.4" marker-end="url(#c4)"></line>
+  <line x1="340" y1="88" x2="352" y2="88" stroke="#8a8175" stroke-width="1.4" marker-end="url(#c4)"></line>
+  <line x1="506" y1="88" x2="518" y2="88" stroke="#8a8175" stroke-width="1.4" marker-end="url(#c4)"></line>
+  <rect x="690" y="46" width="146" height="84" rx="8" fill="#fbeee7" stroke="#f0d5c7"></rect>
+  <text x="763" y="70" font-size="10.5" fill="#8f3d1c" text-anchor="middle">模式举例</text>
+  <text x="763" y="92" font-size="10.5" fill="#8f3d1c" text-anchor="middle">*大学　*医院</text>
+  <text x="763" y="112" font-size="10.5" fill="#8f3d1c" text-anchor="middle">*老师说　*省</text>
+  <rect x="24" y="146" width="812" height="76" rx="8" fill="#ffffff" stroke="#e4e0d6"></rect>
+  <text x="40" y="170" font-size="11.5" fill="#2c5c42">优点：准。有些实体只有规则能抓，比如固定格式的编号、文号、药品规格。</text>
+  <text x="40" y="194" font-size="11.5" fill="#8f3d1c">代价：写规则要语言学知识，规则一多就互相打架，换一个领域整套重写。</text>
+  <defs><marker id="c4" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#8a8175"></path></marker></defs>
+</svg>
+
+<p><em>规则法的准确率可以做到很高，代价是覆盖率靠人一条条堆。它到今天仍然有用，通常作为模型的第一层过滤，或者用来处理模型学不会的格式类实体。</em></p>
+<p>规则法在专业领域活得很好。医疗文本里的药品规格、检验指标，法律文书里的案号，格式固定，正则一句话就够，模型反而不划算。它的软肋在于可移植性，一套写给病历的规则搬到财报上，几乎全部失效。</p>
+<h2 id="统计模型进来之后"><a href="#统计模型进来之后" class="headerlink" title="统计模型进来之后"></a>统计模型进来之后</h2><p>规则堆不动的时候，思路转向从数据里学。做法是先人工定义一批特征（词本身、词性、前后缀、是否数字、是否姓氏），把每个位置的上下文编码成一个特征向量，再训练一个分类器判断这个位置该打什么标签。</p>
+<p>HMM 是这条路线上最早的一个。它把标签序列当隐状态、把词当观测，用两组概率描述整个过程：状态之间怎么转移，某个状态下会生成什么词。给定观测序列，找最可能的状态序列，就是找最可能的标签序列。</p>
+<svg width="100%" style="max-width:860px;height:auto" viewBox="0 0 860 290" role="img" aria-label="HMM 的隐状态与观测序列">
+  <rect width="860" height="290" fill="#fdfbf6"></rect>
+  <text x="60" y="52" font-size="11.5" fill="#6d747e">隐状态（标签序列）</text>
+  <rect x="60" y="64" width="100" height="40" rx="6" fill="#e9f2f6" stroke="#2f6f8f"></rect>
+  <text x="110" y="90" font-size="12" fill="#1f4d64" text-anchor="middle">B-PER</text>
+  <rect x="230" y="64" width="100" height="40" rx="6" fill="#e9f2f6" stroke="#2f6f8f"></rect>
+  <text x="280" y="90" font-size="12" fill="#1f4d64" text-anchor="middle">I-PER</text>
+  <rect x="400" y="64" width="100" height="40" rx="6" fill="#f4f1e9" stroke="#e2dcc9"></rect>
+  <text x="450" y="90" font-size="12" fill="#8a8175" text-anchor="middle">O</text>
+  <rect x="570" y="64" width="100" height="40" rx="6" fill="#eaf3ee" stroke="#3f7a5a"></rect>
+  <text x="620" y="90" font-size="12" fill="#2c5c42" text-anchor="middle">B-LOC</text>
+  <line x1="160" y1="84" x2="226" y2="84" stroke="#2f6f8f" stroke-width="1.4" marker-end="url(#c5)"></line>
+  <line x1="330" y1="84" x2="396" y2="84" stroke="#2f6f8f" stroke-width="1.4" marker-end="url(#c5)"></line>
+  <line x1="500" y1="84" x2="566" y2="84" stroke="#2f6f8f" stroke-width="1.4" marker-end="url(#c5)"></line>
+  <text x="193" y="58" font-size="10" fill="#2f6f8f" text-anchor="middle">转移</text>
+  <text x="363" y="58" font-size="10" fill="#2f6f8f" text-anchor="middle">转移</text>
+  <text x="533" y="58" font-size="10" fill="#2f6f8f" text-anchor="middle">转移</text>
+  <path d="M110,104 L110,150" stroke="#b4552d" stroke-width="1.2" stroke-dasharray="4 3" marker-end="url(#c6)"></path>
+  <path d="M280,104 L280,150" stroke="#b4552d" stroke-width="1.2" stroke-dasharray="4 3" marker-end="url(#c6)"></path>
+  <path d="M450,104 L450,150" stroke="#b4552d" stroke-width="1.2" stroke-dasharray="4 3" marker-end="url(#c6)"></path>
+  <path d="M620,104 L620,150" stroke="#b4552d" stroke-width="1.2" stroke-dasharray="4 3" marker-end="url(#c6)"></path>
+  <text x="672" y="132" font-size="10" fill="#b4552d">发射</text>
+  <text x="60" y="176" font-size="11.5" fill="#6d747e">观测（字）</text>
+  <rect x="60" y="188" width="100" height="40" rx="6" fill="#ffffff" stroke="#cfd6da"></rect>
+  <text x="110" y="214" font-size="14" fill="#1b1d21" text-anchor="middle">张</text>
+  <rect x="230" y="188" width="100" height="40" rx="6" fill="#ffffff" stroke="#cfd6da"></rect>
+  <text x="280" y="214" font-size="14" fill="#1b1d21" text-anchor="middle">三</text>
+  <rect x="400" y="188" width="100" height="40" rx="6" fill="#ffffff" stroke="#cfd6da"></rect>
+  <text x="450" y="214" font-size="14" fill="#1b1d21" text-anchor="middle">在</text>
+  <rect x="570" y="188" width="100" height="40" rx="6" fill="#ffffff" stroke="#cfd6da"></rect>
+  <text x="620" y="214" font-size="14" fill="#1b1d21" text-anchor="middle">上</text>
+  <text x="740" y="90" font-size="11" fill="#6d747e">A：转移矩阵</text>
+  <text x="740" y="110" font-size="11" fill="#6d747e">B：发射矩阵</text>
+  <text x="740" y="130" font-size="11" fill="#6d747e">π：初始概率</text>
+  <text x="60" y="262" font-size="11.5" fill="#3d444d">HMM 假设当前位置的输出只依赖当前标签，看不到更远的下文。</text>
+  <defs>
+    <marker id="c5" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#2f6f8f"></path></marker>
+    <marker id="c6" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#b4552d"></path></marker>
+  </defs>
+</svg>
+
+<p><em>HMM 描述的是“标签怎么生成词”。转移概率来自标签之间的搭配习惯，发射概率来自某类实体常出现哪些字。解码用维特比算法找一条概率最大的路径。</em></p>
+<p>HMM 的短板在图里已经能看出来：每个位置独立发射，标签之间只靠前一个状态牵连。一句话里前面的“张”如果是姓氏，后面的“三”几乎必然是名，这种长距离的相互约束 HMM 表达不了。</p>
+<p>CRF 就是在这一点上动的手。它不建模联合概率，直接建模条件概率 P(Y|X)，然后对整个序列做全局归一化。这样每个位置的标签可以依赖整段输入，而不只是前一个状态。副作用是训练慢一些，标注时要考虑全局最优路径。</p>
+<svg width="100%" style="max-width:860px;height:auto" viewBox="0 0 860 260" role="img" aria-label="线性链条件随机场">
+  <rect width="860" height="260" fill="#fdfbf6"></rect>
+  <circle cx="110" cy="130" r="26" fill="#e9f2f6" stroke="#2f6f8f"></circle>
+  <text x="110" y="135" font-size="12" fill="#1f4d64" text-anchor="middle">y₁</text>
+  <circle cx="260" cy="130" r="26" fill="#e9f2f6" stroke="#2f6f8f"></circle>
+  <text x="260" y="135" font-size="12" fill="#1f4d64" text-anchor="middle">y₂</text>
+  <circle cx="410" cy="130" r="26" fill="#e9f2f6" stroke="#2f6f8f"></circle>
+  <text x="410" y="135" font-size="12" fill="#1f4d64" text-anchor="middle">y₃</text>
+  <circle cx="560" cy="130" r="26" fill="#e9f2f6" stroke="#2f6f8f"></circle>
+  <text x="560" y="135" font-size="12" fill="#1f4d64" text-anchor="middle">y₄</text>
+  <line x1="136" y1="130" x2="232" y2="130" stroke="#2f6f8f" stroke-width="1.5"></line>
+  <line x1="286" y1="130" x2="382" y2="130" stroke="#2f6f8f" stroke-width="1.5"></line>
+  <line x1="436" y1="130" x2="532" y2="130" stroke="#2f6f8f" stroke-width="1.5"></line>
+  <circle cx="110" cy="216" r="20" fill="#f4f1e9" stroke="#8a8175"></circle>
+  <text x="110" y="221" font-size="11" fill="#3d444d" text-anchor="middle">x₁</text>
+  <circle cx="260" cy="216" r="20" fill="#f4f1e9" stroke="#8a8175"></circle>
+  <text x="260" y="221" font-size="11" fill="#3d444d" text-anchor="middle">x₂</text>
+  <circle cx="410" cy="216" r="20" fill="#f4f1e9" stroke="#8a8175"></circle>
+  <text x="410" y="221" font-size="11" fill="#3d444d" text-anchor="middle">x₃</text>
+  <circle cx="560" cy="216" r="20" fill="#f4f1e9" stroke="#8a8175"></circle>
+  <text x="560" y="221" font-size="11" fill="#3d444d" text-anchor="middle">x₄</text>
+  <line x1="110" y1="196" x2="110" y2="158" stroke="#8a8175" stroke-width="1.2"></line>
+  <line x1="260" y1="196" x2="260" y2="158" stroke="#8a8175" stroke-width="1.2"></line>
+  <line x1="410" y1="196" x2="410" y2="158" stroke="#8a8175" stroke-width="1.2"></line>
+  <line x1="560" y1="196" x2="560" y2="158" stroke="#8a8175" stroke-width="1.2"></line>
+  <path d="M60,240 L620,240" stroke="#b4552d" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#c7)"></path>
+  <text x="330" y="256" font-size="11" fill="#b4552d" text-anchor="middle">每个 y 的条件都建立在整条 x 上，而不是只看前一个状态</text>
+  <text x="650" y="96" font-size="11.5" fill="#3d444d">整条路径一起打分</text>
+  <text x="650" y="118" font-size="11.5" fill="#3d444d">再统一归一化</text>
+  <text x="650" y="148" font-size="11.5" fill="#6d747e">转移特征管相邻标签</text>
+  <text x="650" y="168" font-size="11.5" fill="#6d747e">状态特征管当前位置</text>
+  <defs><marker id="c7" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#b4552d"></path></marker></defs>
+</svg>
+
+<p><em>线性链 CRF 的结构。两条边的颜色分开：横向是标签之间的转移，纵向是输入到标签的状态特征。这个结构后来被原样搬进 BiLSTM-CRF 的最后一层。</em></p>
+<p>同期的 SVM 走另一条路，把每个词当独立样本分类，用核函数把特征映射到高维再找最大间隔超平面。它在小样本上稳，但丢掉了序列信息，做序列标注反而不如 CRF。</p>
+<h2 id="深度模型与-BiLSTM-CRF"><a href="#深度模型与-BiLSTM-CRF" class="headerlink" title="深度模型与 BiLSTM-CRF"></a>深度模型与 BiLSTM-CRF</h2><p>统计模型的天花板在于特征是人挑的。挑得好，效果就好；换个语种、换个领域，又得重新挑。深度学习把这个环节也交给了模型：输入词向量，让网络自己学该看什么。</p>
+<p>四个模型常被放在一起讲。CNN 用卷积核在句子窗口上滑动，擅长抓局部片段，训练快。RNN 按顺序读入，把前文压进隐状态，天然适合序列，但长句子会梯度消失。BERT 用 Transformer 做双向编码，先在海量文本上预训练，再到具体任务上微调，把“上下文”这件事做到了当时的极限。</p>
+<p>实际做中文 NER 时用得最多的是 BiLSTM-CRF。它的结构可以拆成三段：先把每个字变成向量，用 BiLSTM 从前往后、从后往前各读一遍，把两段输出拼起来；再把拼好的表示送进 CRF 层，让 CRF 在全局上挑一条合法且分数最高的标签路径。</p>
+<svg width="100%" style="max-width:860px;height:auto" viewBox="0 0 860 420" role="img" aria-label="BiLSTM-CRF 的结构">
+  <rect width="860" height="420" fill="#fdfbf6"></rect>
+  <text x="60" y="46" font-size="11.5" fill="#6d747e">输出标签</text>
+  <rect x="120" y="62" width="90" height="34" rx="5" fill="#e9f2f6" stroke="#2f6f8f"></rect>
+  <text x="165" y="84" font-size="10.5" fill="#1f4d64" text-anchor="middle">B-PER</text>
+  <rect x="270" y="62" width="90" height="34" rx="5" fill="#e9f2f6" stroke="#2f6f8f"></rect>
+  <text x="315" y="84" font-size="10.5" fill="#1f4d64" text-anchor="middle">I-PER</text>
+  <rect x="420" y="62" width="90" height="34" rx="5" fill="#f4f1e9" stroke="#e2dcc9"></rect>
+  <text x="465" y="84" font-size="10.5" fill="#8a8175" text-anchor="middle">O</text>
+  <rect x="570" y="62" width="90" height="34" rx="5" fill="#eaf3ee" stroke="#3f7a5a"></rect>
+  <text x="615" y="84" font-size="10.5" fill="#2c6a49" text-anchor="middle">B-LOC</text>
+  <rect x="720" y="62" width="90" height="34" rx="5" fill="#eaf3ee" stroke="#3f7a5a"></rect>
+  <text x="765" y="84" font-size="10.5" fill="#2c6a49" text-anchor="middle">I-LOC</text>
+  <rect x="60" y="116" width="770" height="44" rx="8" fill="#fbeee7" stroke="#b4552d"></rect>
+  <text x="445" y="144" font-size="13" fill="#8f3d1c" text-anchor="middle">CRF 层：给整条标签路径打分，挑出全局最优的一条</text>
+  <line x1="165" y1="116" x2="165" y2="100" stroke="#b4552d" stroke-width="1.2" marker-end="url(#c8)"></line>
+  <line x1="315" y1="116" x2="315" y2="100" stroke="#b4552d" stroke-width="1.2" marker-end="url(#c8)"></line>
+  <line x1="465" y1="116" x2="465" y2="100" stroke="#b4552d" stroke-width="1.2" marker-end="url(#c8)"></line>
+  <line x1="615" y1="116" x2="615" y2="100" stroke="#b4552d" stroke-width="1.2" marker-end="url(#c8)"></line>
+  <line x1="765" y1="116" x2="765" y2="100" stroke="#b4552d" stroke-width="1.2" marker-end="url(#c8)"></line>
+  <rect x="60" y="184" width="770" height="26" rx="5" fill="#e9f2f6"></rect>
+  <text x="445" y="202" font-size="11" fill="#1f4d64" text-anchor="middle">前向 LSTM：从左往右读 →</text>
+  <rect x="60" y="216" width="770" height="26" rx="5" fill="#e9f2f6"></rect>
+  <text x="445" y="234" font-size="11" fill="#1f4d64" text-anchor="middle">后向 LSTM：从右往左读 ←</text>
+  <text x="690" y="272" font-size="10.5" fill="#6d747e">两个方向拼接后送入 CRF</text>
+  <line x1="165" y1="242" x2="165" y2="292" stroke="#8a8175" stroke-width="1.2" marker-end="url(#c10)"></line>
+  <line x1="315" y1="242" x2="315" y2="292" stroke="#8a8175" stroke-width="1.2" marker-end="url(#c10)"></line>
+  <line x1="465" y1="242" x2="465" y2="292" stroke="#8a8175" stroke-width="1.2" marker-end="url(#c10)"></line>
+  <line x1="615" y1="242" x2="615" y2="292" stroke="#8a8175" stroke-width="1.2" marker-end="url(#c10)"></line>
+  <line x1="765" y1="242" x2="765" y2="292" stroke="#8a8175" stroke-width="1.2" marker-end="url(#c10)"></line>
+  <rect x="60" y="294" width="770" height="30" rx="5" fill="#f4f1e9"></rect>
+  <text x="445" y="314" font-size="11" fill="#3d444d" text-anchor="middle">字向量 + 上下文表示（预训练或随机初始化）</text>
+  <rect x="120" y="344" width="90" height="34" rx="5" fill="#ffffff" stroke="#cfd6da"></rect>
+  <text x="165" y="366" font-size="14" fill="#1b1d21" text-anchor="middle">张</text>
+  <rect x="270" y="344" width="90" height="34" rx="5" fill="#ffffff" stroke="#cfd6da"></rect>
+  <text x="315" y="366" font-size="14" fill="#1b1d21" text-anchor="middle">三</text>
+  <rect x="420" y="344" width="90" height="34" rx="5" fill="#ffffff" stroke="#cfd6da"></rect>
+  <text x="465" y="366" font-size="14" fill="#1b1d21" text-anchor="middle">在</text>
+  <rect x="570" y="344" width="90" height="34" rx="5" fill="#ffffff" stroke="#cfd6da"></rect>
+  <text x="615" y="366" font-size="14" fill="#1b1d21" text-anchor="middle">上</text>
+  <rect x="720" y="344" width="90" height="34" rx="5" fill="#ffffff" stroke="#cfd6da"></rect>
+  <text x="765" y="366" font-size="14" fill="#1b1d21" text-anchor="middle">海</text>
+  <text x="60" y="400" font-size="11" fill="#6d747e">输入</text>
+  <defs><marker id="c8" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#b4552d"></path></marker>
+    <marker id="c10" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#8a8175"></path></marker></defs>
+</svg>
+
+<p><em>分工很清楚：BiLSTM 负责看上下文，CRF 负责保证标签序列合法。少了 CRF，模型可能输出 B-PER 后面直接跟 B-LOC 这种边界断裂的结果。</em></p>
+<p>这套结构之后，主流做法换成了“预训练模型 + 轻量分类头”，BiLSTM 那一段被 Transformer 替掉。结构在变，两件事没变：一是要有上下文表示，二是要有约束保证标签序列合法。中文 NER 到现在仍有两个硬骨头，一是缺少天然分词，词的边界本身就有争议；二是新词不断出现，训练集里没有的实体只能靠上下文猜。</p>
+<h2 id="关系抽取"><a href="#关系抽取" class="headerlink" title="关系抽取"></a>关系抽取</h2><p>实体找出来之后，下一步是判断它们之间有什么关系。这个任务 1988 年在 MUC 会议上被正式提出，比实体抽取难得多。难在同一个意思有很多种说法：“A 是 B 的父亲”“B 是 A 的儿子”“A 老来得子”，都要归到同一条关系上。</p>
+<p>“猫抓老鼠”这类句子，依存句法能帮上忙。句法分析把句子拆成一棵依存树，主语、宾语、修饰关系都标出来，实体对之间的关系路径就落在树上。沿着“猫—主谓—抓—动宾—老鼠”这条路径走，动作关系就出来了。句法路径也常被当成特征，喂给后面的分类器。</p>
+<svg width="100%" style="max-width:860px;height:auto" viewBox="0 0 860 250" role="img" aria-label="依存句法路径用于关系抽取">
+  <rect width="860" height="250" fill="#fdfbf6"></rect>
+  <text x="70" y="186" font-size="15" fill="#1b1d21">猫</text>
+  <text x="215" y="186" font-size="15" fill="#1b1d21">抓</text>
+  <text x="360" y="186" font-size="15" fill="#1b1d21">老鼠</text>
+  <path d="M80,166 L214,120" stroke="#2f6f8f" stroke-width="1.5"></path>
+  <path d="M370,166 L226,120" stroke="#2f6f8f" stroke-width="1.5"></path>
+  <text x="130" y="132" font-size="10.5" fill="#2f6f8f">主谓</text>
+  <text x="316" y="132" font-size="10.5" fill="#2f6f8f">动宾</text>
+  <rect x="186" y="92" width="66" height="26" rx="5" fill="#e9f2f6" stroke="#2f6f8f"></rect>
+  <text x="219" y="110" font-size="10.5" fill="#1f4d64" text-anchor="middle">核心谓词</text>
+  <path d="M72,196 L372,196" stroke="#b4552d" stroke-width="1.4" stroke-dasharray="6 4"></path>
+  <text x="222" y="216" font-size="11" fill="#b4552d" text-anchor="middle">两个实体之间的最短依存路径</text>
+  <rect x="470" y="60" width="360" height="130" rx="9" fill="#ffffff" stroke="#e4e0d6"></rect>
+  <text x="488" y="86" font-size="12" fill="#3d444d">路径上的信息被当成特征：</text>
+  <text x="488" y="112" font-size="11.5" fill="#6d747e">· 谓词是什么（抓、买、任职于）</text>
+  <text x="488" y="136" font-size="11.5" fill="#6d747e">· 两端实体的类型（人、动物、机构）</text>
+  <text x="488" y="160" font-size="11.5" fill="#6d747e">· 路径长度与方向</text>
+  <text x="470" y="222" font-size="11.5" fill="#6d747e">同一棵树换个视角，就能抽出一批关系模板</text>
+</svg>
+
+<p><em>句法只在句子结构规整时好使。口语、长句、跨句指代一多，依存树本身就不可靠，后面的判断跟着失准。</em></p>
+<p>按标注量分类，关系抽取有三条路线。监督学习用人工标好的句子训练分类器，效果最稳，成本最高；半监督用少量种子去撬动大量未标注文本；无监督完全不看标签，靠聚类把表达同一关系的句子聚到一起，聚出来的簇还得人来看是什么意思。</p>
+<table>
+<thead>
+<tr>
+<th>路线</th>
+<th>监督学习</th>
+<th>半监督</th>
+<th>无监督</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>标签来源</td>
+<td>人工逐句标注</td>
+<td>种子 + 远程知识库</td>
+<td>无标签，靠聚类</td>
+</tr>
+<tr>
+<td>代表方法</td>
+<td>特征向量法、核函数法</td>
+<td>远程监督、Bootstrapping</td>
+<td>K-Means 等聚类</td>
+</tr>
+<tr>
+<td>优势</td>
+<td>准确率高</td>
+<td>规模大，成本低</td>
+<td>能发现新关系</td>
+</tr>
+<tr>
+<td>主要问题</td>
+<td>标注贵，覆盖窄</td>
+<td>噪声多，语义漂移</td>
+<td>结果需人工解释</td>
+</tr>
+</tbody></table>
+<h2 id="标注不够用的时候"><a href="#标注不够用的时候" class="headerlink" title="标注不够用的时候"></a>标注不够用的时候</h2><p>关系抽取最缺的是标注数据。一句一句标一万人年也标不完，于是有了远程监督。它押一个假设：如果知识库里已经写着两个实体有某种关系，那么所有同时提到这两个实体的句子，都可能表达这种关系。于是拿知识库当词典，去海量文本里自动对齐，一夜之间就有了百万级训练集。</p>
+<svg width="100%" style="max-width:860px;height:auto" viewBox="0 0 860 280" role="img" aria-label="远程监督的自动标注">
+  <rect width="860" height="280" fill="#fdfbf6"></rect>
+  <rect x="40" y="60" width="240" height="120" rx="9" fill="#e9f2f6" stroke="#2f6f8f"></rect>
+  <text x="160" y="86" font-size="12" font-weight="600" fill="#1f4d64" text-anchor="middle">已有知识库</text>
+  <text x="160" y="114" font-size="11.5" fill="#3d444d" text-anchor="middle">（王健林，父子，王思聪）</text>
+  <text x="160" y="142" font-size="11" fill="#6d747e" text-anchor="middle">关系已经确定</text>
+  <text x="160" y="164" font-size="11" fill="#6d747e" text-anchor="middle">只是没有句子支撑</text>
+  <path d="M284,120 L372,120" stroke="#b4552d" stroke-width="1.6" marker-end="url(#c9)"></path>
+  <text x="328" y="110" font-size="10.5" fill="#b4552d" text-anchor="middle">对齐</text>
+  <rect x="380" y="40" width="440" height="160" rx="9" fill="#ffffff" stroke="#e4e0d6"></rect>
+  <text x="396" y="64" font-size="11.5" fill="#6d747e">全库检索，凡是同时提到这两个名字的句子</text>
+  <text x="396" y="92" font-size="11" fill="#3d444d">王思聪是王健林的独子。</text>
+  <text x="396" y="114" font-size="11" fill="#3d444d">王健林携子王思聪出席活动。</text>
+  <text x="396" y="136" font-size="11" fill="#8f3d1c">王健林与王思聪共同投资了这家公司。</text>
+  <text x="396" y="158" font-size="11" fill="#8f3d1c">王思聪否认父亲王健林曾注资。</text>
+  <text x="396" y="184" font-size="10.5" fill="#6d747e">后两句也会被打上“父子”标签，但它们说的不是这件事</text>
+  <rect x="40" y="216" width="780" height="42" rx="7" fill="#fbeee7"></rect>
+  <text x="56" y="242" font-size="11.5" fill="#8f3d1c">噪声从这里进来：标签由知识库决定，句子未必在讲那条关系。后续要靠降噪、多示例学习、句子级注意力来筛。</text>
+  <defs><marker id="c9" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M0,0 L9,4.5 L0,9 z" fill="#b4552d"></path></marker></defs>
+</svg>
+
+<p><em>远程监督的假设很粗糙，但它把标注成本压到了近乎零。工程上的做法是先拿它铺量，再用小规模人工标注去校准和降噪。</em></p>
+<p>Bootstrapping 走的是另一条路。给几个种子实例，从包含它们的句子里学模板，用模板去抽新实例，新实例再回来学新模板，如此迭代。风险是语义漂移：第一轮抽到“苹果公司”，第二轮可能抽到“苹果”，第三轮就跑到水果上去了。</p>
+<p>深度学习时代的框架变得统一：把句子编码成词向量，同时给每个词加上“距离头实体多远、距离尾实体多远”的位置向量，两者拼起来送进 CNN 或 RNN 抽特征，最后接一个分类层输出关系类型。位置向量这一步很关键，它让网络知道当前这个词离两个实体各有多远。</p>
+<h2 id="事件抽取"><a href="#事件抽取" class="headerlink" title="事件抽取"></a>事件抽取</h2><p>三元组描述的是静态事实，事件描述的是“发生了什么”。同样一段话，实体和关系都抽对了，事件信息还可能漏掉一大半。</p>
+<blockquote>
+<p>2011 年日本大地震后的一段报道：地震发生后，许多建筑物倒塌，造成大量人员伤亡。救援人员迅速展开紧急救援，许多国家也向日本提供了援助。</p>
+<p>这段话里有三个事件。地震是起因，救援是响应，国际援助是后续。每个事件都有自己的时间、地点、参与方和结果。</p>
+</blockquote>
+<p>事件抽取要做两件事：先找到触发词，判断这里发生了一个什么类型的事件；再把论元填进槽位，时间、地点、参与者、伤亡数字各归各位。</p>
+<svg width="100%" style="max-width:860px;height:auto" viewBox="0 0 860 330" role="img" aria-label="事件的结构：触发词与论元">
+  <rect width="860" height="330" fill="#fdfbf6"></rect>
+  <rect x="40" y="46" width="780" height="56" rx="8" fill="#ffffff" stroke="#e4e0d6"></rect>
+  <text x="58" y="80" font-size="13" fill="#1b1d21">地震发生后，许多建筑物</text>
+  <rect x="222" y="62" width="44" height="26" rx="4" fill="#fbeee7" stroke="#b4552d"></rect>
+  <text x="244" y="80" font-size="13" fill="#8f3d1c" text-anchor="middle">倒塌</text>
+  <text x="272" y="80" font-size="13" fill="#1b1d21">，造成大量人员伤亡。</text>
+  <text x="40" y="128" font-size="11.5" fill="#6d747e">触发词“倒塌”决定了事件类型是“灾害”而不是“建设”</text>
+  <rect x="40" y="148" width="380" height="150" rx="9" fill="#ffffff" stroke="#cfdde4"></rect>
+  <text x="56" y="174" font-size="12.5" font-weight="600" fill="#1f4d64">事件一 · 地震</text>
+  <text x="56" y="200" font-size="11" fill="#6d747e">触发词</text>
+  <text x="120" y="200" font-size="11.5" fill="#1f4d64">地震</text>
+  <text x="56" y="224" font-size="11" fill="#6d747e">时间</text>
+  <text x="120" y="224" font-size="11.5" fill="#3d444d">2011 年</text>
+  <text x="56" y="248" font-size="11" fill="#6d747e">地点</text>
+  <text x="120" y="248" font-size="11.5" fill="#3d444d">日本 东京</text>
+  <text x="56" y="272" font-size="11" fill="#6d747e">后果</text>
+  <text x="120" y="272" font-size="11.5" fill="#3d444d">建筑倒塌 人员伤亡</text>
+  <rect x="440" y="148" width="380" height="150" rx="9" fill="#ffffff" stroke="#cfdde4"></rect>
+  <text x="456" y="174" font-size="12.5" font-weight="600" fill="#1f4d64">事件二 · 国际援助</text>
+  <text x="456" y="200" font-size="11" fill="#6d747e">触发词</text>
+  <text x="520" y="200" font-size="11.5" fill="#1f4d64">提供援助</text>
+  <text x="456" y="224" font-size="11" fill="#6d747e">施动方</text>
+  <text x="520" y="224" font-size="11.5" fill="#3d444d">多个国家</text>
+  <text x="456" y="248" font-size="11" fill="#6d747e">受动方</text>
+  <text x="520" y="248" font-size="11.5" fill="#3d444d">日本</text>
+  <text x="456" y="272" font-size="11" fill="#6d747e">时序</text>
+  <text x="520" y="272" font-size="11.5" fill="#3d444d">地震之后</text>
+</svg>
+
+<p><em>同一段文字里可以并存多个事件，它们往往共用触发词之外的所有要素。论元填不全，事件就不完整，后面拿去做推理会缺条件。</em></p>
+<p>结构上有两种做法。管道式先做触发词识别，再做论元抽取，两阶段串行，简单但前一阶段的错误会累积。联合式把两件事放进一个模型一起学，共享底层表示，能缓解误差传递，代价是模型复杂、调参麻烦。</p>
+<p>再往上还有篇章级。句子级抽取只能看到一句话，跨句的信息抓不到。篇章级要解决两个新问题：关键事件检测，判断整篇文档里哪些段落提到了重要事件；论元补足，把分散在不同段落里的事件要素拼成完整结构。上面那段报道里，“地震”“救援行动”“国际援助”三个关键事件，就是把全文读完才能确定它们的关系的。</p>
+<p>事件抽取的现状和实体抽取不太一样。深度模型在标准数据集上分数很高，换到真实业务就掉得厉害，原因是事件类型定义往往跟业务强绑定，公开数据集的类型体系套不上。领域自适应和低资源事件抽取，目前仍是活跃的研究方向。</p>
+<h2 id="自测"><a href="#自测" class="headerlink" title="自测"></a>自测</h2><details><summary>为什么实体抽取要被改写成序列标注？</summary> <p>因为“找边界”本身不好直接优化，而“给每个位置打一个标签”可以逐位置计算损失。BIOES 这套标签把边界信息编码进标签里，边界和类型一次输出。</p></details> 
+
+<details><summary>BiLSTM-CRF 里，CRF 层不能省的理由是什么？</summary> <p>BiLSTM 独立给每个位置打分，可能输出“B-PER 后面跟 I-LOC”这种非法序列。CRF 建模相邻标签的转移，并在整条路径上做全局归一化，保证输出的标签序列合法且整体最优。</p></details> 
+
+<details><summary>远程监督为什么一定会引入噪声？</summary> <p>它的假设是“两个实体有关系，则提到它们的句子就在讲这个关系”。这个假设过强，同一对实体出现在完全不同语境的句子里，也会被强行打上标签。</p></details> 
+
+<details><summary>管道式和联合式事件抽取，各自适合什么场景？</summary> <p>类型体系稳定、要快速上线，用管道式，每个模块可以单独调；论元跨句严重、误差传递影响大，用联合式，共享表示能减少前后不一致。</p></details> 
+</article><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/other/QUT/%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E6%95%99%E7%A8%8B/04-%E7%9F%A5%E8%AF%86%E8%9E%8D%E5%90%88%E6%8A%80%E6%9C%AF/"><img class="prev-cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">04 知识融合技术</div></div></a></div><div class="next-post pull-right"><a href="/other/QUT/%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E6%95%99%E7%A8%8B/02-%E7%9F%A5%E8%AF%86%E8%A1%A8%E7%A4%BA%E6%8A%80%E6%9C%AF/"><img class="next-cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">02 知识表示技术</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="anzhiyufont anzhiyu-icon-thumbs-up fa-fw" style="font-size: 1.5rem; margin-right: 4px"></i><span>喜欢这篇文章的人也看了</span></div><div class="relatedPosts-list"><div><a href="/other/QUT/%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E6%95%99%E7%A8%8B/00-%E6%95%99%E7%A8%8B%E6%80%BB%E8%A7%88/" title="00 教程总览"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/" alt="cover"><div class="content is-center"><div class="date"><i class="anzhiyufont anzhiyu-icon-calendar-days fa-fw"></i> 2026-11-06</div><div class="title">00 教程总览</div></div></a></div><div><a href="/other/QUT/%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E6%95%99%E7%A8%8B/01-%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E6%A6%82%E8%BF%B0/" title="01 知识图谱概述"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/" alt="cover"><div class="content is-center"><div class="date"><i class="anzhiyufont anzhiyu-icon-calendar-days fa-fw"></i> 2026-11-06</div><div class="title">01 知识图谱概述</div></div></a></div><div><a href="/other/QUT/%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E6%95%99%E7%A8%8B/02-%E7%9F%A5%E8%AF%86%E8%A1%A8%E7%A4%BA%E6%8A%80%E6%9C%AF/" title="02 知识表示技术"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/" alt="cover"><div class="content is-center"><div class="date"><i class="anzhiyufont anzhiyu-icon-calendar-days fa-fw"></i> 2026-11-06</div><div class="title">02 知识表示技术</div></div></a></div><div><a href="/other/QUT/%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E6%95%99%E7%A8%8B/04-%E7%9F%A5%E8%AF%86%E8%9E%8D%E5%90%88%E6%8A%80%E6%9C%AF/" title="04 知识融合技术"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/" alt="cover"><div class="content is-center"><div class="date"><i class="anzhiyufont anzhiyu-icon-calendar-days fa-fw"></i> 2026-11-06</div><div class="title">04 知识融合技术</div></div></a></div><div><a href="/other/QUT/%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E6%95%99%E7%A8%8B/05-%E7%9F%A5%E8%AF%86%E5%AD%98%E5%82%A8%E6%8A%80%E6%9C%AF/" title="05 知识存储技术"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/" alt="cover"><div class="content is-center"><div class="date"><i class="anzhiyufont anzhiyu-icon-calendar-days fa-fw"></i> 2026-11-06</div><div class="title">05 知识存储技术</div></div></a></div><div><a href="/other/QUT/%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E6%95%99%E7%A8%8B/07-%E7%9F%A5%E8%AF%86%E6%8E%A8%E7%90%86%E6%8A%80%E6%9C%AF/" title="07 知识推理技术"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/" alt="cover"><div class="content is-center"><div class="date"><i class="anzhiyufont anzhiyu-icon-calendar-days fa-fw"></i> 2026-11-06</div><div class="title">07 知识推理技术</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="card-content"><div class="author-info-avatar"><img class="avatar-img" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/img/avatar.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__description">大三学生，全栈开发者，终身学习者</div><div class="author-info__bottom-group"><a class="author-info__bottom-group-left" href="/"><h1 class="author-info__name">qiuxz</h1><div class="author-info__desc"></div></a><div class="card-info-social-icons is-center"><a class="social-icon faa-parent animated-hover" href="https://github.com/qiuxzh" target="_blank" title="Github"><i class="anzhiyufont anzhiyu-icon-github"></i></a><a class="social-icon faa-parent animated-hover" href="javascript:void(0);" title="QQ" data-copy="1256227507"><i class="anzhiyufont anzhiyu-icon-qq"></i></a><a class="social-icon faa-parent animated-hover" href="javascript:void(0);" title="Email" data-copy="1256227507@qq.com"><i class="anzhiyufont anzhiyu-icon-envelope"></i></a></div></div></div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="anzhiyufont anzhiyu-icon-bars"></i><span>文章目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E5%8F%A5%E8%AF%9D%E9%87%8C%E7%9A%84%E4%B8%89%E5%B1%82%E4%BF%A1%E6%81%AF"><span class="toc-number">1.</span> <span class="toc-text">一句话里的三层信息</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8A%BD%E5%8F%96%E7%9A%84%E4%BA%94%E4%B8%AA%E9%98%B6%E6%AE%B5"><span class="toc-number">2.</span> <span class="toc-text">抽取的五个阶段</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%9E%E4%BD%93%E6%8A%BD%E5%8F%96%EF%BC%9A%E5%85%88%E5%88%87%E8%BE%B9%E7%95%8C"><span class="toc-number">3.</span> <span class="toc-text">实体抽取：先切边界</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%A7%84%E5%88%99%E6%B3%95"><span class="toc-number">4.</span> <span class="toc-text">规则法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BB%9F%E8%AE%A1%E6%A8%A1%E5%9E%8B%E8%BF%9B%E6%9D%A5%E4%B9%8B%E5%90%8E"><span class="toc-number">5.</span> <span class="toc-text">统计模型进来之后</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B7%B1%E5%BA%A6%E6%A8%A1%E5%9E%8B%E4%B8%8E-BiLSTM-CRF"><span class="toc-number">6.</span> <span class="toc-text">深度模型与 BiLSTM-CRF</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%B3%E7%B3%BB%E6%8A%BD%E5%8F%96"><span class="toc-number">7.</span> <span class="toc-text">关系抽取</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A0%87%E6%B3%A8%E4%B8%8D%E5%A4%9F%E7%94%A8%E7%9A%84%E6%97%B6%E5%80%99"><span class="toc-number">8.</span> <span class="toc-text">标注不够用的时候</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8B%E4%BB%B6%E6%8A%BD%E5%8F%96"><span class="toc-number">9.</span> <span class="toc-text">事件抽取</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%87%AA%E6%B5%8B"><span class="toc-number">10.</span> <span class="toc-text">自测</span></a></li></ol></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"></div><div id="footer-bar"><div class="footer-bar-links"><div class="footer-bar-left"><div id="footer-bar-tips"><div class="copyright">&copy;2020 - 2026 By <a class="footer-bar-link" href="/" title="qiuxz" target="_blank">qiuxz</a></div></div><div id="footer-type-tips"></div></div><div class="footer-bar-right"><a class="footer-bar-link" target="_blank" rel="noopener" href="https://github.com/anzhiyu-c/hexo-theme-anzhiyu" title="主题">主题</a></div></div></div></footer></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="sidebar-site-data site-data is-center"><a href="/archives/" title="archive"><div class="headline">文章</div><div class="length-num">48</div></a><a href="/tags/" title="tag"><div class="headline">标签</div><div class="length-num">9</div></a><a href="/categories/" title="category"><div class="headline">分类</div><div class="length-num">10</div></a></div><span class="sidebar-menu-item-title">功能</span><div class="sidebar-menu-item"><a class="darkmode_switchbutton menu-child" href="javascript:void(0);" title="显示模式"><i class="anzhiyufont anzhiyu-icon-circle-half-stroke"></i><span>显示模式</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="javascript:void(0);"><span> 文章</span></a><ul class="menus_item_child"><li><a class="site-page child faa-parent animated-hover" href="/archives/"><i class="anzhiyufont anzhiyu-icon-box-archive faa-tada" style="font-size: 0.9em;"></i><span> 隧道</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><span> 关于</span></a><ul class="menus_item_child"><li><a class="site-page child faa-parent animated-hover" href="/other/about/"><i class="anzhiyufont anzhiyu-icon-paper-plane faa-tada" style="font-size: 0.9em;"></i><span> 关于本人</span></a></li><li><a class="site-page child faa-parent animated-hover" href="javascript:toRandomPost()"><i class="anzhiyufont anzhiyu-icon-shoe-prints1 faa-tada" style="font-size: 0.9em;"></i><span> 随便逛逛</span></a></li></ul></div></div><span class="sidebar-menu-item-title">标签</span><div class="card-tags"><div class="item-headline"></div><div class="card-tag-cloud"><a href="/tags/YJango%E8%A7%86%E9%A2%91%E6%95%B4%E7%90%86/" style="font-size: 0.88rem;">YJango视频整理<sup>11</sup></a><a href="/tags/%E4%B8%AA%E4%BA%BA%E6%88%90%E9%95%BF/" style="font-size: 0.88rem;">个人成长<sup>3</sup></a><a href="/tags/%E5%AD%A6%E4%B9%A0/" style="font-size: 0.88rem;">学习<sup>13</sup></a><a href="/tags/%E6%84%9F%E6%82%9F/" style="font-size: 0.88rem;">感悟<sup>1</sup></a><a href="/tags/%E6%95%99%E7%A8%8B/" style="font-size: 0.88rem;">教程<sup>9</sup></a><a href="/tags/%E6%9C%AA%E5%88%86%E7%B1%BB/" style="font-size: 0.88rem;">未分类<sup>6</sup></a><a href="/tags/%E6%9E%B6%E6%9E%84/" style="font-size: 0.88rem;">架构<sup>1</sup></a><a href="/tags/%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1/" style="font-size: 0.88rem;">知识图谱<sup>9</sup></a><a href="/tags/%E8%80%83%E8%AF%95/" style="font-size: 0.88rem;">考试<sup>5</sup></a></div></div><hr/></div></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="anzhiyufont anzhiyu-icon-book-open"></i></button><button id="translateLink" type="button" title="简繁转换">繁</button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="anzhiyufont anzhiyu-icon-circle-half-stroke"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="anzhiyufont anzhiyu-icon-arrows-left-right"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="anzhiyufont anzhiyu-icon-gear"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="anzhiyufont anzhiyu-icon-list-ul"></i></button><button id="mobile-column-button" type="button" title="专栏目录"><i class="anzhiyufont anzhiyu-icon-bars"></i></button><button id="go-up" type="button" title="回到顶部"><i class="anzhiyufont anzhiyu-icon-arrow-up"></i></button></div></div><div id="rightMenu"><div class="rightMenu-group rightMenu-small"><div class="rightMenu-item" id="menu-backward"><i class="anzhiyufont anzhiyu-icon-arrow-left"></i></div><div class="rightMenu-item" id="menu-forward"><i class="anzhiyufont anzhiyu-icon-arrow-right"></i></div><div class="rightMenu-item" id="menu-refresh"><i class="anzhiyufont anzhiyu-icon-arrow-rotate-right" style="font-size: 1rem;"></i></div><div class="rightMenu-item" id="menu-top"><i class="anzhiyufont anzhiyu-icon-arrow-up"></i></div></div><div class="rightMenu-group rightMenu-line rightMenuPlugin"><div class="rightMenu-item" id="menu-copytext"><i class="anzhiyufont anzhiyu-icon-copy"></i><span>复制选中文本</span></div><div class="rightMenu-item" id="menu-pastetext"><i class="anzhiyufont anzhiyu-icon-paste"></i><span>粘贴文本</span></div><a class="rightMenu-item" id="menu-commenttext"><i class="anzhiyufont anzhiyu-icon-comment-medical"></i><span>引用到评论</span></a><div class="rightMenu-item" id="menu-newwindow"><i class="anzhiyufont anzhiyu-icon-window-restore"></i><span>新窗口打开</span></div><div class="rightMenu-item" id="menu-copylink"><i class="anzhiyufont anzhiyu-icon-link"></i><span>复制链接地址</span></div><div class="rightMenu-item" id="menu-copyimg"><i class="anzhiyufont anzhiyu-icon-images"></i><span>复制此图片</span></div><div class="rightMenu-item" id="menu-downloadimg"><i class="anzhiyufont anzhiyu-icon-download"></i><span>下载此图片</span></div><div class="rightMenu-item" id="menu-newwindowimg"><i class="anzhiyufont anzhiyu-icon-window-restore"></i><span>新窗口打开图片</span></div><div class="rightMenu-item" id="menu-search"><i class="anzhiyufont anzhiyu-icon-magnifying-glass"></i><span>站内搜索</span></div><div class="rightMenu-item" id="menu-searchBaidu"><i class="anzhiyufont anzhiyu-icon-magnifying-glass"></i><span>百度搜索</span></div></div><div class="rightMenu-group rightMenu-line rightMenuOther"><a class="rightMenu-item menu-link" id="menu-randomPost"><i class="anzhiyufont anzhiyu-icon-shuffle"></i><span>随便逛逛</span></a><a class="rightMenu-item menu-link" href="/categories/"><i class="anzhiyufont anzhiyu-icon-cube"></i><span>博客分类</span></a><a class="rightMenu-item menu-link" href="/tags/"><i class="anzhiyufont anzhiyu-icon-tags"></i><span>文章标签</span></a></div><div class="rightMenu-group rightMenu-line rightMenuOther"><a class="rightMenu-item" id="menu-copy" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-copy"></i><span>复制地址</span></a><a class="rightMenu-item" id="menu-commentBarrage" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-message"></i><span class="menu-commentBarrage-text">关闭热评</span></a><a class="rightMenu-item" id="menu-darkmode" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-circle-half-stroke"></i><span class="menu-darkmode-text">深色模式</span></a><a class="rightMenu-item" id="menu-translate" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-language"></i><span>轉為繁體</span></a></div></div><div id="rightmenu-mask"></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="/js/tw_cn.js"></script><script src="https://cdn.cbd.int/@fancyapps/ui@6.1.6/dist/fancybox/fancybox.umd.js"></script><script src="https://cdn.cbd.int/instant.page@5.2.0/instantpage.js" type="module"></script><script src="https://cdn.cbd.int/vanilla-lazyload@19.1.3/dist/lazyload.iife.min.js"></script><script src="https://cdn.cbd.int/node-snackbar@0.1.16/dist/snackbar.min.js"></script><canvas id="universe"></canvas><script async src="https://npm.elemecdn.com/anzhiyu-theme-static@1.0.0/dark/dark.js"></script><script>// 消除控制台打印
+var HoldLog = console.log;
+console.log = function () {};
+let now1 = new Date();
+queueMicrotask(() => {
+  const Log = function () {
+    HoldLog.apply(console, arguments);
+  }; //在恢复前输出日志
+  const grt = new Date("08/08/2026 00:00:00"); //此处修改你的建站时间或者网站上线时间
+  now1.setTime(now1.getTime() + 250);
+  const days = (now1 - grt) / 1000 / 60 / 60 / 24;
+  const dnum = Math.floor(days);
+  const ascll = [
+    `欢迎使用安知鱼!`,
+    `生活明朗, 万物可爱`,
+    `
+        
+       █████╗ ███╗   ██╗███████╗██╗  ██╗██╗██╗   ██╗██╗   ██╗
+      ██╔══██╗████╗  ██║╚══███╔╝██║  ██║██║╚██╗ ██╔╝██║   ██║
+      ███████║██╔██╗ ██║  ███╔╝ ███████║██║ ╚████╔╝ ██║   ██║
+      ██╔══██║██║╚██╗██║ ███╔╝  ██╔══██║██║  ╚██╔╝  ██║   ██║
+      ██║  ██║██║ ╚████║███████╗██║  ██║██║   ██║   ╚██████╔╝
+      ╚═╝  ╚═╝╚═╝  ╚═══╝╚══════╝╚═╝  ╚═╝╚═╝   ╚═╝    ╚═════╝
+        
+        `,
+    "已上线",
+    dnum,
+    "天",
+    "©2020 By 安知鱼 V1.7.1",
+  ];
+  const ascll2 = [`NCC2-036`, `调用前置摄像头拍照成功，识别为【小笨蛋】.`, `Photo captured: `, `🤪`];
+
+  setTimeout(
+    Log.bind(
+      console,
+      `\n%c${ascll[0]} %c ${ascll[1]} %c ${ascll[2]} %c${ascll[3]}%c ${ascll[4]}%c ${ascll[5]}\n\n%c ${ascll[6]}\n`,
+      "color:#425AEF",
+      "",
+      "color:#425AEF",
+      "color:#425AEF",
+      "",
+      "color:#425AEF",
+      ""
+    )
+  );
+  setTimeout(
+    Log.bind(
+      console,
+      `%c ${ascll2[0]} %c ${ascll2[1]} %c \n${ascll2[2]} %c\n${ascll2[3]}\n`,
+      "color:white; background-color:#4fd953",
+      "",
+      "",
+      'background:url("https://npm.elemecdn.com/anzhiyu-blog@1.1.6/img/post/common/tinggge.gif") no-repeat;font-size:450%'
+    )
+  );
+
+  setTimeout(Log.bind(console, "%c WELCOME %c 你好，小笨蛋.", "color:white; background-color:#4f90d9", ""));
+
+  setTimeout(
+    console.warn.bind(
+      console,
+      "%c ⚡ Powered by 安知鱼 %c 你正在访问 qiuxz 的博客.",
+      "color:white; background-color:#f0ad4e",
+      ""
+    )
+  );
+
+  setTimeout(Log.bind(console, "%c W23-12 %c 你已打开控制台.", "color:white; background-color:#4f90d9", ""));
+
+  setTimeout(
+    console.warn.bind(console, "%c S013-782 %c 你现在正处于监控中.", "color:white; background-color:#d9534f", "")
+  );
+});</script><script async src="/anzhiyu/random.js"></script><div class="js-pjax"><script>if (!window.MathJax) {
+  window.MathJax = {
+    tex: {
+      inlineMath: [['$', '$'], ['\\(', '\\)']],
+      tags: 'ams'
+    },
+    chtml: {
+      scale: 1.1,
+      // MathJax 4 默认从 cdn.jsdelivr.net 取 NewCM 字体，国内直连拿不到，
+      // 公式会退化成缺字形。这里改走 npmmirror（与 mathjax@4.0.0 对应）。
+      fontURL: 'https://registry.npmmirror.com/@mathjax/mathjax-newcm-font/4.0.0/files/chtml/woff2',
+      dynamicPrefix: 'https://registry.npmmirror.com/@mathjax/mathjax-newcm-font/4.0.0/files/chtml/dynamic'
+    },
+    options: {
+      renderActions: {
+        findScript: [10, doc => {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/)
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+            const text = document.createTextNode('')
+            node.parentNode.replaceChild(text, node)
+            math.start = {node: text, delim: '', n: 0}
+            math.end = {node: text, delim: '', n: 0}
+            doc.math.push(math)
+          }
+        }, '']
+      }
+    }
+  }
+  
+  const script = document.createElement('script')
+  script.src = 'https://cdn.cbd.int/mathjax@4.0.0/tex-mml-chtml.js'
+  script.id = 'MathJax-script'
+  script.async = true
+  document.head.appendChild(script)
+} else {
+  MathJax.startup.document.state(0)
+  MathJax.texReset()
+  MathJax.typesetPromise()
+}</script><link rel="stylesheet" type="text/css" href="https://cdn.cbd.int/katex@0.16.25/dist/katex.min.css"><script src="https://cdn.cbd.int/katex@0.16.25/dist/contrib/copy-tex.min.js"></script><script>(() => {
+  document.querySelectorAll('#article-container span.katex-display').forEach(item => {
+    anzhiyu.wrap(item, 'div', { class: 'katex-wrap'})
+  })
+})()</script><input type="hidden" name="page-type" id="page-type" value="post"></div><script>var visitorMail = "";
+</script><script async data-pjax src="https://cdn.cbd.int/anzhiyu-theme-static@1.0.0/waterfall/waterfall.js"></script><script src="https://cdn.cbd.int/qrcodejs@1.0.0/qrcode.min.js"></script><link rel="stylesheet" href="https://cdn.cbd.int/anzhiyu-theme-static@1.1.9/icon/ali_iconfont_css.css"><script src="/js/social-copy.js"></script><script src="/js/column-nav-mobile.js"></script><script src="https://cdn.cbd.int/pjax@0.2.8/pjax.min.js"></script><script>let pjaxSelectors = ["head > title","#config-diff","#body-wrap","#rightside-config-hide","#rightside-config-show",".js-pjax"]
+var pjax = new Pjax({
+  elements: 'a:not([target="_blank"])',
+  selectors: pjaxSelectors,
+  cacheBust: false,
+  analytics: false,
+  scrollRestoration: false
+})
+
+document.addEventListener('pjax:send', function () {
+  // removeEventListener scroll 
+  anzhiyu.removeGlobalFnEvent('pjax')
+  anzhiyu.removeGlobalFnEvent('themeChange')
+
+  document.getElementById('rightside').classList.remove('rightside-show')
+  
+  if (window.aplayers) {
+    for (let i = 0; i < window.aplayers.length; i++) {
+      if (!window.aplayers[i].options.fixed) {
+        window.aplayers[i].destroy()
+      }
+    }
+  }
+
+  typeof typed === 'object' && typed.destroy()
+
+  //reset readmode
+  const $bodyClassList = document.body.classList
+  $bodyClassList.contains('read-mode') && $bodyClassList.remove('read-mode')
+})
+
+document.addEventListener('pjax:complete', function () {
+  window.refreshFn()
+
+  document.querySelectorAll('script[data-pjax]').forEach(item => {
+    const newScript = document.createElement('script')
+    const content = item.text || item.textContent || item.innerHTML || ""
+    Array.from(item.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value))
+    newScript.appendChild(document.createTextNode(content))
+    item.parentNode.replaceChild(newScript, item)
+  })
+
+  GLOBAL_CONFIG.islazyload && window.lazyLoadInstance.update()
+
+  typeof panguInit === 'function' && panguInit()
+
+  // google analytics
+  typeof gtag === 'function' && gtag('config', '', {'page_path': window.location.pathname});
+
+  // baidu analytics
+  typeof _hmt === 'object' && _hmt.push(['_trackPageview',window.location.pathname]);
+
+  typeof loadMeting === 'function' && document.getElementsByClassName('aplayer').length && loadMeting()
+
+  // prismjs
+  typeof Prism === 'object' && Prism.highlightAll()
+})
+
+document.addEventListener('pjax:error', e => {
+  if (e.request.status === 404) {
+    pjax.loadUrl('/404.html')
+  }
+})</script><script charset="UTF-8" src="https://cdn.cbd.int/anzhiyu-theme-static@1.1.5/accesskey/accesskey.js"></script></div><div id="popup-window"><div class="popup-window-title">通知</div><div class="popup-window-divider"></div><div class="popup-window-content"><div class="popup-tip">你好呀</div><div class="popup-link"><i class="anzhiyufont anzhiyu-icon-arrow-circle-right"></i></div></div></div></body></html>

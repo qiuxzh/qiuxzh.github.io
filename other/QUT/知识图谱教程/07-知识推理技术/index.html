@@ -1,0 +1,895 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no"><title>07 知识推理技术 | qiuxz's Blog</title><meta name="keywords" content="知识图谱,教程"><meta name="author" content="qiuxz"><meta name="copyright" content="qiuxz"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#f7f9fe"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-touch-fullscreen" content="yes"><meta name="apple-mobile-web-app-title" content="07 知识推理技术"><meta name="application-name" content="07 知识推理技术"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="#f7f9fe"><meta property="og:type" content="article"><meta property="og:title" content="07 知识推理技术"><meta property="og:url" content="https://qiuxzh.github.io/other/QUT/%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E6%95%99%E7%A8%8B/07-%E7%9F%A5%E8%AF%86%E6%8E%A8%E7%90%86%E6%8A%80%E6%9C%AF/index.html"><meta property="og:site_name" content="qiuxz's Blog"><meta property="og:description" content="前六章建起来的图谱，只装了已经写下来的事实。这一章处理的是另一类知识：明明成立、但从没被写进去的那些。补它的办法有两种，一种靠规则，一种靠数字。 库里没有的那条边 库里存了两条事实：李刚是李倩的父亲，李倩是李伟的母亲。 有人问，李刚和李伟是什么关系。人一秒就能答，祖孙。 机器答不出来。它在库里找“李"><meta property="og:locale" content="zh-CN"><meta property="og:image" content="https://qiuxzh.github.io/img/avatar.jpg"><meta property="article:author" content="qiuxz"><meta property="article:tag"><meta name="twitter:card" content="summary"><meta name="twitter:image" content="https://qiuxzh.github.io/img/avatar.jpg"><meta name="description" content="前六章建起来的图谱，只装了已经写下来的事实。这一章处理的是另一类知识：明明成立、但从没被写进去的那些。补它的办法有两种，一种靠规则，一种靠数字。 库里没有的那条边 库里存了两条事实：李刚是李倩的父亲，李倩是李伟的母亲。 有人问，李刚和李伟是什么关系。人一秒就能答，祖孙。 机器答不出来。它在库里找“李"><link rel="shortcut icon" href="/favicon.ico"><link rel="canonical" href="https://qiuxzh.github.io/other/QUT/%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E6%95%99%E7%A8%8B/07-%E7%9F%A5%E8%AF%86%E6%8E%A8%E7%90%86%E6%8A%80%E6%9C%AF/"><link rel="preconnect" href="//cdn.cbd.int"/><meta name="google-site-verification" content="xxx"/><meta name="baidu-site-verification" content="code-xxx"/><meta name="msvalidate.01" content="xxx"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.cbd.int/node-snackbar@0.1.16/dist/snackbar.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.cbd.int/@fancyapps/ui@6.1.6/dist/fancybox/fancybox.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  linkPageTop: undefined,
+  peoplecanvas: {"enable":true,"img":"https://upload-bbs.miyoushe.com/upload/2024/07/27/125766904/ba62475f396df9de3316a08ed9e65d86_5680958632268053399..png"},
+  postHeadAiDescription: undefined,
+  diytitle: undefined,
+  LA51: undefined,
+  greetingBox: undefined,
+  twikooEnvId: '',
+  commentBarrageConfig:undefined,
+  music_page_default: "nav_music",
+  root: '/',
+  preloader: {"source":3},
+  friends_vue_info: undefined,
+  navMusic: false,
+  mainTone: undefined,
+  authorStatus: undefined,
+  algolia: undefined,
+  localSearch: undefined,
+  translate: {"defaultEncoding":2,"translateDelay":0,"msgToTraditionalChinese":"繁","msgToSimplifiedChinese":"简","rightMenuMsgToTraditionalChinese":"转为繁体","rightMenuMsgToSimplifiedChinese":"转为简体"},
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":330},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    simplehomepage: true,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: {"copy":true,"copyrightEbable":false,"limitCount":50,"languages":{"author":"作者: qiuxz","link":"链接: ","source":"来源: qiuxz's Blog","info":"著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。","copySuccess":"复制成功，复制和转载请标注本文地址"}},
+  lightbox: 'fancybox',
+  Snackbar: {"chs_to_cht":"你已切换为繁体","cht_to_chs":"你已切换为简体","day_to_night":"你已切换为深色模式","night_to_day":"你已切换为浅色模式","bgLight":"#425AEF","bgDark":"#1f1f1f","position":"top-center"},
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.cbd.int/flickr-justified-gallery@2.2.0/dist/fjGallery.min.js',
+      css: 'https://cdn.cbd.int/flickr-justified-gallery@2.2.0/dist/fjGallery.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: true,
+  isAnchor: false,
+  shortcutKey: undefined,
+  autoDarkmode: true
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  configTitle: 'qiuxz\'s Blog',
+  title: '07 知识推理技术',
+  postAI: '',
+  pageFillDescription: '库里没有的那条边, Datalog：把关系写成规则, 如果……那么……, 规则一多就慢, 概念层面的推断, 换一条路：让数字说话, 打分与相似度, 用图神经网络推理, 一跳不够, 把推理当成走路, 边传边剪, 允许不确定, 三类方法怎么配, 自测前六章建起来的图谱只装了已经写下来的事实这一章处理的是另一类知识明明成立但从没被写进去的那些补它的办法有两种一种靠规则一种靠数字库里没有的那条边库里存了两条事实李刚是李倩的父亲李倩是李伟的母亲有人问李刚和李伟是什么关系人一秒就能答祖孙机器答不出来它在库里找李刚李伟这条边从头找到尾没有它会如实回答不知道库里存的三个人李刚李倩李伟父女母子库里没有这条边两条边摆在那儿两条边之间的那段路没有人走把规则也存进去结论就能自己长出来事实父女李刚李倩事实母子李倩李伟规则祖先父母祖先祖先祖先推出祖先李刚李伟这条没被存进去是算出来的规则只写一次凡是符合形状的组合都能套上不用逐条录左边是图谱里真实存在的两条边右边是同一批数据的另一种用法加上规则之后李刚和李伟之间那条空着的路被补上了这类没写进去但确实成立的知识规模比写进去的大得多一个中等规模的家族图谱父母关系大概几万条祖先关系能到几十万条如果全靠人工录入成本不可想象如果让机器照着规则推一遍几分钟就出来了机器怎么知道该按什么形状去补它不知道得有人告诉它告诉的方式有两种一种是把父母关系可以串起来写成规则让机器照着规则反复套另一种是根本不告诉它规则让它自己从大量三元组里学出什么样的关系像真的前者是符号路线后者是向量路线把关系写成规则符号路线里最朴素的一门语言叫它只有三种东西一种面向知识库的声明式逻辑语言声明式的意思是你只描述逻辑关系不写执行步骤具体怎么匹配按什么顺序推交给引擎原子最基本的谓词单位形如父女李刚李倩说的是这几个对象之间成立某种关系规则由头部和体部组成写成符号读作意思是体部成立头部就成立事实已知为真的具体数据也就是图谱里已经有那些三元组三者凑在一起就构成了规则库写规则的时候变量用这样的占位符祖先父母祖先祖先祖先第一行说直接是父母关系就算祖先第二行说如果是的祖先又是的祖先那也是的祖先两行合起来任意长度的祖先链都能推出来这就是支持递归的地方拿开头那三个人走一遍库里最初只有两条事实父母李刚李倩父母李倩李伟第一轮第一条规则匹配上推出两条祖先李刚李倩祖先李倩李伟这两条被写回库里第二轮第二条规则有了材料祖先李刚李倩和祖先李倩李伟中间的李倩对上推出祖先李刚李伟这一条又写回库里第三轮再拿三条祖先事实去匹配一条新的也推不出来循环停在这里库里最后有五条事实原来的两条加上推出来的三条事实库当前已知的全部事实匹配体部用变量去库里找组合生成新事实按头部填出新的三元组写回事实库回到再来一轮每一轮都可能带出新事实而这些新事实又会让下一轮匹配出更多组合某一轮再也生不出新事实了停此时的结果叫事实闭包推理是一个循环每一轮把新推出来的事实塞回库下一轮又能拿它们当条件停下来的那一刻所有能推的都推完了判断能不能停很简单这一轮如果没有产生任何库里没有的事实就说明到达不动点了到达不动点之后的结果叫事实闭包等于初始事实并上所有推导出来的新事实整个过程是匹配生成回灌的闭环它不关心顺序也不关心效率只要规则写对了最后一定能收敛到同一个闭包这一点很像数学里的求极限过程怎么走无所谓落点只有一个如果那么的写法偏逻辑工程上更常见的是另一种形式叫产生式规则名字来自数学家最早指波斯特机里的替换规则后来被扩大到很多领域形式语言里的文法规则也叫产生式道理一样从一个串换到另一个串它的结构只有两段前面是前提也叫条件后面是结论也叫动作前提可以用组合写成日常语言就是如果满足这些条件那么执行这个动作生活里到处都是这种句子天下雨地上湿是原因推出结果如果找到钥匙就能打开门是前提推出操作只要坚持锻炼身体就会健康是条件推出结论人们习惯用因果条件情境这些句式描述世界产生式规则把这套习惯形式化了推理的过程叫正向链式推理扫描当前所有事实看有没有哪条规则的前提被完全满足满足了就执行它的结论把结论并进事实库然后重新扫描直到没有新的结论产生这个节奏和一模一样区别只在写法用谓词和变量产生式用键值对和布尔组合工程上更愿意用后者因为它容易配一个规则编辑器让业务人员自己改大前提与小前提所有人都会死是大前提张三是人是小前提结论是张三会死产生式规则扮演的正是大前提的角色事实库提供小前提这套三段论的结构两千年前就有了规则一多就慢规则少的时候逐条扫描没问题规则上千条事实几十万条的时候每一轮都从头比对一遍代价就上去了更糟的是大部分比对是白做的上一轮已经确认不匹配的组合这一轮事实只多了一条凭什么要重算算法就是冲着这件事来的名字来自拉丁语意思是网它把规则编译成一张判别网络事实从根节点灌进去沿着网络往下走走到哪个动作节点就触发哪条规则规则编译成一张网事实从上往下走根节点是否周末是否晚上是否晴朗动作去公园动作睡觉这条分路不走事实是周末晴朗每读入一个事实就在网上推进一步条件不满足的分支立刻终止不做无谓的枚举深色那条是这次匹配真正走过的路右边整条分支没有进入因为是否晚上这个条件在当前事实里根本不成立速度来自两个特性一个是时间冗余性事实在两次推理之间只变化一点点上一轮算过的中间结果大部分还能用缓存下来不必重来另一个是结构相似性多条规则往往有共同的子条件比如是否周末这一条被五条规则用到就只需要建一个节点五条规则共享网络内部还分两层网络负责单个条件的判定一个节点对一个条件不满足就拦下网络负责把多个条件连起来判断它们是否同时成立两层叠加构成了完整的判别网剩下的工作是调度匹配成功的规则先进一张议程表排队等着至于谁先执行可以按优先级也可以按新近程度条件一旦不再满足规则就从表里撤下来这套网络加缓存的设计把匹配从每轮全量扫描改成了增量更新规则数量和事实数量都上去之后这个差别非常明显概念层面的推断前面几种规则推的都是关系比如谁是谁的祖先另有一类推理发生在概念层面推的是这个东西属于哪一类本体就管这个它把领域里的概念属性关系整理成一套共享的体系再用描述逻辑把概念之间的包含关系写清楚举个最简单的例子本体里有一条规则说工作是医生的人属于医务工作者库里存了张三的工作是医生那么张三是医务工作者这条结论不用人写推一遍就有了这个结论看起来平淡作用却不小用户在搜索框里输入医务工作者如果库里只存了医生这个词关键词匹配一条都命中不了有了本体系统知道医生是医务工作者的子类把概念向上泛化一层结果就出来了本体推理利用概念属性关系之间的逻辑关系做语义推断最常见的落地形式基于描述逻辑它既能依据显式规则推也能依据概念之间的包含关系推跑起来需要三样东西配齐本体提供知识也就是这套概念体系规则提供逻辑也就是什么蕴含什么推理引擎提供机制负责把规则在事实上跑一遍缺一样都转不起来落到应用上最常见的是三件事补全图谱里缺失的概念归属在问答系统里做语义层面的答案推导把关键词搜索升级成概念搜索这三件事本质上是一件事都是把说得不一样但意思一样的东西对上换一条路让数字说话符号路线有个绕不开的门槛规则得有人写家族关系好写医学诊断金融合规电商促销这些领域的规则写起来又慢又容易漏规则一多互相还可能打架谁先谁后都要研究图谱规模一大人工维护规则的成本会超过它省下的成本于是另一条路出现了不给规则给数据让模型从大量三元组里自己学出一套向量然后用向量之间的距离判断关系成不成立这条路下面又分三支区别在于学什么图嵌入学节点节点向量比相似度知识图谱嵌入学实体和关系实体关系实体评分函数给三元组打分分数高就认为成立图神经网络多层聚合聚合邻居再送分类器三支的共同动作把符号换成向量把推理换成向量空间里的计算三条路线的分岔点在学什么只学节点学实体加关系还是连邻居的结构一起学决定了能回答哪一类问题三条路线是递进的图嵌入只给节点一个向量能回答这两个节点像不像知识图谱嵌入把关系也变成向量能回答这个三元组成不成立图神经网络连邻居的结构一起学能回答这个节点属于哪一类对图信息的利用一层比一层充分打分与相似度先看最简单的一支给每个节点一个向量然后拿余弦相似度去量省域邻居关系是个很小的例子四个省内蒙古甘肃宁夏陕西前三者两两相邻陕西跟谁都不挨着按邻居关系建图内蒙古甘肃宁夏陕西陕西与谁都不连边学出二维向量内蒙古甘肃宁夏陕西向量只有两维是为了画出来算相似度内蒙古甘肃判定相邻宁夏陕西判定相邻按图陕西谁都不挨着但向量说它和宁夏很像相似度高只说明像不等于有这条边这是这一支方法的软肋前两步都顺第三步暴露问题相似度高被当成关系成立可陕西与宁夏本来并不相邻向量方法给的是概率意义上的像给不出逻辑意义上的是这个案例很值得琢磨它把向量路线的长处和短处都摆在了桌面上长处是快四个省四个向量算两两相似度只是几次乘加换成几十万实体上千种关系同样的操作也能在线完成不用遍历任何路径短处是它只认像不认是不是相似度和没有本质区别都是挺像的可一个是真有边一个是没有阈值卡在哪儿全靠经验卡低了误报卡高了漏报知识图谱嵌入就是为了缓解这个问题它不只学节点还把关系也变成向量然后定义一个评分函数给三元组打分分数超过多少算成立仍然是阈值但至少模型见过关系这个东西判断会比纯相似度准一些前面讲过的就是最简单的评分函数头实体向量加上关系向量看看离尾实体近不近近就说明这个三元组成立的可能性大用双线性变换用卷积思路都一样换的是打分方式用图神经网络推理图神经网络把邻居也拉进来了它不满足于给每个节点单独一个向量还要让这个向量吸收邻域的信息层数越多吸收得越广社交网络上的兴趣推断是个典型场景六个用户到节点是用户边是好友关系每个用户身上挂一个三维的兴趣标记分别是体育音乐科技节点用户边好友节点特征矩阵用户体育音乐科技的兴趣集中在体育同时关注体育和音乐和的标签缺失但它们的邻居有特征做几层聚合就能把的类别补出来左边是图右边是特征真正让推断成为可能的是的好友关注体育和音乐这条结构信息做法是先用少量已知标签训练再拿学到的表示去预测没有标签的节点传播公式和是同一条只是这里要拿表示去做分类空手道俱乐部社交图是个常用的小例子个节点类标签用单位矩阵当节点特征两层卷积训练轮测试准确率这个结果说明结构信息本身携带了大量判别力哪怕节点特征只是一张单位矩阵为什么这一支算推理严格说它做的是节点分类不是逻辑蕴含但在下游任务里给一个缺失兴趣标签的用户补上标签效果就等于从已有知识推出了新知识工程上不太区分这两件事能补上就算推理一跳不够前面几种方法回答的都是这两个东西之间有没有关系可有一类问题答案不在一条边上问成龙主演电影的导演是谁先在库里找成龙主演找到新警察故事再从新警察故事出发找导演找到陈木胜两跳拼起来才是答案成龙主演的电影导演是谁成龙主演新警察故事导演陈木胜第一跳第二跳同一个问题还有别的答案路径成龙主演尖峰时刻导演布莱特拉特纳路径不止一条跳数越多可选路径呈指数增长这也是多跳推理难的地方答案藏在两跳之外这类问题的好处是能给出路径人要复核的时候顺着这条链看一遍就行不用信模型一跳能解决的问题查一次邻接表就够了两跳要查两次三跳三次看起来只是多查几次实际难度差得很远因为每一步都有多个候选走错一步后面全白走处理办法有三种思路各不相同一种把走路当成决策来学一种在传播过程中边算边剪枝一种干脆放弃唯一答案改用概率分布来描述把推理当成走路的想法是既然推理是一步一步走出来的那就把它当成一个决策过程来训练站在某个实体上下一步该沿哪条关系走这是一个选择选对了离答案更近选错了绕远路这种状态动作奖励的结构正是强化学习擅长的高层策略拆子目标先找谁的朋友低层策略选具体动作沿哪条边跳知识图谱环境跳过去看落到哪个实体子目标动作奖励反馈状态刷新高层决定这一步要干什么低层决定这一步往哪走两层各学各的靠子目标串起来两层策略各管一段高层把一个大问题拆成几个子任务低层负责在每个子任务里做具体跳转奖励从环境回流同时更新两层的参数状态是当前站的位置用实体和关系的向量拼出来可以直接借用这类嵌入的结果动作是沿着某种关系跳到下一个实体奖励来自结果走到正确答案给正分走偏了给负分层次化是它的关键设计一次跳到位很难学拆成先找人再找电影最后判断三个子任务就好学多了子任务完成的结果会回传给上层上层据此决定下一个子目标一个简化实验很能说明问题用随机策略在一个人物电影的小图谱上跑回合奖励均值标准差均值接近零说明有对有错互相抵消标准差接近说明结果极不稳定这组数字是在说一件事没有学出来的策略多跳推理就退化成随机游走得靠策略网络学出来边传边剪另一条路是图神经网络的多跳版叫它不改推理的方式改的是传播的范围普通的图神经网络每一层让所有节点和所有邻居交换信息三跳之后参与计算的节点数量会膨胀得很快大部分节点跟当前问题毫无关系却照样占用算力的做法是传一轮剪一次先按常规做一轮消息传递然后按节点的重要性打分分数低于阈值的邻居消息不再往下传拿一次具体的传看看节点收到三个邻居传来的分量每个数代表那个邻居这条消息值多少阈值定在第三个分量低于线抹成零不参与下一跳前两个留着同一个阈值下节点的三个分量都过了线一个不动节点这一轮压根没收到消息保持全零三个节点收到的消息按分量看谁该留阈值节点全是没收到消息节点第三项低于阈值抹掉节点全部通过保持不变阈值像一道筛子过不去的分量直接归零不参与下一跳的更新留下的还是主要信号扔掉的是噪声重要的判定依据有两个一个是节点本身的重要性可以参考度数在图里的位置也可以让模型学另一个是当前推理目标每一跳都要回头看看自己正在找什么跟目标无关的分支就断掉阈值控制宽松程度调大剪得狠算得快但可能把有用的证据也剪掉调小剪得轻接近普通这个参数没有通用值得按任务调好处是明显的参与下一跳计算的分量少了但保留下来的都是权重高的那些相当于用一点精度换大量的算力允许不确定还有一种更根本的改法前面所有方法都默认答案是唯一的一个实体或者一组实体可现实里的问题经常不是这样成龙主演的电影中哪些是动作片答案可能是一批也可能一个都没有先想一件日常的事有人说这个人大概四十岁你会怎么记记成一个点就把大概丢了记成到这一段不确定才装得进去向量方法一直用的是前一种一个实体就是空间里的一个点问它在不在某个区域答案只有是或否可大概这种状态点表示不了把点换成一段实体成了一条有峰值的分布曲线某个位置最可能往两边逐渐变稀用分布装这个形状它的两个参数正好对应峰在哪摊多宽当答案是一个点就这一个坐标问它在不在这个范围答是或者否中间没有别的话可说求非整条空间减掉一个点剩下的几乎是全部用不上当答案是一段分布中心最可能越往两边越稀边界由两个参数决定求非减掉这一块剩下的还是有形状的东西能继续参与运算点只能回答在不在分布能回答有多可能逻辑里的非要的正是后一种这是绕开那堵墙的地方这么改带来一个实际的好处它能处理逻辑里的非非这个操作在嵌入方法里一直很难做给定一个区域求它的补集如果区域只是一个点补集就是整个空间减掉一个点几乎等于全空间没法用可如果区域是一块有边界的分布补集就是这块之外的部分是可以算出来的是第一个把存在交或非四种逻辑操作全部支持起来的嵌入方法在此之前嵌入类方法长期卡在非上只能绕着走代价是训练更难分布的参数不是随便取的要保证向量分布在单位超球面上足够均匀否则模型会挤在一个角落过拟合所以损失函数里除了语义匹配和结构匹配还有一项专门管分布的均匀性这个小实验只能看出趋势损失从降到逐步下降说明优化在起作用真实场景下的效果得在标准数据集上比三类方法怎么配三条路线的差异一张表能看全维度规则与本体推理向量推理多跳推理知识表示符号规则与本体概念低维稠密向量向量加路径搜索推理依据逻辑蕴含与模式匹配向量距离与评分函数多次跳跃的路径证据可解释性强能直接给出用了哪条规则弱只能说向量很近较强能给出推理路径代表方法本体推理适用场景规则明确的业务领域大规模图谱的快速打分需要深层证据链的问答实际系统里很少只用一种常见的搭配是向量方法负责召回规则和路径方法负责校验用户问一个问题先用嵌入模型把候选实体捞一批出来速度快召回率高但里面混着错的再拿规则去筛不符合硬性约束的剔掉最后用多跳路径把证据链拼出来给人看这么配的理由是三种方法的短板正好互补向量的短板是不精确规则的短板是覆盖不全多跳的短板是慢让向量做粗筛让规则做硬约束让路径做解释各干各擅长的那段别指望规则能覆盖一切规则写不全是这类系统的常态真实业务里的例外太多写到后面规则之间互相冲突维护成本会突然跳上去到了那个阶段通常的做法是把一部分规则换成模型用数据兜住那些说不清的边界情况自测推理为什么要迭代到不动点因为一条规则的结论可能是另一条规则的前提祖先关系就是典型先由父母关系推出一层祖先再由这层祖先推出两层三层每一轮都要把新事实写回库里下一轮才用得上等到某一轮再也生不出新事实说明所有能推的都推完了此时的结果叫事实闭包的速度与规则数目无关靠的是什么靠两件事一是把规则编译成共享的判别网络多条规则里相同的条件只建一个节点规则再多公共部分也不重复计算二是缓存中间结果事实只变一点点的时候上一轮算过的匹配结果可以复用不必从头再来四省份那个例子里向量方法错在哪它把像当成了是陕西的向量和宁夏的向量余弦相似度模型据此判定相邻可图上陕西跟谁都不挨着相似度衡量的是向量方向接近不是逻辑上存在这条边阈值定在哪里本质上是个经验选择为什么说多跳推理比单跳难得多因为每一步都有多个候选单跳只要查一次邻接表多跳的搜索空间随跳数指数增长走错一步后面的路全废而且模型在中间步骤拿不到监督信号不知道这一步走对没走对里高层策略和低层策略分别管什么高层管这一步要完成什么把一个大问题拆成几个子目标低层管这一步往哪走在给定子目标下选具体的边两层分开学靠子目标串起来奖励同时回流更新两边的阈值调大调小各有什么后果调大剪得狠算得快但可能把有用的证据一起剪掉精度下降调小接近普通精度保住了算力没省下来这个值没有通用解得按图谱的稠密程度和任务的容错度来定为什么能处理逻辑非因为它把实体表示成一团分布而不是一个点一个点求补集几乎是全空间没法用一块有边界的分布求补集就是这块之外的部分边界清楚能算这是它区别于此前所有嵌入方法的地方为什么实际系统要把三种方法混着用短板互补向量的短板是不精确但快召回高规则的短板是写不全但一旦命中就是硬结论多跳的短板是慢但能给出路径常见的搭配是向量召回规则校验路径解释',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2026-11-07 02:37:15',
+  postMainColor: '',
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+      win.saveToLocal = {
+        set: (key, value, ttl) => {
+          if (ttl === 0) return
+          const now = Date.now()
+          const expiry = now + ttl * 86400000
+          const item = {
+            value,
+            expiry
+          }
+          localStorage.setItem(key, JSON.stringify(item))
+        },
+      
+        get: key => {
+          const itemStr = localStorage.getItem(key)
+      
+          if (!itemStr) {
+            return undefined
+          }
+          const item = JSON.parse(itemStr)
+          const now = Date.now()
+      
+          if (now > item.expiry) {
+            localStorage.removeItem(key)
+            return undefined
+          }
+          return item.value
+        }
+      }
+    
+      win.getScript = (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        script.onerror = reject
+        script.onload = script.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          script.onload = script.onreadystatechange = null
+          resolve()
+        }
+
+        Object.keys(attr).forEach(key => {
+          script.setAttribute(key, attr[key])
+        })
+
+        document.head.appendChild(script)
+      })
+    
+      win.getCSS = (url, id = false) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onerror = reject
+        link.onload = link.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          link.onload = link.onreadystatechange = null
+          resolve()
+        }
+        document.head.appendChild(link)
+      })
+    
+      win.activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#18171d')
+        }
+      }
+      win.activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#f7f9fe')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          const isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches
+          const isLightMode = window.matchMedia('(prefers-color-scheme: light)').matches
+          const isNotSpecified = window.matchMedia('(prefers-color-scheme: no-preference)').matches
+          const hasNoSupport = !isDarkMode && !isLightMode && !isNotSpecified
+
+          if (t === undefined) {
+            if (isLightMode) activateLightMode()
+            else if (isDarkMode) activateDarkMode()
+            else if (isNotSpecified || hasNoSupport) {
+              const now = new Date()
+              const hour = now.getHours()
+              const isNight = hour <= 6 || hour >= 18
+              isNight ? activateDarkMode() : activateLightMode()
+            }
+            window.matchMedia('(prefers-color-scheme: dark)').addListener(e => {
+              if (saveToLocal.get('theme') === undefined) {
+                e.matches ? activateDarkMode() : activateLightMode()
+              }
+            })
+          } else if (t === 'light') activateLightMode()
+          else activateDarkMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+      const detectApple = () => {
+        if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+          document.documentElement.classList.add('apple')
+        }
+      }
+      detectApple()
+    })(window)</script><meta name="generator" content="Hexo 7.0.0"></head><body data-type="anzhiyu"><div id="web_bg"></div><div id="an_music_bg"></div><div id="loading-box" onclick="document.getElementById(&quot;loading-box&quot;).classList.add(&quot;loaded&quot;)"><div class="loading-bg"><img class="loading-img nolazyload" alt="加载头像" src="/img/avatar.jpg"/><div class="loading-image-dot"></div></div></div><script>const preloader = {
+  endLoading: () => {
+    document.getElementById('loading-box').classList.add("loaded");
+  },
+  initLoading: () => {
+    document.getElementById('loading-box').classList.remove("loaded")
+  }
+}
+window.addEventListener('load',()=> { preloader.endLoading() })
+setTimeout(function(){preloader.endLoading();},10000)
+
+if (true) {
+  document.addEventListener('pjax:send', () => { preloader.initLoading() })
+  document.addEventListener('pjax:complete', () => { preloader.endLoading() })
+}</script><link rel="stylesheet" href="https://cdn.cbd.int/anzhiyu-theme-static@1.1.10/progress_bar/progress_bar.css"/><script async="async" src="https://cdn.cbd.int/pace-js@1.2.4/pace.min.js" data-pace-options="{ &quot;restartOnRequestAfter&quot;:false,&quot;eventLag&quot;:false}"></script><div class="post" id="body-wrap"><header class="not-top-img" id="page-header"><nav id="nav"><div id="nav-group"><span id="blog_name"><a id="site-name" href="/" accesskey="h"><div class="title">qiuxz's Blog</div><i class="anzhiyufont anzhiyu-icon-house-chimney"></i></a></span><div class="mask-name-container"><div id="name-container"><a id="page-name" href="javascript:anzhiyu.scrollToDest(0, 500)">PAGE_NAME</a></div></div><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="javascript:void(0);"><span> 文章</span></a><ul class="menus_item_child"><li><a class="site-page child faa-parent animated-hover" href="/archives/"><i class="anzhiyufont anzhiyu-icon-box-archive faa-tada" style="font-size: 0.9em;"></i><span> 隧道</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><span> 关于</span></a><ul class="menus_item_child"><li><a class="site-page child faa-parent animated-hover" href="/other/about/"><i class="anzhiyufont anzhiyu-icon-paper-plane faa-tada" style="font-size: 0.9em;"></i><span> 关于本人</span></a></li><li><a class="site-page child faa-parent animated-hover" href="javascript:toRandomPost()"><i class="anzhiyufont anzhiyu-icon-shoe-prints1 faa-tada" style="font-size: 0.9em;"></i><span> 随便逛逛</span></a></li></ul></div></div></div><div id="nav-right"><div class="nav-button" id="randomPost_button"><a class="site-page" onclick="toRandomPost()" title="随机前往一个文章" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-dice"></i></a></div><input id="center-console" type="checkbox"/><label class="widget" for="center-console" title="中控台" onclick="anzhiyu.switchConsole();"><i class="left"></i><i class="widget center"></i><i class="widget right"></i></label><div id="console"><div class="console-card-group-reward"><ul class="reward-all console-card"><li class="reward-item"><a href="https://npm.elemecdn.com/anzhiyu-blog@1.1.6/img/post/common/qrcode-weichat.png" target="_blank"><img class="post-qr-code-img" alt="微信" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://npm.elemecdn.com/anzhiyu-blog@1.1.6/img/post/common/qrcode-weichat.png"/></a><div class="post-qr-code-desc">微信</div></li><li class="reward-item"><a href="https://npm.elemecdn.com/anzhiyu-blog@1.1.6/img/post/common/qrcode-alipay.png" target="_blank"><img class="post-qr-code-img" alt="支付宝" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://npm.elemecdn.com/anzhiyu-blog@1.1.6/img/post/common/qrcode-alipay.png"/></a><div class="post-qr-code-desc">支付宝</div></li></ul></div><div class="console-card-group"><div class="console-card-group-left"><div class="console-card" id="card-newest-comments"><div class="card-content"><div class="author-content-item-tips">互动</div><span class="author-content-item-title"> 最新评论</span></div><div class="aside-list"><span>正在加载中...</span></div></div></div><div class="console-card-group-right"><div class="console-card tags"><div class="card-content"><div class="author-content-item-tips">兴趣点</div><span class="author-content-item-title">寻找你感兴趣的领域</span><div class="card-tags"><div class="item-headline"></div><div class="card-tag-cloud"><a href="/tags/YJango%E8%A7%86%E9%A2%91%E6%95%B4%E7%90%86/" style="font-size: 1.05rem;">YJango视频整理<sup>11</sup></a><a href="/tags/%E4%B8%AA%E4%BA%BA%E6%88%90%E9%95%BF/" style="font-size: 1.05rem;">个人成长<sup>3</sup></a><a href="/tags/%E5%AD%A6%E4%B9%A0/" style="font-size: 1.05rem;">学习<sup>13</sup></a><a href="/tags/%E6%84%9F%E6%82%9F/" style="font-size: 1.05rem;">感悟<sup>1</sup></a><a href="/tags/%E6%95%99%E7%A8%8B/" style="font-size: 1.05rem;">教程<sup>9</sup></a><a href="/tags/%E6%9C%AA%E5%88%86%E7%B1%BB/" style="font-size: 1.05rem;">未分类<sup>6</sup></a><a href="/tags/%E6%9E%B6%E6%9E%84/" style="font-size: 1.05rem;">架构<sup>1</sup></a><a href="/tags/%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1/" style="font-size: 1.05rem;">知识图谱<sup>9</sup></a><a href="/tags/%E8%80%83%E8%AF%95/" style="font-size: 1.05rem;">考试<sup>5</sup></a></div></div><hr/></div></div><div class="console-card history"><div class="item-headline"><i class="anzhiyufont anzhiyu-icon-box-archiv"></i><span>文章</span></div><div class="card-archives"><div class="item-headline"><i class="anzhiyufont anzhiyu-icon-archive"></i><span>归档</span><a class="card-more-btn" href="/archives/" title="查看更多">
+    <i class="anzhiyufont anzhiyu-icon-angle-right"></i></a></div><ul class="card-archive-list"><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2026/11/"><span class="card-archive-list-date">十一月 2026</span><div class="card-archive-list-count-group"><span class="card-archive-list-count">15</span><span>篇</span></div></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2026/10/"><span class="card-archive-list-date">十月 2026</span><div class="card-archive-list-count-group"><span class="card-archive-list-count">3</span><span>篇</span></div></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2026/09/"><span class="card-archive-list-date">九月 2026</span><div class="card-archive-list-count-group"><span class="card-archive-list-count">15</span><span>篇</span></div></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2026/08/"><span class="card-archive-list-date">八月 2026</span><div class="card-archive-list-count-group"><span class="card-archive-list-count">4</span><span>篇</span></div></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2026/06/"><span class="card-archive-list-date">六月 2026</span><div class="card-archive-list-count-group"><span class="card-archive-list-count">4</span><span>篇</span></div></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2026/05/"><span class="card-archive-list-date">五月 2026</span><div class="card-archive-list-count-group"><span class="card-archive-list-count">1</span><span>篇</span></div></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2026/03/"><span class="card-archive-list-date">三月 2026</span><div class="card-archive-list-count-group"><span class="card-archive-list-count">1</span><span>篇</span></div></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2025/12/"><span class="card-archive-list-date">十二月 2025</span><div class="card-archive-list-count-group"><span class="card-archive-list-count">2</span><span>篇</span></div></a></li></ul></div><hr/></div></div></div><div class="button-group"><div class="console-btn-item"><a class="darkmode_switchbutton" title="显示模式切换" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-moon"></i></a></div><div class="console-btn-item" id="consoleHideAside" onclick="anzhiyu.hideAsideBtn()" title="边栏显示控制"><a class="asideSwitch"><i class="anzhiyufont anzhiyu-icon-arrows-left-right"></i></a></div></div><div class="console-mask" onclick="anzhiyu.hideConsole()" href="javascript:void(0);"></div></div><div class="nav-button" id="nav-totop"><a class="totopbtn" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-arrow-up"></i><span id="percent" onclick="anzhiyu.scrollToDest(0,500)">0</span></a></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);" title="切换"><i class="anzhiyufont anzhiyu-icon-bars"></i></a></div></div></div></nav></header><main id="blog-container"><div class="column-nav"><div class="column-nav-inner"><div class="column-nav-title">知识图谱教程</div><nav class="column-nav-list"><a class="column-link" href="https://qiuxzh.github.io/other/QUT/%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E6%95%99%E7%A8%8B/00-%E6%95%99%E7%A8%8B%E6%80%BB%E8%A7%88/" style="padding-left:8px">00 教程总览</a><a class="column-link" href="https://qiuxzh.github.io/other/QUT/%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E6%95%99%E7%A8%8B/01-%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E6%A6%82%E8%BF%B0/" style="padding-left:8px">01 知识图谱概述</a><a class="column-link" href="https://qiuxzh.github.io/other/QUT/%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E6%95%99%E7%A8%8B/02-%E7%9F%A5%E8%AF%86%E8%A1%A8%E7%A4%BA%E6%8A%80%E6%9C%AF/" style="padding-left:8px">02 知识表示技术</a><a class="column-link" href="https://qiuxzh.github.io/other/QUT/%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E6%95%99%E7%A8%8B/03-%E7%9F%A5%E8%AF%86%E6%8A%BD%E5%8F%96%E6%8A%80%E6%9C%AF/" style="padding-left:8px">03 知识抽取技术</a><a class="column-link" href="https://qiuxzh.github.io/other/QUT/%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E6%95%99%E7%A8%8B/04-%E7%9F%A5%E8%AF%86%E8%9E%8D%E5%90%88%E6%8A%80%E6%9C%AF/" style="padding-left:8px">04 知识融合技术</a><a class="column-link" href="https://qiuxzh.github.io/other/QUT/%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E6%95%99%E7%A8%8B/05-%E7%9F%A5%E8%AF%86%E5%AD%98%E5%82%A8%E6%8A%80%E6%9C%AF/" style="padding-left:8px">05 知识存储技术</a><a class="column-link" href="https://qiuxzh.github.io/other/QUT/%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E6%95%99%E7%A8%8B/06-%E5%9B%BE%E8%A1%A8%E7%A4%BA%E5%AD%A6%E4%B9%A0%E4%B8%8E%E5%9B%BE%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/" style="padding-left:8px">06 图表示学习与图神经网络</a><a class="column-link active" href="https://qiuxzh.github.io/other/QUT/%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E6%95%99%E7%A8%8B/07-%E7%9F%A5%E8%AF%86%E6%8E%A8%E7%90%86%E6%8A%80%E6%9C%AF/" style="padding-left:8px">07 知识推理技术</a><a class="column-link" href="https://qiuxzh.github.io/other/QUT/%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E6%95%99%E7%A8%8B/08-%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E8%A1%8D%E7%94%9F%E6%8A%80%E6%9C%AF/" style="padding-left:8px">08 知识图谱衍生技术</a></nav></div></div><div class="layout" id="content-inner"><div id="post"><div id="post-info"><div id="post-firstinfo"><div class="meta-firstline"><a class="post-meta-original">原创</a><span class="post-meta-categories"><span class="post-meta-separator"></span><i class="anzhiyufont anzhiyu-icon-inbox post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E6%95%99%E7%A8%8B/" itemprop="url">知识图谱教程</a></span><span class="article-meta tags"><a class="article-meta__tags" href="/tags/%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1/" tabindex="-1" itemprop="url"> <span> <i class="anzhiyufont anzhiyu-icon-hashtag"></i>知识图谱</span></a><a class="article-meta__tags" href="/tags/%E6%95%99%E7%A8%8B/" tabindex="-1" itemprop="url"> <span> <i class="anzhiyufont anzhiyu-icon-hashtag"></i>教程</span></a></span></div></div><h1 class="post-title" itemprop="name headline">07 知识推理技术</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="anzhiyufont anzhiyu-icon-calendar-days post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" itemprop="dateCreated datePublished" datetime="2026-11-06T19:02:00.000Z" title="发表于 2026-11-06 19:02:00">2026-11-06</time><span class="post-meta-separator"></span><i class="anzhiyufont anzhiyu-icon-history post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" itemprop="dateCreated datePublished" datetime="2026-11-07T02:37:15.496Z" title="更新于 2026-11-07 02:37:15">2026-11-07</time></span></div><div class="meta-secondline"></div></div></div><article class="post-content" id="article-container" itemscope itemtype="https://qiuxzh.github.io/other/QUT/%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E6%95%99%E7%A8%8B/07-%E7%9F%A5%E8%AF%86%E6%8E%A8%E7%90%86%E6%8A%80%E6%9C%AF/"><header><a class="post-meta-categories" href="/categories/%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E6%95%99%E7%A8%8B/" itemprop="url">知识图谱教程</a><a href="/tags/%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1/" tabindex="-1" itemprop="url">知识图谱</a><a href="/tags/%E6%95%99%E7%A8%8B/" tabindex="-1" itemprop="url">教程</a><h1 id="CrawlerTitle" itemprop="name headline">07 知识推理技术</h1><span itemprop="author" itemscope itemtype="http://schema.org/Person">qiuxz</span><time itemprop="dateCreated datePublished" datetime="2026-11-06T19:02:00.000Z" title="发表于 2026-11-06 19:02:00">2026-11-06</time><time itemprop="dateCreated datePublished" datetime="2026-11-07T02:37:15.496Z" title="更新于 2026-11-07 02:37:15">2026-11-07</time></header><p>前六章建起来的图谱，只装了已经写下来的事实。这一章处理的是另一类知识：明明成立、但从没被写进去的那些。补它的办法有两种，一种靠规则，一种靠数字。</p>
+<h2 id="库里没有的那条边"><a href="#库里没有的那条边" class="headerlink" title="库里没有的那条边"></a>库里没有的那条边</h2><blockquote>
+<p>库里存了两条事实：李刚是李倩的父亲，李倩是李伟的母亲。</p>
+<p>有人问，李刚和李伟是什么关系。人一秒就能答，祖孙。</p>
+<p>机器答不出来。它在库里找“李刚—李伟”这条边，从头找到尾，没有。它会如实回答“不知道”。</p>
+</blockquote>
+<svg width="100%" style="max-width:860px;height:auto" viewBox="0 0 860 340" role="img" aria-label="家族关系图中缺失的一条边，以及由规则推出的结论">
+  <rect width="860" height="340" fill="#fdfbf6"></rect>
+  <text x="36" y="34" font-size="11.5" font-weight="600" fill="#8a8175">库里存的三个人</text>
+  <line x1="130" y1="111" x2="130" y2="179" stroke="#2f6f8f" stroke-width="2"></line>
+  <line x1="152" y1="196" x2="288" y2="155" stroke="#2f6f8f" stroke-width="2"></line>
+  <line x1="150" y1="96" x2="288" y2="134" stroke="#b4552d" stroke-width="1.6" stroke-dasharray="6 4"></line>
+  <circle cx="130" cy="85" r="26" fill="#e9f2f6" stroke="#2f6f8f"></circle>
+  <text x="130" y="90" font-size="12" fill="#1f4d64" text-anchor="middle">李刚</text>
+  <circle cx="130" cy="205" r="26" fill="#e9f2f6" stroke="#2f6f8f"></circle>
+  <text x="130" y="210" font-size="12" fill="#1f4d64" text-anchor="middle">李倩</text>
+  <circle cx="310" cy="145" r="26" fill="#e9f2f6" stroke="#2f6f8f"></circle>
+  <text x="310" y="150" font-size="12" fill="#1f4d64" text-anchor="middle">李伟</text>
+  <text x="172" y="150" font-size="10" fill="#6d747e">父女</text>
+  <text x="222" y="196" font-size="10" fill="#6d747e">母子</text>
+  <text x="222" y="92" font-size="9.5" fill="#8f3d1c" text-anchor="middle">库里没有这条边</text>
+  <text x="36" y="300" font-size="10.5" fill="#6d747e">两条边摆在那儿，两条边之间的那段路没有人走。</text>
+  <rect x="430" y="46" width="396" height="228" rx="10" fill="#ffffff" stroke="#e4e0d6"></rect>
+  <text x="452" y="76" font-size="11.5" font-weight="600" fill="#3d444d">把规则也存进去，结论就能自己长出来</text>
+  <g font-size="11" fill="#3d444d">
+    <text x="452" y="108">事实　父女（李刚，李倩）</text>
+    <text x="452" y="132">事实　母子（李倩，李伟）</text>
+  </g>
+  <g font-size="11" fill="#1f4d64">
+    <text x="452" y="166">规则　祖先(x,z) :- 父母(x,z)</text>
+    <text x="452" y="190">　　　祖先(x,z) :- 祖先(x,y), 祖先(y,z)</text>
+  </g>
+  <g font-size="11" fill="#8f3d1c">
+    <text x="452" y="224">推出　祖先（李刚，李伟）</text>
+    <text x="452" y="248" font-size="10" fill="#8a8175">这条没被存进去，是算出来的</text>
+  </g>
+  <text x="430" y="306" font-size="10.5" fill="#6d747e">规则只写一次，凡是符合形状的组合都能套上，不用逐条录。</text>
+</svg>
+
+<p><em>左边是图谱里真实存在的两条边，右边是同一批数据的另一种用法。加上规则之后，李刚和李伟之间那条空着的路被补上了。</em></p>
+<p>这类“没写进去但确实成立”的知识，规模比写进去的大得多。一个中等规模的家族图谱，父母关系大概几万条，祖先关系能到几十万条。如果全靠人工录入，成本不可想象；如果让机器照着规则推一遍，几分钟就出来了。</p>
+<blockquote>
+<p><strong>机器怎么知道该按什么形状去补？</strong></p>
+<p>它不知道，得有人告诉它。告诉的方式有两种。一种是把“父母关系可以串起来”写成规则，让机器照着规则反复套；另一种是根本不告诉它规则，让它自己从大量三元组里学出“什么样的关系像真的”。前者是符号路线，后者是向量路线。</p>
+</blockquote>
+<h2 id="Datalog：把关系写成规则"><a href="#Datalog：把关系写成规则" class="headerlink" title="Datalog：把关系写成规则"></a>Datalog：把关系写成规则</h2><p>符号路线里最朴素的一门语言叫 Datalog。它只有三种东西。</p>
+<p><strong>Datalog</strong>　Declarative Logic Language</p>
+<p>一种面向知识库的声明式逻辑语言。声明式的意思是你只描述逻辑关系，不写执行步骤，具体怎么匹配、按什么顺序推，交给引擎。</p>
+<ul>
+<li><strong>原子</strong>：最基本的谓词单位，形如“父女（李刚，李倩）”，说的是这几个对象之间成立某种关系。</li>
+<li><strong>规则</strong>：由头部和体部组成，写成 <code>head :- body</code>，符号读作 if。意思是体部成立，头部就成立。</li>
+<li><strong>事实</strong>：已知为真的具体数据，也就是图谱里已经有那些三元组。</li>
+</ul>
+<p>三者凑在一起就构成了规则库。写规则的时候，变量用 x、y、z 这样的占位符。</p>
+<p>祖先(x, z) :- 父母(x, z)  祖先(x, z) :- 祖先(x, y), 祖先(y, z)</p>
+<p>第一行说，直接是父母关系就算祖先。第二行说，如果 x 是 y 的祖先、y 又是 z 的祖先，那 x 也是 z 的祖先。两行合起来，任意长度的祖先链都能推出来，这就是 Datalog 支持递归的地方。</p>
+<p>拿开头那三个人走一遍。库里最初只有两条事实：父母（李刚，李倩）、父母（李倩，李伟）。</p>
+<p>第一轮，第一条规则匹配上，推出两条：祖先（李刚，李倩）、祖先（李倩，李伟）。这两条被写回库里。</p>
+<p>第二轮，第二条规则有了材料。祖先（李刚，李倩）和祖先（李倩，李伟）中间的李倩对上，推出祖先（李刚，李伟）。这一条又写回库里。</p>
+<p>第三轮，再拿三条祖先事实去匹配，一条新的也推不出来。循环停在这里。库里最后有五条事实：原来的两条，加上推出来的三条。</p>
+<svg width="100%" style="max-width:860px;height:auto" viewBox="0 0 860 300" role="img" aria-label="Datalog 推理的四步循环">
+  <rect width="860" height="300" fill="#fdfbf6"></rect>
+  <defs>
+    <marker id="m72" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#8a8175"></path>
+    </marker>
+  </defs>
+  <rect x="52" y="56" width="216" height="76" rx="9" fill="#e9f2f6" stroke="#2f6f8f"></rect>
+  <text x="160" y="86" font-size="12" fill="#1f4d64" text-anchor="middle">① 事实库</text>
+  <text x="160" y="110" font-size="10" fill="#1f4d64" text-anchor="middle">当前已知的全部事实</text>
+  <rect x="322" y="56" width="216" height="76" rx="9" fill="#ffffff" stroke="#cfd6da"></rect>
+  <text x="430" y="86" font-size="12" fill="#3d444d" text-anchor="middle">② 匹配体部</text>
+  <text x="430" y="110" font-size="10" fill="#6d747e" text-anchor="middle">用变量去库里找组合</text>
+  <rect x="592" y="56" width="216" height="76" rx="9" fill="#ffffff" stroke="#cfd6da"></rect>
+  <text x="700" y="86" font-size="12" fill="#3d444d" text-anchor="middle">③ 生成新事实</text>
+  <text x="700" y="110" font-size="10" fill="#6d747e" text-anchor="middle">按头部填出新的三元组</text>
+  <g stroke="#8a8175" stroke-width="1.5" marker-end="url(#m72)">
+    <line x1="270" y1="94" x2="316" y2="94"></line>
+    <line x1="540" y1="94" x2="586" y2="94"></line>
+  </g>
+  <path d="M700,132 V196 H160 V138" fill="none" stroke="#b4552d" stroke-width="1.8" marker-end="url(#m72)"></path>
+  <text x="430" y="188" font-size="11" fill="#8f3d1c" text-anchor="middle">④ 写回事实库，回到 ① 再来一轮</text>
+  <text x="430" y="232" font-size="11" fill="#6d747e" text-anchor="middle">每一轮都可能带出新事实，而这些新事实又会让下一轮匹配出更多组合。</text>
+  <rect x="180" y="250" width="500" height="34" rx="8" fill="#f6e7c8"></rect>
+  <text x="430" y="272" font-size="11" fill="#6b5320" text-anchor="middle">某一轮再也生不出新事实了，停。此时的结果叫事实闭包</text>
+</svg>
+
+<p><em>推理是一个循环。每一轮把新推出来的事实塞回库，下一轮又能拿它们当条件。停下来的那一刻，所有能推的都推完了。</em></p>
+<p>判断能不能停很简单：这一轮如果没有产生任何库里没有的事实，就说明到达不动点了。到达不动点之后的结果叫<strong>事实闭包</strong>，等于初始事实并上所有推导出来的新事实。</p>
+<p>整个过程是“匹配—生成—回灌”的闭环。它不关心顺序，也不关心效率，只要规则写对了，最后一定能收敛到同一个闭包。这一点很像数学里的求极限，过程怎么走无所谓，落点只有一个。</p>
+<h2 id="如果……那么……"><a href="#如果……那么……" class="headerlink" title="如果……那么……"></a>如果……那么……</h2><p>Datalog 的写法偏逻辑，工程上更常见的是另一种形式，叫产生式规则。</p>
+<p>名字来自数学家 E.Post，最早指波斯特机里的替换规则，后来被扩大到很多领域。形式语言里的文法规则也叫产生式，道理一样：从一个串换到另一个串。</p>
+<p>它的结构只有两段。前面是前提，也叫条件；后面是结论，也叫动作。前提可以用 AND、OR、NOT 组合。写成日常语言就是“如果满足这些条件，那么执行这个动作”。</p>
+<p>生活里到处都是这种句子。天下雨，地上湿，是原因推出结果；如果找到钥匙，就能打开门，是前提推出操作；只要坚持锻炼，身体就会健康，是条件推出结论。人们习惯用因果、条件、情境这些句式描述世界，产生式规则把这套习惯形式化了。</p>
+<p>推理的过程叫<strong>正向链式推理</strong>。扫描当前所有事实，看有没有哪条规则的前提被完全满足；满足了就执行它的结论，把结论并进事实库；然后重新扫描，直到没有新的结论产生。</p>
+<p>这个节奏和 Datalog 一模一样，区别只在写法。Datalog 用谓词和变量，产生式用键值对和布尔组合。工程上更愿意用后者，因为它容易配一个规则编辑器，让业务人员自己改。</p>
+<blockquote>
+<p><strong>大前提与小前提。</strong>“所有人都会死”是大前提，“张三是人”是小前提，结论是“张三会死”。产生式规则扮演的正是大前提的角色，事实库提供小前提。这套三段论的结构，两千年前就有了。</p>
+</blockquote>
+<h2 id="规则一多就慢"><a href="#规则一多就慢" class="headerlink" title="规则一多就慢"></a>规则一多就慢</h2><p>规则少的时候，逐条扫描没问题。规则上千条、事实几十万条的时候，每一轮都从头比对一遍，代价就上去了。更糟的是，大部分比对是白做的：上一轮已经确认不匹配的组合，这一轮事实只多了一条，凭什么要重算？</p>
+<p>RETE 算法就是冲着这件事来的。名字来自拉丁语，意思是“网”。它把规则编译成一张判别网络，事实从根节点灌进去，沿着网络往下走，走到哪个动作节点，就触发哪条规则。</p>
+<svg width="100%" style="max-width:860px;height:auto" viewBox="0 0 860 380" role="img" aria-label="RETE 判别网络的条件节点与动作节点">
+  <rect width="860" height="380" fill="#fdfbf6"></rect>
+  <text x="36" y="34" font-size="11.5" font-weight="600" fill="#3d444d">规则编译成一张网，事实从上往下走</text>
+  <rect x="360" y="52" width="140" height="46" rx="8" fill="#1f4d64"></rect>
+  <text x="430" y="80" font-size="11.5" fill="#ffffff" text-anchor="middle">Root 根节点</text>
+  <path d="M430,98 V118 H200 V136" fill="none" stroke="#2f6f8f" stroke-width="2"></path>
+  <path d="M430,98 V118 H660 V136" fill="none" stroke="#d8d2c6" stroke-width="1.6" stroke-dasharray="5 4"></path>
+  <rect x="140" y="136" width="120" height="48" rx="8" fill="#e9f2f6" stroke="#2f6f8f" stroke-width="2"></rect>
+  <text x="200" y="157" font-size="10.5" fill="#1f4d64" text-anchor="middle">Weekend</text>
+  <text x="200" y="173" font-size="9.5" fill="#6d747e" text-anchor="middle">是否周末</text>
+  <rect x="600" y="136" width="120" height="48" rx="8" fill="#f7f5f0" stroke="#d8d2c6"></rect>
+  <text x="660" y="157" font-size="10.5" fill="#8a8175" text-anchor="middle">Night</text>
+  <text x="660" y="173" font-size="9.5" fill="#a09a8e" text-anchor="middle">是否晚上</text>
+  <line x1="200" y1="184" x2="200" y2="222" stroke="#2f6f8f" stroke-width="2"></line>
+  <rect x="140" y="222" width="120" height="48" rx="8" fill="#e9f2f6" stroke="#2f6f8f" stroke-width="2"></rect>
+  <text x="200" y="243" font-size="10.5" fill="#1f4d64" text-anchor="middle">Sunny</text>
+  <text x="200" y="259" font-size="9.5" fill="#6d747e" text-anchor="middle">是否晴朗</text>
+  <line x1="200" y1="270" x2="200" y2="304" stroke="#2f6f8f" stroke-width="2"></line>
+  <rect x="120" y="304" width="160" height="48" rx="8" fill="#eaf3ee" stroke="#3f7a5a" stroke-width="2"></rect>
+  <text x="200" y="325" font-size="10.5" fill="#2e5c44" text-anchor="middle">Go to Park</text>
+  <text x="200" y="341" font-size="9.5" fill="#3f7a5a" text-anchor="middle">动作：去公园</text>
+  <line x1="660" y1="184" x2="660" y2="304" stroke="#d8d2c6" stroke-width="1.6" stroke-dasharray="5 4"></line>
+  <rect x="580" y="304" width="160" height="48" rx="8" fill="#f7f5f0" stroke="#d8d2c6"></rect>
+  <text x="660" y="325" font-size="10.5" fill="#8a8175" text-anchor="middle">Sleep</text>
+  <text x="660" y="341" font-size="9.5" fill="#a09a8e" text-anchor="middle">动作：睡觉</text>
+  <text x="700" y="222" font-size="9.5" fill="#a09a8e">这条分路不走</text>
+  <text x="36" y="200" font-size="10" fill="#8f3d1c">事实是</text>
+  <text x="36" y="220" font-size="10" fill="#8f3d1c">周末、晴朗</text>
+  <text x="430" y="368" font-size="10.5" fill="#6d747e" text-anchor="middle">每读入一个事实就在网上推进一步，条件不满足的分支立刻终止，不做无谓的枚举。</text>
+</svg>
+
+<p><em>深色那条是这次匹配真正走过的路。右边整条分支没有进入，因为“是否晚上”这个条件在当前事实里根本不成立。</em></p>
+<p>速度来自两个特性。一个是<strong>时间冗余性</strong>，事实在两次推理之间只变化一点点，上一轮算过的中间结果大部分还能用，缓存下来，不必重来。另一个是<strong>结构相似性</strong>，多条规则往往有共同的子条件，比如“是否周末”这一条被五条规则用到，就只需要建一个节点，五条规则共享。</p>
+<p>网络内部还分两层。Alpha 网络负责单个条件的判定，一个节点对一个条件，不满足就拦下；Beta 网络负责把多个条件连起来，判断它们是否同时成立。两层叠加，构成了完整的判别网。</p>
+<p>剩下的工作是调度。匹配成功的规则先进一张议程表，排队等着。至于谁先执行，可以按优先级，也可以按新近程度。条件一旦不再满足，规则就从表里撤下来。</p>
+<p>这套“网络加缓存”的设计，把匹配从每轮全量扫描改成了增量更新。规则数量和事实数量都上去之后，这个差别非常明显。</p>
+<h2 id="概念层面的推断"><a href="#概念层面的推断" class="headerlink" title="概念层面的推断"></a>概念层面的推断</h2><p>前面几种规则推的都是关系，比如谁是谁的祖先。另有一类推理发生在概念层面，推的是“这个东西属于哪一类”。</p>
+<p>本体就管这个。它把领域里的概念、属性、关系整理成一套共享的体系，再用描述逻辑把概念之间的包含关系写清楚。</p>
+<p>举个最简单的例子。本体里有一条规则说，工作是医生的人属于医务工作者。库里存了“张三的工作是医生”。那么“张三是医务工作者”这条结论，不用人写，推一遍就有了。</p>
+<p>这个结论看起来平淡，作用却不小。用户在搜索框里输入“医务工作者”，如果库里只存了“医生”这个词，关键词匹配一条都命中不了；有了本体，系统知道医生是医务工作者的子类，把概念向上泛化一层，结果就出来了。</p>
+<p><strong>本体推理</strong>　Ontology Reasoning</p>
+<p>利用概念、属性、关系之间的逻辑关系做语义推断，最常见的落地形式基于描述逻辑。它既能依据显式规则推，也能依据概念之间的包含关系推。</p>
+<p>跑起来需要三样东西配齐。本体提供知识，也就是这套概念体系；规则提供逻辑，也就是“什么蕴含什么”；推理引擎提供机制，负责把规则在事实上跑一遍。缺一样都转不起来。</p>
+<p>落到应用上，最常见的是三件事：补全图谱里缺失的概念归属、在问答系统里做语义层面的答案推导、把关键词搜索升级成概念搜索。这三件事本质上是一件事，都是把“说得不一样但意思一样”的东西对上。</p>
+<h2 id="换一条路：让数字说话"><a href="#换一条路：让数字说话" class="headerlink" title="换一条路：让数字说话"></a>换一条路：让数字说话</h2><p>符号路线有个绕不开的门槛。规则得有人写。</p>
+<p>家族关系好写，医学诊断、金融合规、电商促销这些领域的规则，写起来又慢又容易漏。规则一多，互相还可能打架，谁先谁后都要研究。图谱规模一大，人工维护规则的成本会超过它省下的成本。</p>
+<p>于是另一条路出现了：不给规则，给数据。让模型从大量三元组里自己学出一套向量，然后用向量之间的距离判断关系成不成立。</p>
+<p>这条路下面又分三支，区别在于学什么。</p>
+<svg width="100%" style="max-width:860px;height:auto" viewBox="0 0 860 280" role="img" aria-label="向量推理的三条技术路线">
+  <rect width="860" height="280" fill="#fdfbf6"></rect>
+  <rect x="30" y="40" width="256" height="200" rx="10" fill="#ffffff" stroke="#e4e0d6"></rect>
+  <text x="158" y="70" font-size="12" font-weight="600" fill="#1f4d64" text-anchor="middle">图嵌入</text>
+  <text x="158" y="92" font-size="10" fill="#6d747e" text-anchor="middle">学节点</text>
+  <circle cx="110" cy="140" r="14" fill="#e9f2f6" stroke="#2f6f8f"></circle>
+  <circle cx="158" cy="126" r="14" fill="#e9f2f6" stroke="#2f6f8f"></circle>
+  <circle cx="206" cy="152" r="14" fill="#e9f2f6" stroke="#2f6f8f"></circle>
+  <line x1="124" y1="136" x2="144" y2="130" stroke="#b9c8d0"></line>
+  <line x1="172" y1="130" x2="192" y2="146" stroke="#b9c8d0"></line>
+  <text x="158" y="196" font-size="10" fill="#3d444d" text-anchor="middle">节点向量，比相似度</text>
+  <text x="158" y="218" font-size="10" fill="#8a8175" text-anchor="middle">DeepWalk、Node2Vec、LINE</text>
+  <rect x="302" y="40" width="256" height="200" rx="10" fill="#ffffff" stroke="#cfdde4"></rect>
+  <text x="430" y="70" font-size="12" font-weight="600" fill="#1f4d64" text-anchor="middle">知识图谱嵌入</text>
+  <text x="430" y="92" font-size="10" fill="#6d747e" text-anchor="middle">学实体和关系</text>
+  <text x="368" y="138" font-size="10" fill="#1f4d64">实体</text>
+  <text x="412" y="138" font-size="10" fill="#8f3d1c">+ 关系</text>
+  <text x="470" y="138" font-size="10" fill="#1f4d64">≈ 实体</text>
+  <text x="430" y="166" font-size="10" fill="#6d747e" text-anchor="middle">评分函数给三元组打分</text>
+  <text x="430" y="196" font-size="10" fill="#3d444d" text-anchor="middle">分数高，就认为成立</text>
+  <text x="430" y="218" font-size="10" fill="#8a8175" text-anchor="middle">TransE、RESCAL、ConvE</text>
+  <rect x="574" y="40" width="256" height="200" rx="10" fill="#ffffff" stroke="#e4e0d6"></rect>
+  <text x="702" y="70" font-size="12" font-weight="600" fill="#1f4d64" text-anchor="middle">图神经网络</text>
+  <text x="702" y="92" font-size="10" fill="#6d747e" text-anchor="middle">多层聚合</text>
+  <circle cx="660" cy="150" r="13" fill="#e9f2f6" stroke="#2f6f8f"></circle>
+  <circle cx="702" cy="132" r="13" fill="#e9f2f6" stroke="#2f6f8f"></circle>
+  <circle cx="744" cy="150" r="13" fill="#e9f2f6" stroke="#2f6f8f"></circle>
+  <line x1="673" y1="145" x2="689" y2="137" stroke="#b9c8d0"></line>
+  <line x1="715" y1="137" x2="731" y2="145" stroke="#b9c8d0"></line>
+  <text x="702" y="196" font-size="10" fill="#3d444d" text-anchor="middle">聚合邻居，再送分类器</text>
+  <text x="702" y="218" font-size="10" fill="#8a8175" text-anchor="middle">GCN、R-GCN、GAT、RGAT</text>
+  <text x="430" y="266" font-size="10.5" fill="#6d747e" text-anchor="middle">三支的共同动作：把符号换成向量，把推理换成向量空间里的计算。</text>
+</svg>
+
+<p><em>三条路线的分岔点在“学什么”。只学节点、学实体加关系、还是连邻居的结构一起学，决定了能回答哪一类问题。</em></p>
+<p>三条路线是递进的。图嵌入只给节点一个向量，能回答“这两个节点像不像”；知识图谱嵌入把关系也变成向量，能回答“这个三元组成不成立”；图神经网络连邻居的结构一起学，能回答“这个节点属于哪一类”。对图信息的利用一层比一层充分。</p>
+<h2 id="打分与相似度"><a href="#打分与相似度" class="headerlink" title="打分与相似度"></a>打分与相似度</h2><p>先看最简单的一支。给每个节点一个向量，然后拿余弦相似度去量。</p>
+<p>省域邻居关系是个很小的例子。四个省，内蒙古、甘肃、宁夏、陕西。前三者两两相邻，陕西跟谁都不挨着。</p>
+<svg width="100%" style="max-width:860px;height:auto" viewBox="0 0 860 300" role="img" aria-label="由邻接关系建图、学嵌入、再用余弦相似度判断是否相邻">
+  <rect width="860" height="300" fill="#fdfbf6"></rect>
+  <defs>
+    <marker id="m75" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#8a8175"></path>
+    </marker>
+  </defs>
+  <text x="30" y="32" font-size="11" font-weight="600" fill="#8a8175">① 按邻居关系建图</text>
+  <line x1="120" y1="84" x2="120" y2="143" stroke="#2f6f8f" stroke-width="1.6"></line>
+  <line x1="140" y1="72" x2="226" y2="110" stroke="#2f6f8f" stroke-width="1.6"></line>
+  <line x1="142" y1="165" x2="223" y2="127" stroke="#2f6f8f" stroke-width="1.6"></line>
+  <line x1="120" y1="187" x2="120" y2="233" stroke="#2f6f8f" stroke-width="1.6"></line>
+  <g fill="#e9f2f6" stroke="#2f6f8f">
+    <circle cx="120" cy="62" r="22"></circle><circle cx="245" cy="120" r="22"></circle>
+    <circle cx="120" cy="165" r="22"></circle><circle cx="120" cy="255" r="22"></circle>
+  </g>
+  <g font-size="9.5" fill="#1f4d64" text-anchor="middle">
+    <text x="120" y="66">内蒙古</text><text x="245" y="124">甘肃</text>
+    <text x="120" y="169">宁夏</text><text x="120" y="259">陕西</text>
+  </g>
+  <text x="245" y="196" font-size="9" fill="#8f3d1c" text-anchor="middle">陕西与谁</text>
+  <text x="245" y="212" font-size="9" fill="#8f3d1c" text-anchor="middle">都不连边</text>
+  <line x1="286" y1="170" x2="322" y2="170" stroke="#8a8175" stroke-width="1.4" marker-end="url(#m75)"></line>
+  <text x="340" y="32" font-size="11" font-weight="600" fill="#8a8175">② 学出二维向量</text>
+  <g font-size="10" fill="#3d444d">
+    <text x="342" y="70">内蒙古</text><text x="416" y="70">[0.2, 0.5]</text>
+    <text x="342" y="100">甘肃</text><text x="416" y="100">[0.8, 0.6]</text>
+    <text x="342" y="130">宁夏</text><text x="416" y="130">[0.4, 0.7]</text>
+    <text x="342" y="160">陕西</text><text x="416" y="160">[0.3, 0.4]</text>
+  </g>
+  <text x="342" y="196" font-size="9.5" fill="#6d747e">向量只有两维，是为了画出来</text>
+  <line x1="524" y1="170" x2="560" y2="170" stroke="#8a8175" stroke-width="1.4" marker-end="url(#m75)"></line>
+  <text x="578" y="32" font-size="11" font-weight="600" fill="#8a8175">③ 算相似度</text>
+  <rect x="578" y="52" width="252" height="66" rx="8" fill="#eaf3ee" stroke="#3f7a5a"></rect>
+  <text x="592" y="76" font-size="10" fill="#2e5c44">sim(内蒙古, 甘肃) = 0.98</text>
+  <text x="592" y="102" font-size="10" fill="#2e5c44">判定：相邻</text>
+  <rect x="578" y="128" width="252" height="66" rx="8" fill="#eaf3ee" stroke="#3f7a5a"></rect>
+  <text x="592" y="152" font-size="10" fill="#2e5c44">sim(宁夏, 陕西) = 0.96</text>
+  <text x="592" y="178" font-size="10" fill="#2e5c44">判定：相邻</text>
+  <rect x="578" y="204" width="252" height="60" rx="8" fill="#fbeee7" stroke="#b4552d"></rect>
+  <text x="592" y="228" font-size="10" fill="#8f3d1c">按图，陕西谁都不挨着</text>
+  <text x="592" y="250" font-size="10" fill="#8f3d1c">但向量说它和宁夏很像</text>
+  <text x="30" y="286" font-size="10" fill="#6d747e">相似度高只说明“像”，不等于“有这条边”。这是这一支方法的软肋。</text>
+</svg>
+
+<p><em>前两步都顺，第三步暴露问题。相似度高被当成关系成立，可陕西与宁夏本来并不相邻。向量方法给的是概率意义上的“像”，给不出逻辑意义上的“是”。</em></p>
+<p>这个案例很值得琢磨。它把向量路线的长处和短处都摆在了桌面上。</p>
+<p>长处是快。四个省、四个向量，算两两相似度只是几次乘加。换成几十万实体、上千种关系，同样的操作也能在线完成，不用遍历任何路径。</p>
+<p>短处是它只认“像”，不认“是不是”。相似度 0.96 和 0.98 没有本质区别，都是“挺像的”，可一个是真有边，一个是没有。阈值卡在哪儿，全靠经验。卡低了误报，卡高了漏报。</p>
+<p>知识图谱嵌入就是为了缓解这个问题。它不只学节点，还把关系也变成向量，然后定义一个评分函数给三元组打分。分数超过多少算成立，仍然是阈值，但至少模型见过“关系”这个东西，判断会比纯相似度准一些。</p>
+<p>前面讲过的 TransE 就是最简单的评分函数：头实体向量加上关系向量，看看离尾实体近不近。近就说明这个三元组成立的可能性大。RESCAL 用双线性变换，ConvE 用卷积，思路都一样，换的是打分方式。</p>
+<h2 id="用图神经网络推理"><a href="#用图神经网络推理" class="headerlink" title="用图神经网络推理"></a>用图神经网络推理</h2><p>图神经网络把邻居也拉进来了。它不满足于给每个节点单独一个向量，还要让这个向量吸收邻域的信息，层数越多吸收得越广。</p>
+<p>社交网络上的兴趣推断是个典型场景。六个用户 A 到 F，节点是用户，边是好友关系，每个用户身上挂一个三维的兴趣标记，分别是体育、音乐、科技。</p>
+<svg width="100%" style="max-width:860px;height:auto" viewBox="0 0 860 300" role="img" aria-label="社交网络中的用户兴趣特征矩阵与图卷积推断">
+  <rect width="860" height="300" fill="#fdfbf6"></rect>
+  <text x="36" y="32" font-size="11" font-weight="600" fill="#8a8175">节点＝用户，边＝好友</text>
+  <g stroke="#b9c8d0" stroke-width="1.4">
+    <line x1="120" y1="80" x2="120" y2="180"></line>
+    <line x1="120" y1="80" x2="240" y2="80"></line>
+    <line x1="120" y1="180" x2="240" y2="180"></line>
+    <line x1="240" y1="80" x2="240" y2="180"></line>
+    <line x1="240" y1="180" x2="350" y2="130"></line>
+    <line x1="350" y1="130" x2="350" y2="230"></line>
+  </g>
+  <g fill="#e9f2f6" stroke="#2f6f8f">
+    <circle cx="120" cy="80" r="17"></circle><circle cx="120" cy="180" r="17"></circle>
+    <circle cx="240" cy="80" r="17"></circle><circle cx="240" cy="180" r="17"></circle>
+    <circle cx="350" cy="130" r="17"></circle><circle cx="350" cy="230" r="17"></circle>
+  </g>
+  <g font-size="11" fill="#1f4d64" text-anchor="middle">
+    <text x="120" y="84">A</text><text x="120" y="184">B</text>
+    <text x="240" y="84">C</text><text x="240" y="184">D</text>
+    <text x="350" y="134">E</text><text x="350" y="234">F</text>
+  </g>
+  <text x="430" y="32" font-size="11" font-weight="600" fill="#8a8175">节点特征矩阵 X</text>
+  <rect x="430" y="46" width="300" height="150" fill="#ffffff" stroke="#cfd6da"></rect>
+  <rect x="430" y="46" width="300" height="30" fill="#f4f1e9"></rect>
+  <path d="M506,46 V196 M582,46 V196 M658,46 V196 M430,76 H730 M430,106 H730 M430,136 H730 M430,166 H730" stroke="#e9e5dc"></path>
+  <g font-size="10" fill="#6d747e" text-anchor="middle">
+    <text x="468" y="66">用户</text><text x="544" y="66">体育</text><text x="620" y="66">音乐</text><text x="694" y="66">科技</text>
+  </g>
+  <g font-size="10" fill="#3d444d" text-anchor="middle">
+    <text x="468" y="96">A</text><text x="544" y="96">1</text><text x="620" y="96">0</text><text x="694" y="96">0</text>
+    <text x="468" y="126">B</text><text x="544" y="126">0</text><text x="620" y="126">1</text><text x="694" y="126">0</text>
+    <text x="468" y="156">C</text><text x="544" y="156">0</text><text x="620" y="156">0</text><text x="694" y="156">1</text>
+    <text x="468" y="186">D</text><text x="544" y="186">1</text><text x="620" y="186">1</text><text x="694" y="186">0</text>
+  </g>
+  <text x="430" y="222" font-size="10.5" fill="#6d747e">A 的兴趣集中在体育，D 同时关注体育和音乐。</text>
+  <text x="430" y="248" font-size="10.5" fill="#8f3d1c">E 和 F 的标签缺失，但它们的邻居有特征。</text>
+  <text x="430" y="274" font-size="10.5" fill="#3f7a5a">做几层聚合，就能把 E、F 的类别补出来。</text>
+</svg>
+
+<p><em>左边是图，右边是特征。真正让推断成为可能的，是“E 的好友 D 关注体育和音乐”这条结构信息。</em></p>
+<p>做法是先用少量已知标签训练，再拿学到的表示去预测没有标签的节点。传播公式和 GCN 是同一条，只是这里要拿表示去做分类。</p>
+<p>空手道俱乐部社交图是个常用的小例子，34 个节点、2 类标签，用单位矩阵当节点特征，两层卷积，训练 200 轮，测试准确率 94.12%。这个结果说明结构信息本身携带了大量判别力，哪怕节点特征只是一张单位矩阵。</p>
+<blockquote>
+<p><strong>为什么这一支算“推理”。</strong>严格说，它做的是节点分类，不是逻辑蕴含。但在下游任务里，给一个缺失兴趣标签的用户补上标签，效果就等于“从已有知识推出了新知识”。工程上不太区分这两件事，能补上就算推理。</p>
+</blockquote>
+<h2 id="一跳不够"><a href="#一跳不够" class="headerlink" title="一跳不够"></a>一跳不够</h2><p>前面几种方法回答的都是“这两个东西之间有没有关系”。可有一类问题，答案不在一条边上。</p>
+<p>问：成龙主演电影的导演是谁？</p>
+<p>先在库里找“成龙—主演—？”，找到《新警察故事》。再从《新警察故事》出发找“？—导演—？”，找到陈木胜。两跳拼起来才是答案。</p>
+<svg width="100%" style="max-width:860px;height:auto" viewBox="0 0 860 300" role="img" aria-label="两跳推理路径示例">
+  <rect width="860" height="300" fill="#fdfbf6"></rect>
+  <defs>
+    <marker id="m77" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#2f6f8f"></path>
+    </marker>
+  </defs>
+  <text x="36" y="34" font-size="11.5" font-weight="600" fill="#3d444d">成龙主演的电影，导演是谁？</text>
+  <rect x="50" y="70" width="120" height="44" rx="8" fill="#1f4d64"></rect>
+  <text x="110" y="98" font-size="12" fill="#ffffff" text-anchor="middle">成龙</text>
+  <line x1="170" y1="92" x2="316" y2="92" stroke="#2f6f8f" stroke-width="2" marker-end="url(#m77)"></line>
+  <text x="243" y="82" font-size="10" fill="#1f4d64" text-anchor="middle">主演</text>
+  <rect x="320" y="70" width="170" height="44" rx="8" fill="#e9f2f6" stroke="#2f6f8f"></rect>
+  <text x="405" y="98" font-size="12" fill="#1f4d64" text-anchor="middle">新警察故事</text>
+  <line x1="490" y1="92" x2="636" y2="92" stroke="#2f6f8f" stroke-width="2" marker-end="url(#m77)"></line>
+  <text x="563" y="82" font-size="10" fill="#1f4d64" text-anchor="middle">导演</text>
+  <rect x="640" y="70" width="120" height="44" rx="8" fill="#eaf3ee" stroke="#3f7a5a"></rect>
+  <text x="700" y="98" font-size="12" fill="#2e5c44" text-anchor="middle">陈木胜</text>
+  <text x="243" y="136" font-size="9.5" fill="#8a8175" text-anchor="middle">第一跳</text>
+  <text x="563" y="136" font-size="9.5" fill="#8a8175" text-anchor="middle">第二跳</text>
+  <line x1="50" y1="160" x2="810" y2="160" stroke="#e4e0d6"></line>
+  <text x="50" y="190" font-size="10.5" fill="#6d747e">同一个问题，还有别的答案路径：</text>
+  <rect x="50" y="204" width="120" height="38" rx="8" fill="#ffffff" stroke="#cfd6da"></rect>
+  <text x="110" y="228" font-size="11" fill="#3d444d" text-anchor="middle">成龙</text>
+  <line x1="170" y1="223" x2="256" y2="223" stroke="#b9c8d0" stroke-width="1.6" marker-end="url(#m77)"></line>
+  <text x="213" y="214" font-size="9.5" fill="#6d747e" text-anchor="middle">主演</text>
+  <rect x="260" y="204" width="170" height="38" rx="8" fill="#ffffff" stroke="#cfd6da"></rect>
+  <text x="345" y="228" font-size="11" fill="#3d444d" text-anchor="middle">尖峰时刻</text>
+  <line x1="430" y1="223" x2="516" y2="223" stroke="#b9c8d0" stroke-width="1.6" marker-end="url(#m77)"></line>
+  <text x="473" y="214" font-size="9.5" fill="#6d747e" text-anchor="middle">导演</text>
+  <rect x="520" y="204" width="170" height="38" rx="8" fill="#ffffff" stroke="#cfd6da"></rect>
+  <text x="605" y="228" font-size="11" fill="#3d444d" text-anchor="middle">布莱特·拉特纳</text>
+  <text x="50" y="278" font-size="10.5" fill="#8f3d1c">路径不止一条。跳数越多，可选路径呈指数增长，这也是多跳推理难的地方。</text>
+</svg>
+
+<p><em>答案藏在两跳之外。这类问题的好处是能给出路径，人要复核的时候，顺着这条链看一遍就行，不用信模型。</em></p>
+<p>一跳能解决的问题，查一次邻接表就够了。两跳要查两次，三跳三次。看起来只是多查几次，实际难度差得很远，因为每一步都有多个候选，走错一步，后面全白走。</p>
+<p>处理办法有三种，思路各不相同。一种把走路当成决策来学，一种在传播过程中边算边剪枝，一种干脆放弃“唯一答案”，改用概率分布来描述。</p>
+<h2 id="把推理当成走路"><a href="#把推理当成走路" class="headerlink" title="把推理当成走路"></a>把推理当成走路</h2><p>RLH 的想法是，既然推理是一步一步走出来的，那就把它当成一个决策过程来训练。</p>
+<p>站在某个实体上，下一步该沿哪条关系走，这是一个选择。选对了离答案更近，选错了绕远路。这种“状态、动作、奖励”的结构，正是强化学习擅长的。</p>
+<svg width="100%" style="max-width:860px;height:auto" viewBox="0 0 860 320" role="img" aria-label="RLH 的高层策略、低层策略与奖励回流">
+  <rect width="860" height="320" fill="#fdfbf6"></rect>
+  <defs>
+    <marker id="m78" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#8a8175"></path>
+    </marker>
+    <marker id="m78b" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#b4552d"></path>
+    </marker>
+  </defs>
+  <rect x="330" y="40" width="200" height="56" rx="9" fill="#1f4d64"></rect>
+  <text x="430" y="64" font-size="11.5" fill="#ffffff" text-anchor="middle">高层策略</text>
+  <text x="430" y="84" font-size="9.5" fill="#bcd6e2" text-anchor="middle">拆子目标：先找谁的朋友</text>
+  <rect x="330" y="130" width="200" height="56" rx="9" fill="#e9f2f6" stroke="#2f6f8f"></rect>
+  <text x="430" y="154" font-size="11.5" fill="#1f4d64" text-anchor="middle">低层策略</text>
+  <text x="430" y="174" font-size="9.5" fill="#6d747e" text-anchor="middle">选具体动作：沿哪条边跳</text>
+  <rect x="330" y="220" width="200" height="56" rx="9" fill="#ffffff" stroke="#cfd6da"></rect>
+  <text x="430" y="244" font-size="11.5" fill="#3d444d" text-anchor="middle">知识图谱环境</text>
+  <text x="430" y="264" font-size="9.5" fill="#6d747e" text-anchor="middle">跳过去，看落到哪个实体</text>
+  <line x1="430" y1="96" x2="430" y2="124" stroke="#8a8175" stroke-width="1.6" marker-end="url(#m78)"></line>
+  <text x="442" y="114" font-size="9" fill="#8a8175">子目标 g</text>
+  <line x1="430" y1="186" x2="430" y2="214" stroke="#8a8175" stroke-width="1.6" marker-end="url(#m78)"></line>
+  <text x="442" y="204" font-size="9" fill="#8a8175">动作 a</text>
+  <path d="M330,248 H130 V68 H324" fill="none" stroke="#b4552d" stroke-width="1.6" marker-end="url(#m78b)"></path>
+  <text x="128" y="150" font-size="10" fill="#8f3d1c" text-anchor="middle" transform="rotate(-90 128 150)">奖励反馈</text>
+  <path d="M530,248 H700 V68 H536" fill="none" stroke="#b9c8d0" stroke-width="1.4" stroke-dasharray="5 4" marker-end="url(#m78)"></path>
+  <text x="702" y="150" font-size="10" fill="#8a8175" transform="rotate(90 702 150)">状态刷新</text>
+  <text x="430" y="304" font-size="10.5" fill="#6d747e" text-anchor="middle">高层决定“这一步要干什么”，低层决定“这一步往哪走”。两层各学各的，靠子目标串起来。</text>
+</svg>
+
+<p><em>两层策略各管一段。高层把一个大问题拆成几个子任务，低层负责在每个子任务里做具体跳转。奖励从环境回流，同时更新两层的参数。</em></p>
+<p>状态是当前站的位置，用实体和关系的向量拼出来，可以直接借用 TransE、TransR 这类嵌入的结果。动作是沿着某种关系跳到下一个实体。奖励来自结果：走到正确答案给正分，走偏了给负分。</p>
+<p>层次化是它的关键设计。一次跳到位很难学，拆成“先找人”“再找电影”“最后判断”三个子任务就好学多了。子任务完成的结果会回传给上层，上层据此决定下一个子目标。</p>
+<p>一个简化实验很能说明问题。用随机策略在一个人物—电影的小图谱上跑 1000 回合，奖励均值 -0.0280，标准差 0.9996。均值接近零说明有对有错互相抵消，标准差接近 1 说明结果极不稳定。</p>
+<p>这组数字是在说一件事：没有学出来的策略，多跳推理就退化成随机游走。RLH 得靠策略网络学出来。</p>
+<h2 id="边传边剪"><a href="#边传边剪" class="headerlink" title="边传边剪"></a>边传边剪</h2><p>另一条路是图神经网络的多跳版，叫 DPMPN。它不改推理的方式，改的是传播的范围。</p>
+<p>普通的图神经网络，每一层让所有节点和所有邻居交换信息。三跳之后，参与计算的节点数量会膨胀得很快，大部分节点跟当前问题毫无关系，却照样占用算力。</p>
+<p>DPMPN 的做法是传一轮、剪一次。先按常规做一轮消息传递，然后按节点的重要性打分，分数低于阈值的邻居，消息不再往下传。</p>
+<p>拿一次具体的传看看。节点 B 收到三个邻居传来的分量，0.1837、0.7022、0.0729，每个数代表那个邻居这条消息值多少。阈值定在 0.1，第三个分量低于线，抹成零，不参与下一跳；前两个留着。</p>
+<p>同一个阈值下，节点 C 的三个分量都过了线，一个不动；节点 A 这一轮压根没收到消息，保持全零。</p>
+<svg width="100%" style="max-width:860px;height:auto" viewBox="0 0 860 320" role="img" aria-label="低于阈值的消息分量被修剪掉的示意">
+  <rect width="860" height="320" fill="#fdfbf6"></rect>
+  <text x="36" y="32" font-size="11.5" font-weight="600" fill="#3d444d">三个节点收到的消息，按分量看谁该留</text>
+  <line x1="90" y1="280" x2="800" y2="280" stroke="#cfd6da"></line>
+  <line x1="90" y1="260" x2="800" y2="260" stroke="#b4552d" stroke-dasharray="6 4"></line>
+  <text x="800" y="252" font-size="9.5" fill="#8f3d1c" text-anchor="end">阈值 0.1</text>
+  <g fill="#2f6f8f">
+    <rect x="120" y="278" width="34" height="2"></rect>
+    <rect x="162" y="278" width="34" height="2"></rect>
+    <rect x="204" y="278" width="34" height="2"></rect>
+  </g>
+  <text x="179" y="302" font-size="10.5" fill="#6d747e" text-anchor="middle">节点 A</text>
+  <text x="179" y="64" font-size="9.5" fill="#8f3d1c" text-anchor="middle">全是 0</text>
+  <text x="179" y="82" font-size="9" fill="#a09a8e" text-anchor="middle">没收到消息</text>
+  <g fill="#2f6f8f">
+    <rect x="368" y="243" width="34" height="37"></rect>
+    <rect x="410" y="140" width="34" height="140"></rect>
+  </g>
+  <rect x="452" y="265" width="34" height="15" fill="#e8e3d8" stroke="#c9c2b2"></rect>
+  <text x="427" y="302" font-size="10.5" fill="#6d747e" text-anchor="middle">节点 B</text>
+  <text x="427" y="64" font-size="9.5" fill="#8f3d1c" text-anchor="middle">第三项 0.073</text>
+  <text x="427" y="82" font-size="9" fill="#a09a8e" text-anchor="middle">低于阈值，抹掉</text>
+  <g fill="#2f6f8f">
+    <rect x="616" y="155" width="34" height="125"></rect>
+    <rect x="658" y="105" width="34" height="175"></rect>
+    <rect x="700" y="135" width="34" height="145"></rect>
+  </g>
+  <text x="675" y="302" font-size="10.5" fill="#6d747e" text-anchor="middle">节点 C</text>
+  <text x="675" y="64" font-size="9.5" fill="#3f7a5a" text-anchor="middle">全部通过</text>
+  <text x="675" y="82" font-size="9" fill="#a09a8e" text-anchor="middle">保持不变</text>
+  <line x1="90" y1="280" x2="90" y2="76" stroke="#cfd6da"></line>
+  <g font-size="8.5" fill="#a09a8e" text-anchor="end">
+    <text x="84" y="283">0</text>
+    <text x="84" y="183">0.5</text>
+    <text x="84" y="83">1.0</text>
+  </g>
+</svg>
+
+<p><em>阈值像一道筛子。过不去的分量直接归零，不参与下一跳的更新。留下的还是主要信号，扔掉的是噪声。</em></p>
+<p>重要的判定依据有两个。一个是节点本身的重要性，可以参考度数、在图里的位置，也可以让模型学；另一个是当前推理目标，每一跳都要回头看看自己正在找什么，跟目标无关的分支就断掉。</p>
+<p>阈值 θ 控制宽松程度。θ 调大，剪得狠，算得快，但可能把有用的证据也剪掉；θ 调小，剪得轻，接近普通 GNN。这个参数没有通用值，得按任务调。</p>
+<p>好处是明显的：参与下一跳计算的分量少了，但保留下来的都是权重高的那些。相当于用一点精度换大量的算力。</p>
+<h2 id="允许不确定"><a href="#允许不确定" class="headerlink" title="允许不确定"></a>允许不确定</h2><p>还有一种更根本的改法。前面所有方法都默认答案是唯一的，一个实体，或者一组实体。可现实里的问题经常不是这样。</p>
+<p>“成龙主演的电影中，哪些是动作片？”答案可能是一批，也可能一个都没有。</p>
+<p>先想一件日常的事。有人说“这个人大概四十岁”，你会怎么记？记成一个点 40，就把“大概”丢了；记成 35 到 45 这一段，不确定才装得进去。</p>
+<p>向量方法一直用的是前一种。一个实体就是空间里的一个点，问它在不在某个区域，答案只有是或否。可“大概”这种状态，点表示不了。</p>
+<p>BetaE 把点换成一段。实体成了一条有峰值的分布曲线：某个位置最可能，往两边逐渐变稀。用 Beta 分布装这个形状，它的两个参数正好对应“峰在哪、摊多宽”。</p>
+<svg width="100%" style="max-width:860px;height:auto" viewBox="0 0 860 300" role="img" aria-label="点表示与分布表示的区别">
+  <rect width="860" height="300" fill="#fdfbf6"></rect>
+  <text x="40" y="34" font-size="11.5" font-weight="600" fill="#3d444d">当答案是一个点</text>
+  <line x1="50" y1="170" x2="386" y2="170" stroke="#cfd6da" stroke-width="1.4"></line>
+  <circle cx="210" cy="170" r="9" fill="#2f6f8f"></circle>
+  <line x1="210" y1="170" x2="210" y2="200" stroke="#2f6f8f" stroke-dasharray="3 3"></line>
+  <text x="210" y="216" font-size="10" fill="#1f4d64" text-anchor="middle">就这一个坐标</text>
+  <text x="40" y="88" font-size="10.5" fill="#6d747e">问“它在不在这个范围”：</text>
+  <text x="40" y="110" font-size="10.5" fill="#8f3d1c">答是，或者否。中间没有别的话可说。</text>
+  <text x="40" y="258" font-size="10.5" fill="#6d747e">求“非”：整条空间减掉一个点，</text>
+  <text x="40" y="276" font-size="10.5" fill="#8f3d1c">剩下的几乎是全部，用不上。</text>
+  <line x1="430" y1="60" x2="430" y2="240" stroke="#e4e0d6"></line>
+  <text x="470" y="34" font-size="11.5" font-weight="600" fill="#3d444d">当答案是一段分布</text>
+  <defs>
+    <lineargradient id="bg1" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#2f6f8f" stop-opacity=".28"></stop>
+      <stop offset="100%" stop-color="#2f6f8f" stop-opacity=".04"></stop>
+    </lineargradient>
+  </defs>
+  <path d="M486,170 C520,170 548,168 570,140 C590,114 604,72 636,72 C668,72 682,114 702,140 C724,168 752,170 786,170 Z" fill="url(#bg1)" stroke="#2f6f8f" stroke-width="1.6"></path>
+  <line x1="636" y1="72" x2="636" y2="170" stroke="#2f6f8f" stroke-dasharray="3 3"></line>
+  <text x="636" y="62" font-size="10" fill="#1f4d64" text-anchor="middle">中心最可能</text>
+  <text x="470" y="196" font-size="10.5" fill="#6d747e">越往两边越稀，边界由两个参数决定</text>
+  <text x="470" y="258" font-size="10.5" fill="#6d747e">求“非”：减掉这一块，剩下的还是</text>
+  <text x="470" y="276" font-size="10.5" fill="#2e5c44">有形状的东西，能继续参与运算。</text>
+</svg>
+
+<p><em>点只能回答在不在，分布能回答有多可能。逻辑里的“非”要的正是后一种，这是 BetaE 绕开那堵墙的地方。</em></p>
+<p>这么改带来一个实际的好处：它能处理逻辑里的“非”。</p>
+<p>“非”这个操作在嵌入方法里一直很难做。给定一个区域，求它的补集，如果区域只是一个点，补集就是整个空间减掉一个点，几乎等于全空间，没法用。可如果区域是一块有边界的分布，补集就是这块之外的部分，是可以算出来的。</p>
+<p>BetaE 是第一个把存在、交、或、非四种逻辑操作全部支持起来的嵌入方法。在此之前，嵌入类方法长期卡在“非”上，只能绕着走。</p>
+<p>代价是训练更难。Beta 分布的参数不是随便取的，要保证向量分布在单位超球面上足够均匀，否则模型会挤在一个角落过拟合。所以损失函数里除了语义匹配和结构匹配，还有一项专门管分布的均匀性。</p>
+<p>这个小实验只能看出趋势：损失从 2.89 降到 2.82，逐步下降，说明优化在起作用。真实场景下的效果，得在标准数据集上比。</p>
+<h2 id="三类方法怎么配"><a href="#三类方法怎么配" class="headerlink" title="三类方法怎么配"></a>三类方法怎么配</h2><p>三条路线的差异，一张表能看全。</p>
+<table>
+<thead>
+<tr>
+<th>维度</th>
+<th>规则与本体推理</th>
+<th>向量推理</th>
+<th>多跳推理</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>知识表示</td>
+<td>符号规则与本体概念</td>
+<td>低维稠密向量</td>
+<td>向量加路径搜索</td>
+</tr>
+<tr>
+<td>推理依据</td>
+<td>逻辑蕴含与模式匹配</td>
+<td>向量距离与评分函数</td>
+<td>多次跳跃的路径证据</td>
+</tr>
+<tr>
+<td>可解释性</td>
+<td>强，能直接给出用了哪条规则</td>
+<td>弱，只能说“向量很近”</td>
+<td>较强，能给出推理路径</td>
+</tr>
+<tr>
+<td>代表方法</td>
+<td>Datalog、RETE、本体推理</td>
+<td>TransE、ConvE、GCN、GAT</td>
+<td>RLH、DPMPN、BetaE</td>
+</tr>
+<tr>
+<td>适用场景</td>
+<td>规则明确的业务领域</td>
+<td>大规模图谱的快速打分</td>
+<td>需要深层证据链的问答</td>
+</tr>
+</tbody></table>
+<p>实际系统里很少只用一种。常见的搭配是向量方法负责召回，规则和路径方法负责校验。</p>
+<p>用户问一个问题，先用嵌入模型把候选实体捞一批出来，速度快、召回率高，但里面混着错的。再拿规则去筛，不符合硬性约束的剔掉。最后用多跳路径把证据链拼出来，给人看。</p>
+<p>这么配的理由是三种方法的短板正好互补。向量的短板是不精确，规则的短板是覆盖不全，多跳的短板是慢。让向量做粗筛，让规则做硬约束，让路径做解释，各干各擅长的那段。</p>
+<blockquote>
+<p><strong>别指望规则能覆盖一切。</strong>规则写不全，是这类系统的常态。真实业务里的例外太多，写到后面规则之间互相冲突，维护成本会突然跳上去。到了那个阶段，通常的做法是把一部分规则换成模型，用数据兜住那些说不清的边界情况。</p>
+</blockquote>
+<h2 id="自测"><a href="#自测" class="headerlink" title="自测"></a>自测</h2><details><summary>Datalog 推理为什么要“迭代到不动点”？</summary> <p>因为一条规则的结论可能是另一条规则的前提。祖先关系就是典型：先由父母关系推出一层祖先，再由这层祖先推出两层、三层。每一轮都要把新事实写回库里，下一轮才用得上。等到某一轮再也生不出新事实，说明所有能推的都推完了，此时的结果叫事实闭包。</p></details>  
+
+<details><summary>RETE 的“速度与规则数目无关”，靠的是什么？</summary> <p>靠两件事。一是把规则编译成共享的判别网络，多条规则里相同的条件只建一个节点，规则再多，公共部分也不重复计算。二是缓存中间结果，事实只变一点点的时候，上一轮算过的匹配结果可以复用，不必从头再来。</p></details>  
+
+<details><summary>四省份那个例子里，向量方法错在哪？</summary> <p>它把“像”当成了“是”。陕西的向量和宁夏的向量余弦相似度 0.96，模型据此判定相邻，可图上陕西跟谁都不挨着。相似度衡量的是向量方向接近，不是逻辑上存在这条边。阈值定在哪里，本质上是个经验选择。</p></details>  
+
+<details><summary>为什么说多跳推理比单跳难得多？</summary> <p>因为每一步都有多个候选。单跳只要查一次邻接表，多跳的搜索空间随跳数指数增长。走错一步，后面的路全废，而且模型在中间步骤拿不到监督信号，不知道这一步走对没走对。</p></details>  
+
+<details><summary>RLH 里高层策略和低层策略分别管什么？</summary> <p>高层管“这一步要完成什么”，把一个大问题拆成几个子目标；低层管“这一步往哪走”，在给定子目标下选具体的边。两层分开学，靠子目标串起来，奖励同时回流更新两边。</p></details>  
+
+<details><summary>DPMPN 的阈值调大调小，各有什么后果？</summary> <p>调大剪得狠，算得快，但可能把有用的证据一起剪掉，精度下降。调小接近普通 GNN，精度保住了，算力没省下来。这个值没有通用解，得按图谱的稠密程度和任务的容错度来定。</p></details>  
+
+<details><summary>BetaE 为什么能处理逻辑“非”？</summary> <p>因为它把实体表示成一团分布，而不是一个点。一个点求补集几乎是全空间，没法用；一块有边界的分布求补集，就是这块之外的部分，边界清楚，能算。这是它区别于此前所有嵌入方法的地方。</p></details>  
+
+<details><summary>为什么实际系统要把三种方法混着用？</summary> <p>短板互补。向量的短板是不精确，但快、召回高；规则的短板是写不全，但一旦命中就是硬结论；多跳的短板是慢，但能给出路径。常见的搭配是向量召回、规则校验、路径解释。</p></details> 
+</article><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/other/QUT/%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E6%95%99%E7%A8%8B/08-%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E8%A1%8D%E7%94%9F%E6%8A%80%E6%9C%AF/"><img class="prev-cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">08 知识图谱衍生技术</div></div></a></div><div class="next-post pull-right"><a href="/other/QUT/%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E6%95%99%E7%A8%8B/06-%E5%9B%BE%E8%A1%A8%E7%A4%BA%E5%AD%A6%E4%B9%A0%E4%B8%8E%E5%9B%BE%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/"><img class="next-cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">06 图表示学习与图神经网络</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="anzhiyufont anzhiyu-icon-thumbs-up fa-fw" style="font-size: 1.5rem; margin-right: 4px"></i><span>喜欢这篇文章的人也看了</span></div><div class="relatedPosts-list"><div><a href="/other/QUT/%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E6%95%99%E7%A8%8B/00-%E6%95%99%E7%A8%8B%E6%80%BB%E8%A7%88/" title="00 教程总览"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/" alt="cover"><div class="content is-center"><div class="date"><i class="anzhiyufont anzhiyu-icon-calendar-days fa-fw"></i> 2026-11-06</div><div class="title">00 教程总览</div></div></a></div><div><a href="/other/QUT/%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E6%95%99%E7%A8%8B/01-%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E6%A6%82%E8%BF%B0/" title="01 知识图谱概述"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/" alt="cover"><div class="content is-center"><div class="date"><i class="anzhiyufont anzhiyu-icon-calendar-days fa-fw"></i> 2026-11-06</div><div class="title">01 知识图谱概述</div></div></a></div><div><a href="/other/QUT/%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E6%95%99%E7%A8%8B/02-%E7%9F%A5%E8%AF%86%E8%A1%A8%E7%A4%BA%E6%8A%80%E6%9C%AF/" title="02 知识表示技术"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/" alt="cover"><div class="content is-center"><div class="date"><i class="anzhiyufont anzhiyu-icon-calendar-days fa-fw"></i> 2026-11-06</div><div class="title">02 知识表示技术</div></div></a></div><div><a href="/other/QUT/%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E6%95%99%E7%A8%8B/03-%E7%9F%A5%E8%AF%86%E6%8A%BD%E5%8F%96%E6%8A%80%E6%9C%AF/" title="03 知识抽取技术"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/" alt="cover"><div class="content is-center"><div class="date"><i class="anzhiyufont anzhiyu-icon-calendar-days fa-fw"></i> 2026-11-06</div><div class="title">03 知识抽取技术</div></div></a></div><div><a href="/other/QUT/%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E6%95%99%E7%A8%8B/04-%E7%9F%A5%E8%AF%86%E8%9E%8D%E5%90%88%E6%8A%80%E6%9C%AF/" title="04 知识融合技术"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/" alt="cover"><div class="content is-center"><div class="date"><i class="anzhiyufont anzhiyu-icon-calendar-days fa-fw"></i> 2026-11-06</div><div class="title">04 知识融合技术</div></div></a></div><div><a href="/other/QUT/%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E6%95%99%E7%A8%8B/05-%E7%9F%A5%E8%AF%86%E5%AD%98%E5%82%A8%E6%8A%80%E6%9C%AF/" title="05 知识存储技术"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/" alt="cover"><div class="content is-center"><div class="date"><i class="anzhiyufont anzhiyu-icon-calendar-days fa-fw"></i> 2026-11-06</div><div class="title">05 知识存储技术</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="card-content"><div class="author-info-avatar"><img class="avatar-img" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/img/avatar.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__description">大三学生，全栈开发者，终身学习者</div><div class="author-info__bottom-group"><a class="author-info__bottom-group-left" href="/"><h1 class="author-info__name">qiuxz</h1><div class="author-info__desc"></div></a><div class="card-info-social-icons is-center"><a class="social-icon faa-parent animated-hover" href="https://github.com/qiuxzh" target="_blank" title="Github"><i class="anzhiyufont anzhiyu-icon-github"></i></a><a class="social-icon faa-parent animated-hover" href="javascript:void(0);" title="QQ" data-copy="1256227507"><i class="anzhiyufont anzhiyu-icon-qq"></i></a><a class="social-icon faa-parent animated-hover" href="javascript:void(0);" title="Email" data-copy="1256227507@qq.com"><i class="anzhiyufont anzhiyu-icon-envelope"></i></a></div></div></div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="anzhiyufont anzhiyu-icon-bars"></i><span>文章目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BA%93%E9%87%8C%E6%B2%A1%E6%9C%89%E7%9A%84%E9%82%A3%E6%9D%A1%E8%BE%B9"><span class="toc-number">1.</span> <span class="toc-text">库里没有的那条边</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Datalog%EF%BC%9A%E6%8A%8A%E5%85%B3%E7%B3%BB%E5%86%99%E6%88%90%E8%A7%84%E5%88%99"><span class="toc-number">2.</span> <span class="toc-text">Datalog：把关系写成规则</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A6%82%E6%9E%9C%E2%80%A6%E2%80%A6%E9%82%A3%E4%B9%88%E2%80%A6%E2%80%A6"><span class="toc-number">3.</span> <span class="toc-text">如果……那么……</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%A7%84%E5%88%99%E4%B8%80%E5%A4%9A%E5%B0%B1%E6%85%A2"><span class="toc-number">4.</span> <span class="toc-text">规则一多就慢</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A6%82%E5%BF%B5%E5%B1%82%E9%9D%A2%E7%9A%84%E6%8E%A8%E6%96%AD"><span class="toc-number">5.</span> <span class="toc-text">概念层面的推断</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8D%A2%E4%B8%80%E6%9D%A1%E8%B7%AF%EF%BC%9A%E8%AE%A9%E6%95%B0%E5%AD%97%E8%AF%B4%E8%AF%9D"><span class="toc-number">6.</span> <span class="toc-text">换一条路：让数字说话</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%89%93%E5%88%86%E4%B8%8E%E7%9B%B8%E4%BC%BC%E5%BA%A6"><span class="toc-number">7.</span> <span class="toc-text">打分与相似度</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%94%A8%E5%9B%BE%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E6%8E%A8%E7%90%86"><span class="toc-number">8.</span> <span class="toc-text">用图神经网络推理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E8%B7%B3%E4%B8%8D%E5%A4%9F"><span class="toc-number">9.</span> <span class="toc-text">一跳不够</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8A%8A%E6%8E%A8%E7%90%86%E5%BD%93%E6%88%90%E8%B5%B0%E8%B7%AF"><span class="toc-number">10.</span> <span class="toc-text">把推理当成走路</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BE%B9%E4%BC%A0%E8%BE%B9%E5%89%AA"><span class="toc-number">11.</span> <span class="toc-text">边传边剪</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%81%E8%AE%B8%E4%B8%8D%E7%A1%AE%E5%AE%9A"><span class="toc-number">12.</span> <span class="toc-text">允许不确定</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E7%B1%BB%E6%96%B9%E6%B3%95%E6%80%8E%E4%B9%88%E9%85%8D"><span class="toc-number">13.</span> <span class="toc-text">三类方法怎么配</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%87%AA%E6%B5%8B"><span class="toc-number">14.</span> <span class="toc-text">自测</span></a></li></ol></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"></div><div id="footer-bar"><div class="footer-bar-links"><div class="footer-bar-left"><div id="footer-bar-tips"><div class="copyright">&copy;2020 - 2026 By <a class="footer-bar-link" href="/" title="qiuxz" target="_blank">qiuxz</a></div></div><div id="footer-type-tips"></div></div><div class="footer-bar-right"><a class="footer-bar-link" target="_blank" rel="noopener" href="https://github.com/anzhiyu-c/hexo-theme-anzhiyu" title="主题">主题</a></div></div></div></footer></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="sidebar-site-data site-data is-center"><a href="/archives/" title="archive"><div class="headline">文章</div><div class="length-num">48</div></a><a href="/tags/" title="tag"><div class="headline">标签</div><div class="length-num">9</div></a><a href="/categories/" title="category"><div class="headline">分类</div><div class="length-num">10</div></a></div><span class="sidebar-menu-item-title">功能</span><div class="sidebar-menu-item"><a class="darkmode_switchbutton menu-child" href="javascript:void(0);" title="显示模式"><i class="anzhiyufont anzhiyu-icon-circle-half-stroke"></i><span>显示模式</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="javascript:void(0);"><span> 文章</span></a><ul class="menus_item_child"><li><a class="site-page child faa-parent animated-hover" href="/archives/"><i class="anzhiyufont anzhiyu-icon-box-archive faa-tada" style="font-size: 0.9em;"></i><span> 隧道</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><span> 关于</span></a><ul class="menus_item_child"><li><a class="site-page child faa-parent animated-hover" href="/other/about/"><i class="anzhiyufont anzhiyu-icon-paper-plane faa-tada" style="font-size: 0.9em;"></i><span> 关于本人</span></a></li><li><a class="site-page child faa-parent animated-hover" href="javascript:toRandomPost()"><i class="anzhiyufont anzhiyu-icon-shoe-prints1 faa-tada" style="font-size: 0.9em;"></i><span> 随便逛逛</span></a></li></ul></div></div><span class="sidebar-menu-item-title">标签</span><div class="card-tags"><div class="item-headline"></div><div class="card-tag-cloud"><a href="/tags/YJango%E8%A7%86%E9%A2%91%E6%95%B4%E7%90%86/" style="font-size: 0.88rem;">YJango视频整理<sup>11</sup></a><a href="/tags/%E4%B8%AA%E4%BA%BA%E6%88%90%E9%95%BF/" style="font-size: 0.88rem;">个人成长<sup>3</sup></a><a href="/tags/%E5%AD%A6%E4%B9%A0/" style="font-size: 0.88rem;">学习<sup>13</sup></a><a href="/tags/%E6%84%9F%E6%82%9F/" style="font-size: 0.88rem;">感悟<sup>1</sup></a><a href="/tags/%E6%95%99%E7%A8%8B/" style="font-size: 0.88rem;">教程<sup>9</sup></a><a href="/tags/%E6%9C%AA%E5%88%86%E7%B1%BB/" style="font-size: 0.88rem;">未分类<sup>6</sup></a><a href="/tags/%E6%9E%B6%E6%9E%84/" style="font-size: 0.88rem;">架构<sup>1</sup></a><a href="/tags/%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1/" style="font-size: 0.88rem;">知识图谱<sup>9</sup></a><a href="/tags/%E8%80%83%E8%AF%95/" style="font-size: 0.88rem;">考试<sup>5</sup></a></div></div><hr/></div></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="anzhiyufont anzhiyu-icon-book-open"></i></button><button id="translateLink" type="button" title="简繁转换">繁</button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="anzhiyufont anzhiyu-icon-circle-half-stroke"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="anzhiyufont anzhiyu-icon-arrows-left-right"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="anzhiyufont anzhiyu-icon-gear"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="anzhiyufont anzhiyu-icon-list-ul"></i></button><button id="mobile-column-button" type="button" title="专栏目录"><i class="anzhiyufont anzhiyu-icon-bars"></i></button><button id="go-up" type="button" title="回到顶部"><i class="anzhiyufont anzhiyu-icon-arrow-up"></i></button></div></div><div id="rightMenu"><div class="rightMenu-group rightMenu-small"><div class="rightMenu-item" id="menu-backward"><i class="anzhiyufont anzhiyu-icon-arrow-left"></i></div><div class="rightMenu-item" id="menu-forward"><i class="anzhiyufont anzhiyu-icon-arrow-right"></i></div><div class="rightMenu-item" id="menu-refresh"><i class="anzhiyufont anzhiyu-icon-arrow-rotate-right" style="font-size: 1rem;"></i></div><div class="rightMenu-item" id="menu-top"><i class="anzhiyufont anzhiyu-icon-arrow-up"></i></div></div><div class="rightMenu-group rightMenu-line rightMenuPlugin"><div class="rightMenu-item" id="menu-copytext"><i class="anzhiyufont anzhiyu-icon-copy"></i><span>复制选中文本</span></div><div class="rightMenu-item" id="menu-pastetext"><i class="anzhiyufont anzhiyu-icon-paste"></i><span>粘贴文本</span></div><a class="rightMenu-item" id="menu-commenttext"><i class="anzhiyufont anzhiyu-icon-comment-medical"></i><span>引用到评论</span></a><div class="rightMenu-item" id="menu-newwindow"><i class="anzhiyufont anzhiyu-icon-window-restore"></i><span>新窗口打开</span></div><div class="rightMenu-item" id="menu-copylink"><i class="anzhiyufont anzhiyu-icon-link"></i><span>复制链接地址</span></div><div class="rightMenu-item" id="menu-copyimg"><i class="anzhiyufont anzhiyu-icon-images"></i><span>复制此图片</span></div><div class="rightMenu-item" id="menu-downloadimg"><i class="anzhiyufont anzhiyu-icon-download"></i><span>下载此图片</span></div><div class="rightMenu-item" id="menu-newwindowimg"><i class="anzhiyufont anzhiyu-icon-window-restore"></i><span>新窗口打开图片</span></div><div class="rightMenu-item" id="menu-search"><i class="anzhiyufont anzhiyu-icon-magnifying-glass"></i><span>站内搜索</span></div><div class="rightMenu-item" id="menu-searchBaidu"><i class="anzhiyufont anzhiyu-icon-magnifying-glass"></i><span>百度搜索</span></div></div><div class="rightMenu-group rightMenu-line rightMenuOther"><a class="rightMenu-item menu-link" id="menu-randomPost"><i class="anzhiyufont anzhiyu-icon-shuffle"></i><span>随便逛逛</span></a><a class="rightMenu-item menu-link" href="/categories/"><i class="anzhiyufont anzhiyu-icon-cube"></i><span>博客分类</span></a><a class="rightMenu-item menu-link" href="/tags/"><i class="anzhiyufont anzhiyu-icon-tags"></i><span>文章标签</span></a></div><div class="rightMenu-group rightMenu-line rightMenuOther"><a class="rightMenu-item" id="menu-copy" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-copy"></i><span>复制地址</span></a><a class="rightMenu-item" id="menu-commentBarrage" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-message"></i><span class="menu-commentBarrage-text">关闭热评</span></a><a class="rightMenu-item" id="menu-darkmode" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-circle-half-stroke"></i><span class="menu-darkmode-text">深色模式</span></a><a class="rightMenu-item" id="menu-translate" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-language"></i><span>轉為繁體</span></a></div></div><div id="rightmenu-mask"></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="/js/tw_cn.js"></script><script src="https://cdn.cbd.int/@fancyapps/ui@6.1.6/dist/fancybox/fancybox.umd.js"></script><script src="https://cdn.cbd.int/instant.page@5.2.0/instantpage.js" type="module"></script><script src="https://cdn.cbd.int/vanilla-lazyload@19.1.3/dist/lazyload.iife.min.js"></script><script src="https://cdn.cbd.int/node-snackbar@0.1.16/dist/snackbar.min.js"></script><canvas id="universe"></canvas><script async src="https://npm.elemecdn.com/anzhiyu-theme-static@1.0.0/dark/dark.js"></script><script>// 消除控制台打印
+var HoldLog = console.log;
+console.log = function () {};
+let now1 = new Date();
+queueMicrotask(() => {
+  const Log = function () {
+    HoldLog.apply(console, arguments);
+  }; //在恢复前输出日志
+  const grt = new Date("08/08/2026 00:00:00"); //此处修改你的建站时间或者网站上线时间
+  now1.setTime(now1.getTime() + 250);
+  const days = (now1 - grt) / 1000 / 60 / 60 / 24;
+  const dnum = Math.floor(days);
+  const ascll = [
+    `欢迎使用安知鱼!`,
+    `生活明朗, 万物可爱`,
+    `
+        
+       █████╗ ███╗   ██╗███████╗██╗  ██╗██╗██╗   ██╗██╗   ██╗
+      ██╔══██╗████╗  ██║╚══███╔╝██║  ██║██║╚██╗ ██╔╝██║   ██║
+      ███████║██╔██╗ ██║  ███╔╝ ███████║██║ ╚████╔╝ ██║   ██║
+      ██╔══██║██║╚██╗██║ ███╔╝  ██╔══██║██║  ╚██╔╝  ██║   ██║
+      ██║  ██║██║ ╚████║███████╗██║  ██║██║   ██║   ╚██████╔╝
+      ╚═╝  ╚═╝╚═╝  ╚═══╝╚══════╝╚═╝  ╚═╝╚═╝   ╚═╝    ╚═════╝
+        
+        `,
+    "已上线",
+    dnum,
+    "天",
+    "©2020 By 安知鱼 V1.7.1",
+  ];
+  const ascll2 = [`NCC2-036`, `调用前置摄像头拍照成功，识别为【小笨蛋】.`, `Photo captured: `, `🤪`];
+
+  setTimeout(
+    Log.bind(
+      console,
+      `\n%c${ascll[0]} %c ${ascll[1]} %c ${ascll[2]} %c${ascll[3]}%c ${ascll[4]}%c ${ascll[5]}\n\n%c ${ascll[6]}\n`,
+      "color:#425AEF",
+      "",
+      "color:#425AEF",
+      "color:#425AEF",
+      "",
+      "color:#425AEF",
+      ""
+    )
+  );
+  setTimeout(
+    Log.bind(
+      console,
+      `%c ${ascll2[0]} %c ${ascll2[1]} %c \n${ascll2[2]} %c\n${ascll2[3]}\n`,
+      "color:white; background-color:#4fd953",
+      "",
+      "",
+      'background:url("https://npm.elemecdn.com/anzhiyu-blog@1.1.6/img/post/common/tinggge.gif") no-repeat;font-size:450%'
+    )
+  );
+
+  setTimeout(Log.bind(console, "%c WELCOME %c 你好，小笨蛋.", "color:white; background-color:#4f90d9", ""));
+
+  setTimeout(
+    console.warn.bind(
+      console,
+      "%c ⚡ Powered by 安知鱼 %c 你正在访问 qiuxz 的博客.",
+      "color:white; background-color:#f0ad4e",
+      ""
+    )
+  );
+
+  setTimeout(Log.bind(console, "%c W23-12 %c 你已打开控制台.", "color:white; background-color:#4f90d9", ""));
+
+  setTimeout(
+    console.warn.bind(console, "%c S013-782 %c 你现在正处于监控中.", "color:white; background-color:#d9534f", "")
+  );
+});</script><script async src="/anzhiyu/random.js"></script><div class="js-pjax"><script>if (!window.MathJax) {
+  window.MathJax = {
+    tex: {
+      inlineMath: [['$', '$'], ['\\(', '\\)']],
+      tags: 'ams'
+    },
+    chtml: {
+      scale: 1.1,
+      // MathJax 4 默认从 cdn.jsdelivr.net 取 NewCM 字体，国内直连拿不到，
+      // 公式会退化成缺字形。这里改走 npmmirror（与 mathjax@4.0.0 对应）。
+      fontURL: 'https://registry.npmmirror.com/@mathjax/mathjax-newcm-font/4.0.0/files/chtml/woff2',
+      dynamicPrefix: 'https://registry.npmmirror.com/@mathjax/mathjax-newcm-font/4.0.0/files/chtml/dynamic'
+    },
+    options: {
+      renderActions: {
+        findScript: [10, doc => {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/)
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+            const text = document.createTextNode('')
+            node.parentNode.replaceChild(text, node)
+            math.start = {node: text, delim: '', n: 0}
+            math.end = {node: text, delim: '', n: 0}
+            doc.math.push(math)
+          }
+        }, '']
+      }
+    }
+  }
+  
+  const script = document.createElement('script')
+  script.src = 'https://cdn.cbd.int/mathjax@4.0.0/tex-mml-chtml.js'
+  script.id = 'MathJax-script'
+  script.async = true
+  document.head.appendChild(script)
+} else {
+  MathJax.startup.document.state(0)
+  MathJax.texReset()
+  MathJax.typesetPromise()
+}</script><link rel="stylesheet" type="text/css" href="https://cdn.cbd.int/katex@0.16.25/dist/katex.min.css"><script src="https://cdn.cbd.int/katex@0.16.25/dist/contrib/copy-tex.min.js"></script><script>(() => {
+  document.querySelectorAll('#article-container span.katex-display').forEach(item => {
+    anzhiyu.wrap(item, 'div', { class: 'katex-wrap'})
+  })
+})()</script><input type="hidden" name="page-type" id="page-type" value="post"></div><script>var visitorMail = "";
+</script><script async data-pjax src="https://cdn.cbd.int/anzhiyu-theme-static@1.0.0/waterfall/waterfall.js"></script><script src="https://cdn.cbd.int/qrcodejs@1.0.0/qrcode.min.js"></script><link rel="stylesheet" href="https://cdn.cbd.int/anzhiyu-theme-static@1.1.9/icon/ali_iconfont_css.css"><script src="/js/social-copy.js"></script><script src="/js/column-nav-mobile.js"></script><script src="https://cdn.cbd.int/pjax@0.2.8/pjax.min.js"></script><script>let pjaxSelectors = ["head > title","#config-diff","#body-wrap","#rightside-config-hide","#rightside-config-show",".js-pjax"]
+var pjax = new Pjax({
+  elements: 'a:not([target="_blank"])',
+  selectors: pjaxSelectors,
+  cacheBust: false,
+  analytics: false,
+  scrollRestoration: false
+})
+
+document.addEventListener('pjax:send', function () {
+  // removeEventListener scroll 
+  anzhiyu.removeGlobalFnEvent('pjax')
+  anzhiyu.removeGlobalFnEvent('themeChange')
+
+  document.getElementById('rightside').classList.remove('rightside-show')
+  
+  if (window.aplayers) {
+    for (let i = 0; i < window.aplayers.length; i++) {
+      if (!window.aplayers[i].options.fixed) {
+        window.aplayers[i].destroy()
+      }
+    }
+  }
+
+  typeof typed === 'object' && typed.destroy()
+
+  //reset readmode
+  const $bodyClassList = document.body.classList
+  $bodyClassList.contains('read-mode') && $bodyClassList.remove('read-mode')
+})
+
+document.addEventListener('pjax:complete', function () {
+  window.refreshFn()
+
+  document.querySelectorAll('script[data-pjax]').forEach(item => {
+    const newScript = document.createElement('script')
+    const content = item.text || item.textContent || item.innerHTML || ""
+    Array.from(item.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value))
+    newScript.appendChild(document.createTextNode(content))
+    item.parentNode.replaceChild(newScript, item)
+  })
+
+  GLOBAL_CONFIG.islazyload && window.lazyLoadInstance.update()
+
+  typeof panguInit === 'function' && panguInit()
+
+  // google analytics
+  typeof gtag === 'function' && gtag('config', '', {'page_path': window.location.pathname});
+
+  // baidu analytics
+  typeof _hmt === 'object' && _hmt.push(['_trackPageview',window.location.pathname]);
+
+  typeof loadMeting === 'function' && document.getElementsByClassName('aplayer').length && loadMeting()
+
+  // prismjs
+  typeof Prism === 'object' && Prism.highlightAll()
+})
+
+document.addEventListener('pjax:error', e => {
+  if (e.request.status === 404) {
+    pjax.loadUrl('/404.html')
+  }
+})</script><script charset="UTF-8" src="https://cdn.cbd.int/anzhiyu-theme-static@1.1.5/accesskey/accesskey.js"></script></div><div id="popup-window"><div class="popup-window-title">通知</div><div class="popup-window-divider"></div><div class="popup-window-content"><div class="popup-tip">你好呀</div><div class="popup-link"><i class="anzhiyufont anzhiyu-icon-arrow-circle-right"></i></div></div></div></body></html>

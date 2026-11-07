@@ -1,0 +1,799 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no"><title>02 知识表示技术 | qiuxz's Blog</title><meta name="keywords" content="知识图谱,教程"><meta name="author" content="qiuxz"><meta name="copyright" content="qiuxz"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#f7f9fe"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-touch-fullscreen" content="yes"><meta name="apple-mobile-web-app-title" content="02 知识表示技术"><meta name="application-name" content="02 知识表示技术"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="#f7f9fe"><meta property="og:type" content="article"><meta property="og:title" content="02 知识表示技术"><meta property="og:url" content="https://qiuxzh.github.io/other/QUT/%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E6%95%99%E7%A8%8B/02-%E7%9F%A5%E8%AF%86%E8%A1%A8%E7%A4%BA%E6%8A%80%E6%9C%AF/index.html"><meta property="og:site_name" content="qiuxz's Blog"><meta property="og:description" content="知识要变成结构，可结构有很多种写法。写法一旦定下来，能推出什么、推不出什么，也就跟着定下来了。这一章从一句会推出错误结论的推理讲起，把符号表示和向量表示两条线依次走过。 三句话推不出正确答案 下面三句话都是真的。鸟会飞。企鹅是鸟。企鹅不会飞。 前两句放在一起，任何一个会三段论的人都会推出“企鹅会飞”"><meta property="og:locale" content="zh-CN"><meta property="og:image" content="https://qiuxzh.github.io/img/avatar.jpg"><meta property="article:author" content="qiuxz"><meta property="article:tag"><meta name="twitter:card" content="summary"><meta name="twitter:image" content="https://qiuxzh.github.io/img/avatar.jpg"><meta name="description" content="知识要变成结构，可结构有很多种写法。写法一旦定下来，能推出什么、推不出什么，也就跟着定下来了。这一章从一句会推出错误结论的推理讲起，把符号表示和向量表示两条线依次走过。 三句话推不出正确答案 下面三句话都是真的。鸟会飞。企鹅是鸟。企鹅不会飞。 前两句放在一起，任何一个会三段论的人都会推出“企鹅会飞”"><link rel="shortcut icon" href="/favicon.ico"><link rel="canonical" href="https://qiuxzh.github.io/other/QUT/%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E6%95%99%E7%A8%8B/02-%E7%9F%A5%E8%AF%86%E8%A1%A8%E7%A4%BA%E6%8A%80%E6%9C%AF/"><link rel="preconnect" href="//cdn.cbd.int"/><meta name="google-site-verification" content="xxx"/><meta name="baidu-site-verification" content="code-xxx"/><meta name="msvalidate.01" content="xxx"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.cbd.int/node-snackbar@0.1.16/dist/snackbar.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.cbd.int/@fancyapps/ui@6.1.6/dist/fancybox/fancybox.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  linkPageTop: undefined,
+  peoplecanvas: {"enable":true,"img":"https://upload-bbs.miyoushe.com/upload/2024/07/27/125766904/ba62475f396df9de3316a08ed9e65d86_5680958632268053399..png"},
+  postHeadAiDescription: undefined,
+  diytitle: undefined,
+  LA51: undefined,
+  greetingBox: undefined,
+  twikooEnvId: '',
+  commentBarrageConfig:undefined,
+  music_page_default: "nav_music",
+  root: '/',
+  preloader: {"source":3},
+  friends_vue_info: undefined,
+  navMusic: false,
+  mainTone: undefined,
+  authorStatus: undefined,
+  algolia: undefined,
+  localSearch: undefined,
+  translate: {"defaultEncoding":2,"translateDelay":0,"msgToTraditionalChinese":"繁","msgToSimplifiedChinese":"简","rightMenuMsgToTraditionalChinese":"转为繁体","rightMenuMsgToSimplifiedChinese":"转为简体"},
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":330},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    simplehomepage: true,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: {"copy":true,"copyrightEbable":false,"limitCount":50,"languages":{"author":"作者: qiuxz","link":"链接: ","source":"来源: qiuxz's Blog","info":"著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。","copySuccess":"复制成功，复制和转载请标注本文地址"}},
+  lightbox: 'fancybox',
+  Snackbar: {"chs_to_cht":"你已切换为繁体","cht_to_chs":"你已切换为简体","day_to_night":"你已切换为深色模式","night_to_day":"你已切换为浅色模式","bgLight":"#425AEF","bgDark":"#1f1f1f","position":"top-center"},
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.cbd.int/flickr-justified-gallery@2.2.0/dist/fjGallery.min.js',
+      css: 'https://cdn.cbd.int/flickr-justified-gallery@2.2.0/dist/fjGallery.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: true,
+  isAnchor: false,
+  shortcutKey: undefined,
+  autoDarkmode: true
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  configTitle: 'qiuxz\'s Blog',
+  title: '02 知识表示技术',
+  postAI: '',
+  pageFillDescription: '三句话推不出正确答案, 表示要解决什么, 四条早期路线, 语义网络, 产生式规则, 框架系统, 谓词逻辑, 符号表示的三层, 属性图, RDF, OWL, 符号表示走到哪停住, 从词向量到实体向量, TransE：关系是一次平移, 平移不够用之后, 时间进来之后, 怎么选, 自测知识要变成结构可结构有很多种写法写法一旦定下来能推出什么推不出什么也就跟着定下来了这一章从一句会推出错误结论的推理讲起把符号表示和向量表示两条线依次走过三句话推不出正确答案下面三句话都是真的鸟会飞企鹅是鸟企鹅不会飞前两句放在一起任何一个会三段论的人都会推出企鹅会飞可这条结论是错的第三句话正是来纠正它的企鹅鸟会飞真具有属性沿继承企鹅会飞推出来了但事实是企鹅不会飞三种写法机器能推出的东西完全不同写成一段话什么都推不出写成纯三元组推出错的带上例外约束不推知识表示的选择会直接改变推理结果三元组本身没有位置存放除了企鹅所以继承规则会一路推到底要想拦住它得换一种能写约束的表示同样三条事实为什么换一种写法机器给出的答案就变了因为表示不只是换个容器容器决定哪些关系能写进去哪些约束写得下哪些推断会被允许写不下例外就推得出错误结论表示要解决什么知识表示这门学问问的是一个很实际的问题人脑里的知识怎么改写成机器能运算的形式它不只是存下来还要保证存下来的东西能被拿去推理学习决策年在里把这件事拆成五个角色放到工程上看其中三个最关键知识表示替代物用一个符号代表真实事物对世界的承诺选定哪些东西算存在可推理能推出没直接写进来的写客户编号机器只知道有一串字符不知道它指哪个人决定把订单当实体还是当属性后面能问的问题就跟着变了能由父子推出祖孙这条关系从没被谁写进去过三个角色对应三件事符号要能指代现实选定的世界要说得清楚表示本身要支持推导数据格式只做到第一条所以数据不等于知识那篇文章里还有一句常被引用的判断知识表示不等于数据格式也不等于数据结构或编程语言区别落在最后一列数据存下来是给人查的知识存下来要能被机器拿去推在整条建库流水线上表示处在中间位置前面要认知和收集后面要建库和维护选错表示前面的工作白做后面的查询也提不出想提的问题四条早期路线到年代人们试过四种写法它们的共同目标是同一件事把概念和概念之间的关系记下来并且让机器能顺着这些关系走四种写法的差别在于它们各自愿意为哪种推理能力付出代价语义网络有向图猫动物宠物节点是概念边是语义关系直观但没有公认的形式语义产生式规则专家系统的骨架革兰氏阴性杆状绿脓杆菌一条规则一个知识点规则多了会组合爆炸写不出结构只擅长因果链框架系统的框架理论槽与侧面人槽个人信息侧面姓名侧面年龄遇到新事物先套一个现成框架再改细节描述完整但构建成本高形式不灵活谓词逻辑一阶逻辑子句描述逻辑有严格形式语义推理可验证写不确定性很吃力四条路线各有取舍语义网络赢得直观产生式赢得可解释框架赢得结构化描述谓词逻辑赢得严格性它们都没能同时拿下这四样语义网络语义网络把知识画成一张有向图顶点是概念边是概念之间的语义关系最基本的单元叫语义基元写出来正好是个三元组节点一关系节点二一条语义基元对应的那一小块图叫基本网元第一章讲的实体与关系在这里已经有雏形它的优点很直接直观贴近人的联想方式自然语言到图的转换也容易做缺点同样直接这套图没有公认的形式语义同一张图给不同的程序解释含义可以不一样到底传不传属性传几层全靠实现者自己约定用它做全称存在量词的推理逻辑上不充分是这条路线最成功的产物普林斯顿大学从年开始做用上下位关系蕴含关系把词组织起来版收录了万个词和万条语义关系它的贡献是给词义提供了一套可计算的坐标到今天仍然是很多系统的默认词典产生式规则产生式系统把知识写成的规则后面跟一个置信度取值在到之间用它推断分子结构用它诊断感染性疾病里有一条经典规则如果微生物的染色斑是革兰氏阴性形状呈杆状病人是中间宿主那么该微生物是绿脓杆菌置信度规则的好处是模块化一条规则一个知识点加规则不用动别的代价也很明显求解过程是反复的匹配冲突消解执行规则库一上万条匹配就慢下来遇到复杂问题还会组合爆炸最要紧的是它表达不了结构性知识事物之间的层次关系在规则里写不出来框架系统的框架理论认为人对事物的认识是以类似框架的结构存在记忆里的遇到新事物先从记忆里找一个合适的框架再按实际情况改细节框架是一段描述对象属性的数据结构里面分成若干槽每个槽再分成若干侧面槽有槽值侧面有侧面值拿人举例框架叫人槽是个人信息这个槽的槽值包括姓名和年龄槽内部还可以有教育背景和工作经验两个侧面侧面值是学位和工作年限这套写法已经很接近面向对象里的类与属性也和后面要讲的属性图有血缘关系谓词逻辑谓词逻辑用这样的原子公式描述个体之间的关系再用量词连接词组织成命题它有一套严格的形式定义和推理规则推出来的结论可以验证困难在于写不了不确定性知识启发式经验也没地方放而且推理复杂度高与知识图谱关系最近的是描述逻辑它是一阶谓词逻辑的一个可判定子集专门用来描述本体的概念和属性知识库分成和两部分装内涵知识说明概念的一般性质比如母亲是有孩子的女性装外延知识也就是具体个体比如是母亲的孩子是第二章后半段讲时这套术语会原样出现四条路线留下了什么语义网络留下了节点加边的形状产生式留下了规则推理的习惯框架留下了实体带一组属性的组织方式谓词逻辑留下了严格语义和的分工今天的属性图把这四样各自继承了一部分符号表示的三层符号表示用可读的符号写知识人看得懂机器也能解析工业界实际在用的有三层从实用到严格依次是属性图属性图节点和边都能挂属性张伟人物张伟教授清华大学计算机系毕业院校年份属性直接挂在节点或边上读写都方便一切都拆成主语谓语宾语张伟姓名张伟张伟年龄张伟职称教授张伟毕业院校清华大学张伟毕业年份属性退化成一条三元组结构更平交换更容易同一条知识两种写法属性图把年龄当节点上的一个字段把它当成一条独立的三元组前者读写快后者拼接与合并方便属性图属性图由顶点边标签关系类型和属性组成是一张有向图节点代表实体边代表关系节点和边都可以带一组键值对形式的属性一个人物关系图谱里每个节点可以放姓名年龄性别边上可以放好友关系的权重和建立时间这种模型最贴近工程直觉主流图数据库大多按它实现读写性能也针对图结构做了优化代价是它不支持符号推理图上没有这类语义构件机器只能按你写的边去走走不出你没写的东西是推动的语义数据模型用三元组主语谓语宾语描述资源主语通常是实体谓语是关系或属性宾语可以是另一个实体也可以是一个字面值属性图里的属性在里变成了一条指向字面值的三元组之上还有一层补了几个固定的词让图能表达谁属于谁先看两个说的是个体和类的关系写成企鹅鸟说的是类和类的关系写成企鹅鸟有这两条机器不用人教就知道企鹅也属于动物因为企鹅属于鸟鸟属于动物这条链会自己传下去另外几个词管别的事声明某个谓语是属性让属性之间也能继承和规定一条关系两头分别该是什么类型道理和一样作用的位置不同这几个词一加图就有了分类能力可以做简单的推理教授教师教职工张伟已知教授系统补出来的两条断言教师教职工这些断言从来没被写进库是的传递性自己推出来的库里的规模没变能回答的问题变多了这是符号表示相对于纯数据库的核心差别也是它值得多花成本建库的理由三元组写不下复杂约束时就轮到它给的是一批可以写进本体的约束每一类解决一种三元组说不清的情况先看最常用的一种打开企业名录每个公司都有且只有一个统一社会信用代码这句话用三元组写不出来你能写甲公司信用代码但写不出只能有一个里加一条基数限定推理机就有了检查依据谁名下挂了两个代码报冲突其余构件按管的东西分四组管类的能对类做交并补管属性取值的有存在限定全称限定管数量的还是基数限定管属性之间关系的能声明互反对称传递函数也能把几条属性串成属性链传递性小明是小林的祖先小林是小志的祖先小明是小志的祖先互反祖先与后代互为反向小明是小林的祖先小林是小明的后代函数性每人只能有一个取值库里若出现两个母亲就是冲突对称性小明是小林的朋友小林是小明的朋友传递互反函数对称都属于属性之间关系这一组这类约束在纯三元组里写不下来把它们变成可以声明的东西推理机读声明就能自动补边或者报冲突的表达能力是有代价的构件用得越多推理复杂度越高有些组合甚至会把推理从可判定拖成不可判定工程上常见的做法是只用一小撮构件够表达业务约束就行符号表示走到哪停住符号表示把知识写清楚了可它有个先天问题字符串之间没有距离北京和中国是两个孤立的符号机器知道北京是中国首都也知道巴黎是法国首都但从符号本身看不出这两条知识有任何相似之处它也不会算这两个实体有多像除非你把相似性也写成一条关系第二个问题是稀疏库里没写的边就是不存在机器没法从已有结构里泛化出新的第三个问题是人工成本写一条三元组要人确认一次规模上去以后维护不住向量表示想解决的正是这三点让实体变成一串数让相似的东西在数值上靠得近让没写下来的边也能被估出来从词向量到实体向量这套思路最早用在词上词是符号计算机拿符号做不了代数运算于是先把词变成向量最朴素的做法是词典有多大向量就多长当前词的位置填其余填一万个词的词典每个词就是一万维的向量绝大多数位置是零这种编码能区分词但区分不了语义任意两个向量的内积都是零猫和狗的距离跟猫和量子力学一样远词典再大一点存储也顶不住编码维度等于词典大小只有一个位置是共维猫狗汽车之间距离都相等分布式表示维度远小于词典每一维都有数值猫与狗靠近与汽车远离距离可以算词的含义由它周围的词决定同样的道理搬到图谱上实体含义由它在图里的邻居决定关系则被学成一个可以作用的变换这就是后面所有翻译模型旋转模型的共同前提左边是符号右边是语义维度从一万降到一百换来的是可以用距离做判断代价是每一维不再对应任何具体含义是让这件事普及的模型两种训练方式用上下文预测中心词反过来用中心词预测窗口内每个上下文词以为例窗口取中心词是周围是就切出四个训练样本输入先做乘中心词矩阵压到维隐层再乘上下文矩阵回一个维向量之后取概率最大的词和真实上下文比对反向传播修权重词向量这一套搬到实体上就遇到了一个词没有的麻烦关系词向量只要表示词图谱里还要表示首都父亲出生于这些关系而且关系得能参与运算关系是一次平移先看两组三元组北京是首都中国巴黎是首都法国学过地理的人一眼能看出这两条知识的结构一模一样是首都在两组之间是同一个动作要是能把这种共同点在向量空间里体现出来机器就有望从一条知识泛化到另一条等人在年提出的就是抓住这一点把关系当成从头实体到尾实体的一次平移向量上学就是北京中国是首都巴黎法国是首都两条边完全平行而且等长评分函数越接近越好同一个关系向量被两个不同的头实体重复使用于是它成了一个可迁移的动作训练要做的是把巴黎推回法国这个位置同时压住错误尾实体的得分把关系当成平移向量图上的每条边就变成了空间里的一个位移中国落在北京沿是首都平移过去的位置上法国也该落在巴黎平移过去的位置上训练目标是让真的三元组距离小让假的距离大假的从哪来随机把头实体或尾实体换掉这个做法叫负采样构造出的负样本是东京是首都中国这种明显不成立的组合损失函数用排序要求真样本的分数比负样本至少低一个差得不够就罚的参数少训练快在一对一的关系上表现好它栽在两类关系上一类是一对多比如一个作者写了十本书这十本书的向量都得落在同一个位置模型没法区分另一类是对称关系小明和小林是配偶按平移假设就有来回一推向量全塌到一处平移不够用之后对称关系这一条值得把算式摊开看张三的配偶是李四李四的配偶是张三两条同时成立按平移的写法两条事实各写一个等式张三的向量加上等于李四的向量李四的向量加上又等于张三的向量两式相减等于负只能是零向量关系向量变成零这对配偶在空间里塌成同一个点方向信息全丢了自反关系也一样栽一个固定的位移装不下这些形态补救分成两路一路改几何让关系能做平移做不到的动作一路改空间让实体和关系分开住走前一路关系不再当平移当复平面上的旋转且约束每个分量的模长为旋转度再转度回到原地配偶关系来回推不会塌旋转度要四次才回原位父子这种单向关系还是单向反对称和组合也顺带装进了同一个几何代价是坐标从实数变成复数小明小林为什么旋转能解决配偶关系平移假设下且两式相减得方向信息全丢了旋转假设下两次旋转回到原处仍有意义还顺带把另外两种关系模式装进了同一个几何反对称与组合平移在对称关系上会把推成零旋转不会这是唯一的改动也是配偶这类关系能被表达的原因走后一路它认为实体和关系不该待在同一个空间里实体有实体的语义关系有关系的语义两者维度甚至可以不同中间用一个映射矩阵把实体投到关系空间再做平移这样同一个实体在不同关系下可以有不同表现作者关系里的刘慈欣和工程师关系里的刘慈欣不必共用一套坐标空间还能换得更彻底把旋转搬进双曲空间双曲空间的体积随半径指数增长装树状层级天然合适越往下分的概念越多需要的地方也越大欧氏空间装一棵深树要么维度开得很大要么把不同分支挤在一起三种几何各管一段平移适合层级和单向关系旋转多出对称这一类双曲空间专门照顾树状的层次结构还有一条路绕开几何直接把头实体关系尾实体编码成向量算匹配度用做上下文抽局部特征最后接分类层输出分数在它基础上加入关系的文本描述和实体属性缓解纯结构信息不够的问题这类模型参数量大可解释性弱换来的是能用上图谱之外的文字时间进来之后前面所有模型都默认一件事知识是不变的现实里这句话经常不成立某公司的是张三在年成立年可能就不成立了静态三元组只有真假两态装不下在什么时间成立两种补法一种是把时间当成第四元把三元组扩成四元组头实体关系尾实体时间就在这个方向上把时间也学成一个向量塞进原来的平移公式另一种是把时间当连续信号用时间编码把时间戳映射成向量再用带时间权重的注意力聚合邻居让节点表示随时间演化动态表示目前还在演进工程上用得不如静态模型多原因不难理解加了时间维度数据稀疏问题会更严重同一对实体在不同时刻的观测往往只有零星几条怎么选符号表示和向量表示不是替代关系它们解决的是不同层面的问题符号负责准确和可解释向量负责泛化和相似度真实系统里两者经常一起出现图数据库里存符号化的三元组保证可查可审向量库里存同一批实体的嵌入用来做推荐和补全表示方式擅长弱项典型用法属性图读写快建模直观不支持符号推理业务图谱风控关系网标准交换格式可做类层次推理属性拆得碎查询写起来长开放数据发布跨库合并约束表达完整能查冲突推理复杂度高建模门槛高领域本体一致性校验一类参数少训练快能补边一对多与对称关系吃力链接预测实体补全能表达对称与层次结构空间复杂调参麻烦层级明显的领域图谱语义匹配模型能吃文本描述参数大可解释性弱稀疏实体跨模态场景选型时先问三个问题要不要机器自己推新结论要不要算实体之间的相似度数据规模多大三个都不要一张关系表就够了要推理往或走要相似度加一层嵌入硬把两件事塞进一种表示最后往往两头都不好用自测为什么企鹅是鸟鸟会飞在纯三元组里会推出错结论三元组只能写肯定的事实没有位置声明例外的继承规则会把会飞一路传下去除非表示层能写除企鹅外这类约束或者额外存一条企鹅不会飞的事实并让推理优先采信它属性图和表达同一条知识实质差别在哪属性图把属性挂在节点或边上是一个整体结构把属性也拆成三元组图更平前者读写效率高后者拼接合并交换方便也更容易接上本体推理处理配偶关系为什么会失效对称关要求同时两式联立得关系向量退化成零两个实体的方向信息丢失用旋转代替平移度转两次回到原点就没这个问题什么时候不该用向量表示需要给出可核查的推理链条时嵌入能告诉你这两个实体可能相关给不出依据审计医疗法律这类场景通常要求每一步都能追溯',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2026-11-07 02:37:15',
+  postMainColor: '',
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+      win.saveToLocal = {
+        set: (key, value, ttl) => {
+          if (ttl === 0) return
+          const now = Date.now()
+          const expiry = now + ttl * 86400000
+          const item = {
+            value,
+            expiry
+          }
+          localStorage.setItem(key, JSON.stringify(item))
+        },
+      
+        get: key => {
+          const itemStr = localStorage.getItem(key)
+      
+          if (!itemStr) {
+            return undefined
+          }
+          const item = JSON.parse(itemStr)
+          const now = Date.now()
+      
+          if (now > item.expiry) {
+            localStorage.removeItem(key)
+            return undefined
+          }
+          return item.value
+        }
+      }
+    
+      win.getScript = (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        script.onerror = reject
+        script.onload = script.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          script.onload = script.onreadystatechange = null
+          resolve()
+        }
+
+        Object.keys(attr).forEach(key => {
+          script.setAttribute(key, attr[key])
+        })
+
+        document.head.appendChild(script)
+      })
+    
+      win.getCSS = (url, id = false) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onerror = reject
+        link.onload = link.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          link.onload = link.onreadystatechange = null
+          resolve()
+        }
+        document.head.appendChild(link)
+      })
+    
+      win.activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#18171d')
+        }
+      }
+      win.activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#f7f9fe')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          const isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches
+          const isLightMode = window.matchMedia('(prefers-color-scheme: light)').matches
+          const isNotSpecified = window.matchMedia('(prefers-color-scheme: no-preference)').matches
+          const hasNoSupport = !isDarkMode && !isLightMode && !isNotSpecified
+
+          if (t === undefined) {
+            if (isLightMode) activateLightMode()
+            else if (isDarkMode) activateDarkMode()
+            else if (isNotSpecified || hasNoSupport) {
+              const now = new Date()
+              const hour = now.getHours()
+              const isNight = hour <= 6 || hour >= 18
+              isNight ? activateDarkMode() : activateLightMode()
+            }
+            window.matchMedia('(prefers-color-scheme: dark)').addListener(e => {
+              if (saveToLocal.get('theme') === undefined) {
+                e.matches ? activateDarkMode() : activateLightMode()
+              }
+            })
+          } else if (t === 'light') activateLightMode()
+          else activateDarkMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+      const detectApple = () => {
+        if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+          document.documentElement.classList.add('apple')
+        }
+      }
+      detectApple()
+    })(window)</script><meta name="generator" content="Hexo 7.0.0"></head><body data-type="anzhiyu"><div id="web_bg"></div><div id="an_music_bg"></div><div id="loading-box" onclick="document.getElementById(&quot;loading-box&quot;).classList.add(&quot;loaded&quot;)"><div class="loading-bg"><img class="loading-img nolazyload" alt="加载头像" src="/img/avatar.jpg"/><div class="loading-image-dot"></div></div></div><script>const preloader = {
+  endLoading: () => {
+    document.getElementById('loading-box').classList.add("loaded");
+  },
+  initLoading: () => {
+    document.getElementById('loading-box').classList.remove("loaded")
+  }
+}
+window.addEventListener('load',()=> { preloader.endLoading() })
+setTimeout(function(){preloader.endLoading();},10000)
+
+if (true) {
+  document.addEventListener('pjax:send', () => { preloader.initLoading() })
+  document.addEventListener('pjax:complete', () => { preloader.endLoading() })
+}</script><link rel="stylesheet" href="https://cdn.cbd.int/anzhiyu-theme-static@1.1.10/progress_bar/progress_bar.css"/><script async="async" src="https://cdn.cbd.int/pace-js@1.2.4/pace.min.js" data-pace-options="{ &quot;restartOnRequestAfter&quot;:false,&quot;eventLag&quot;:false}"></script><div class="post" id="body-wrap"><header class="not-top-img" id="page-header"><nav id="nav"><div id="nav-group"><span id="blog_name"><a id="site-name" href="/" accesskey="h"><div class="title">qiuxz's Blog</div><i class="anzhiyufont anzhiyu-icon-house-chimney"></i></a></span><div class="mask-name-container"><div id="name-container"><a id="page-name" href="javascript:anzhiyu.scrollToDest(0, 500)">PAGE_NAME</a></div></div><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="javascript:void(0);"><span> 文章</span></a><ul class="menus_item_child"><li><a class="site-page child faa-parent animated-hover" href="/archives/"><i class="anzhiyufont anzhiyu-icon-box-archive faa-tada" style="font-size: 0.9em;"></i><span> 隧道</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><span> 关于</span></a><ul class="menus_item_child"><li><a class="site-page child faa-parent animated-hover" href="/other/about/"><i class="anzhiyufont anzhiyu-icon-paper-plane faa-tada" style="font-size: 0.9em;"></i><span> 关于本人</span></a></li><li><a class="site-page child faa-parent animated-hover" href="javascript:toRandomPost()"><i class="anzhiyufont anzhiyu-icon-shoe-prints1 faa-tada" style="font-size: 0.9em;"></i><span> 随便逛逛</span></a></li></ul></div></div></div><div id="nav-right"><div class="nav-button" id="randomPost_button"><a class="site-page" onclick="toRandomPost()" title="随机前往一个文章" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-dice"></i></a></div><input id="center-console" type="checkbox"/><label class="widget" for="center-console" title="中控台" onclick="anzhiyu.switchConsole();"><i class="left"></i><i class="widget center"></i><i class="widget right"></i></label><div id="console"><div class="console-card-group-reward"><ul class="reward-all console-card"><li class="reward-item"><a href="https://npm.elemecdn.com/anzhiyu-blog@1.1.6/img/post/common/qrcode-weichat.png" target="_blank"><img class="post-qr-code-img" alt="微信" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://npm.elemecdn.com/anzhiyu-blog@1.1.6/img/post/common/qrcode-weichat.png"/></a><div class="post-qr-code-desc">微信</div></li><li class="reward-item"><a href="https://npm.elemecdn.com/anzhiyu-blog@1.1.6/img/post/common/qrcode-alipay.png" target="_blank"><img class="post-qr-code-img" alt="支付宝" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://npm.elemecdn.com/anzhiyu-blog@1.1.6/img/post/common/qrcode-alipay.png"/></a><div class="post-qr-code-desc">支付宝</div></li></ul></div><div class="console-card-group"><div class="console-card-group-left"><div class="console-card" id="card-newest-comments"><div class="card-content"><div class="author-content-item-tips">互动</div><span class="author-content-item-title"> 最新评论</span></div><div class="aside-list"><span>正在加载中...</span></div></div></div><div class="console-card-group-right"><div class="console-card tags"><div class="card-content"><div class="author-content-item-tips">兴趣点</div><span class="author-content-item-title">寻找你感兴趣的领域</span><div class="card-tags"><div class="item-headline"></div><div class="card-tag-cloud"><a href="/tags/YJango%E8%A7%86%E9%A2%91%E6%95%B4%E7%90%86/" style="font-size: 1.05rem;">YJango视频整理<sup>11</sup></a><a href="/tags/%E4%B8%AA%E4%BA%BA%E6%88%90%E9%95%BF/" style="font-size: 1.05rem;">个人成长<sup>3</sup></a><a href="/tags/%E5%AD%A6%E4%B9%A0/" style="font-size: 1.05rem;">学习<sup>13</sup></a><a href="/tags/%E6%84%9F%E6%82%9F/" style="font-size: 1.05rem;">感悟<sup>1</sup></a><a href="/tags/%E6%95%99%E7%A8%8B/" style="font-size: 1.05rem;">教程<sup>9</sup></a><a href="/tags/%E6%9C%AA%E5%88%86%E7%B1%BB/" style="font-size: 1.05rem;">未分类<sup>6</sup></a><a href="/tags/%E6%9E%B6%E6%9E%84/" style="font-size: 1.05rem;">架构<sup>1</sup></a><a href="/tags/%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1/" style="font-size: 1.05rem;">知识图谱<sup>9</sup></a><a href="/tags/%E8%80%83%E8%AF%95/" style="font-size: 1.05rem;">考试<sup>5</sup></a></div></div><hr/></div></div><div class="console-card history"><div class="item-headline"><i class="anzhiyufont anzhiyu-icon-box-archiv"></i><span>文章</span></div><div class="card-archives"><div class="item-headline"><i class="anzhiyufont anzhiyu-icon-archive"></i><span>归档</span><a class="card-more-btn" href="/archives/" title="查看更多">
+    <i class="anzhiyufont anzhiyu-icon-angle-right"></i></a></div><ul class="card-archive-list"><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2026/11/"><span class="card-archive-list-date">十一月 2026</span><div class="card-archive-list-count-group"><span class="card-archive-list-count">15</span><span>篇</span></div></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2026/10/"><span class="card-archive-list-date">十月 2026</span><div class="card-archive-list-count-group"><span class="card-archive-list-count">3</span><span>篇</span></div></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2026/09/"><span class="card-archive-list-date">九月 2026</span><div class="card-archive-list-count-group"><span class="card-archive-list-count">15</span><span>篇</span></div></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2026/08/"><span class="card-archive-list-date">八月 2026</span><div class="card-archive-list-count-group"><span class="card-archive-list-count">4</span><span>篇</span></div></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2026/06/"><span class="card-archive-list-date">六月 2026</span><div class="card-archive-list-count-group"><span class="card-archive-list-count">4</span><span>篇</span></div></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2026/05/"><span class="card-archive-list-date">五月 2026</span><div class="card-archive-list-count-group"><span class="card-archive-list-count">1</span><span>篇</span></div></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2026/03/"><span class="card-archive-list-date">三月 2026</span><div class="card-archive-list-count-group"><span class="card-archive-list-count">1</span><span>篇</span></div></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2025/12/"><span class="card-archive-list-date">十二月 2025</span><div class="card-archive-list-count-group"><span class="card-archive-list-count">2</span><span>篇</span></div></a></li></ul></div><hr/></div></div></div><div class="button-group"><div class="console-btn-item"><a class="darkmode_switchbutton" title="显示模式切换" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-moon"></i></a></div><div class="console-btn-item" id="consoleHideAside" onclick="anzhiyu.hideAsideBtn()" title="边栏显示控制"><a class="asideSwitch"><i class="anzhiyufont anzhiyu-icon-arrows-left-right"></i></a></div></div><div class="console-mask" onclick="anzhiyu.hideConsole()" href="javascript:void(0);"></div></div><div class="nav-button" id="nav-totop"><a class="totopbtn" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-arrow-up"></i><span id="percent" onclick="anzhiyu.scrollToDest(0,500)">0</span></a></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);" title="切换"><i class="anzhiyufont anzhiyu-icon-bars"></i></a></div></div></div></nav></header><main id="blog-container"><div class="column-nav"><div class="column-nav-inner"><div class="column-nav-title">知识图谱教程</div><nav class="column-nav-list"><a class="column-link" href="https://qiuxzh.github.io/other/QUT/%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E6%95%99%E7%A8%8B/00-%E6%95%99%E7%A8%8B%E6%80%BB%E8%A7%88/" style="padding-left:8px">00 教程总览</a><a class="column-link" href="https://qiuxzh.github.io/other/QUT/%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E6%95%99%E7%A8%8B/01-%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E6%A6%82%E8%BF%B0/" style="padding-left:8px">01 知识图谱概述</a><a class="column-link active" href="https://qiuxzh.github.io/other/QUT/%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E6%95%99%E7%A8%8B/02-%E7%9F%A5%E8%AF%86%E8%A1%A8%E7%A4%BA%E6%8A%80%E6%9C%AF/" style="padding-left:8px">02 知识表示技术</a><a class="column-link" href="https://qiuxzh.github.io/other/QUT/%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E6%95%99%E7%A8%8B/03-%E7%9F%A5%E8%AF%86%E6%8A%BD%E5%8F%96%E6%8A%80%E6%9C%AF/" style="padding-left:8px">03 知识抽取技术</a><a class="column-link" href="https://qiuxzh.github.io/other/QUT/%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E6%95%99%E7%A8%8B/04-%E7%9F%A5%E8%AF%86%E8%9E%8D%E5%90%88%E6%8A%80%E6%9C%AF/" style="padding-left:8px">04 知识融合技术</a><a class="column-link" href="https://qiuxzh.github.io/other/QUT/%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E6%95%99%E7%A8%8B/05-%E7%9F%A5%E8%AF%86%E5%AD%98%E5%82%A8%E6%8A%80%E6%9C%AF/" style="padding-left:8px">05 知识存储技术</a><a class="column-link" href="https://qiuxzh.github.io/other/QUT/%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E6%95%99%E7%A8%8B/06-%E5%9B%BE%E8%A1%A8%E7%A4%BA%E5%AD%A6%E4%B9%A0%E4%B8%8E%E5%9B%BE%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/" style="padding-left:8px">06 图表示学习与图神经网络</a><a class="column-link" href="https://qiuxzh.github.io/other/QUT/%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E6%95%99%E7%A8%8B/07-%E7%9F%A5%E8%AF%86%E6%8E%A8%E7%90%86%E6%8A%80%E6%9C%AF/" style="padding-left:8px">07 知识推理技术</a><a class="column-link" href="https://qiuxzh.github.io/other/QUT/%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E6%95%99%E7%A8%8B/08-%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E8%A1%8D%E7%94%9F%E6%8A%80%E6%9C%AF/" style="padding-left:8px">08 知识图谱衍生技术</a></nav></div></div><div class="layout" id="content-inner"><div id="post"><div id="post-info"><div id="post-firstinfo"><div class="meta-firstline"><a class="post-meta-original">原创</a><span class="post-meta-categories"><span class="post-meta-separator"></span><i class="anzhiyufont anzhiyu-icon-inbox post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E6%95%99%E7%A8%8B/" itemprop="url">知识图谱教程</a></span><span class="article-meta tags"><a class="article-meta__tags" href="/tags/%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1/" tabindex="-1" itemprop="url"> <span> <i class="anzhiyufont anzhiyu-icon-hashtag"></i>知识图谱</span></a><a class="article-meta__tags" href="/tags/%E6%95%99%E7%A8%8B/" tabindex="-1" itemprop="url"> <span> <i class="anzhiyufont anzhiyu-icon-hashtag"></i>教程</span></a></span></div></div><h1 class="post-title" itemprop="name headline">02 知识表示技术</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="anzhiyufont anzhiyu-icon-calendar-days post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" itemprop="dateCreated datePublished" datetime="2026-11-06T19:07:00.000Z" title="发表于 2026-11-06 19:07:00">2026-11-06</time><span class="post-meta-separator"></span><i class="anzhiyufont anzhiyu-icon-history post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" itemprop="dateCreated datePublished" datetime="2026-11-07T02:37:15.495Z" title="更新于 2026-11-07 02:37:15">2026-11-07</time></span></div><div class="meta-secondline"></div></div></div><article class="post-content" id="article-container" itemscope itemtype="https://qiuxzh.github.io/other/QUT/%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E6%95%99%E7%A8%8B/02-%E7%9F%A5%E8%AF%86%E8%A1%A8%E7%A4%BA%E6%8A%80%E6%9C%AF/"><header><a class="post-meta-categories" href="/categories/%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E6%95%99%E7%A8%8B/" itemprop="url">知识图谱教程</a><a href="/tags/%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1/" tabindex="-1" itemprop="url">知识图谱</a><a href="/tags/%E6%95%99%E7%A8%8B/" tabindex="-1" itemprop="url">教程</a><h1 id="CrawlerTitle" itemprop="name headline">02 知识表示技术</h1><span itemprop="author" itemscope itemtype="http://schema.org/Person">qiuxz</span><time itemprop="dateCreated datePublished" datetime="2026-11-06T19:07:00.000Z" title="发表于 2026-11-06 19:07:00">2026-11-06</time><time itemprop="dateCreated datePublished" datetime="2026-11-07T02:37:15.495Z" title="更新于 2026-11-07 02:37:15">2026-11-07</time></header><p>知识要变成结构，可结构有很多种写法。写法一旦定下来，能推出什么、推不出什么，也就跟着定下来了。这一章从一句会推出错误结论的推理讲起，把符号表示和向量表示两条线依次走过。</p>
+<h2 id="三句话推不出正确答案"><a href="#三句话推不出正确答案" class="headerlink" title="三句话推不出正确答案"></a>三句话推不出正确答案</h2><blockquote>
+<p>下面三句话都是真的。鸟会飞。企鹅是鸟。企鹅不会飞。</p>
+<p>前两句放在一起，任何一个会三段论的人都会推出“企鹅会飞”。可这条结论是错的。第三句话正是来纠正它的。</p>
+</blockquote>
+<svg width="100%" style="max-width:860px;height:auto" viewBox="0 0 860 300" role="img" aria-label="从继承关系推出错误结论">
+  <rect width="860" height="300" fill="#fdfbf6"></rect>
+  <rect x="60" y="46" width="110" height="44" rx="8" fill="#e9f2f6" stroke="#2f6f8f"></rect>
+  <text x="115" y="74" font-size="14" fill="#1f4d64" text-anchor="middle">企鹅</text>
+  <rect x="280" y="46" width="110" height="44" rx="8" fill="#e9f2f6" stroke="#2f6f8f"></rect>
+  <text x="335" y="74" font-size="14" fill="#1f4d64" text-anchor="middle">鸟</text>
+  <rect x="500" y="46" width="130" height="44" rx="8" fill="#f6e7c8" stroke="#c9ad74"></rect>
+  <text x="565" y="74" font-size="13" fill="#6b5320" text-anchor="middle">会飞 = 真</text>
+  <line x1="170" y1="68" x2="276" y2="68" stroke="#2f6f8f" stroke-width="1.6" marker-end="url(#b1)"></line>
+  <text x="223" y="60" font-size="11" fill="#2f6f8f" text-anchor="middle">isa</text>
+  <line x1="390" y1="68" x2="496" y2="68" stroke="#8a6a2f" stroke-width="1.6" marker-end="url(#b2)"></line>
+  <text x="443" y="60" font-size="11" fill="#8a6a2f" text-anchor="middle">具有属性</text>
+  <path d="M115,90 L115,132" stroke="#3f7a5a" stroke-width="1.6" marker-end="url(#b3)"></path>
+  <text x="125" y="118" font-size="11" fill="#3f7a5a">沿 isa 继承</text>
+  <rect x="46" y="136" width="150" height="44" rx="8" fill="#eaf3ee" stroke="#3f7a5a"></rect>
+  <text x="121" y="164" font-size="13.5" fill="#2c5c42" text-anchor="middle">企鹅会飞 ✓</text>
+  <text x="215" y="164" font-size="13" fill="#8a8175">推出来了</text>
+  <rect x="330" y="136" width="230" height="44" rx="8" fill="#fbeee7" stroke="#b4552d" stroke-width="1.6"></rect>
+  <text x="445" y="164" font-size="13.5" fill="#8f3d1c" text-anchor="middle">但事实是：企鹅不会飞</text>
+  <text x="60" y="228" font-size="12" fill="#6d747e">三种写法，机器能推出的东西完全不同：</text>
+  <rect x="60" y="242" width="230" height="42" rx="7" fill="#ffffff" stroke="#e4e0d6"></rect>
+  <text x="72" y="268" font-size="11.5" fill="#3d444d">写成一段话：什么都推不出</text>
+  <rect x="310" y="242" width="230" height="42" rx="7" fill="#ffffff" stroke="#e4e0d6"></rect>
+  <text x="322" y="268" font-size="11.5" fill="#8f3d1c">写成纯三元组：推出错的</text>
+  <rect x="560" y="242" width="230" height="42" rx="7" fill="#ffffff" stroke="#cfdde4"></rect>
+  <text x="572" y="268" font-size="11.5" fill="#1f4d64">带上例外约束：不推</text>
+  <defs>
+    <marker id="b1" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#2f6f8f"></path></marker>
+    <marker id="b2" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#8a6a2f"></path></marker>
+    <marker id="b3" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#3f7a5a"></path></marker>
+  </defs>
+</svg>
+
+<p><em>知识表示的选择会直接改变推理结果。三元组本身没有位置存放“除了企鹅”，所以继承规则会一路推到底。要想拦住它，得换一种能写约束的表示。</em></p>
+<blockquote>
+<p><strong>同样三条事实，为什么换一种写法，机器给出的答案就变了？</strong></p>
+<p>因为表示不只是换个容器。容器决定哪些关系能写进去，哪些约束写得下，哪些推断会被允许。写不下例外，就推得出错误结论。</p>
+</blockquote>
+<h2 id="表示要解决什么"><a href="#表示要解决什么" class="headerlink" title="表示要解决什么"></a>表示要解决什么</h2><p>知识表示（Knowledge Representation）这门学问，问的是一个很实际的问题：人脑里的知识，怎么改写成机器能运算的形式。它不只是存下来，还要保证存下来的东西能被拿去推理、学习、决策。</p>
+<p>1993 年 Davis、Shrobe、Szolovits 在《What is a Knowledge Representation?》里把这件事拆成五个角色。放到工程上看，其中三个最关键。</p>
+<svg width="100%" style="max-width:860px;height:auto" viewBox="0 0 860 300" role="img" aria-label="知识表示的三个核心角色">
+  <rect width="860" height="300" fill="#fdfbf6"></rect>
+  <circle cx="430" cy="150" r="52" fill="#fbeee7" stroke="#b4552d" stroke-width="1.6"></circle>
+  <text x="430" y="146" font-size="13.5" font-weight="600" fill="#8f3d1c" text-anchor="middle">知识</text>
+  <text x="430" y="166" font-size="13.5" font-weight="600" fill="#8f3d1c" text-anchor="middle">表示</text>
+  <line x1="380" y1="120" x2="250" y2="82" stroke="#cfd6da" stroke-width="1.4"></line>
+  <rect x="40" y="52" width="212" height="60" rx="9" fill="#ffffff" stroke="#cfdde4"></rect>
+  <text x="146" y="76" font-size="13" font-weight="600" fill="#1f4d64" text-anchor="middle">替代物</text>
+  <text x="146" y="96" font-size="10.5" fill="#6d747e" text-anchor="middle">用一个符号代表真实事物</text>
+  <line x1="380" y1="150" x2="256" y2="150" stroke="#cfd6da" stroke-width="1.4"></line>
+  <rect x="40" y="120" width="212" height="60" rx="9" fill="#ffffff" stroke="#cfdde4"></rect>
+  <text x="146" y="144" font-size="13" font-weight="600" fill="#1f4d64" text-anchor="middle">对世界的承诺</text>
+  <text x="146" y="164" font-size="10.5" fill="#6d747e" text-anchor="middle">选定哪些东西算存在</text>
+  <line x1="380" y1="180" x2="250" y2="218" stroke="#cfd6da" stroke-width="1.4"></line>
+  <rect x="40" y="188" width="212" height="60" rx="9" fill="#ffffff" stroke="#cfdde4"></rect>
+  <text x="146" y="212" font-size="13" font-weight="600" fill="#1f4d64" text-anchor="middle">可推理</text>
+  <text x="146" y="232" font-size="10.5" fill="#6d747e" text-anchor="middle">能推出没直接写进来的</text>
+  <rect x="520" y="52" width="300" height="60" rx="9" fill="#f4f1e9"></rect>
+  <text x="534" y="76" font-size="12" fill="#3d444d">写“客户编号 10086”，机器只知道有</text>
+  <text x="534" y="96" font-size="12" fill="#3d444d">一串字符，不知道它指哪个人</text>
+  <rect x="520" y="120" width="300" height="60" rx="9" fill="#f4f1e9"></rect>
+  <text x="534" y="144" font-size="12" fill="#3d444d">决定把“订单”当实体，还是当属性，</text>
+  <text x="534" y="164" font-size="12" fill="#3d444d">后面能问的问题就跟着变了</text>
+  <rect x="520" y="188" width="300" height="60" rx="9" fill="#f4f1e9"></rect>
+  <text x="534" y="212" font-size="12" fill="#3d444d">能由“父子”推出“祖孙”，这条关系</text>
+  <text x="534" y="232" font-size="12" fill="#3d444d">从没被谁写进去过</text>
+</svg>
+
+<p><em>三个角色对应三件事：符号要能指代现实，选定的世界要说得清楚，表示本身要支持推导。数据格式只做到第一条，所以数据不等于知识。</em></p>
+<p>Davis 那篇文章里还有一句常被引用的判断：知识表示不等于数据格式，也不等于数据结构或编程语言。区别落在最后一列，数据存下来是给人查的，知识存下来要能被机器拿去推。</p>
+<p>在整条建库流水线上，表示处在中间位置。前面要认知和收集，后面要建库和维护。选错表示，前面的工作白做，后面的查询也提不出想提的问题。</p>
+<h2 id="四条早期路线"><a href="#四条早期路线" class="headerlink" title="四条早期路线"></a>四条早期路线</h2><p>1960 到 1990 年代，人们试过四种写法。它们的共同目标是同一件事：把“概念”和“概念之间的关系”记下来，并且让机器能顺着这些关系走。四种写法的差别，在于它们各自愿意为哪种推理能力付出代价。</p>
+<svg width="100%" style="max-width:860px;height:auto" viewBox="0 0 860 420" role="img" aria-label="四种早期知识表示方法">
+  <rect width="860" height="420" fill="#fdfbf6"></rect>
+  <rect x="30" y="34" width="390" height="174" rx="10" fill="#ffffff" stroke="#cfdde4"></rect>
+  <text x="48" y="60" font-size="13" font-weight="600" fill="#1f4d64">语义网络</text>
+  <text x="48" y="78" font-size="10.5" fill="#6d747e">Quillian，1966 · 有向图</text>
+  <circle cx="110" cy="128" r="20" fill="#e9f2f6" stroke="#2f6f8f"></circle>
+  <text x="110" y="133" font-size="11" fill="#1f4d64" text-anchor="middle">猫</text>
+  <circle cx="250" cy="106" r="20" fill="#e9f2f6" stroke="#2f6f8f"></circle>
+  <text x="250" y="111" font-size="10" fill="#1f4d64" text-anchor="middle">动物</text>
+  <circle cx="250" cy="172" r="20" fill="#e9f2f6" stroke="#2f6f8f"></circle>
+  <text x="250" y="177" font-size="10" fill="#1f4d64" text-anchor="middle">宠物</text>
+  <line x1="128" y1="120" x2="232" y2="110" stroke="#2f6f8f" stroke-width="1.3"></line>
+  <text x="180" y="108" font-size="10" fill="#2f6f8f" text-anchor="middle">isa</text>
+  <line x1="128" y1="138" x2="232" y2="168" stroke="#2f6f8f" stroke-width="1.3"></line>
+  <text x="180" y="166" font-size="10" fill="#2f6f8f" text-anchor="middle">isa</text>
+  <text x="300" y="122" font-size="11" fill="#3d444d">节点是概念</text>
+  <text x="300" y="142" font-size="11" fill="#3d444d">边是语义关系</text>
+  <text x="300" y="168" font-size="11" fill="#6d747e">直观，但没有公认</text>
+  <text x="300" y="186" font-size="11" fill="#6d747e">的形式语义</text>
+  <rect x="440" y="34" width="390" height="174" rx="10" fill="#ffffff" stroke="#e2dcc9"></rect>
+  <text x="458" y="60" font-size="13" font-weight="600" fill="#8a6a2f">产生式规则</text>
+  <text x="458" y="78" font-size="10.5" fill="#6d747e">IF-THEN · 专家系统的骨架</text>
+  <rect x="470" y="94" width="200" height="34" rx="6" fill="#f6e7c8" stroke="#c9ad74"></rect>
+  <text x="570" y="116" font-size="10.5" fill="#6b5320" text-anchor="middle">IF 革兰氏阴性 + 杆状</text>
+  <rect x="470" y="140" width="200" height="34" rx="6" fill="#fbeee7" stroke="#c9ad74"></rect>
+  <text x="570" y="162" font-size="10.5" fill="#8f3d1c" text-anchor="middle">THEN 绿脓杆菌 CF=0.6</text>
+  <text x="690" y="112" font-size="11" fill="#3d444d">一条规则一个知识点</text>
+  <text x="690" y="132" font-size="11" fill="#3d444d">规则多了会组合爆炸</text>
+  <text x="690" y="158" font-size="11" fill="#6d747e">写不出结构，</text>
+  <text x="690" y="176" font-size="11" fill="#6d747e">只擅长因果链</text>
+  <rect x="30" y="222" width="390" height="174" rx="10" fill="#ffffff" stroke="#e8ddd3"></rect>
+  <text x="48" y="248" font-size="13" font-weight="600" fill="#8f3d1c">框架系统</text>
+  <text x="48" y="266" font-size="10.5" fill="#6d747e">Minsky 的框架理论 · 槽与侧面</text>
+  <rect x="48" y="282" width="104" height="30" rx="5" fill="#fbeee7" stroke="#b4552d"></rect>
+  <text x="100" y="302" font-size="11" fill="#8f3d1c" text-anchor="middle">人</text>
+  <line x1="152" y1="297" x2="186" y2="297" stroke="#cfd6da"></line>
+  <rect x="190" y="282" width="104" height="30" rx="5" fill="#ffffff" stroke="#e4e0d6"></rect>
+  <text x="242" y="302" font-size="10.5" fill="#3d444d" text-anchor="middle">槽：个人信息</text>
+  <line x1="294" y1="297" x2="318" y2="297" stroke="#cfd6da"></line>
+  <rect x="322" y="276" width="80" height="24" rx="4" fill="#ffffff" stroke="#e4e0d6"></rect>
+  <text x="362" y="292" font-size="10" fill="#6d747e" text-anchor="middle">侧面：姓名</text>
+  <rect x="322" y="306" width="80" height="24" rx="4" fill="#ffffff" stroke="#e4e0d6"></rect>
+  <text x="362" y="322" font-size="10" fill="#6d747e" text-anchor="middle">侧面：年龄</text>
+  <text x="48" y="358" font-size="11" fill="#3d444d">遇到新事物，先套一个现成框架，再改细节</text>
+  <text x="48" y="378" font-size="11" fill="#6d747e">描述完整，但构建成本高、形式不灵活</text>
+  <rect x="440" y="222" width="390" height="174" rx="10" fill="#ffffff" stroke="#cfdde4"></rect>
+  <text x="458" y="248" font-size="13" font-weight="600" fill="#1f4d64">谓词逻辑</text>
+  <text x="458" y="266" font-size="10.5" fill="#6d747e">一阶逻辑 · Horn 子句 · 描述逻辑</text>
+  <text x="470" y="300" font-size="13" fill="#1f4d64" font-family="monospace">mother(Helen)</text>
+  <text x="470" y="324" font-size="13" fill="#1f4d64" font-family="monospace">has_child(Helen, Jack)</text>
+  <text x="470" y="348" font-size="12" fill="#6d747e" font-family="monospace">has_child(X,Y) :- has_son(X,Y)</text>
+  <text x="470" y="380" font-size="11" fill="#3d444d">有严格形式语义，推理可验证</text>
+  <text x="690" y="380" font-size="11" fill="#6d747e">写不确定性很吃力</text>
+</svg>
+
+<p><em>四条路线各有取舍：语义网络赢得直观，产生式赢得可解释，框架赢得结构化描述，谓词逻辑赢得严格性。它们都没能同时拿下这四样。</em></p>
+<h3 id="语义网络"><a href="#语义网络" class="headerlink" title="语义网络"></a>语义网络</h3><p>语义网络把知识画成一张有向图，顶点是概念，边是概念之间的语义关系。最基本的单元叫语义基元，写出来正好是个三元组（节点一，关系，节点二），一条语义基元对应的那一小块图叫基本网元。第一章讲的“实体与关系”在这里已经有雏形。</p>
+<p>它的优点很直接：直观、贴近人的联想方式，自然语言到图的转换也容易做。缺点同样直接，这套图没有公认的形式语义，同一张图给不同的程序解释，含义可以不一样；“isa”到底传不传属性、传几层，全靠实现者自己约定。用它做全称、存在量词的推理，逻辑上不充分。</p>
+<p>WordNet 是这条路线最成功的产物。普林斯顿大学从 1985 年开始做，用上下位关系、蕴含关系把词组织起来，3.0 版收录了 15 万个词和 20 万条语义关系。它的贡献是给“词义”提供了一套可计算的坐标，到今天仍然是很多系统的默认词典。</p>
+<h3 id="产生式规则"><a href="#产生式规则" class="headerlink" title="产生式规则"></a>产生式规则</h3><p>产生式系统把知识写成 IF P THEN Q 的规则，后面跟一个置信度 CF，取值在 0 到 1 之间。DENDRAL 用它推断分子结构，MYCIN 用它诊断感染性疾病。MYCIN 里有一条经典规则：如果微生物的染色斑是革兰氏阴性、形状呈杆状、病人是中间宿主，那么该微生物是绿脓杆菌，置信度 0.6。</p>
+<p>规则的好处是模块化：一条规则一个知识点，加规则不用动别的。代价也很明显。求解过程是反复的“匹配、冲突消解、执行”，规则库一上万条，匹配就慢下来；遇到复杂问题还会组合爆炸；最要紧的是它表达不了结构性知识，事物之间的层次关系在规则里写不出来。</p>
+<h3 id="框架系统"><a href="#框架系统" class="headerlink" title="框架系统"></a>框架系统</h3><p>Minsky 的框架理论认为，人对事物的认识是以类似框架的结构存在记忆里的。遇到新事物，先从记忆里找一个合适的框架，再按实际情况改细节。框架是一段描述对象属性的数据结构，里面分成若干槽，每个槽再分成若干侧面，槽有槽值，侧面有侧面值。</p>
+<p>拿人举例：框架叫“人”，槽是“个人信息”，这个槽的槽值包括姓名和年龄；槽内部还可以有“教育背景”和“工作经验”两个侧面，侧面值是学位和工作年限。这套写法已经很接近面向对象里的类与属性，也和后面要讲的属性图有血缘关系。</p>
+<h3 id="谓词逻辑"><a href="#谓词逻辑" class="headerlink" title="谓词逻辑"></a>谓词逻辑</h3><p>谓词逻辑用 P(t1, t2, …, tn) 这样的原子公式描述个体之间的关系，再用量词、连接词组织成命题。它有一套严格的形式定义和推理规则，推出来的结论可以验证。困难在于写不了不确定性知识，启发式经验也没地方放，而且推理复杂度高。</p>
+<p>与知识图谱关系最近的，是描述逻辑。它是一阶谓词逻辑的一个可判定子集，专门用来描述本体的概念和属性，知识库分成 TBox 和 ABox 两部分。TBox 装内涵知识，说明概念的一般性质，比如“母亲是有孩子的女性”；ABox 装外延知识，也就是具体个体，比如“Helen 是母亲”“Helen 的孩子是 Jack”。第二章后半段讲 OWL 时，这套术语会原样出现。</p>
+<blockquote>
+<p><strong>四条路线留下了什么。</strong>语义网络留下了“节点加边”的形状，产生式留下了规则推理的习惯，框架留下了“实体带一组属性”的组织方式，谓词逻辑留下了严格语义和 TBox&#x2F;ABox 的分工。今天的 RDF、OWL、属性图，把这四样各自继承了一部分。</p>
+</blockquote>
+<h2 id="符号表示的三层"><a href="#符号表示的三层" class="headerlink" title="符号表示的三层"></a>符号表示的三层</h2><p>符号表示用可读的符号写知识，人看得懂，机器也能解析。工业界实际在用的有三层，从实用到严格依次是属性图、RDF、OWL。</p>
+<svg width="100%" style="max-width:860px;height:auto" viewBox="0 0 860 380" role="img" aria-label="属性图与 RDF 表达同一件事">
+  <rect width="860" height="380" fill="#fdfbf6"></rect>
+  <text x="46" y="42" font-size="13.5" font-weight="600" fill="#1f4d64">属性图</text>
+  <text x="46" y="62" font-size="11" fill="#6d747e">节点和边都能挂属性</text>
+  <rect x="30" y="74" width="380" height="270" rx="10" fill="#ffffff" stroke="#cfdde4"></rect>
+  <circle cx="128" cy="132" r="30" fill="#e9f2f6" stroke="#2f6f8f" stroke-width="1.6"></circle>
+  <text x="128" y="137" font-size="13" fill="#1f4d64" text-anchor="middle">张伟</text>
+  <text x="128" y="180" font-size="10" fill="#3d6d84" text-anchor="middle">人物</text>
+  <rect x="52" y="196" width="152" height="66" rx="6" fill="#f4f1e9" stroke="#e4e0d6"></rect>
+  <text x="62" y="216" font-size="10.5" fill="#3d444d">name: 张伟</text>
+  <text x="62" y="234" font-size="10.5" fill="#3d444d">age: 45</text>
+  <text x="62" y="252" font-size="10.5" fill="#3d444d">title: 教授</text>
+  <circle cx="330" cy="132" r="38" fill="#e9f2f6" stroke="#2f6f8f" stroke-width="1.6"></circle>
+  <text x="330" y="130" font-size="11.5" fill="#1f4d64" text-anchor="middle">清华大学</text>
+  <text x="330" y="148" font-size="11.5" fill="#1f4d64" text-anchor="middle">计算机系</text>
+  <line x1="160" y1="128" x2="290" y2="128" stroke="#2f6f8f" stroke-width="1.8" marker-end="url(#b4)"></line>
+  <text x="225" y="118" font-size="10.5" fill="#2f6f8f" text-anchor="middle">毕业院校</text>
+  <text x="225" y="150" font-size="10" fill="#b4552d" text-anchor="middle">{ 年份: 2005 }</text>
+  <text x="46" y="366" font-size="11" fill="#6d747e">属性直接挂在节点或边上，读写都方便</text>
+  <line x1="420" y1="50" x2="420" y2="356" stroke="#e4e0d6" stroke-dasharray="4 4"></line>
+  <text x="452" y="42" font-size="13.5" font-weight="600" fill="#8f3d1c">RDF</text>
+  <text x="452" y="62" font-size="11" fill="#6d747e">一切都拆成主语 · 谓语 · 宾语</text>
+  <rect x="436" y="74" width="394" height="270" rx="10" fill="#ffffff" stroke="#f0d5c7"></rect>
+  <rect x="460" y="96" width="346" height="34" rx="5" fill="#fbeee7"></rect>
+  <text x="472" y="118" font-size="10.5" fill="#8f3d1c" font-family="monospace">&lt;张伟&gt; &lt;姓名&gt; "张伟"</text>
+  <rect x="460" y="138" width="346" height="34" rx="5" fill="#fbeee7"></rect>
+  <text x="472" y="160" font-size="10.5" fill="#8f3d1c" font-family="monospace">&lt;张伟&gt; &lt;年龄&gt; "45"</text>
+  <rect x="460" y="180" width="346" height="34" rx="5" fill="#fbeee7"></rect>
+  <text x="472" y="202" font-size="10.5" fill="#8f3d1c" font-family="monospace">&lt;张伟&gt; &lt;职称&gt; "教授"</text>
+  <rect x="460" y="222" width="346" height="34" rx="5" fill="#fbeee7"></rect>
+  <text x="472" y="244" font-size="10.5" fill="#8f3d1c" font-family="monospace">&lt;张伟&gt; &lt;毕业院校&gt; &lt;清华大学&gt;</text>
+  <rect x="460" y="264" width="346" height="34" rx="5" fill="#fbeee7"></rect>
+  <text x="472" y="286" font-size="10.5" fill="#8f3d1c" font-family="monospace">&lt;张伟&gt; &lt;毕业年份&gt; "2005"</text>
+  <text x="452" y="366" font-size="11" fill="#6d747e">属性退化成一条三元组，结构更平，交换更容易</text>
+  <defs><marker id="b4" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#2f6f8f"></path></marker></defs>
+</svg>
+
+<p><em>同一条知识，两种写法。属性图把年龄当节点上的一个字段，RDF 把它当成一条独立的三元组。前者读写快，后者拼接与合并方便。</em></p>
+<h3 id="属性图"><a href="#属性图" class="headerlink" title="属性图"></a>属性图</h3><p>属性图由顶点、边、标签、关系类型和属性组成，是一张有向图。节点代表实体，边代表关系，节点和边都可以带一组键值对形式的属性。一个人物关系图谱里，每个节点可以放姓名、年龄、性别，边上可以放好友关系的权重和建立时间。</p>
+<p>这种模型最贴近工程直觉，主流图数据库大多按它实现，读写性能也针对图结构做了优化。代价是它不支持符号推理，图上没有 subClassOf 这类语义构件，机器只能按你写的边去走，走不出你没写的东西。</p>
+<h3 id="RDF"><a href="#RDF" class="headerlink" title="RDF"></a>RDF</h3><p>RDF 是 W3C 推动的语义数据模型，用三元组（主语，谓语，宾语）描述资源。主语通常是实体，谓语是关系或属性，宾语可以是另一个实体，也可以是一个字面值。属性图里的“属性”，在 RDF 里变成了一条指向字面值的三元组。</p>
+<p>RDF 之上还有一层 RDFS，补了几个固定的词，让图能表达“谁属于谁”。</p>
+<p>先看两个。type 说的是个体和类的关系，写成<code>企鹅 type 鸟</code>。subClassOf 说的是类和类的关系，写成<code>企鹅 subClassOf 鸟</code>。有这两条，机器不用人教就知道企鹅也属于动物，因为企鹅属于鸟、鸟属于动物，这条链会自己传下去。</p>
+<p>另外几个词管别的事。Property 声明某个谓语是属性，subPropertyOf 让属性之间也能继承，domain 和 range 规定一条关系两头分别该是什么类型。道理和 subClassOf 一样，作用的位置不同。</p>
+<p>这几个词一加，图就有了分类能力，可以做简单的推理。</p>
+<svg width="100%" style="max-width:860px;height:auto" viewBox="0 0 860 268" role="img" aria-label="RDFS 的类层次推理">
+  <rect width="860" height="268" fill="#fdfbf6"></rect>
+  <rect x="56" y="44" width="120" height="42" rx="7" fill="#e9f2f6" stroke="#2f6f8f"></rect>
+  <text x="116" y="70" font-size="12.5" fill="#1f4d64" text-anchor="middle">教授</text>
+  <rect x="236" y="44" width="120" height="42" rx="7" fill="#e9f2f6" stroke="#2f6f8f"></rect>
+  <text x="296" y="70" font-size="12.5" fill="#1f4d64" text-anchor="middle">教师</text>
+  <rect x="416" y="44" width="120" height="42" rx="7" fill="#e9f2f6" stroke="#2f6f8f"></rect>
+  <text x="476" y="70" font-size="12.5" fill="#1f4d64" text-anchor="middle">教职工</text>
+  <line x1="176" y1="65" x2="232" y2="65" stroke="#2f6f8f" stroke-width="1.5" marker-end="url(#b5)"></line>
+  <text x="204" y="57" font-size="10" fill="#2f6f8f" text-anchor="middle">sub</text>
+  <line x1="356" y1="65" x2="412" y2="65" stroke="#2f6f8f" stroke-width="1.5" marker-end="url(#b5)"></line>
+  <text x="384" y="57" font-size="10" fill="#2f6f8f" text-anchor="middle">sub</text>
+  <rect x="56" y="150" width="120" height="42" rx="7" fill="#fbeee7" stroke="#b4552d"></rect>
+  <text x="116" y="176" font-size="12.5" fill="#8f3d1c" text-anchor="middle">张伟</text>
+  <text x="116" y="212" font-size="10.5" fill="#6d747e" text-anchor="middle">已知：type 教授</text>
+  <path d="M176,171 L744,171" stroke="#b4552d" stroke-width="1.4" stroke-dasharray="6 4" marker-end="url(#b6)"></path>
+  <text x="450" y="162" font-size="11" fill="#b4552d" text-anchor="middle">系统补出来的两条断言</text>
+  <rect x="576" y="150" width="76" height="42" rx="7" fill="#ffffff" stroke="#f0d5c7"></rect>
+  <text x="614" y="176" font-size="11" fill="#8f3d1c" text-anchor="middle">type 教师</text>
+  <rect x="672" y="150" width="90" height="42" rx="7" fill="#ffffff" stroke="#f0d5c7"></rect>
+  <text x="717" y="176" font-size="11" fill="#8f3d1c" text-anchor="middle">type 教职工</text>
+  <text x="56" y="248" font-size="11.5" fill="#6d747e">这些断言从来没被写进库，是 subClassOf 的传递性自己推出来的</text>
+  <defs>
+    <marker id="b5" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#2f6f8f"></path></marker>
+    <marker id="b6" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#b4552d"></path></marker>
+  </defs>
+</svg>
+
+<p><em>库里的规模没变，能回答的问题变多了。这是符号表示相对于纯数据库的核心差别，也是它值得多花成本建库的理由。</em></p>
+<h3 id="OWL"><a href="#OWL" class="headerlink" title="OWL"></a>OWL</h3><p>三元组写不下复杂约束时，就轮到 OWL。它给的是一批可以写进本体的约束，每一类解决一种“三元组说不清”的情况。</p>
+<p>先看最常用的一种。打开企业名录，每个公司都有且只有一个统一社会信用代码。这句话用三元组写不出来：你能写“甲公司 信用代码 91310000xxxx”，但写不出“只能有一个”。OWL 里加一条基数限定，推理机就有了检查依据，谁名下挂了两个代码，报冲突。</p>
+<p>其余构件按管的东西分四组。管类的能对类做交、并、补；管属性取值的有存在限定、全称限定、hasValue；管数量的还是基数限定；管属性之间关系的能声明互反、对称、传递、函数，也能把几条属性串成属性链。</p>
+<svg width="100%" style="max-width:860px;height:auto" viewBox="0 0 860 300" role="img" aria-label="OWL 的四类表达构件">
+  <rect width="860" height="300" fill="#fdfbf6"></rect>
+  <rect x="30" y="30" width="392" height="118" rx="10" fill="#ffffff" stroke="#cfdde4"></rect>
+  <text x="46" y="54" font-size="12.5" font-weight="600" fill="#1f4d64">传递性</text>
+  <text x="46" y="74" font-size="10" fill="#6d747e">TransitiveProperty</text>
+  <text x="46" y="102" font-size="11.5" fill="#3d444d">小明 是 小林 的祖先</text>
+  <text x="46" y="122" font-size="11.5" fill="#3d444d">小林 是 小志 的祖先</text>
+  <text x="46" y="142" font-size="11.5" fill="#8f3d1c">⟹ 小明 是 小志 的祖先</text>
+  <rect x="438" y="30" width="392" height="118" rx="10" fill="#ffffff" stroke="#cfdde4"></rect>
+  <text x="454" y="54" font-size="12.5" font-weight="600" fill="#1f4d64">互反</text>
+  <text x="454" y="74" font-size="10" fill="#6d747e">inverseOf</text>
+  <text x="454" y="102" font-size="11.5" fill="#3d444d">祖先 与 后代 互为反向</text>
+  <text x="454" y="122" font-size="11.5" fill="#3d444d">小明 是 小林 的祖先</text>
+  <text x="454" y="142" font-size="11.5" fill="#8f3d1c">⟹ 小林 是 小明 的后代</text>
+  <rect x="30" y="164" width="392" height="118" rx="10" fill="#ffffff" stroke="#cfdde4"></rect>
+  <text x="46" y="188" font-size="12.5" font-weight="600" fill="#1f4d64">函数性</text>
+  <text x="46" y="208" font-size="10" fill="#6d747e">FunctionalProperty</text>
+  <text x="46" y="236" font-size="11.5" fill="#3d444d">hasMother 每人只能有一个取值</text>
+  <text x="46" y="256" font-size="11.5" fill="#3d444d">库里若出现两个母亲，就是冲突</text>
+  <rect x="438" y="164" width="392" height="118" rx="10" fill="#ffffff" stroke="#cfdde4"></rect>
+  <text x="454" y="188" font-size="12.5" font-weight="600" fill="#1f4d64">对称性</text>
+  <text x="454" y="208" font-size="10" fill="#6d747e">SymmetricProperty</text>
+  <text x="454" y="236" font-size="11.5" fill="#3d444d">小明 是 小林 的朋友</text>
+  <text x="454" y="256" font-size="11.5" fill="#8f3d1c">⟹ 小林 是 小明 的朋友</text>
+</svg>
+
+<p><em>传递、互反、函数、对称，都属于“属性之间关系”这一组。这类约束在纯三元组里写不下来，OWL 把它们变成可以声明的东西，推理机读声明就能自动补边或者报冲突。</em></p>
+<p>OWL 的表达能力是有代价的。构件用得越多，推理复杂度越高，有些组合甚至会把推理从可判定拖成不可判定。工程上常见的做法是只用一小撮构件，够表达业务约束就行。</p>
+<h2 id="符号表示走到哪停住"><a href="#符号表示走到哪停住" class="headerlink" title="符号表示走到哪停住"></a>符号表示走到哪停住</h2><p>符号表示把知识写清楚了，可它有个先天问题：字符串之间没有距离。北京和中国是两个孤立的符号，机器知道“北京是中国首都”，也知道“巴黎是法国首都”，但从符号本身看不出这两条知识有任何相似之处。它也不会算“这两个实体有多像”，除非你把相似性也写成一条关系。</p>
+<p>第二个问题是稀疏。库里没写的边就是不存在，机器没法从已有结构里泛化出新的。第三个问题是人工成本，写一条三元组要人确认一次，规模上去以后维护不住。</p>
+<p>向量表示想解决的正是这三点：让实体变成一串数，让相似的东西在数值上靠得近，让没写下来的边也能被估出来。</p>
+<h2 id="从词向量到实体向量"><a href="#从词向量到实体向量" class="headerlink" title="从词向量到实体向量"></a>从词向量到实体向量</h2><p>这套思路最早用在词上。词是符号，计算机拿符号做不了代数运算，于是先把词变成向量。最朴素的做法是 one-hot：词典有多大，向量就多长，当前词的位置填 1，其余填 0。一万个词的词典，每个词就是一万维的向量，绝大多数位置是零。</p>
+<p>这种编码能区分词，但区分不了语义。任意两个 one-hot 向量的内积都是零，“猫”和“狗”的距离跟“猫”和“量子力学”一样远。词典再大一点，存储也顶不住。</p>
+<svg width="100%" style="max-width:860px;height:auto" viewBox="0 0 860 280" role="img" aria-label="one-hot 向量与分布式向量">
+  <rect width="860" height="280" fill="#fdfbf6"></rect>
+  <text x="46" y="42" font-size="12.5" font-weight="600" fill="#8a8175">one-hot 编码</text>
+  <text x="46" y="62" font-size="10.5" fill="#6d747e">维度等于词典大小，只有一个位置是 1</text>
+  <g>
+    <rect x="46" y="86" width="16" height="16" rx="2" fill="#e9ddc8"></rect><rect x="66" y="86" width="16" height="16" rx="2" fill="#e9ddc8"></rect>
+    <rect x="86" y="86" width="16" height="16" rx="2" fill="#e9ddc8"></rect><rect x="106" y="86" width="16" height="16" rx="2" fill="#e9ddc8"></rect>
+    <rect x="126" y="86" width="16" height="16" rx="2" fill="#e9ddc8"></rect><rect x="146" y="86" width="16" height="16" rx="2" fill="#e9ddc8"></rect>
+    <rect x="166" y="86" width="16" height="16" rx="2" fill="#b4552d"></rect><rect x="186" y="86" width="16" height="16" rx="2" fill="#e9ddc8"></rect>
+    <rect x="206" y="86" width="16" height="16" rx="2" fill="#e9ddc8"></rect><rect x="226" y="86" width="16" height="16" rx="2" fill="#e9ddc8"></rect>
+    <rect x="246" y="86" width="16" height="16" rx="2" fill="#e9ddc8"></rect><rect x="266" y="86" width="16" height="16" rx="2" fill="#e9ddc8"></rect>
+  </g>
+  <text x="300" y="100" font-size="13" fill="#8a8175">…</text>
+  <text x="330" y="100" font-size="10.5" fill="#6d747e">共 10000 维</text>
+  <text x="46" y="132" font-size="11" fill="#8f3d1c">猫 · 狗 · 汽车 之间距离都相等</text>
+  <line x1="430" y1="60" x2="430" y2="240" stroke="#e4e0d6" stroke-dasharray="4 4"></line>
+  <text x="462" y="42" font-size="12.5" font-weight="600" fill="#1f4d64">分布式表示</text>
+  <text x="462" y="62" font-size="10.5" fill="#6d747e">维度远小于词典，每一维都有数值</text>
+  <g>
+    <rect x="462" y="86" width="16" height="16" rx="2" fill="#2f6f8f" opacity=".9"></rect><rect x="482" y="86" width="16" height="16" rx="2" fill="#2f6f8f" opacity=".3"></rect>
+    <rect x="502" y="86" width="16" height="16" rx="2" fill="#2f6f8f" opacity=".65"></rect><rect x="522" y="86" width="16" height="16" rx="2" fill="#2f6f8f" opacity=".15"></rect>
+    <rect x="542" y="86" width="16" height="16" rx="2" fill="#2f6f8f" opacity=".8"></rect><rect x="562" y="86" width="16" height="16" rx="2" fill="#2f6f8f" opacity=".4"></rect>
+    <rect x="582" y="86" width="16" height="16" rx="2" fill="#2f6f8f" opacity=".55"></rect><rect x="602" y="86" width="16" height="16" rx="2" fill="#2f6f8f" opacity=".7"></rect>
+  </g>
+  <text x="632" y="100" font-size="10.5" fill="#6d747e">d = 100</text>
+  <text x="462" y="132" font-size="11" fill="#1f4d64">猫与狗靠近，与汽车远离，距离可以算</text>
+  <rect x="46" y="164" width="784" height="86" rx="8" fill="#f4f1e9"></rect>
+  <text x="62" y="190" font-size="12" fill="#3d444d">“词的含义由它周围的词决定。” —— J. R. Firth, 1957</text>
+  <text x="62" y="214" font-size="11.5" fill="#6d747e">同样的道理搬到图谱上：实体含义由它在图里的邻居决定，关系则被学成一个可以作用的变换。</text>
+  <text x="62" y="236" font-size="11.5" fill="#6d747e">这就是后面所有翻译模型、旋转模型的共同前提。</text>
+</svg>
+
+<p><em>左边是符号，右边是语义。维度从一万降到一百，换来的是可以用距离做判断，代价是每一维不再对应任何具体含义。</em></p>
+<p>Word2Vec 是让这件事普及的模型，两种训练方式：CBoW 用上下文预测中心词，Skip-gram 反过来，用中心词预测窗口内每个上下文词。以“I always go to work by bus”为例，窗口取 2，中心词是 work，周围是 go、to、by、bus，就切出四个训练样本。输入先做 one-hot，乘中心词矩阵压到 n 维隐层，再乘上下文矩阵回一个 V 维向量，softmax 之后取概率最大的词，和真实上下文比对，反向传播修权重。</p>
+<p>词向量这一套搬到实体上，就遇到了一个词没有的麻烦：<strong>关系</strong>。词向量只要表示词，图谱里还要表示“首都”“父亲”“出生于”这些关系，而且关系得能参与运算。</p>
+<h2 id="TransE：关系是一次平移"><a href="#TransE：关系是一次平移" class="headerlink" title="TransE：关系是一次平移"></a>TransE：关系是一次平移</h2><p>先看两组三元组：（北京，是首都，中国）、（巴黎，是首都，法国）。学过地理的人一眼能看出，这两条知识的结构一模一样，“是首都”在两组之间是同一个动作。要是能把这种共同点在向量空间里体现出来，机器就有望从一条知识泛化到另一条。</p>
+<p>Bordes 等人在 2013 年提出的 TransE 就是抓住这一点：把关系当成从头实体到尾实体的一次平移。向量上学，就是 <code>h + r ≈ t</code>。</p>
+<svg width="100%" style="max-width:860px;height:auto" viewBox="0 0 860 340" role="img" aria-label="TransE 的平移假设">
+  <rect width="860" height="340" fill="#fdfbf6"></rect>
+  <circle cx="90" cy="190" r="4" fill="#1b1d21"></circle>
+  <circle cx="250" cy="120" r="4" fill="#1b1d21"></circle>
+  <circle cx="330" cy="250" r="4" fill="#1b1d21"></circle>
+  <circle cx="490" cy="180" r="4" fill="#1b1d21"></circle>
+  <line x1="90" y1="190" x2="244" y2="122" stroke="#b4552d" stroke-width="2.2" marker-end="url(#b8)"></line>
+  <text x="80" y="196" font-size="12" fill="#1b1d21" text-anchor="end">h 北京</text>
+  <text x="256" y="114" font-size="12" fill="#1b1d21">t 中国</text>
+  <text x="167" y="140" font-size="12" fill="#b4552d" text-anchor="middle">r 是首都</text>
+  <line x1="330" y1="250" x2="484" y2="182" stroke="#b4552d" stroke-width="2.2" marker-end="url(#b8)"></line>
+  <text x="320" y="256" font-size="12" fill="#1b1d21" text-anchor="end">h 巴黎</text>
+  <text x="496" y="174" font-size="12" fill="#1b1d21">t 法国</text>
+  <text x="407" y="200" font-size="12" fill="#b4552d" text-anchor="middle">r 是首都</text>
+  <line x1="90" y1="190" x2="330" y2="250" stroke="#cfd6da" stroke-width="1.2" stroke-dasharray="4 4"></line>
+  <line x1="250" y1="120" x2="490" y2="180" stroke="#cfd6da" stroke-width="1.2" stroke-dasharray="4 4"></line>
+  <text x="210" y="292" font-size="11.5" fill="#6d747e" text-anchor="middle">两条边完全平行，而且等长</text>
+  <rect x="560" y="56" width="272" height="104" rx="9" fill="#ffffff" stroke="#e4e0d6"></rect>
+  <text x="696" y="82" font-size="11" fill="#6d747e" text-anchor="middle">评分函数</text>
+  <text x="696" y="108" font-size="13.5" fill="#1f4d64" text-anchor="middle" font-family="monospace">f(h,r,t) = ‖h + r − t‖</text>
+  <text x="696" y="132" font-size="10.5" fill="#6d747e" text-anchor="middle">越接近 0 越好</text>
+  <text x="560" y="192" font-size="11.5" fill="#3d444d">同一个关系向量 r，被两个不同的头实体</text>
+  <text x="560" y="212" font-size="11.5" fill="#3d444d">重复使用，于是它成了一个可迁移的动作。</text>
+  <text x="560" y="244" font-size="11.5" fill="#8f3d1c">训练要做的，是把“巴黎 + r”推回“法国”</text>
+  <text x="560" y="264" font-size="11.5" fill="#8f3d1c">这个位置，同时压住错误尾实体的得分。</text>
+  <defs>
+    <marker id="b8" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M0,0 L9,4.5 L0,9 z" fill="#b4552d"></path></marker>
+  </defs>
+</svg>
+
+<p><em>把关系当成平移向量，图上的每条边就变成了空间里的一个位移。中国落在北京沿“是首都”平移过去的位置上，法国也该落在巴黎平移过去的位置上。</em></p>
+<p>训练目标是让真的三元组距离小，让假的距离大。假的从哪来？随机把头实体或尾实体换掉。这个做法叫负采样，构造出的负样本是（东京，是首都，中国）这种明显不成立的组合。损失函数用 margin 排序，要求真样本的分数比负样本至少低一个 margin，差得不够就罚。</p>
+<p>TransE 的参数少，训练快，在“一对一”的关系上表现好。它栽在两类关系上。一类是一对多，比如一个作者写了十本书，这十本书的向量都得落在同一个位置，模型没法区分。另一类是对称关系，“小明和小林是配偶”，按平移假设就有 r ≈ 0，来回一推向量全塌到一处。</p>
+<h2 id="平移不够用之后"><a href="#平移不够用之后" class="headerlink" title="平移不够用之后"></a>平移不够用之后</h2><p>对称关系这一条，值得把算式摊开看。</p>
+<p>“张三的配偶是李四”，“李四的配偶是张三”，两条同时成立。按平移的写法，两条事实各写一个等式：张三的向量加上 r 等于李四的向量，李四的向量加上 r 又等于张三的向量。两式相减，r 等于负 r，r 只能是零向量。关系向量变成零，这对配偶在空间里塌成同一个点，方向信息全丢了。</p>
+<p>自反关系也一样栽。一个固定的位移，装不下这些形态。</p>
+<p>补救分成两路。一路改几何，让关系能做平移做不到的动作；一路改空间，让实体和关系分开住。</p>
+<p>RotatE 走前一路。关系不再当平移，当复平面上的旋转：<code>t = h ∘ r</code>，且约束每个分量的模长为 1。旋转 180 度再转 180 度回到原地，配偶关系来回推不会塌；旋转 90 度要四次才回原位，父子这种单向关系还是单向。反对称和组合也顺带装进了同一个几何。代价是坐标从实数变成复数。</p>
+<svg width="100%" style="max-width:860px;height:auto" viewBox="0 0 860 300" role="img" aria-label="RotatE 的旋转假设">
+  <rect width="860" height="300" fill="#fdfbf6"></rect>
+  <circle cx="330" cy="160" r="108" fill="none" stroke="#e4e0d6" stroke-dasharray="4 4"></circle>
+  <line x1="200" y1="160" x2="470" y2="160" stroke="#e4e0d6"></line>
+  <line x1="330" y1="40" x2="330" y2="282" stroke="#e4e0d6"></line>
+  <line x1="330" y1="160" x2="410" y2="86" stroke="#2f6f8f" stroke-width="2" marker-end="url(#b11)"></line>
+  <text x="418" y="78" font-size="12" fill="#2f6f8f">h 小明</text>
+  <path d="M410,86 A108,108 0 0 1 404,232" fill="none" stroke="#b4552d" stroke-width="2" marker-end="url(#b12)"></path>
+  <text x="470" y="160" font-size="12" fill="#b4552d">r · 180°</text>
+  <line x1="330" y1="160" x2="252" y2="234" stroke="#3f7a5a" stroke-width="2" marker-end="url(#b13)"></line>
+  <text x="196" y="252" font-size="12" fill="#3f7a5a">t 小林</text>
+  <text x="562" y="80" font-size="12.5" font-weight="600" fill="#1f4d64">为什么旋转能解决配偶关系</text>
+  <text x="562" y="106" font-size="11.5" fill="#3d444d">平移假设下：h + r = t，且 t + r = h</text>
+  <text x="562" y="126" font-size="11.5" fill="#8f3d1c">两式相减得 r = 0，方向信息全丢了</text>
+  <text x="562" y="158" font-size="11.5" fill="#3d444d">旋转假设下：h ∘ r = t，t ∘ r = h</text>
+  <text x="562" y="178" font-size="11.5" fill="#1f4d64">两次 180° 旋转回到原处，r 仍有意义</text>
+  <text x="562" y="216" font-size="11.5" fill="#6d747e">RotatE 还顺带把另外两种关系模式</text>
+  <text x="562" y="236" font-size="11.5" fill="#6d747e">装进了同一个几何：反对称与组合。</text>
+</svg>
+
+<p><em>平移在对称关系上会把 r 推成零，旋转不会。这是 RotatE 唯一的改动，也是配偶这类关系能被表达的原因。</em></p>
+<p>TransR 走后一路。它认为实体和关系不该待在同一个空间里：实体有实体的语义，关系有关系的语义，两者维度甚至可以不同，中间用一个映射矩阵把实体投到关系空间再做平移。这样同一个实体在不同关系下可以有不同表现，“作者”关系里的“刘慈欣”和“工程师”关系里的“刘慈欣”不必共用一套坐标。</p>
+<p>空间还能换得更彻底。RotH 把旋转搬进双曲空间。双曲空间的体积随半径指数增长，装树状层级天然合适：越往下分的概念越多，需要的地方也越大。欧氏空间装一棵深树，要么维度开得很大，要么把不同分支挤在一起。</p>
+<p>三种几何各管一段。平移适合层级和单向关系，旋转多出对称这一类，双曲空间专门照顾树状的层次结构。</p>
+<p>还有一条路绕开几何。SMN 直接把头实体、关系、尾实体编码成向量算匹配度，用 LSTM 做上下文、CNN 抽局部特征，最后接分类层输出分数。ESM 在它基础上加入关系的文本描述和实体属性，缓解纯结构信息不够的问题。这类模型参数量大、可解释性弱，换来的是能用上图谱之外的文字。</p>
+<h2 id="时间进来之后"><a href="#时间进来之后" class="headerlink" title="时间进来之后"></a>时间进来之后</h2><p>前面所有模型都默认一件事：知识是不变的。现实里这句话经常不成立。“某公司的 CEO 是张三”在 2019 年成立，2023 年可能就不成立了。静态三元组只有真假两态，装不下“在什么时间成立”。</p>
+<p>两种补法。一种是把时间当成第四元，把三元组扩成四元组（头实体，关系，尾实体，时间），TTransE 就在这个方向上，把时间也学成一个向量，塞进原来的平移公式。另一种是把时间当连续信号，TGAT 用时间编码把时间戳映射成向量，再用带时间权重的注意力聚合邻居，让节点表示随时间演化。</p>
+<p>动态表示目前还在演进，工程上用得不如静态模型多，原因不难理解：加了时间维度，数据稀疏问题会更严重，同一对实体在不同时刻的观测往往只有零星几条。</p>
+<h2 id="怎么选"><a href="#怎么选" class="headerlink" title="怎么选"></a>怎么选</h2><p>符号表示和向量表示不是替代关系，它们解决的是不同层面的问题。符号负责准确和可解释，向量负责泛化和相似度。真实系统里两者经常一起出现：图数据库里存符号化的三元组保证可查可审，向量库里存同一批实体的嵌入用来做推荐和补全。</p>
+<table>
+<thead>
+<tr>
+<th>表示方式</th>
+<th>擅长</th>
+<th>弱项</th>
+<th>典型用法</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>属性图</td>
+<td>读写快，建模直观</td>
+<td>不支持符号推理</td>
+<td>业务图谱、风控关系网</td>
+</tr>
+<tr>
+<td>RDF &#x2F; RDFS</td>
+<td>标准交换格式，可做类层次推理</td>
+<td>属性拆得碎，查询写起来长</td>
+<td>开放数据发布、跨库合并</td>
+</tr>
+<tr>
+<td>OWL</td>
+<td>约束表达完整，能查冲突</td>
+<td>推理复杂度高，建模门槛高</td>
+<td>领域本体、一致性校验</td>
+</tr>
+<tr>
+<td>TransE 一类</td>
+<td>参数少，训练快，能补边</td>
+<td>一对多与对称关系吃力</td>
+<td>链接预测、实体补全</td>
+</tr>
+<tr>
+<td>RotatE &#x2F; RotH</td>
+<td>能表达对称与层次结构</td>
+<td>空间复杂，调参麻烦</td>
+<td>层级明显的领域图谱</td>
+</tr>
+<tr>
+<td>语义匹配模型</td>
+<td>能吃文本描述</td>
+<td>参数大，可解释性弱</td>
+<td>稀疏实体、跨模态场景</td>
+</tr>
+</tbody></table>
+<p>选型时先问三个问题：要不要机器自己推新结论，要不要算实体之间的相似度，数据规模多大。三个都“不要”，一张关系表就够了；要推理，往 RDF 或 OWL 走；要相似度，加一层嵌入。硬把两件事塞进一种表示，最后往往两头都不好用。</p>
+<h2 id="自测"><a href="#自测" class="headerlink" title="自测"></a>自测</h2><details><summary>为什么“企鹅是鸟、鸟会飞”在纯三元组里会推出错结论？</summary> <p>三元组只能写肯定的事实，没有位置声明例外。isa 的继承规则会把“会飞”一路传下去，除非表示层能写“除企鹅外”这类约束，或者额外存一条企鹅不会飞的事实并让推理优先采信它。</p></details> 
+
+<details><summary>属性图和 RDF 表达同一条知识，实质差别在哪？</summary> <p>属性图把属性挂在节点或边上，是一个整体结构；RDF 把属性也拆成三元组，图更平。前者读写效率高，后者拼接、合并、交换方便，也更容易接上本体推理。</p></details> 
+
+<details><summary>TransE 处理配偶关系为什么会失效？</summary> <p>对称关要求 h + r = t 同时 t + r = h，两式联立得 r ≈ 0，关系向量退化成零，两个实体的方向信息丢失。RotatE 用旋转代替平移，180 度转两次回到原点，就没这个问题。</p></details> 
+
+<details><summary>什么时候不该用向量表示？</summary> <p>需要给出可核查的推理链条时。嵌入能告诉你“这两个实体可能相关”，给不出依据。审计、医疗、法律这类场景通常要求每一步都能追溯。</p></details> 
+</article><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/other/QUT/%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E6%95%99%E7%A8%8B/03-%E7%9F%A5%E8%AF%86%E6%8A%BD%E5%8F%96%E6%8A%80%E6%9C%AF/"><img class="prev-cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">03 知识抽取技术</div></div></a></div><div class="next-post pull-right"><a href="/other/QUT/%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E6%95%99%E7%A8%8B/01-%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E6%A6%82%E8%BF%B0/"><img class="next-cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">01 知识图谱概述</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="anzhiyufont anzhiyu-icon-thumbs-up fa-fw" style="font-size: 1.5rem; margin-right: 4px"></i><span>喜欢这篇文章的人也看了</span></div><div class="relatedPosts-list"><div><a href="/other/QUT/%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E6%95%99%E7%A8%8B/00-%E6%95%99%E7%A8%8B%E6%80%BB%E8%A7%88/" title="00 教程总览"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/" alt="cover"><div class="content is-center"><div class="date"><i class="anzhiyufont anzhiyu-icon-calendar-days fa-fw"></i> 2026-11-06</div><div class="title">00 教程总览</div></div></a></div><div><a href="/other/QUT/%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E6%95%99%E7%A8%8B/01-%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E6%A6%82%E8%BF%B0/" title="01 知识图谱概述"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/" alt="cover"><div class="content is-center"><div class="date"><i class="anzhiyufont anzhiyu-icon-calendar-days fa-fw"></i> 2026-11-06</div><div class="title">01 知识图谱概述</div></div></a></div><div><a href="/other/QUT/%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E6%95%99%E7%A8%8B/03-%E7%9F%A5%E8%AF%86%E6%8A%BD%E5%8F%96%E6%8A%80%E6%9C%AF/" title="03 知识抽取技术"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/" alt="cover"><div class="content is-center"><div class="date"><i class="anzhiyufont anzhiyu-icon-calendar-days fa-fw"></i> 2026-11-06</div><div class="title">03 知识抽取技术</div></div></a></div><div><a href="/other/QUT/%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E6%95%99%E7%A8%8B/04-%E7%9F%A5%E8%AF%86%E8%9E%8D%E5%90%88%E6%8A%80%E6%9C%AF/" title="04 知识融合技术"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/" alt="cover"><div class="content is-center"><div class="date"><i class="anzhiyufont anzhiyu-icon-calendar-days fa-fw"></i> 2026-11-06</div><div class="title">04 知识融合技术</div></div></a></div><div><a href="/other/QUT/%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E6%95%99%E7%A8%8B/05-%E7%9F%A5%E8%AF%86%E5%AD%98%E5%82%A8%E6%8A%80%E6%9C%AF/" title="05 知识存储技术"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/" alt="cover"><div class="content is-center"><div class="date"><i class="anzhiyufont anzhiyu-icon-calendar-days fa-fw"></i> 2026-11-06</div><div class="title">05 知识存储技术</div></div></a></div><div><a href="/other/QUT/%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E6%95%99%E7%A8%8B/07-%E7%9F%A5%E8%AF%86%E6%8E%A8%E7%90%86%E6%8A%80%E6%9C%AF/" title="07 知识推理技术"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/" alt="cover"><div class="content is-center"><div class="date"><i class="anzhiyufont anzhiyu-icon-calendar-days fa-fw"></i> 2026-11-06</div><div class="title">07 知识推理技术</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="card-content"><div class="author-info-avatar"><img class="avatar-img" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/img/avatar.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__description">大三学生，全栈开发者，终身学习者</div><div class="author-info__bottom-group"><a class="author-info__bottom-group-left" href="/"><h1 class="author-info__name">qiuxz</h1><div class="author-info__desc"></div></a><div class="card-info-social-icons is-center"><a class="social-icon faa-parent animated-hover" href="https://github.com/qiuxzh" target="_blank" title="Github"><i class="anzhiyufont anzhiyu-icon-github"></i></a><a class="social-icon faa-parent animated-hover" href="javascript:void(0);" title="QQ" data-copy="1256227507"><i class="anzhiyufont anzhiyu-icon-qq"></i></a><a class="social-icon faa-parent animated-hover" href="javascript:void(0);" title="Email" data-copy="1256227507@qq.com"><i class="anzhiyufont anzhiyu-icon-envelope"></i></a></div></div></div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="anzhiyufont anzhiyu-icon-bars"></i><span>文章目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E5%8F%A5%E8%AF%9D%E6%8E%A8%E4%B8%8D%E5%87%BA%E6%AD%A3%E7%A1%AE%E7%AD%94%E6%A1%88"><span class="toc-number">1.</span> <span class="toc-text">三句话推不出正确答案</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%A1%A8%E7%A4%BA%E8%A6%81%E8%A7%A3%E5%86%B3%E4%BB%80%E4%B9%88"><span class="toc-number">2.</span> <span class="toc-text">表示要解决什么</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9B%E6%9D%A1%E6%97%A9%E6%9C%9F%E8%B7%AF%E7%BA%BF"><span class="toc-number">3.</span> <span class="toc-text">四条早期路线</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AF%AD%E4%B9%89%E7%BD%91%E7%BB%9C"><span class="toc-number">3.1.</span> <span class="toc-text">语义网络</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BA%A7%E7%94%9F%E5%BC%8F%E8%A7%84%E5%88%99"><span class="toc-number">3.2.</span> <span class="toc-text">产生式规则</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A1%86%E6%9E%B6%E7%B3%BB%E7%BB%9F"><span class="toc-number">3.3.</span> <span class="toc-text">框架系统</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%B0%93%E8%AF%8D%E9%80%BB%E8%BE%91"><span class="toc-number">3.4.</span> <span class="toc-text">谓词逻辑</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%A6%E5%8F%B7%E8%A1%A8%E7%A4%BA%E7%9A%84%E4%B8%89%E5%B1%82"><span class="toc-number">4.</span> <span class="toc-text">符号表示的三层</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B1%9E%E6%80%A7%E5%9B%BE"><span class="toc-number">4.1.</span> <span class="toc-text">属性图</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#RDF"><span class="toc-number">4.2.</span> <span class="toc-text">RDF</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#OWL"><span class="toc-number">4.3.</span> <span class="toc-text">OWL</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%A6%E5%8F%B7%E8%A1%A8%E7%A4%BA%E8%B5%B0%E5%88%B0%E5%93%AA%E5%81%9C%E4%BD%8F"><span class="toc-number">5.</span> <span class="toc-text">符号表示走到哪停住</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%8E%E8%AF%8D%E5%90%91%E9%87%8F%E5%88%B0%E5%AE%9E%E4%BD%93%E5%90%91%E9%87%8F"><span class="toc-number">6.</span> <span class="toc-text">从词向量到实体向量</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#TransE%EF%BC%9A%E5%85%B3%E7%B3%BB%E6%98%AF%E4%B8%80%E6%AC%A1%E5%B9%B3%E7%A7%BB"><span class="toc-number">7.</span> <span class="toc-text">TransE：关系是一次平移</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B9%B3%E7%A7%BB%E4%B8%8D%E5%A4%9F%E7%94%A8%E4%B9%8B%E5%90%8E"><span class="toc-number">8.</span> <span class="toc-text">平移不够用之后</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%97%B6%E9%97%B4%E8%BF%9B%E6%9D%A5%E4%B9%8B%E5%90%8E"><span class="toc-number">9.</span> <span class="toc-text">时间进来之后</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%80%8E%E4%B9%88%E9%80%89"><span class="toc-number">10.</span> <span class="toc-text">怎么选</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%87%AA%E6%B5%8B"><span class="toc-number">11.</span> <span class="toc-text">自测</span></a></li></ol></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"></div><div id="footer-bar"><div class="footer-bar-links"><div class="footer-bar-left"><div id="footer-bar-tips"><div class="copyright">&copy;2020 - 2026 By <a class="footer-bar-link" href="/" title="qiuxz" target="_blank">qiuxz</a></div></div><div id="footer-type-tips"></div></div><div class="footer-bar-right"><a class="footer-bar-link" target="_blank" rel="noopener" href="https://github.com/anzhiyu-c/hexo-theme-anzhiyu" title="主题">主题</a></div></div></div></footer></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="sidebar-site-data site-data is-center"><a href="/archives/" title="archive"><div class="headline">文章</div><div class="length-num">48</div></a><a href="/tags/" title="tag"><div class="headline">标签</div><div class="length-num">9</div></a><a href="/categories/" title="category"><div class="headline">分类</div><div class="length-num">10</div></a></div><span class="sidebar-menu-item-title">功能</span><div class="sidebar-menu-item"><a class="darkmode_switchbutton menu-child" href="javascript:void(0);" title="显示模式"><i class="anzhiyufont anzhiyu-icon-circle-half-stroke"></i><span>显示模式</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="javascript:void(0);"><span> 文章</span></a><ul class="menus_item_child"><li><a class="site-page child faa-parent animated-hover" href="/archives/"><i class="anzhiyufont anzhiyu-icon-box-archive faa-tada" style="font-size: 0.9em;"></i><span> 隧道</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><span> 关于</span></a><ul class="menus_item_child"><li><a class="site-page child faa-parent animated-hover" href="/other/about/"><i class="anzhiyufont anzhiyu-icon-paper-plane faa-tada" style="font-size: 0.9em;"></i><span> 关于本人</span></a></li><li><a class="site-page child faa-parent animated-hover" href="javascript:toRandomPost()"><i class="anzhiyufont anzhiyu-icon-shoe-prints1 faa-tada" style="font-size: 0.9em;"></i><span> 随便逛逛</span></a></li></ul></div></div><span class="sidebar-menu-item-title">标签</span><div class="card-tags"><div class="item-headline"></div><div class="card-tag-cloud"><a href="/tags/YJango%E8%A7%86%E9%A2%91%E6%95%B4%E7%90%86/" style="font-size: 0.88rem;">YJango视频整理<sup>11</sup></a><a href="/tags/%E4%B8%AA%E4%BA%BA%E6%88%90%E9%95%BF/" style="font-size: 0.88rem;">个人成长<sup>3</sup></a><a href="/tags/%E5%AD%A6%E4%B9%A0/" style="font-size: 0.88rem;">学习<sup>13</sup></a><a href="/tags/%E6%84%9F%E6%82%9F/" style="font-size: 0.88rem;">感悟<sup>1</sup></a><a href="/tags/%E6%95%99%E7%A8%8B/" style="font-size: 0.88rem;">教程<sup>9</sup></a><a href="/tags/%E6%9C%AA%E5%88%86%E7%B1%BB/" style="font-size: 0.88rem;">未分类<sup>6</sup></a><a href="/tags/%E6%9E%B6%E6%9E%84/" style="font-size: 0.88rem;">架构<sup>1</sup></a><a href="/tags/%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1/" style="font-size: 0.88rem;">知识图谱<sup>9</sup></a><a href="/tags/%E8%80%83%E8%AF%95/" style="font-size: 0.88rem;">考试<sup>5</sup></a></div></div><hr/></div></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="anzhiyufont anzhiyu-icon-book-open"></i></button><button id="translateLink" type="button" title="简繁转换">繁</button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="anzhiyufont anzhiyu-icon-circle-half-stroke"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="anzhiyufont anzhiyu-icon-arrows-left-right"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="anzhiyufont anzhiyu-icon-gear"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="anzhiyufont anzhiyu-icon-list-ul"></i></button><button id="mobile-column-button" type="button" title="专栏目录"><i class="anzhiyufont anzhiyu-icon-bars"></i></button><button id="go-up" type="button" title="回到顶部"><i class="anzhiyufont anzhiyu-icon-arrow-up"></i></button></div></div><div id="rightMenu"><div class="rightMenu-group rightMenu-small"><div class="rightMenu-item" id="menu-backward"><i class="anzhiyufont anzhiyu-icon-arrow-left"></i></div><div class="rightMenu-item" id="menu-forward"><i class="anzhiyufont anzhiyu-icon-arrow-right"></i></div><div class="rightMenu-item" id="menu-refresh"><i class="anzhiyufont anzhiyu-icon-arrow-rotate-right" style="font-size: 1rem;"></i></div><div class="rightMenu-item" id="menu-top"><i class="anzhiyufont anzhiyu-icon-arrow-up"></i></div></div><div class="rightMenu-group rightMenu-line rightMenuPlugin"><div class="rightMenu-item" id="menu-copytext"><i class="anzhiyufont anzhiyu-icon-copy"></i><span>复制选中文本</span></div><div class="rightMenu-item" id="menu-pastetext"><i class="anzhiyufont anzhiyu-icon-paste"></i><span>粘贴文本</span></div><a class="rightMenu-item" id="menu-commenttext"><i class="anzhiyufont anzhiyu-icon-comment-medical"></i><span>引用到评论</span></a><div class="rightMenu-item" id="menu-newwindow"><i class="anzhiyufont anzhiyu-icon-window-restore"></i><span>新窗口打开</span></div><div class="rightMenu-item" id="menu-copylink"><i class="anzhiyufont anzhiyu-icon-link"></i><span>复制链接地址</span></div><div class="rightMenu-item" id="menu-copyimg"><i class="anzhiyufont anzhiyu-icon-images"></i><span>复制此图片</span></div><div class="rightMenu-item" id="menu-downloadimg"><i class="anzhiyufont anzhiyu-icon-download"></i><span>下载此图片</span></div><div class="rightMenu-item" id="menu-newwindowimg"><i class="anzhiyufont anzhiyu-icon-window-restore"></i><span>新窗口打开图片</span></div><div class="rightMenu-item" id="menu-search"><i class="anzhiyufont anzhiyu-icon-magnifying-glass"></i><span>站内搜索</span></div><div class="rightMenu-item" id="menu-searchBaidu"><i class="anzhiyufont anzhiyu-icon-magnifying-glass"></i><span>百度搜索</span></div></div><div class="rightMenu-group rightMenu-line rightMenuOther"><a class="rightMenu-item menu-link" id="menu-randomPost"><i class="anzhiyufont anzhiyu-icon-shuffle"></i><span>随便逛逛</span></a><a class="rightMenu-item menu-link" href="/categories/"><i class="anzhiyufont anzhiyu-icon-cube"></i><span>博客分类</span></a><a class="rightMenu-item menu-link" href="/tags/"><i class="anzhiyufont anzhiyu-icon-tags"></i><span>文章标签</span></a></div><div class="rightMenu-group rightMenu-line rightMenuOther"><a class="rightMenu-item" id="menu-copy" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-copy"></i><span>复制地址</span></a><a class="rightMenu-item" id="menu-commentBarrage" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-message"></i><span class="menu-commentBarrage-text">关闭热评</span></a><a class="rightMenu-item" id="menu-darkmode" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-circle-half-stroke"></i><span class="menu-darkmode-text">深色模式</span></a><a class="rightMenu-item" id="menu-translate" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-language"></i><span>轉為繁體</span></a></div></div><div id="rightmenu-mask"></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="/js/tw_cn.js"></script><script src="https://cdn.cbd.int/@fancyapps/ui@6.1.6/dist/fancybox/fancybox.umd.js"></script><script src="https://cdn.cbd.int/instant.page@5.2.0/instantpage.js" type="module"></script><script src="https://cdn.cbd.int/vanilla-lazyload@19.1.3/dist/lazyload.iife.min.js"></script><script src="https://cdn.cbd.int/node-snackbar@0.1.16/dist/snackbar.min.js"></script><canvas id="universe"></canvas><script async src="https://npm.elemecdn.com/anzhiyu-theme-static@1.0.0/dark/dark.js"></script><script>// 消除控制台打印
+var HoldLog = console.log;
+console.log = function () {};
+let now1 = new Date();
+queueMicrotask(() => {
+  const Log = function () {
+    HoldLog.apply(console, arguments);
+  }; //在恢复前输出日志
+  const grt = new Date("08/08/2026 00:00:00"); //此处修改你的建站时间或者网站上线时间
+  now1.setTime(now1.getTime() + 250);
+  const days = (now1 - grt) / 1000 / 60 / 60 / 24;
+  const dnum = Math.floor(days);
+  const ascll = [
+    `欢迎使用安知鱼!`,
+    `生活明朗, 万物可爱`,
+    `
+        
+       █████╗ ███╗   ██╗███████╗██╗  ██╗██╗██╗   ██╗██╗   ██╗
+      ██╔══██╗████╗  ██║╚══███╔╝██║  ██║██║╚██╗ ██╔╝██║   ██║
+      ███████║██╔██╗ ██║  ███╔╝ ███████║██║ ╚████╔╝ ██║   ██║
+      ██╔══██║██║╚██╗██║ ███╔╝  ██╔══██║██║  ╚██╔╝  ██║   ██║
+      ██║  ██║██║ ╚████║███████╗██║  ██║██║   ██║   ╚██████╔╝
+      ╚═╝  ╚═╝╚═╝  ╚═══╝╚══════╝╚═╝  ╚═╝╚═╝   ╚═╝    ╚═════╝
+        
+        `,
+    "已上线",
+    dnum,
+    "天",
+    "©2020 By 安知鱼 V1.7.1",
+  ];
+  const ascll2 = [`NCC2-036`, `调用前置摄像头拍照成功，识别为【小笨蛋】.`, `Photo captured: `, `🤪`];
+
+  setTimeout(
+    Log.bind(
+      console,
+      `\n%c${ascll[0]} %c ${ascll[1]} %c ${ascll[2]} %c${ascll[3]}%c ${ascll[4]}%c ${ascll[5]}\n\n%c ${ascll[6]}\n`,
+      "color:#425AEF",
+      "",
+      "color:#425AEF",
+      "color:#425AEF",
+      "",
+      "color:#425AEF",
+      ""
+    )
+  );
+  setTimeout(
+    Log.bind(
+      console,
+      `%c ${ascll2[0]} %c ${ascll2[1]} %c \n${ascll2[2]} %c\n${ascll2[3]}\n`,
+      "color:white; background-color:#4fd953",
+      "",
+      "",
+      'background:url("https://npm.elemecdn.com/anzhiyu-blog@1.1.6/img/post/common/tinggge.gif") no-repeat;font-size:450%'
+    )
+  );
+
+  setTimeout(Log.bind(console, "%c WELCOME %c 你好，小笨蛋.", "color:white; background-color:#4f90d9", ""));
+
+  setTimeout(
+    console.warn.bind(
+      console,
+      "%c ⚡ Powered by 安知鱼 %c 你正在访问 qiuxz 的博客.",
+      "color:white; background-color:#f0ad4e",
+      ""
+    )
+  );
+
+  setTimeout(Log.bind(console, "%c W23-12 %c 你已打开控制台.", "color:white; background-color:#4f90d9", ""));
+
+  setTimeout(
+    console.warn.bind(console, "%c S013-782 %c 你现在正处于监控中.", "color:white; background-color:#d9534f", "")
+  );
+});</script><script async src="/anzhiyu/random.js"></script><div class="js-pjax"><script>if (!window.MathJax) {
+  window.MathJax = {
+    tex: {
+      inlineMath: [['$', '$'], ['\\(', '\\)']],
+      tags: 'ams'
+    },
+    chtml: {
+      scale: 1.1,
+      // MathJax 4 默认从 cdn.jsdelivr.net 取 NewCM 字体，国内直连拿不到，
+      // 公式会退化成缺字形。这里改走 npmmirror（与 mathjax@4.0.0 对应）。
+      fontURL: 'https://registry.npmmirror.com/@mathjax/mathjax-newcm-font/4.0.0/files/chtml/woff2',
+      dynamicPrefix: 'https://registry.npmmirror.com/@mathjax/mathjax-newcm-font/4.0.0/files/chtml/dynamic'
+    },
+    options: {
+      renderActions: {
+        findScript: [10, doc => {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/)
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+            const text = document.createTextNode('')
+            node.parentNode.replaceChild(text, node)
+            math.start = {node: text, delim: '', n: 0}
+            math.end = {node: text, delim: '', n: 0}
+            doc.math.push(math)
+          }
+        }, '']
+      }
+    }
+  }
+  
+  const script = document.createElement('script')
+  script.src = 'https://cdn.cbd.int/mathjax@4.0.0/tex-mml-chtml.js'
+  script.id = 'MathJax-script'
+  script.async = true
+  document.head.appendChild(script)
+} else {
+  MathJax.startup.document.state(0)
+  MathJax.texReset()
+  MathJax.typesetPromise()
+}</script><link rel="stylesheet" type="text/css" href="https://cdn.cbd.int/katex@0.16.25/dist/katex.min.css"><script src="https://cdn.cbd.int/katex@0.16.25/dist/contrib/copy-tex.min.js"></script><script>(() => {
+  document.querySelectorAll('#article-container span.katex-display').forEach(item => {
+    anzhiyu.wrap(item, 'div', { class: 'katex-wrap'})
+  })
+})()</script><input type="hidden" name="page-type" id="page-type" value="post"></div><script>var visitorMail = "";
+</script><script async data-pjax src="https://cdn.cbd.int/anzhiyu-theme-static@1.0.0/waterfall/waterfall.js"></script><script src="https://cdn.cbd.int/qrcodejs@1.0.0/qrcode.min.js"></script><link rel="stylesheet" href="https://cdn.cbd.int/anzhiyu-theme-static@1.1.9/icon/ali_iconfont_css.css"><script src="/js/social-copy.js"></script><script src="/js/column-nav-mobile.js"></script><script src="https://cdn.cbd.int/pjax@0.2.8/pjax.min.js"></script><script>let pjaxSelectors = ["head > title","#config-diff","#body-wrap","#rightside-config-hide","#rightside-config-show",".js-pjax"]
+var pjax = new Pjax({
+  elements: 'a:not([target="_blank"])',
+  selectors: pjaxSelectors,
+  cacheBust: false,
+  analytics: false,
+  scrollRestoration: false
+})
+
+document.addEventListener('pjax:send', function () {
+  // removeEventListener scroll 
+  anzhiyu.removeGlobalFnEvent('pjax')
+  anzhiyu.removeGlobalFnEvent('themeChange')
+
+  document.getElementById('rightside').classList.remove('rightside-show')
+  
+  if (window.aplayers) {
+    for (let i = 0; i < window.aplayers.length; i++) {
+      if (!window.aplayers[i].options.fixed) {
+        window.aplayers[i].destroy()
+      }
+    }
+  }
+
+  typeof typed === 'object' && typed.destroy()
+
+  //reset readmode
+  const $bodyClassList = document.body.classList
+  $bodyClassList.contains('read-mode') && $bodyClassList.remove('read-mode')
+})
+
+document.addEventListener('pjax:complete', function () {
+  window.refreshFn()
+
+  document.querySelectorAll('script[data-pjax]').forEach(item => {
+    const newScript = document.createElement('script')
+    const content = item.text || item.textContent || item.innerHTML || ""
+    Array.from(item.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value))
+    newScript.appendChild(document.createTextNode(content))
+    item.parentNode.replaceChild(newScript, item)
+  })
+
+  GLOBAL_CONFIG.islazyload && window.lazyLoadInstance.update()
+
+  typeof panguInit === 'function' && panguInit()
+
+  // google analytics
+  typeof gtag === 'function' && gtag('config', '', {'page_path': window.location.pathname});
+
+  // baidu analytics
+  typeof _hmt === 'object' && _hmt.push(['_trackPageview',window.location.pathname]);
+
+  typeof loadMeting === 'function' && document.getElementsByClassName('aplayer').length && loadMeting()
+
+  // prismjs
+  typeof Prism === 'object' && Prism.highlightAll()
+})
+
+document.addEventListener('pjax:error', e => {
+  if (e.request.status === 404) {
+    pjax.loadUrl('/404.html')
+  }
+})</script><script charset="UTF-8" src="https://cdn.cbd.int/anzhiyu-theme-static@1.1.5/accesskey/accesskey.js"></script></div><div id="popup-window"><div class="popup-window-title">通知</div><div class="popup-window-divider"></div><div class="popup-window-content"><div class="popup-tip">你好呀</div><div class="popup-link"><i class="anzhiyufont anzhiyu-icon-arrow-circle-right"></i></div></div></div></body></html>

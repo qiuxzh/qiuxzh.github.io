@@ -1346,4 +1346,8 @@ column:
       path: growth/learn
     - name: 思考
       path: growth/thinking
+    - name: 知识图谱作业
+      path: other/QUT/知识图谱作业
+    - name: 知识图谱教程
+      path: other/QUT/知识图谱教程
 

@@ -81,7 +81,8 @@ meta_generator: true
 date_format: YYYY-MM-DD
 time_format: HH:mm:ss
 ## updated_option supports 'mtime', 'date', 'empty'
-updated_option: 'mtime'
+## 用 'date'：没写 updated 时退回 date，避免部署时文件时间被 checkout 重置而显示成构建日期
+updated_option: 'date'
 
 # Pagination
 ## Set per_page to 0 to disable pagination

@@ -801,7 +801,7 @@ aside:
     category: true
   card_author:
     enable: true
-    description: 大三学生，全栈开发者，终身学习者
+    description: 全栈开发、agent开发
     name_link: /
 
   card_announcement:

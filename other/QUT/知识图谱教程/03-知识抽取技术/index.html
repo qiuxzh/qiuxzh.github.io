@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no"><title>03 知识抽取技术 | qiuxz's Blog</title><meta name="keywords" content="知识图谱,教程"><meta name="author" content="qiuxz"><meta name="copyright" content="qiuxz"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#f7f9fe"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-touch-fullscreen" content="yes"><meta name="apple-mobile-web-app-title" content="03 知识抽取技术"><meta name="application-name" content="03 知识抽取技术"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="#f7f9fe"><meta property="og:type" content="article"><meta property="og:title" content="03 知识抽取技术"><meta property="og:url" content="https://qiuxzh.github.io/other/QUT/%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E6%95%99%E7%A8%8B/03-%E7%9F%A5%E8%AF%86%E6%8A%BD%E5%8F%96%E6%8A%80%E6%9C%AF/index.html"><meta property="og:site_name" content="qiuxz's Blog"><meta property="og:description" content="图谱里的三元组不会自己出现，得从文本、表格、数据库里一条条捞出来。这一章按“先找实体、再判关系、最后抽事件”的顺序，讲清楚机器在每一步上卡在哪里，以及各代方法分别怎么绕过去。 一句话里的三层信息 一条新闻里写着：王思聪是万达集团董事长王健林的独子。 人读完，脑子里自动装进了两个人名和一条关系。要把这"><meta property="og:locale" content="zh-CN"><meta property="og:image" content="https://qiuxz-blog-image.oss-cn-beijing.aliyuncs.com/blog/avatar.jpg"><meta property="article:author" content="qiuxz"><meta property="article:tag"><meta name="twitter:card" content="summary"><meta name="twitter:image" content="https://qiuxz-blog-image.oss-cn-beijing.aliyuncs.com/blog/avatar.jpg"><meta name="description" content="图谱里的三元组不会自己出现，得从文本、表格、数据库里一条条捞出来。这一章按“先找实体、再判关系、最后抽事件”的顺序，讲清楚机器在每一步上卡在哪里，以及各代方法分别怎么绕过去。 一句话里的三层信息 一条新闻里写着：王思聪是万达集团董事长王健林的独子。 人读完，脑子里自动装进了两个人名和一条关系。要把这"><link rel="shortcut icon" href="/favicon.ico"><link rel="canonical" href="https://qiuxzh.github.io/other/QUT/%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E6%95%99%E7%A8%8B/03-%E7%9F%A5%E8%AF%86%E6%8A%BD%E5%8F%96%E6%8A%80%E6%9C%AF/"><link rel="preconnect" href="//cdn.cbd.int"/><meta name="google-site-verification" content="xxx"/><meta name="baidu-site-verification" content="code-xxx"/><meta name="msvalidate.01" content="xxx"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.cbd.int/node-snackbar@0.1.16/dist/snackbar.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.cbd.int/@fancyapps/ui@6.1.6/dist/fancybox/fancybox.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no"><title>03 知识抽取技术 | qiuxz's Blog</title><meta name="keywords" content="知识图谱,教程"><meta name="author" content="qiuxz"><meta name="copyright" content="qiuxz"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#f7f9fe"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-touch-fullscreen" content="yes"><meta name="apple-mobile-web-app-title" content="03 知识抽取技术"><meta name="application-name" content="03 知识抽取技术"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="#f7f9fe"><meta property="og:type" content="article"><meta property="og:title" content="03 知识抽取技术"><meta property="og:url" content="https://qiuxzh.github.io/other/QUT/%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E6%95%99%E7%A8%8B/03-%E7%9F%A5%E8%AF%86%E6%8A%BD%E5%8F%96%E6%8A%80%E6%9C%AF/index.html"><meta property="og:site_name" content="qiuxz's Blog"><meta property="og:description" content="图谱里的三元组不会自己出现，得从文本、表格、数据库里一条条捞出来。这一章按“先找实体、再判关系、最后抽事件”的顺序，讲清楚机器在每一步上卡在哪里，以及各代方法分别怎么绕过去。 知识抽取：从文本到三元组第二章定好了图谱里能有哪些实体类型、关系类型，还有每种事件要填哪些槽位。第三章要做的是把文本填进这些"><meta property="og:locale" content="zh-CN"><meta property="og:image" content="https://qiuxz-blog-image.oss-cn-beijing.aliyuncs.com/blog/avatar.jpg"><meta property="article:author" content="qiuxz"><meta property="article:tag"><meta name="twitter:card" content="summary"><meta name="twitter:image" content="https://qiuxz-blog-image.oss-cn-beijing.aliyuncs.com/blog/avatar.jpg"><meta name="description" content="图谱里的三元组不会自己出现，得从文本、表格、数据库里一条条捞出来。这一章按“先找实体、再判关系、最后抽事件”的顺序，讲清楚机器在每一步上卡在哪里，以及各代方法分别怎么绕过去。 知识抽取：从文本到三元组第二章定好了图谱里能有哪些实体类型、关系类型，还有每种事件要填哪些槽位。第三章要做的是把文本填进这些"><link rel="shortcut icon" href="/favicon.ico"><link rel="canonical" href="https://qiuxzh.github.io/other/QUT/%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E6%95%99%E7%A8%8B/03-%E7%9F%A5%E8%AF%86%E6%8A%BD%E5%8F%96%E6%8A%80%E6%9C%AF/"><link rel="preconnect" href="//cdn.cbd.int"/><meta name="google-site-verification" content="xxx"/><meta name="baidu-site-verification" content="code-xxx"/><meta name="msvalidate.01" content="xxx"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.cbd.int/node-snackbar@0.1.16/dist/snackbar.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.cbd.int/@fancyapps/ui@6.1.6/dist/fancybox/fancybox.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
   linkPageTop: undefined,
   peoplecanvas: {"enable":true,"img":"https://upload-bbs.miyoushe.com/upload/2024/07/27/125766904/ba62475f396df9de3316a08ed9e65d86_5680958632268053399..png"},
   postHeadAiDescription: undefined,
@@ -55,7 +55,7 @@
   configTitle: 'qiuxz\'s Blog',
   title: '03 知识抽取技术',
   postAI: '',
-  pageFillDescription: '一句话里的三层信息, 抽取的五个阶段, 实体抽取：先切边界, 规则法, 统计模型进来之后, 深度模型与 BiLSTM-CRF, 关系抽取, 标注不够用的时候, 事件抽取, 自测图谱里的三元组不会自己出现得从文本表格数据库里一条条捞出来这一章按先找实体再判关系最后抽事件的顺序讲清楚机器在每一步上卡在哪里以及各代方法分别怎么绕过去一句话里的三层信息一条新闻里写着王思聪是万达集团董事长王健林的独子人读完脑子里自动装进了两个人名和一条关系要把这句话变成图谱里的一条三元组王健林父子王思聪机器得依次做完三件事王思聪是万达集团董事长王健林的独子原文第一步找实体哪些字是人名机构名边界在哪是什么类型第二步判关系这两个实体之间是什么关系独子指向父子第三步归一关系在库里叫什么名字对齐到已有王健林父子王思聪三步里最难的不是第三步关系类型有现成的表可查实体边界有语料可学真正麻烦的是中文那句话里万达集团董事长王健林这一串字该从哪里断开英文有空格机器把词切开就行中文没有万达集团董事长王健林这一串边界在哪人靠语义切分知道董事长是头衔王健林才是人机器拿到的是连续的字它得靠上下文特征判断哪个位置该断这一步算错后面的关系全得跟着错知识抽取要解决的正是这件事把非结构化的文本变成结构化的三元组这个概念在上世纪七十年代后期出现在自然语言处理的文献里年把它用在搜索结果上之后才真正变成工程问题抽取的五个阶段一个完整的抽取工程从原始数据到可用的三元组要经过五道工序课本把它们排成流水线实际做的时候它们互相咬合前一道的输出就是后一道的输入错一处会一路传下去预处理收集清洗标注实体抽取识别扩展关系抽取模式分类事件抽取触发词论元校验评估准确率召回率输入纯文本网页表格半结构化数据库与链接数据实体错了关系必然错关系错了事件就抽不全评估放在最后但要能回退到任何一步输出是一批三元组再交给第四章的融合处理同义冲突重复预处理阶段常被低估数据来自哪里标注规范怎么定直接决定后面模型能学到什么标注标准不一致模型学到的就是噪声预处理里三件事收集清洗标注收集要定范围和来源清洗要去重去噪纠错标注要给实体和关系打上标签供模型学习标注最费人力也最容易出偏差两个人对同一句话标出不同结果模型就学不会实体抽取先切边界实体抽取也叫命名实体识别任务定义很窄找出实体在文本中的起止位置再判断它属于哪一类定位和分类是两件事前者决定输出几个字符后者决定这个字符串叫什么一句张三在上海工作机器要输出四段东西张三从第个字到第个字类型是人名上海从第个字到第个字类型是地名中间那个在和工作不属于任何实体输入字序列张三在上海工作输出标签序列开始内部不在实体里结束单字实体与的组合决定了边界遇到就开一个新实体遇到就收尾标签体系越细区分能力越强训练也越慢中文任务里常用这一套把识别任务改写成给每个字打一个标签问题就变成了序列标注这个转换很关键后面所有模型都建立在它上面这个改写让任务变得可计算也带来了一个新约束标签之间不能随便组合前面必须是或不能凭空冒出个这条约束在独立预测每个位置的模型里靠不住后面层要解决的正是它规则法最早的做法不需要训练人先观察语料总结出模式机构名常以大学医院集团收尾人名常出现在某某说某某老师里把这些模式写成正则或模板拿文本去匹配匹配上就标成实体规则制定正则词典模板文本解析分词词性句法规则匹配冲突消解实体输出位置类型属性模式举例大学医院老师说省优点准有些实体只有规则能抓比如固定格式的编号文号药品规格代价写规则要语言学知识规则一多就互相打架换一个领域整套重写规则法的准确率可以做到很高代价是覆盖率靠人一条条堆它到今天仍然有用通常作为模型的第一层过滤或者用来处理模型学不会的格式类实体规则法在专业领域活得很好医疗文本里的药品规格检验指标法律文书里的案号格式固定正则一句话就够模型反而不划算它的软肋在于可移植性一套写给病历的规则搬到财报上几乎全部失效统计模型进来之后规则堆不动的时候思路转向从数据里学做法是先人工定义一批特征词本身词性前后缀是否数字是否姓氏把每个位置的上下文编码成一个特征向量再训练一个分类器判断这个位置该打什么标签是这条路线上最早的一个它把标签序列当隐状态把词当观测用两组概率描述整个过程状态之间怎么转移某个状态下会生成什么词给定观测序列找最可能的状态序列就是找最可能的标签序列隐状态标签序列转移转移转移发射观测字张三在上转移矩阵发射矩阵初始概率假设当前位置的输出只依赖当前标签看不到更远的下文描述的是标签怎么生成词转移概率来自标签之间的搭配习惯发射概率来自某类实体常出现哪些字解码用维特比算法找一条概率最大的路径的短板在图里已经能看出来每个位置独立发射标签之间只靠前一个状态牵连一句话里前面的张如果是姓氏后面的三几乎必然是名这种长距离的相互约束表达不了就是在这一点上动的手它不建模联合概率直接建模条件概率然后对整个序列做全局归一化这样每个位置的标签可以依赖整段输入而不只是前一个状态副作用是训练慢一些标注时要考虑全局最优路径每个的条件都建立在整条上而不是只看前一个状态整条路径一起打分再统一归一化转移特征管相邻标签状态特征管当前位置线性链的结构两条边的颜色分开横向是标签之间的转移纵向是输入到标签的状态特征这个结构后来被原样搬进的最后一层同期的走另一条路把每个词当独立样本分类用核函数把特征映射到高维再找最大间隔超平面它在小样本上稳但丢掉了序列信息做序列标注反而不如深度模型与统计模型的天花板在于特征是人挑的挑得好效果就好换个语种换个领域又得重新挑深度学习把这个环节也交给了模型输入词向量让网络自己学该看什么四个模型常被放在一起讲用卷积核在句子窗口上滑动擅长抓局部片段训练快按顺序读入把前文压进隐状态天然适合序列但长句子会梯度消失用做双向编码先在海量文本上预训练再到具体任务上微调把上下文这件事做到了当时的极限实际做中文时用得最多的是它的结构可以拆成三段先把每个字变成向量用从前往后从后往前各读一遍把两段输出拼起来再把拼好的表示送进层让在全局上挑一条合法且分数最高的标签路径输出标签层给整条标签路径打分挑出全局最优的一条前向从左往右读后向从右往左读两个方向拼接后送入字向量上下文表示预训练或随机初始化张三在上海输入分工很清楚负责看上下文负责保证标签序列合法少了模型可能输出后面直接跟这种边界断裂的结果这套结构之后主流做法换成了预训练模型轻量分类头那一段被替掉结构在变两件事没变一是要有上下文表示二是要有约束保证标签序列合法中文到现在仍有两个硬骨头一是缺少天然分词词的边界本身就有争议二是新词不断出现训练集里没有的实体只能靠上下文猜关系抽取实体找出来之后下一步是判断它们之间有什么关系这个任务年在会议上被正式提出比实体抽取难得多难在同一个意思有很多种说法是的父亲是的儿子老来得子都要归到同一条关系上猫抓老鼠这类句子依存句法能帮上忙句法分析把句子拆成一棵依存树主语宾语修饰关系都标出来实体对之间的关系路径就落在树上沿着猫主谓抓动宾老鼠这条路径走动作关系就出来了句法路径也常被当成特征喂给后面的分类器猫抓老鼠主谓动宾核心谓词两个实体之间的最短依存路径路径上的信息被当成特征谓词是什么抓买任职于两端实体的类型人动物机构路径长度与方向同一棵树换个视角就能抽出一批关系模板句法只在句子结构规整时好使口语长句跨句指代一多依存树本身就不可靠后面的判断跟着失准按标注量分类关系抽取有三条路线监督学习用人工标好的句子训练分类器效果最稳成本最高半监督用少量种子去撬动大量未标注文本无监督完全不看标签靠聚类把表达同一关系的句子聚到一起聚出来的簇还得人来看是什么意思路线监督学习半监督无监督标签来源人工逐句标注种子远程知识库无标签靠聚类代表方法特征向量法核函数法远程监督等聚类优势准确率高规模大成本低能发现新关系主要问题标注贵覆盖窄噪声多语义漂移结果需人工解释标注不够用的时候关系抽取最缺的是标注数据一句一句标一万人年也标不完于是有了远程监督它押一个假设如果知识库里已经写着两个实体有某种关系那么所有同时提到这两个实体的句子都可能表达这种关系于是拿知识库当词典去海量文本里自动对齐一夜之间就有了百万级训练集已有知识库王健林父子王思聪关系已经确定只是没有句子支撑对齐全库检索凡是同时提到这两个名字的句子王思聪是王健林的独子王健林携子王思聪出席活动王健林与王思聪共同投资了这家公司王思聪否认父亲王健林曾注资后两句也会被打上父子标签但它们说的不是这件事噪声从这里进来标签由知识库决定句子未必在讲那条关系后续要靠降噪多示例学习句子级注意力来筛远程监督的假设很粗糙但它把标注成本压到了近乎零工程上的做法是先拿它铺量再用小规模人工标注去校准和降噪走的是另一条路给几个种子实例从包含它们的句子里学模板用模板去抽新实例新实例再回来学新模板如此迭代风险是语义漂移第一轮抽到苹果公司第二轮可能抽到苹果第三轮就跑到水果上去了深度学习时代的框架变得统一把句子编码成词向量同时给每个词加上距离头实体多远距离尾实体多远的位置向量两者拼起来送进或抽特征最后接一个分类层输出关系类型位置向量这一步很关键它让网络知道当前这个词离两个实体各有多远事件抽取三元组描述的是静态事实事件描述的是发生了什么同样一段话实体和关系都抽对了事件信息还可能漏掉一大半年日本大地震后的一段报道地震发生后许多建筑物倒塌造成大量人员伤亡救援人员迅速展开紧急救援许多国家也向日本提供了援助这段话里有三个事件地震是起因救援是响应国际援助是后续每个事件都有自己的时间地点参与方和结果事件抽取要做两件事先找到触发词判断这里发生了一个什么类型的事件再把论元填进槽位时间地点参与者伤亡数字各归各位地震发生后许多建筑物倒塌造成大量人员伤亡触发词倒塌决定了事件类型是灾害而不是建设事件一地震触发词地震时间年地点日本东京后果建筑倒塌人员伤亡事件二国际援助触发词提供援助施动方多个国家受动方日本时序地震之后同一段文字里可以并存多个事件它们往往共用触发词之外的所有要素论元填不全事件就不完整后面拿去做推理会缺条件结构上有两种做法管道式先做触发词识别再做论元抽取两阶段串行简单但前一阶段的错误会累积联合式把两件事放进一个模型一起学共享底层表示能缓解误差传递代价是模型复杂调参麻烦再往上还有篇章级句子级抽取只能看到一句话跨句的信息抓不到篇章级要解决两个新问题关键事件检测判断整篇文档里哪些段落提到了重要事件论元补足把分散在不同段落里的事件要素拼成完整结构上面那段报道里地震救援行动国际援助三个关键事件就是把全文读完才能确定它们的关系的事件抽取的现状和实体抽取不太一样深度模型在标准数据集上分数很高换到真实业务就掉得厉害原因是事件类型定义往往跟业务强绑定公开数据集的类型体系套不上领域自适应和低资源事件抽取目前仍是活跃的研究方向自测为什么实体抽取要被改写成序列标注因为找边界本身不好直接优化而给每个位置打一个标签可以逐位置计算损失这套标签把边界信息编码进标签里边界和类型一次输出里层不能省的理由是什么独立给每个位置打分可能输出后面跟这种非法序列建模相邻标签的转移并在整条路径上做全局归一化保证输出的标签序列合法且整体最优远程监督为什么一定会引入噪声它的假设是两个实体有关系则提到它们的句子就在讲这个关系这个假设过强同一对实体出现在完全不同语境的句子里也会被强行打上标签管道式和联合式事件抽取各自适合什么场景类型体系稳定要快速上线用管道式每个模块可以单独调论元跨句严重误差传递影响大用联合式共享表示能减少前后不一致',
+  pageFillDescription: '知识抽取：从文本到三元组, 输入：一段两句话的新闻, 输出：实体清单、三元组与事件槽位, 抽取三步：找实体、判关系与归一, 中文边界：一句话有三种切法, 抽取流水线：五个阶段, 预处理：收集、清洗与标注, 五道工序的输出对照, 实体抽取：序列标注, 序列标注：BIO 与 BIOES, 解码与嵌套实体, 规则法：词典、正则与模板, 规则法漏在哪, 统计模型：HMM 与 CRF, HMM：转移概率与发射概率, CRF：条件概率与全局归一化, SVM 与人工特征, CRF 拦住非法路径, 深度模型：BiLSTM-CRF 与预训练, 四个模型的分工, BiLSTM-CRF：编码器加约束层, 去掉 CRF 与更换编码器, 关系抽取：从句子到三元组, 依存句法：实体之间的路径, 三条监督路线, 同义说法归一, 关系方向：句子顺序与三元组顺序, 远程监督与 Bootstrapping, Bootstrapping：模板迭代与语义漂移, 位置向量：深度学习时代的关系分类, 远程监督的四条训练样本, 事件抽取：触发词与论元, 管道式与联合式, 篇章级事件抽取, 评估：准确率、召回率与 F1, 严格规则与放宽规则, 方法演进：七代方法解决了什么, 自测图谱里的三元组不会自己出现得从文本表格数据库里一条条捞出来这一章按先找实体再判关系最后抽事件的顺序讲清楚机器在每一步上卡在哪里以及各代方法分别怎么绕过去知识抽取从文本到三元组第二章定好了图谱里能有哪些实体类型关系类型还有每种事件要填哪些槽位第三章要做的是把文本填进这些空位第四章再接手处理同名实体和冲突取值三章的分工落到数据上就是下面这张图输入一段两句话的新闻下面这段文本本章会从头用到尾王思聪是万达集团董事长王健林的独子上周五万达集团在上海与星光影视签约王健林出席了签约仪式输入王思聪是万达集团董事长王健林的独子上周五万达集团在上海与星光影视签约王健林出席了签约仪式实体抽取关系抽取事件抽取实体清单王思聪万达集团王健林上海星光影视三元组王健林父子王思聪王健林任职于万达集团万达集团合作星光影视每条都能挂到上事件结构签约触发词时间上周五地点上海参与方万达集团星光影视出席参与方王健林输出交给第四章做融合对齐同一实体的不同写法再存进第五章讲的图数据库输出实体清单三元组与事件槽位三份输出的形状各不相同实体是带起止位置的字符串三元组是头尾两个实体加一个关系名事件是触发词加一组槽位前面那张图只拆了第一句第二句还会多出上海星光影视和上周五同一段文本里的实体合并去重后才交给关系抽取关系抽取和事件抽取接着产出另外两份结构后面每一节都在解这张图里的一格先讲怎么把字切成实体再讲怎么判断两个实体之间的关系然后讲带时间和参与方的事件怎么落进槽位最后讲怎么判断抽得对不对方法换了好几代输入和输出的形状一直没变抽取三步找实体判关系与归一一条新闻里写着王思聪是万达集团董事长王健林的独子人读完脑子里自动装进了两个人名和一条关系要把这句话变成图谱里的一条三元组王健林父子王思聪机器得依次做完三件事王思聪是万达集团董事长王健林的独子原文第一步找实体哪些字是人名机构名边界在哪是什么类型第二步判关系这两个实体之间是什么关系独子指向父子第三步归一关系在库里叫什么名字对齐到已有王健林父子王思聪三步里最难的不是第三步关系类型有现成的表可查实体边界有语料可学真正麻烦的是中文那句话里万达集团董事长王健林这一串字该从哪里断开中文边界一句话有三种切法英文有空格机器把词切开就行中文没有万达集团董事长王健林这一串边界在哪人靠语义切分知道董事长是头衔王健林才是人机器拿到的是连续的字它得靠上下文特征判断哪个位置该断这一步算错后面的关系全得跟着错知识抽取要解决的正是这件事把非结构化的文本变成结构化的三元组这个概念在上世纪七十年代后期出现在自然语言处理的文献里年把它用在搜索结果上之后才真正变成工程问题把那一串字拆开看人几乎不会犹豫机器却要在每个字之间做一次判断同一串字三种断法读起来都通顺按语义断万达集团董事长王健林王健林父子王思聪两个实体一条能挂上的三元组整串当一个万达集团董事长王健林万达集团董事长王健林父子王思聪图谱里多出一个查无此人的节点每词都切开万达集团董事长王健林万达任职于王健林机构名被截短融合时并错差别只在框的范围框错一个字后面每一条关系都挂到了错误的节点上三种切法都读得通只有第一种能对齐到第二章定好的实体边界错一个字关系分类就会挂到错误的节点上第四章做融合时也认不出这是同一个实体中文里南京市长江大桥是同一个问题切成南京市长江大桥还是南京市长江大桥得靠上下文决定模型只能看前后字英文靠空格把这件事省掉了大半中文没有这层便宜抽取流水线五个阶段一个完整的抽取工程从原始数据到可用的三元组要经过五道工序课本把它们排成流水线实际做的时候它们互相咬合前一道的输出就是后一道的输入错一处会一路传下去预处理收集清洗标注实体抽取识别扩展关系抽取模式分类事件抽取触发词论元校验评估准确率召回率输入纯文本网页表格半结构化数据库与链接数据实体错了关系必然错关系错了事件就抽不全评估放在最后但要能回退到任何一步输出是一批三元组再交给第四章的融合处理同义冲突重复预处理阶段常被低估数据来自哪里标注规范怎么定直接决定后面模型能学到什么标注标准不一致模型学到的就是噪声预处理收集清洗与标注预处理里三件事收集清洗与标注收集要定范围和来源清洗要去重去噪纠错标注要给实体和关系打上标签供模型学习标注最费人力也最容易出偏差两个人对同一句话标出不同结果模型就学不会五道工序的输出对照拿张三在上海工作这条句子走一遍五道工序各自留下的东西是看得见的阶段输入输出出错后的样子收集与清洗网页上爬下来的带标签文本张三在上海工作正文里混着导航栏模型把首页也学成实体标注干净句子每个字的标签两个人标法不一致模型学到两套边界实体抽取字序列张三上海把上海工作整段标成关系抽取句子加上面两个实体张三工作地上海把在判成任职于关系类型错位校验评估抽取结果加人工答案准确率召回率只看准确率会放过漏抽的实体最后一道常被跳过抽出来的三元组数量好看不等于抽全了第五章存进图数据库之前得先知道漏了多少实体抽取序列标注实体抽取也叫命名实体识别任务定义很窄找出实体在文本中的起止位置再判断它属于哪一类定位和分类是两件事前者决定输出几个字符后者决定这个字符串叫什么序列标注与一句张三在上海工作机器要输出四段东西张三从第个字到第个字类型是人名上海从第个字到第个字类型是地名中间那个在和工作不属于任何实体输入字序列张三在上海工作输出标签序列开始内部不在实体里结束单字实体与的组合决定了边界遇到就开一个新实体遇到就收尾标签体系越细区分能力越强训练也越慢中文任务里常用这一套把识别任务改写成给每个字打一个标签问题就变成了序列标注这个转换很关键后面所有模型都建立在它上面这个改写让任务变得可计算也带来了一个新约束标签之间不能随便组合前面必须是或不能凭空冒出个这条约束在独立预测每个位置的模型里靠不住后面层要解决的正是它同一个句子换两套标签写法输出长度不变边界信息藏在不同的标签里同一个句子两套标签边界信息的位置不同原句张三在上海工作双字实体靠撑长度直接标出结尾原句王在上海工作单字实体只能写成一个就说清了标签种类从类涨到类换来的是一段实体到哪儿结束不用再靠后一个字去猜解码与嵌套实体模型吐出来的是标签串写进图谱之前还要解码一次解码把标签串重新拼回实体标签串动作得到的实体遇到开一段遇到下一个或收尾张三同一条规则换成地名类型上海跳过不属于任何实体无输出还有一条没画出来前面既不是也不是时这段该怎么收场解码程序只能丢弃或者硬猜起点这正是层要提前拦掉的情况解码这步看着简单遇到前面没有的非法序列就得先决定丢弃还是修补这正是层要提前拦下来的情况还有一类边界问题一套标签根本标不下北京大学附属医院整体是一家机构里面的北京大学也是一家机构两个实体嵌套每个字只留一个标签位要改成多层标签序列或者换成给候选片段单独打分的做法规则法词典正则与模板最早的做法不需要训练人先观察语料总结出模式机构名常以大学医院集团收尾人名常出现在某某说某某老师里把这些模式写成正则或模板拿文本去匹配匹配上就标成实体规则制定正则词典模板文本解析分词词性句法规则匹配冲突消解实体输出位置类型属性模式举例大学医院老师说省优点准有些实体只有规则能抓比如固定格式的编号文号药品规格代价写规则要语言学知识规则一多就互相打架换一个领域整套重写规则法的准确率可以做到很高代价是覆盖率靠人一条条堆它到今天仍然有用通常作为模型的第一层过滤或者用来处理模型学不会的格式类实体规则法在专业领域活得很好医疗文本里的药品规格检验指标法律文书里的案号格式固定正则一句话就够模型反而不划算它的软肋在于可移植性一套写给病历的规则搬到财报上几乎全部失效规则法漏在哪写几条规则出来输入输出就很直白词典里收了万达集团和星光影视模板写成某人出席了某活动金额这类格式交给正则亿元每条规则都有它认不出的写法命中的落空的机构名词典万达集团星光影视个海风科技词典里没收后缀模板某集团万达集团个海风科技不带后缀正则亿元亿元五亿元写成中文数字出席了模板王健林出席了签约仪式王健林到场换动词四条规则放进一段没见过的财报通常只剩后缀模板还能命中几个带公司的名字规则准是因为它只认自己见过的写法换个动词换个简写换一种数字格式匹配就直接落空这四条规则放到一段没见过的财报里通常只剩后缀模板还能命中几条统计模型与规则堆不动的时候思路转向从数据里学做法是先人工定义一批特征词本身词性前后缀是否数字是否姓氏把每个位置的上下文编码成一个特征向量再训练一个分类器判断这个位置该打什么标签转移概率与发射概率是这条路线上最早的一个它把标签序列当隐状态把词当观测用两组概率描述整个过程状态之间怎么转移某个状态下会生成什么词给定观测序列找最可能的状态序列就是找最可能的标签序列隐状态标签序列转移转移转移发射观测字张三在上转移矩阵发射矩阵初始概率假设当前位置的输出只依赖当前标签看不到更远的下文描述的是标签怎么生成词转移概率来自标签之间的搭配习惯发射概率来自某类实体常出现哪些字解码用维特比算法找一条概率最大的路径的短板在图里已经能看出来每个位置独立发射标签之间只靠前一个状态牵连一句话里前面的张如果是姓氏后面的三几乎必然是名这种长距离的相互约束表达不了条件概率与全局归一化就是在这一点上动的手它不建模联合概率直接建模条件概率然后对整个序列做全局归一化这样每个位置的标签可以依赖整段输入而不只是前一个状态副作用是训练慢一些标注时要考虑全局最优路径每个的条件都建立在整条上而不是只看前一个状态整条路径一起打分再统一归一化转移特征管相邻标签状态特征管当前位置线性链的结构两条边的颜色分开横向是标签之间的转移纵向是输入到标签的状态特征这个结构后来被原样搬进的最后一层与人工特征同期的走另一条路把每个词当独立样本分类用核函数把特征映射到高维再找最大间隔超平面它在小样本上稳但丢掉了序列信息做序列标注反而不如人工定义特征这句太抽象真到训练时一个字会被摊成一张表取张三在上海工作里的上字上这个位置进分类器之前先摊成六条特征在上海只看上这一个位置当前字上地名词首常见前一个字在介词后面常接地名后一个字海上海是高频词词性名词排除动词位置是否在姓氏表否压低分数前一个标签允许开一段新实体分类器六条取值学权重六条取值拼成一个向量分类器读的是这一列上和海只是其中两项换一种语言六条特征得按那种语言重新设计一遍十几条这样的取值拼成一个向量分类器在上面学权重读的是这一列取值上海两个字只作为其中一项出现换一种语言特征模板要重写一遍拦住非法路径的作用也可以用一条具体输出看出来逐位置打分时两条标签序列都可能被选出来输入字张三在上海逐位置打分路径第个字是前面却是这条转移记了一笔很低的分数路径总分示意含到的转移罚分路径路径总分示意整条路径一起打分后胜出分数是示意值真正参与比较的是各位置的发射分数加相邻标签的转移分数第一行第个字是前面却没有逐位置分类器各自为政察觉不到这个断层给上一位置这一位置记低分整条路径因此被压下去第二行才浮上来全局归一化做的就是这件事深度模型与预训练统计模型的天花板在于特征是人挑的挑得好效果就好换个语种换个领域又得重新挑深度学习把这个环节也交给了模型输入词向量让网络自己学该看什么四个模型的分工四个模型常被放在一起讲用卷积核在句子窗口上滑动擅长抓局部片段训练快按顺序读入把前文压进隐状态天然适合序列但长句子会梯度消失用做双向编码先在海量文本上预训练再到具体任务上微调把上下文这件事做到了当时的极限编码器加约束层实际做中文时用得最多的是它的结构可以拆成三段先把每个字变成向量用从前往后从后往前各读一遍把两段输出拼起来再把拼好的表示送进层让在全局上挑一条合法且分数最高的标签路径输出标签层给整条标签路径打分挑出全局最优的一条前向从左往右读后向从右往左读两个方向拼接后送入字向量上下文表示预训练或随机初始化张三在上海输入分工很清楚负责看上下文负责保证标签序列合法少了模型可能输出后面直接跟这种边界断裂的结果这套结构之后主流做法换成了预训练模型轻量分类头那一段被替掉结构在变两件事没变一是要有上下文表示二是要有约束保证标签序列合法中文到现在仍有两个硬骨头一是缺少天然分词词的边界本身就有争议二是新词不断出现训练集里没有的实体只能靠上下文猜去掉与更换编码器把层拆掉同一句话的输出差异可以直接看出来同一句话去掉之后第个字出了什么问题张三在上海工作李四在北京带合法只有前面是非法逐位置取最大概率每个字都只管自己前面必须是或这条约束没有地方写解码程序遇到这种序列要么丢掉这一段要么硬猜一个起点李四这个实体就没了或错位第个字李被判成了前面是少掉之后模型在每个位置上单独取最大值边界约束没有地方生效解码程序遇到这种序列要么丢弃这一段要么硬猜一个起点两种处理都会让李四这个实体丢掉或错位后面换成预训练模型输入输出的形状仍然一样做法输入中间表示输出字序列双向拼接解码出的标签序列加字序列加位置编码双向编码解码出的标签序列加字序列加位置编码双向编码逐位置最大概率标签换掉的是编码器标签体系和解码约束照旧判断能不能省看的始终是标签序列合法性这一条跟前面用哪种编码器无关关系抽取从句子到三元组实体找出来之后下一步是判断它们之间有什么关系这个任务年在会议上被正式提出比实体抽取难得多难在同一个意思有很多种说法是的父亲是的儿子老来得子都要归到同一条关系上依存句法实体之间的路径猫抓老鼠这类句子依存句法能帮上忙句法分析把句子拆成一棵依存树主语宾语修饰关系都标出来实体对之间的关系路径就落在树上沿着猫主谓抓动宾老鼠这条路径走动作关系就出来了句法路径也常被当成特征喂给后面的分类器猫抓老鼠主谓动宾核心谓词两个实体之间的最短依存路径路径上的信息被当成特征谓词是什么抓买任职于两端实体的类型人动物机构路径长度与方向同一棵树换个视角就能抽出一批关系模板句法只在句子结构规整时好使口语长句跨句指代一多依存树本身就不可靠后面的判断跟着失准三条监督路线按标注量分类关系抽取有三条路线监督学习用人工标好的句子训练分类器效果最稳成本最高半监督用少量种子去撬动大量未标注文本无监督完全不看标签靠聚类把表达同一关系的句子聚到一起聚出来的簇还得人来看是什么意思路线监督学习半监督无监督标签来源人工逐句标注种子远程知识库无标签靠聚类代表方法特征向量法核函数法远程监督等聚类优势准确率高规模大成本低能发现新关系主要问题标注贵覆盖窄噪声多语义漂移结果需人工解释同义说法归一开头说的同一个意思有很多种说法摊开是这样输入句子加两个实体的位置王健林是王思聪的父亲王思聪是王健林的独子王健林老来得子都归一到父子关系标签父子王健林父子王思聪王健林与王思聪共同投资了这家公司输出不生成三元组字面线索不同标签相同字面提到同一对实体未必在讲那条关系四句话讲的是同一个家庭只有前三句给了父子关系的证据分类器的输入是句子加两个实体的位置输出是关系类型或者它要学的是把父亲独子老来得子这些不同字面归到同一个标签上关系方向句子顺序与三元组顺序还有一层容易漏关系的方向王思聪是王健林的独子里句子先出现王思聪后出现王健林图谱里记的却是王健林父子王思聪句子里的先后顺序和三元组的头尾顺序经常是反的训练时实体位置标记必须带上否则模型分不清谁是父亲远程监督与关系抽取最缺的是标注数据一句一句标一万人年也标不完于是有了远程监督它押一个假设如果知识库里已经写着两个实体有某种关系那么所有同时提到这两个实体的句子都可能表达这种关系于是拿知识库当词典去海量文本里自动对齐一夜之间就有了百万级训练集已有知识库王健林父子王思聪关系已经确定只是没有句子支撑对齐全库检索凡是同时提到这两个名字的句子王思聪是王健林的独子王健林携子王思聪出席活动王健林与王思聪共同投资了这家公司王思聪否认父亲王健林曾注资后两句也会被打上父子标签但它们说的不是这件事噪声从这里进来标签由知识库决定句子未必在讲那条关系后续要靠降噪多示例学习句子级注意力来筛远程监督的假设很粗糙但它把标注成本压到了近乎零工程上的做法是先拿它铺量再用小规模人工标注去校准和降噪模板迭代与语义漂移走的是另一条路给几个种子实例从包含它们的句子里学模板用模板去抽新实例新实例再回来学新模板如此迭代风险是语义漂移第一轮抽到苹果公司第二轮可能抽到苹果第三轮就跑到水果上去了位置向量深度学习时代的关系分类深度学习时代的框架变得统一把句子编码成词向量同时给每个词加上距离头实体多远距离尾实体多远的位置向量两者拼起来送进或抽特征最后接一个分类层输出关系类型位置向量这一步很关键它让网络知道当前这个词离两个实体各有多远远程监督的四条训练样本远程监督产出的训练样本长这样句子本身没被人工读过一眼知识库只认实体对四句话拿到同一个标签句子自动标签句子实际在讲王思聪是王健林的独子父子亲子关系不是噪声王健林携子王思聪出席活动父子亲子关系不是噪声王健林与王思聪共同投资了这家公司父子商业合作噪声王思聪否认父亲王健林曾注资父子否认与资金往来噪声四句里有两句是噪声真实语料比例更高名人的父子关系常被当背景介绍句子重点在别处多示例学习把同一实体对的句子打成包让模型自己分配权重包级预测才不至于被噪声带跑四句里两句是噪声真实语料里这个比例还会更高名人的父子关系常被拿来当背景介绍句子的重点在别处多示例学习把同一个实体对对应的所有句子打成一个包让模型自己给包里每句话分配权重权重高的句子主导分类句子级注意力做的也是这件事包级预测因此还能落在父子上的语义漂移是一轮一轮看得见的从公司到水果四轮就滑出去了种子苹果公司创始人乔布斯还没有新实例公司模板创立了的创始人微软谷歌和特斯拉公司模板的上市吃的苹果手机苹果汁开始偏模板产自价格红富士山东农产品每一轮只往外挪一点单看任何一轮都不算错到第三轮模板已经把苹果当成水果了工程上要设置信度阈值每轮人工抽检或者限定模板里实体类型不许变模板每轮只往外挪一点第三轮就跑到了水果上中间单看任何一轮都不算错工程上要设置信度阈值每轮人工抽检或者限制模板里实体类型不能变事件抽取触发词与论元三元组描述的是静态事实事件描述的是发生了什么同样一段话实体和关系都抽对了事件信息还可能漏掉一大半年日本大地震后的一段报道地震发生后许多建筑物倒塌造成大量人员伤亡救援人员迅速展开紧急救援许多国家也向日本提供了援助这段话里有三个事件地震是起因救援是响应国际援助是后续每个事件都有自己的时间地点参与方和结果事件抽取要做两件事先找到触发词判断这里发生了一个什么类型的事件再把论元填进槽位时间地点参与者伤亡数字各归各位地震发生后许多建筑物倒塌造成大量人员伤亡救援人员展开紧急救援许多国家也向日本提供了援助触发词倒塌把这句话定成灾害类而不是建设类事件一地震触发词地震时间年地点日本参与方未提及结果建筑倒塌人员伤亡事件二救援触发词展开救援时间地震发生后地点日本参与方救援人员对象紧急救援事件三国际援助触发词提供援助时间地震发生后地点日本参与方许多国家对象向日本提供援助两个事件写的是相对时间入库前要归一化到绝对时间轴槽位缺的写未提及空着和写未提及是两件事论元散在不同句子里许多国家在第二句日本在第三句句子级只看得到其中一格篇章级要做的就是把这些格子拼起来同一段文字里并排着三个事件它们共用大部分要素只有触发词和参与方不同论元填不全事件就不完整后面拿去做推理会缺条件管道式与联合式结构上有两种做法管道式先做触发词识别再做论元抽取两阶段串行简单但前一阶段的错误会累积联合式把两件事放进一个模型一起学共享底层表示能缓解误差传递代价是模型复杂调参麻烦管道式的误差传递也能算出来结构中间产物出错时的损失管道式触发词列表触发词漏一个对应事件的全部论元一起丢联合式无独立中间输出单个论元判错其余槽位仍可保留触发词识别漏掉提供援助后面论元抽取根本不会为这个事件启动五个槽位一起空着联合式把触发词和论元放进一个模型里判断共享底层表示代价是训练数据要同时标好两样东西篇章级事件抽取再往上还有篇章级句子级抽取只能看到一句话跨句的信息抓不到篇章级要解决两个新问题关键事件检测判断整篇文档里哪些段落提到了重要事件论元补足把分散在不同段落里的事件要素拼成完整结构上面那段报道里地震救援行动国际援助三个关键事件就是把全文读完才能确定它们的关系的事件抽取的现状和实体抽取不太一样深度模型在标准数据集上分数很高换到真实业务就掉得厉害原因是事件类型定义往往跟业务强绑定公开数据集的类型体系套不上领域自适应和低资源事件抽取目前仍是活跃的研究方向评估准确率召回率与五阶段图里最后那格写着准确率召回率前面一直没展开拿一段人工标好的文本当标准答案答案里有条三元组模型抽出来条其中条在答案里另外条是编出来的抽对的是抽错的是漏掉的是准确率召回率人工答案条三元组每一格代表条条抽对条漏抽模型输出条三元组条抽对条抽错没有输出的部分两条绿色块长度相同都是那条抽对的三元组橙色和红色分别是漏掉的和多出来的严格规则与放宽规则把规则放宽一点实体不再要求必须出现在姓氏表里李雷韩梅梅这类没见过的名字也能进来抽出条数从变成抽对的涨到条准确率掉了召回率上来了反而涨了同一份答案三种做法三个指标严格规则抽出条对条放宽规则抽出条对条全交上去抽出条对条召回率满分只要把候选全交上去代价是准确率掉到三分之一是两边的调和平均哪边塌了都跟着降把条候选全交上去召回率满分准确率掉到三分之一只看一个指标选不出方案是两边的调和平均哪边塌了都会跟着降实体抽取按实体算和关系抽取按三元组算事件抽取要分开报两套分数触发词识别一套论元识别一套方法演进七代方法解决了什么整章出现的方法可以按上一代留下什么问题排成一条线输入始终是一段文本输出始终是带类型的实体关系或事件方法判断依据解决了上一代的什么又留下什么规则和词典人写好的模式不需要标注数据格式类实体很准换个领域要重写没见过的写法全漏转移概率加发射概率从数据里学不用手写规则每个位置只看当前状态长距离约束表达不了整条路径的条件概率标签能依赖整段输入非法序列被压掉特征仍要人挑训练慢等分类器核函数映射后的超平面小样本上稳序列信息丢了标注任务不占优网络自己学的上下文表示特征不用人挑需要足够标注语料长句仍有压力预训练加分类头海量文本预训练出的表示上下文表示更强生词靠字级信息也能猜算力开销大领域迁移仍要微调远程监督知识库对齐出来的自动标签标注成本压到接近零标签噪声语义漂移表格里既有实体抽取的路线也有关系抽取补数据的办法工程里常常一起用规则兜住格式类实体开放文本交给模型关系分类靠远程监督铺量再留一小份人工标注做校准和评估自测为什么实体抽取要被改写成序列标注因为找边界本身不好直接优化而给每个位置打一个标签可以逐位置计算损失这套标签把边界信息编码进标签里边界和类型一次输出里层不能省的理由是什么独立给每个位置打分可能输出后面跟这种非法序列建模相邻标签的转移并在整条路径上做全局归一化保证输出的标签序列合法且整体最优远程监督为什么一定会引入噪声它的假设是两个实体有关系则提到它们的句子就在讲这个关系这个假设过强同一对实体出现在完全不同语境的句子里也会被强行打上标签管道式和联合式事件抽取各自适合什么场景类型体系稳定要快速上线用管道式每个模块可以单独调论元跨句严重误差传递影响大用联合式共享表示能减少前后不一致同一句话用和标输出差在哪只有和双字实体写成多了和同一个实体写成单字实体一个就够边界信息更明确代价是标签种类从类涨到类逐位置分类为什么会输出后面直接跟每个位置独立取最大概率模型没有地方表达前面必须是或这条约束给这类转移记低分并在整条路径上做全局归一化非法路径的总分因此被压下去准确率召回率是怎么来的答案里条模型抽出条其中条对准确率分母是模型抽出的条数召回率的分母换成答案里的条数剩下条是抽错条是漏抽放宽规则让召回率从升到方案一定变好了吗准确率会从掉到得看场景能不能接受多出来的错抽从升到是两边取调和平均后的结果如果错抽进图谱的代价很高宁可保准确率北京大学附属医院为什么用一套标不下整串是一家机构里面的北京大学也是一家机构两个实体嵌套每个字只留一个标签位要改成多层标签序列或者换成给候选片段单独打分的做法',
   isPost: true,
   isHome: false,
   isHighlightShrink: false,
@@ -205,7 +205,51 @@ if (true) {
   document.addEventListener('pjax:complete', () => { preloader.endLoading() })
 }</script><link rel="stylesheet" href="https://cdn.cbd.int/anzhiyu-theme-static@1.1.10/progress_bar/progress_bar.css"/><script async="async" src="https://cdn.cbd.int/pace-js@1.2.4/pace.min.js" data-pace-options="{ &quot;restartOnRequestAfter&quot;:false,&quot;eventLag&quot;:false}"></script><div class="post" id="body-wrap"><header class="not-top-img" id="page-header"><nav id="nav"><div id="nav-group"><span id="blog_name"><a id="site-name" href="/" accesskey="h"><div class="title">qiuxz's Blog</div><i class="anzhiyufont anzhiyu-icon-house-chimney"></i></a></span><div class="mask-name-container"><div id="name-container"><a id="page-name" href="javascript:anzhiyu.scrollToDest(0, 500)">PAGE_NAME</a></div></div><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="javascript:void(0);"><span> 文章</span></a><ul class="menus_item_child"><li><a class="site-page child faa-parent animated-hover" href="/archives/"><i class="anzhiyufont anzhiyu-icon-box-archive faa-tada" style="font-size: 0.9em;"></i><span> 隧道</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><span> 关于</span></a><ul class="menus_item_child"><li><a class="site-page child faa-parent animated-hover" href="/other/about/"><i class="anzhiyufont anzhiyu-icon-paper-plane faa-tada" style="font-size: 0.9em;"></i><span> 关于本人</span></a></li><li><a class="site-page child faa-parent animated-hover" href="javascript:toRandomPost()"><i class="anzhiyufont anzhiyu-icon-shoe-prints1 faa-tada" style="font-size: 0.9em;"></i><span> 随便逛逛</span></a></li></ul></div></div></div><div id="nav-right"><div class="nav-button" id="randomPost_button"><a class="site-page" onclick="toRandomPost()" title="随机前往一个文章" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-dice"></i></a></div><input id="center-console" type="checkbox"/><label class="widget" for="center-console" title="中控台" onclick="anzhiyu.switchConsole();"><i class="left"></i><i class="widget center"></i><i class="widget right"></i></label><div id="console"><div class="console-card-group-reward"><ul class="reward-all console-card"><li class="reward-item"><a href="https://npm.elemecdn.com/anzhiyu-blog@1.1.6/img/post/common/qrcode-weichat.png" target="_blank"><img class="post-qr-code-img" alt="微信" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://npm.elemecdn.com/anzhiyu-blog@1.1.6/img/post/common/qrcode-weichat.png"/></a><div class="post-qr-code-desc">微信</div></li><li class="reward-item"><a href="https://npm.elemecdn.com/anzhiyu-blog@1.1.6/img/post/common/qrcode-alipay.png" target="_blank"><img class="post-qr-code-img" alt="支付宝" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://npm.elemecdn.com/anzhiyu-blog@1.1.6/img/post/common/qrcode-alipay.png"/></a><div class="post-qr-code-desc">支付宝</div></li></ul></div><div class="console-card-group"><div class="console-card-group-left"><div class="console-card" id="card-newest-comments"><div class="card-content"><div class="author-content-item-tips">互动</div><span class="author-content-item-title"> 最新评论</span></div><div class="aside-list"><span>正在加载中...</span></div></div></div><div class="console-card-group-right"><div class="console-card tags"><div class="card-content"><div class="author-content-item-tips">兴趣点</div><span class="author-content-item-title">寻找你感兴趣的领域</span><div class="card-tags"><div class="item-headline"></div><div class="card-tag-cloud"><a href="/tags/YJango%E8%A7%86%E9%A2%91%E6%95%B4%E7%90%86/" style="font-size: 1.05rem;">YJango视频整理<sup>11</sup></a><a href="/tags/%E4%B8%AA%E4%BA%BA%E6%88%90%E9%95%BF/" style="font-size: 1.05rem;">个人成长<sup>3</sup></a><a href="/tags/%E5%AD%A6%E4%B9%A0/" style="font-size: 1.05rem;">学习<sup>13</sup></a><a href="/tags/%E6%84%9F%E6%82%9F/" style="font-size: 1.05rem;">感悟<sup>1</sup></a><a href="/tags/%E6%95%99%E7%A8%8B/" style="font-size: 1.05rem;">教程<sup>8</sup></a><a href="/tags/%E6%9C%AA%E5%88%86%E7%B1%BB/" style="font-size: 1.05rem;">未分类<sup>6</sup></a><a href="/tags/%E6%9E%B6%E6%9E%84/" style="font-size: 1.05rem;">架构<sup>1</sup></a><a href="/tags/%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1/" style="font-size: 1.05rem;">知识图谱<sup>9</sup></a><a href="/tags/%E8%80%83%E8%AF%95/" style="font-size: 1.05rem;">考试<sup>7</sup></a></div></div><hr/></div></div><div class="console-card history"><div class="item-headline"><i class="anzhiyufont anzhiyu-icon-box-archiv"></i><span>文章</span></div><div class="card-archives"><div class="item-headline"><i class="anzhiyufont anzhiyu-icon-archive"></i><span>归档</span><a class="card-more-btn" href="/archives/" title="查看更多">
     <i class="anzhiyufont anzhiyu-icon-angle-right"></i></a></div><ul class="card-archive-list"><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2026/11/"><span class="card-archive-list-date">十一月 2026</span><div class="card-archive-list-count-group"><span class="card-archive-list-count">15</span><span>篇</span></div></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2026/10/"><span class="card-archive-list-date">十月 2026</span><div class="card-archive-list-count-group"><span class="card-archive-list-count">3</span><span>篇</span></div></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2026/09/"><span class="card-archive-list-date">九月 2026</span><div class="card-archive-list-count-group"><span class="card-archive-list-count">16</span><span>篇</span></div></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2026/08/"><span class="card-archive-list-date">八月 2026</span><div class="card-archive-list-count-group"><span class="card-archive-list-count">4</span><span>篇</span></div></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2026/06/"><span class="card-archive-list-date">六月 2026</span><div class="card-archive-list-count-group"><span class="card-archive-list-count">4</span><span>篇</span></div></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2026/05/"><span class="card-archive-list-date">五月 2026</span><div class="card-archive-list-count-group"><span class="card-archive-list-count">1</span><span>篇</span></div></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2026/03/"><span class="card-archive-list-date">三月 2026</span><div class="card-archive-list-count-group"><span class="card-archive-list-count">1</span><span>篇</span></div></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2025/12/"><span class="card-archive-list-date">十二月 2025</span><div class="card-archive-list-count-group"><span class="card-archive-list-count">2</span><span>篇</span></div></a></li></ul></div><hr/></div></div></div><div class="button-group"><div class="console-btn-item"><a class="darkmode_switchbutton" title="显示模式切换" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-moon"></i></a></div><div class="console-btn-item" id="consoleHideAside" onclick="anzhiyu.hideAsideBtn()" title="边栏显示控制"><a class="asideSwitch"><i class="anzhiyufont anzhiyu-icon-arrows-left-right"></i></a></div></div><div class="console-mask" onclick="anzhiyu.hideConsole()" href="javascript:void(0);"></div></div><div class="nav-button" id="nav-totop"><a class="totopbtn" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-arrow-up"></i><span id="percent" onclick="anzhiyu.scrollToDest(0,500)">0</span></a></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);" title="切换"><i class="anzhiyufont anzhiyu-icon-bars"></i></a></div></div></div></nav></header><main id="blog-container"><div class="column-nav"><div class="column-nav-inner"><div class="column-nav-title">知识图谱教程</div><nav class="column-nav-list"><a class="column-link" href="https://qiuxzh.github.io/other/QUT/%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E6%95%99%E7%A8%8B/00-%E6%95%99%E7%A8%8B%E6%80%BB%E8%A7%88/" style="padding-left:8px">00 教程总览</a><a class="column-link" href="https://qiuxzh.github.io/other/QUT/%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E6%95%99%E7%A8%8B/01-%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E6%A6%82%E8%BF%B0/" style="padding-left:8px">01 知识图谱概述</a><a class="column-link" href="https://qiuxzh.github.io/other/QUT/%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E6%95%99%E7%A8%8B/02-%E7%9F%A5%E8%AF%86%E8%A1%A8%E7%A4%BA%E6%8A%80%E6%9C%AF/" style="padding-left:8px">02 知识表示技术</a><a class="column-link active" href="https://qiuxzh.github.io/other/QUT/%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E6%95%99%E7%A8%8B/03-%E7%9F%A5%E8%AF%86%E6%8A%BD%E5%8F%96%E6%8A%80%E6%9C%AF/" style="padding-left:8px">03 知识抽取技术</a><a class="column-link" href="https://qiuxzh.github.io/other/QUT/%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E6%95%99%E7%A8%8B/04-%E7%9F%A5%E8%AF%86%E8%9E%8D%E5%90%88%E6%8A%80%E6%9C%AF/" style="padding-left:8px">04 知识融合技术</a><a class="column-link" href="https://qiuxzh.github.io/other/QUT/%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E6%95%99%E7%A8%8B/05-%E7%9F%A5%E8%AF%86%E5%AD%98%E5%82%A8%E6%8A%80%E6%9C%AF/" style="padding-left:8px">05 知识存储技术</a><a class="column-link" href="https://qiuxzh.github.io/other/QUT/%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E6%95%99%E7%A8%8B/06-%E5%9B%BE%E8%A1%A8%E7%A4%BA%E5%AD%A6%E4%B9%A0%E4%B8%8E%E5%9B%BE%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/" style="padding-left:8px">06 图表示学习与图神经网络</a><a class="column-link" href="https://qiuxzh.github.io/other/QUT/%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E6%95%99%E7%A8%8B/07-%E7%9F%A5%E8%AF%86%E6%8E%A8%E7%90%86%E6%8A%80%E6%9C%AF/" style="padding-left:8px">07 知识推理技术</a><a class="column-link" href="https://qiuxzh.github.io/other/QUT/%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E6%95%99%E7%A8%8B/08-%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E8%A1%8D%E7%94%9F%E6%8A%80%E6%9C%AF/" style="padding-left:8px">08 知识图谱衍生技术</a></nav></div></div><div class="layout" id="content-inner"><div id="post"><div id="post-info"><div id="post-firstinfo"><div class="meta-firstline"><a class="post-meta-original">原创</a><span class="post-meta-categories"><span class="post-meta-separator"></span><i class="anzhiyufont anzhiyu-icon-inbox post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E6%95%99%E7%A8%8B/" itemprop="url">知识图谱教程</a></span><span class="article-meta tags"><a class="article-meta__tags" href="/tags/%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1/" tabindex="-1" itemprop="url"> <span> <i class="anzhiyufont anzhiyu-icon-hashtag"></i>知识图谱</span></a><a class="article-meta__tags" href="/tags/%E6%95%99%E7%A8%8B/" tabindex="-1" itemprop="url"> <span> <i class="anzhiyufont anzhiyu-icon-hashtag"></i>教程</span></a></span></div></div><h1 class="post-title" itemprop="name headline">03 知识抽取技术</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="anzhiyufont anzhiyu-icon-calendar-days post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" itemprop="dateCreated datePublished" datetime="2026-11-06T19:06:00.000Z" title="发表于 2026-11-06 19:06:00">2026-11-06</time><span class="post-meta-separator"></span><i class="anzhiyufont anzhiyu-icon-history post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" itemprop="dateCreated datePublished" datetime="2026-11-06T19:06:00.000Z" title="更新于 2026-11-06 19:06:00">2026-11-06</time></span></div><div class="meta-secondline"></div></div></div><article class="post-content" id="article-container" itemscope itemtype="https://qiuxzh.github.io/other/QUT/%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E6%95%99%E7%A8%8B/03-%E7%9F%A5%E8%AF%86%E6%8A%BD%E5%8F%96%E6%8A%80%E6%9C%AF/"><header><a class="post-meta-categories" href="/categories/%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E6%95%99%E7%A8%8B/" itemprop="url">知识图谱教程</a><a href="/tags/%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1/" tabindex="-1" itemprop="url">知识图谱</a><a href="/tags/%E6%95%99%E7%A8%8B/" tabindex="-1" itemprop="url">教程</a><h1 id="CrawlerTitle" itemprop="name headline">03 知识抽取技术</h1><span itemprop="author" itemscope itemtype="http://schema.org/Person">qiuxz</span><time itemprop="dateCreated datePublished" datetime="2026-11-06T19:06:00.000Z" title="发表于 2026-11-06 19:06:00">2026-11-06</time><time itemprop="dateCreated datePublished" datetime="2026-11-06T19:06:00.000Z" title="更新于 2026-11-06 19:06:00">2026-11-06</time></header><p>图谱里的三元组不会自己出现，得从文本、表格、数据库里一条条捞出来。这一章按“先找实体、再判关系、最后抽事件”的顺序，讲清楚机器在每一步上卡在哪里，以及各代方法分别怎么绕过去。</p>
-<h2 id="一句话里的三层信息"><a href="#一句话里的三层信息" class="headerlink" title="一句话里的三层信息"></a>一句话里的三层信息</h2><blockquote>
+<h2 id="知识抽取：从文本到三元组"><a href="#知识抽取：从文本到三元组" class="headerlink" title="知识抽取：从文本到三元组"></a>知识抽取：从文本到三元组</h2><p>第二章定好了图谱里能有哪些实体类型、关系类型，还有每种事件要填哪些槽位。第三章要做的是把文本填进这些空位，第四章再接手处理同名实体和冲突取值。三章的分工落到数据上，就是下面这张图。</p>
+<h3 id="输入：一段两句话的新闻"><a href="#输入：一段两句话的新闻" class="headerlink" title="输入：一段两句话的新闻"></a>输入：一段两句话的新闻</h3><p>下面这段文本，本章会从头用到尾。</p>
+<blockquote>
+<p>王思聪是万达集团董事长王健林的独子。上周五，万达集团在上海与星光影视签约，王健林出席了签约仪式。</p>
+</blockquote>
+<svg width="100%" style="max-width:860px;height:auto" viewBox="0 0 860 350" role="img" aria-label="一段文本经过抽取得到实体清单、三元组和事件结构">
+  <rect width="860" height="350" fill="#fdfbf6"></rect>
+  <text x="30" y="30" font-size="11.5" fill="#6d747e">输入</text>
+  <rect x="30" y="40" width="800" height="62" rx="8" fill="#ffffff" stroke="#e4e0d6"></rect>
+  <text x="46" y="66" font-size="12" fill="#1b1d21">王思聪是万达集团董事长王健林的独子。上周五，万达集团在上海与星光影视签约，</text>
+  <text x="46" y="88" font-size="12" fill="#1b1d21">王健林出席了签约仪式。</text>
+  <line x1="155" y1="102" x2="155" y2="154" stroke="#8a8175" stroke-width="1.4" marker-end="url(#ov1)"></line>
+  <line x1="430" y1="102" x2="430" y2="154" stroke="#8a8175" stroke-width="1.4" marker-end="url(#ov1)"></line>
+  <line x1="705" y1="102" x2="705" y2="154" stroke="#8a8175" stroke-width="1.4" marker-end="url(#ov1)"></line>
+  <text x="155" y="130" font-size="11" fill="#6d747e" text-anchor="middle">实体抽取</text>
+  <text x="430" y="130" font-size="11" fill="#6d747e" text-anchor="middle">关系抽取</text>
+  <text x="705" y="130" font-size="11" fill="#6d747e" text-anchor="middle">事件抽取</text>
+  <rect x="30" y="160" width="250" height="140" rx="9" fill="#e9f2f6" stroke="#2f6f8f"></rect>
+  <text x="46" y="184" font-size="12" font-weight="600" fill="#1f4d64">实体清单</text>
+  <text x="46" y="210" font-size="10.5" fill="#3d444d">王思聪　1-3　PER</text>
+  <text x="46" y="232" font-size="10.5" fill="#3d444d">万达集团　5-8　ORG</text>
+  <text x="46" y="254" font-size="10.5" fill="#3d444d">王健林　12-14　PER</text>
+  <text x="46" y="276" font-size="10.5" fill="#6d747e">上海 LOC　星光影视 ORG</text>
+  <rect x="305" y="160" width="250" height="140" rx="9" fill="#fbeee7" stroke="#b4552d"></rect>
+  <text x="321" y="184" font-size="12" font-weight="600" fill="#8f3d1c">三元组</text>
+  <text x="321" y="210" font-size="10.5" fill="#3d444d">（王健林，父子，王思聪）</text>
+  <text x="321" y="232" font-size="10.5" fill="#3d444d">（王健林，任职于，万达集团）</text>
+  <text x="321" y="254" font-size="10.5" fill="#3d444d">（万达集团，合作，星光影视）</text>
+  <text x="321" y="276" font-size="10.5" fill="#6d747e">每条都能挂到 schema 上</text>
+  <rect x="580" y="160" width="250" height="140" rx="9" fill="#eaf3ee" stroke="#3f7a5a"></rect>
+  <text x="596" y="184" font-size="12" font-weight="600" fill="#2c5c42">事件结构</text>
+  <text x="596" y="210" font-size="10.5" fill="#3d444d">签约　触发词</text>
+  <text x="596" y="232" font-size="10.5" fill="#3d444d">时间 上周五　地点 上海</text>
+  <text x="596" y="254" font-size="10.5" fill="#3d444d">参与方 万达集团 星光影视</text>
+  <text x="596" y="276" font-size="10.5" fill="#6d747e">出席　参与方 王健林</text>
+  <rect x="30" y="312" width="800" height="26" rx="6" fill="#f4f1e9" stroke="#e2dcc9"></rect>
+  <text x="46" y="330" font-size="11" fill="#8a6a2f">输出交给第四章做融合，对齐同一实体的不同写法，再存进第五章讲的图数据库</text>
+  <defs><marker id="ov1" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#8a8175"></path></marker></defs>
+</svg>
+
+<h3 id="输出：实体清单、三元组与事件槽位"><a href="#输出：实体清单、三元组与事件槽位" class="headerlink" title="输出：实体清单、三元组与事件槽位"></a>输出：实体清单、三元组与事件槽位</h3><p>三份输出的形状各不相同。实体是带起止位置的字符串，三元组是头尾两个实体加一个关系名，事件是触发词加一组槽位。</p>
+<p>前面那张图只拆了第一句。第二句还会多出「上海」(LOC)、「星光影视」(ORG) 和「上周五」(TIME)，同一段文本里的实体合并去重后才交给关系抽取。</p>
+<p>关系抽取和事件抽取接着产出另外两份结构。</p>
+<p>后面每一节都在解这张图里的一格。先讲怎么把字切成实体，再讲怎么判断两个实体之间的关系，然后讲带时间和参与方的事件怎么落进槽位，最后讲怎么判断抽得对不对。方法换了好几代，输入和输出的形状一直没变。</p>
+<h2 id="抽取三步：找实体、判关系与归一"><a href="#抽取三步：找实体、判关系与归一" class="headerlink" title="抽取三步：找实体、判关系与归一"></a>抽取三步：找实体、判关系与归一</h2><blockquote>
 <p>一条新闻里写着：王思聪是万达集团董事长王健林的独子。</p>
 <p>人读完，脑子里自动装进了两个人名和一条关系。要把这句话变成图谱里的一条三元组（王健林，父子，王思聪），机器得依次做完三件事。</p>
 </blockquote>
@@ -239,12 +283,75 @@ if (true) {
 </svg>
 
 <p><em>三步里最难的不是第三步。关系类型有现成的表可查，实体边界有语料可学，真正麻烦的是中文那句话里“万达集团董事长王健林”这一串字该从哪里断开。</em></p>
-<blockquote>
-<p><strong>英文有空格，机器把词切开就行。中文没有，”万达集团董事长王健林”这一串，边界在哪？</strong></p>
+<h3 id="中文边界：一句话有三种切法"><a href="#中文边界：一句话有三种切法" class="headerlink" title="中文边界：一句话有三种切法"></a>中文边界：一句话有三种切法</h3><blockquote>
+<p><strong>英文有空格，机器把词切开就行。中文没有，“万达集团董事长王健林”这一串，边界在哪？</strong></p>
 <p>人靠语义切分，知道“董事长”是头衔、“王健林”才是人。机器拿到的是连续的字，它得靠上下文特征判断哪个位置该断。这一步算错，后面的关系全得跟着错。</p>
 </blockquote>
 <p>知识抽取要解决的正是这件事：把非结构化的文本变成结构化的三元组。这个概念在上世纪七十年代后期出现在自然语言处理的文献里，2012 年 Google 把它用在搜索结果上之后，才真正变成工程问题。</p>
-<h2 id="抽取的五个阶段"><a href="#抽取的五个阶段" class="headerlink" title="抽取的五个阶段"></a>抽取的五个阶段</h2><p>一个完整的抽取工程，从原始数据到可用的三元组，要经过五道工序。课本把它们排成流水线，实际做的时候它们互相咬合，前一道的输出就是后一道的输入，错一处会一路传下去。</p>
+<p>把那一串字拆开看，人几乎不会犹豫，机器却要在每个字之间做一次判断。</p>
+<svg width="100%" style="max-width:860px;height:auto" viewBox="0 0 860 410" role="img" aria-label="同一串字三种切法，只有第一种能对齐 schema">
+  <rect width="860" height="410" fill="#fdfbf6"></rect>
+  <text x="40" y="30" font-size="11.5" fill="#6d747e">同一串字，三种断法，读起来都通顺</text>
+  <circle cx="52" cy="86" r="11" fill="#3f7a5a"></circle>
+  <text x="52" y="90" font-size="11" fill="#ffffff" text-anchor="middle">A</text>
+  <text x="40" y="118" font-size="10.5" fill="#6d747e">按语义断</text>
+  <rect x="140" y="70" width="104" height="32" rx="5" fill="#e9f2f6" stroke="#2f6f8f"></rect>
+  <rect x="322" y="70" width="78" height="32" rx="5" fill="#e9f2f6" stroke="#2f6f8f"></rect>
+  <text x="153" y="92" font-size="14" fill="#1f4d64">万</text>
+  <text x="179" y="92" font-size="14" fill="#1f4d64">达</text>
+  <text x="205" y="92" font-size="14" fill="#1f4d64">集</text>
+  <text x="231" y="92" font-size="14" fill="#1f4d64">团</text>
+  <text x="257" y="92" font-size="14" fill="#8a8175">董</text>
+  <text x="283" y="92" font-size="14" fill="#8a8175">事</text>
+  <text x="309" y="92" font-size="14" fill="#8a8175">长</text>
+  <text x="334" y="92" font-size="14" fill="#1f4d64">王</text>
+  <text x="360" y="92" font-size="14" fill="#1f4d64">健</text>
+  <text x="386" y="92" font-size="14" fill="#1f4d64">林</text>
+  <text x="420" y="86" font-size="12.5" fill="#1f4d64">（王健林，父子，王思聪）</text>
+  <text x="420" y="108" font-size="11" fill="#6d747e">两个实体，一条能挂上 schema 的三元组</text>
+  <text x="810" y="92" font-size="15" fill="#3f7a5a" text-anchor="end">✓</text>
+  <circle cx="52" cy="196" r="11" fill="#b4552d"></circle>
+  <text x="52" y="200" font-size="11" fill="#ffffff" text-anchor="middle">B</text>
+  <text x="40" y="228" font-size="10.5" fill="#6d747e">整串当一个</text>
+  <rect x="140" y="180" width="260" height="32" rx="5" fill="#fbeee7" stroke="#b4552d"></rect>
+  <text x="153" y="202" font-size="14" fill="#8f3d1c">万</text>
+  <text x="179" y="202" font-size="14" fill="#8f3d1c">达</text>
+  <text x="205" y="202" font-size="14" fill="#8f3d1c">集</text>
+  <text x="231" y="202" font-size="14" fill="#8f3d1c">团</text>
+  <text x="257" y="202" font-size="14" fill="#8f3d1c">董</text>
+  <text x="283" y="202" font-size="14" fill="#8f3d1c">事</text>
+  <text x="309" y="202" font-size="14" fill="#8f3d1c">长</text>
+  <text x="334" y="202" font-size="14" fill="#8f3d1c">王</text>
+  <text x="360" y="202" font-size="14" fill="#8f3d1c">健</text>
+  <text x="386" y="202" font-size="14" fill="#8f3d1c">林</text>
+  <text x="420" y="196" font-size="11.5" fill="#8f3d1c">（万达集团董事长王健林，父子，王思聪）</text>
+  <text x="420" y="218" font-size="11" fill="#6d747e">图谱里多出一个查无此人的节点</text>
+  <text x="810" y="202" font-size="15" fill="#b4552d" text-anchor="end">✗</text>
+  <circle cx="52" cy="306" r="11" fill="#b4552d"></circle>
+  <text x="52" y="310" font-size="11" fill="#ffffff" text-anchor="middle">C</text>
+  <text x="40" y="338" font-size="10.5" fill="#6d747e">每词都切开</text>
+  <rect x="140" y="290" width="48" height="32" rx="5" fill="#e9f2f6" stroke="#2f6f8f"></rect>
+  <rect x="192" y="290" width="48" height="32" rx="5" fill="#e9f2f6" stroke="#2f6f8f"></rect>
+  <rect x="322" y="290" width="78" height="32" rx="5" fill="#e9f2f6" stroke="#2f6f8f"></rect>
+  <text x="148" y="312" font-size="14" fill="#1f4d64">万</text>
+  <text x="174" y="312" font-size="14" fill="#1f4d64">达</text>
+  <text x="200" y="312" font-size="14" fill="#1f4d64">集</text>
+  <text x="226" y="312" font-size="14" fill="#1f4d64">团</text>
+  <text x="257" y="312" font-size="14" fill="#8a8175">董</text>
+  <text x="283" y="312" font-size="14" fill="#8a8175">事</text>
+  <text x="309" y="312" font-size="14" fill="#8a8175">长</text>
+  <text x="334" y="312" font-size="14" fill="#1f4d64">王</text>
+  <text x="360" y="312" font-size="14" fill="#1f4d64">健</text>
+  <text x="386" y="312" font-size="14" fill="#1f4d64">林</text>
+  <text x="420" y="306" font-size="12.5" fill="#1f4d64">（万达，任职于，王健林）</text>
+  <text x="420" y="328" font-size="11" fill="#6d747e">机构名被截短，融合时并错</text>
+  <text x="810" y="312" font-size="15" fill="#b4552d" text-anchor="end">✗</text>
+  <text x="40" y="390" font-size="11" fill="#6d747e">差别只在框的范围。框错一个字，后面每一条关系都挂到了错误的节点上。</text>
+</svg>
+
+<p><em>三种切法都读得通，只有第一种能对齐到第二章定好的 schema。实体边界错一个字，关系分类就会挂到错误的节点上，第四章做融合时也认不出这是同一个实体。</em></p>
+<p>中文里「南京市长江大桥」是同一个问题，切成「南京市 &#x2F; 长江大桥」还是「南京 &#x2F; 市长 &#x2F; 江大桥」，得靠上下文决定，模型只能看前后字。英文靠空格把这件事省掉了大半，中文没有这层便宜。</p>
+<h2 id="抽取流水线：五个阶段"><a href="#抽取流水线：五个阶段" class="headerlink" title="抽取流水线：五个阶段"></a>抽取流水线：五个阶段</h2><p>一个完整的抽取工程，从原始数据到可用的三元组，要经过五道工序。课本把它们排成流水线，实际做的时候它们互相咬合，前一道的输出就是后一道的输入，错一处会一路传下去。</p>
 <svg width="100%" style="max-width:860px;height:auto" viewBox="0 0 860 300" role="img" aria-label="知识抽取的五个阶段">
   <rect width="860" height="300" fill="#fdfbf6"></rect>
   <rect x="24" y="46" width="152" height="70" rx="8" fill="#f4f1e9" stroke="#e2dcc9"></rect>
@@ -281,9 +388,51 @@ if (true) {
 </svg>
 
 <p><em>预处理阶段常被低估。数据来自哪里、标注规范怎么定，直接决定后面模型能学到什么。标注标准不一致，模型学到的就是噪声。</em></p>
-<p>预处理里三件事：收集、清洗、标注。收集要定范围和来源，清洗要去重、去噪、纠错，标注要给实体和关系打上标签供模型学习。标注最费人力，也最容易出偏差，两个人对同一句话标出不同结果，模型就学不会。</p>
-<h2 id="实体抽取：先切边界"><a href="#实体抽取：先切边界" class="headerlink" title="实体抽取：先切边界"></a>实体抽取：先切边界</h2><p>实体抽取也叫命名实体识别，任务定义很窄：找出实体在文本中的起止位置，再判断它属于哪一类。定位和分类是两件事，前者决定输出几个字符，后者决定这个字符串叫什么。</p>
-<p>一句“张三在上海工作”，机器要输出四段东西：张三从第 1 个字到第 2 个字，类型是人名；上海从第 4 个字到第 5 个字，类型是地名。中间那个“在”和“工作”不属于任何实体。</p>
+<h3 id="预处理：收集、清洗与标注"><a href="#预处理：收集、清洗与标注" class="headerlink" title="预处理：收集、清洗与标注"></a>预处理：收集、清洗与标注</h3><p>预处理里三件事：收集、清洗与标注。收集要定范围和来源，清洗要去重、去噪、纠错，标注要给实体和关系打上标签供模型学习。标注最费人力，也最容易出偏差，两个人对同一句话标出不同结果，模型就学不会。</p>
+<h3 id="五道工序的输出对照"><a href="#五道工序的输出对照" class="headerlink" title="五道工序的输出对照"></a>五道工序的输出对照</h3><p>拿「张三在上海工作」这条句子走一遍，五道工序各自留下的东西是看得见的。</p>
+<table>
+<thead>
+<tr>
+<th>阶段</th>
+<th>输入</th>
+<th>输出</th>
+<th>出错后的样子</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>收集与清洗</td>
+<td>网页上爬下来的带标签文本</td>
+<td>张三在上海工作</td>
+<td>正文里混着导航栏，模型把「首页」也学成实体</td>
+</tr>
+<tr>
+<td>标注</td>
+<td>干净句子</td>
+<td>每个字的 BIO 标签</td>
+<td>两个人标法不一致，模型学到两套边界</td>
+</tr>
+<tr>
+<td>实体抽取</td>
+<td>字序列</td>
+<td>张三(1-2, PER)、上海(4-5, LOC)</td>
+<td>把「上海工作」整段标成 LOC</td>
+</tr>
+<tr>
+<td>关系抽取</td>
+<td>句子加上面两个实体</td>
+<td>（张三，工作地，上海）</td>
+<td>把「在」判成「任职于」，关系类型错位</td>
+</tr>
+<tr>
+<td>校验评估</td>
+<td>抽取结果加人工答案</td>
+<td>准确率、召回率</td>
+<td>只看准确率会放过漏抽的实体</td>
+</tr>
+</tbody></table>
+<p><em>最后一道常被跳过。抽出来的三元组数量好看，不等于抽全了；第五章存进图数据库之前，得先知道漏了多少。</em></p>
+<h2 id="实体抽取：序列标注"><a href="#实体抽取：序列标注" class="headerlink" title="实体抽取：序列标注"></a>实体抽取：序列标注</h2><p>实体抽取也叫命名实体识别，任务定义很窄：找出实体在文本中的起止位置，再判断它属于哪一类。定位和分类是两件事，前者决定输出几个字符，后者决定这个字符串叫什么。</p>
+<h3 id="序列标注：BIO-与-BIOES"><a href="#序列标注：BIO-与-BIOES" class="headerlink" title="序列标注：BIO 与 BIOES"></a>序列标注：BIO 与 BIOES</h3><p>一句“张三在上海工作”，机器要输出四段东西：张三从第 1 个字到第 2 个字，类型是人名；上海从第 4 个字到第 5 个字，类型是地名。中间那个“在”和“工作”不属于任何实体。</p>
 <svg width="100%" style="max-width:860px;height:auto" viewBox="0 0 860 300" role="img" aria-label="序列标注与 BIOES 标签体系">
   <rect width="860" height="300" fill="#fdfbf6"></rect>
   <text x="60" y="52" font-size="11.5" fill="#6d747e">输入（字序列）</text>
@@ -329,7 +478,138 @@ if (true) {
 
 <p><em>把识别任务改写成“给每个字打一个标签”，问题就变成了序列标注。这个转换很关键，后面所有模型都建立在它上面。</em></p>
 <p>这个改写让任务变得可计算，也带来了一个新约束：标签之间不能随便组合。“I-PER”前面必须是“B-PER”或“I-PER”，不能凭空冒出个“I”。这条约束在独立预测每个位置的模型里靠不住，后面 CRF 层要解决的正是它。</p>
-<h2 id="规则法"><a href="#规则法" class="headerlink" title="规则法"></a>规则法</h2><p>最早的做法不需要训练。人先观察语料，总结出模式：机构名常以“大学”“医院”“集团”收尾，人名常出现在“某某说”“某某老师”里。把这些模式写成正则或模板，拿文本去匹配，匹配上就标成实体。</p>
+<p>同一个句子换两套标签写法，输出长度不变，边界信息藏在不同的标签里。</p>
+<svg width="100%" style="max-width:860px;height:auto" viewBox="0 0 860 352" role="img" aria-label="同一句话两套标签写法的逐字对照">
+  <rect width="860" height="352" fill="#fdfbf6"></rect>
+  <text x="40" y="28" font-size="11.5" fill="#6d747e">同一个句子，两套标签，边界信息的位置不同</text>
+  <text x="40" y="72" font-size="10.5" fill="#6d747e">原句</text>
+  <rect x="120" y="48" width="60" height="34" rx="5" fill="#ffffff" stroke="#cfd6da"></rect>
+  <text x="150" y="71" font-size="16" fill="#1b1d21" text-anchor="middle">张</text>
+  <rect x="184" y="48" width="60" height="34" rx="5" fill="#ffffff" stroke="#cfd6da"></rect>
+  <text x="214" y="71" font-size="16" fill="#1b1d21" text-anchor="middle">三</text>
+  <rect x="248" y="48" width="60" height="34" rx="5" fill="#ffffff" stroke="#cfd6da"></rect>
+  <text x="278" y="71" font-size="16" fill="#1b1d21" text-anchor="middle">在</text>
+  <rect x="312" y="48" width="60" height="34" rx="5" fill="#ffffff" stroke="#cfd6da"></rect>
+  <text x="342" y="71" font-size="16" fill="#1b1d21" text-anchor="middle">上</text>
+  <rect x="376" y="48" width="60" height="34" rx="5" fill="#ffffff" stroke="#cfd6da"></rect>
+  <text x="406" y="71" font-size="16" fill="#1b1d21" text-anchor="middle">海</text>
+  <rect x="440" y="48" width="60" height="34" rx="5" fill="#ffffff" stroke="#cfd6da"></rect>
+  <text x="470" y="71" font-size="16" fill="#1b1d21" text-anchor="middle">工</text>
+  <rect x="504" y="48" width="60" height="34" rx="5" fill="#ffffff" stroke="#cfd6da"></rect>
+  <text x="534" y="71" font-size="16" fill="#1b1d21" text-anchor="middle">作</text>
+  <text x="40" y="116" font-size="10.5" fill="#6d747e">BIO</text>
+  <rect x="120" y="96" width="60" height="28" rx="4" fill="#e9f2f6" stroke="#2f6f8f"></rect>
+  <text x="150" y="115" font-size="9.5" fill="#1f4d64" text-anchor="middle">B-PER</text>
+  <rect x="184" y="96" width="60" height="28" rx="4" fill="#e9f2f6" stroke="#2f6f8f"></rect>
+  <text x="214" y="115" font-size="9.5" fill="#1f4d64" text-anchor="middle">I-PER</text>
+  <rect x="248" y="96" width="60" height="28" rx="4" fill="#f4f1e9" stroke="#e2dcc9"></rect>
+  <text x="278" y="115" font-size="9.5" fill="#8a8175" text-anchor="middle">O</text>
+  <rect x="312" y="96" width="60" height="28" rx="4" fill="#eaf3ee" stroke="#3f7a5a"></rect>
+  <text x="342" y="115" font-size="9.5" fill="#2c5c42" text-anchor="middle">B-LOC</text>
+  <rect x="376" y="96" width="60" height="28" rx="4" fill="#eaf3ee" stroke="#3f7a5a"></rect>
+  <text x="406" y="115" font-size="9.5" fill="#2c5c42" text-anchor="middle">I-LOC</text>
+  <rect x="440" y="96" width="60" height="28" rx="4" fill="#f4f1e9" stroke="#e2dcc9"></rect>
+  <text x="470" y="115" font-size="9.5" fill="#8a8175" text-anchor="middle">O</text>
+  <rect x="504" y="96" width="60" height="28" rx="4" fill="#f4f1e9" stroke="#e2dcc9"></rect>
+  <text x="534" y="115" font-size="9.5" fill="#8a8175" text-anchor="middle">O</text>
+  <text x="40" y="152" font-size="10.5" fill="#6d747e">BIOES</text>
+  <rect x="120" y="132" width="60" height="28" rx="4" fill="#e9f2f6" stroke="#2f6f8f"></rect>
+  <text x="150" y="151" font-size="9.5" fill="#1f4d64" text-anchor="middle">B-PER</text>
+  <rect x="184" y="132" width="60" height="28" rx="4" fill="#eaf3ee" stroke="#3f7a5a"></rect>
+  <text x="214" y="151" font-size="9.5" fill="#2c5c42" text-anchor="middle">E-PER</text>
+  <rect x="248" y="132" width="60" height="28" rx="4" fill="#f4f1e9" stroke="#e2dcc9"></rect>
+  <text x="278" y="151" font-size="9.5" fill="#8a8175" text-anchor="middle">O</text>
+  <rect x="312" y="132" width="60" height="28" rx="4" fill="#eaf3ee" stroke="#3f7a5a"></rect>
+  <text x="342" y="151" font-size="9.5" fill="#2c5c42" text-anchor="middle">B-LOC</text>
+  <rect x="376" y="132" width="60" height="28" rx="4" fill="#eaf3ee" stroke="#3f7a5a"></rect>
+  <text x="406" y="151" font-size="9.5" fill="#2c5c42" text-anchor="middle">E-LOC</text>
+  <rect x="440" y="132" width="60" height="28" rx="4" fill="#f4f1e9" stroke="#e2dcc9"></rect>
+  <text x="470" y="151" font-size="9.5" fill="#8a8175" text-anchor="middle">O</text>
+  <rect x="504" y="132" width="60" height="28" rx="4" fill="#f4f1e9" stroke="#e2dcc9"></rect>
+  <text x="534" y="151" font-size="9.5" fill="#8a8175" text-anchor="middle">O</text>
+  <text x="600" y="115" font-size="10.5" fill="#6d747e">双字实体靠 I 撑长度</text>
+  <text x="600" y="151" font-size="10.5" fill="#6d747e">E 直接标出结尾</text>
+  <text x="40" y="222" font-size="10.5" fill="#6d747e">原句</text>
+  <rect x="120" y="198" width="60" height="34" rx="5" fill="#ffffff" stroke="#cfd6da"></rect>
+  <text x="150" y="221" font-size="16" fill="#1b1d21" text-anchor="middle">王</text>
+  <rect x="184" y="198" width="60" height="34" rx="5" fill="#ffffff" stroke="#cfd6da"></rect>
+  <text x="214" y="221" font-size="16" fill="#1b1d21" text-anchor="middle">在</text>
+  <rect x="248" y="198" width="60" height="34" rx="5" fill="#ffffff" stroke="#cfd6da"></rect>
+  <text x="278" y="221" font-size="16" fill="#1b1d21" text-anchor="middle">上</text>
+  <rect x="312" y="198" width="60" height="34" rx="5" fill="#ffffff" stroke="#cfd6da"></rect>
+  <text x="342" y="221" font-size="16" fill="#1b1d21" text-anchor="middle">海</text>
+  <rect x="376" y="198" width="60" height="34" rx="5" fill="#ffffff" stroke="#cfd6da"></rect>
+  <text x="406" y="221" font-size="16" fill="#1b1d21" text-anchor="middle">工</text>
+  <rect x="440" y="198" width="60" height="34" rx="5" fill="#ffffff" stroke="#cfd6da"></rect>
+  <text x="470" y="221" font-size="16" fill="#1b1d21" text-anchor="middle">作</text>
+  <text x="40" y="266" font-size="10.5" fill="#6d747e">BIO</text>
+  <rect x="120" y="246" width="60" height="28" rx="4" fill="#e9f2f6" stroke="#2f6f8f"></rect>
+  <text x="150" y="265" font-size="9.5" fill="#1f4d64" text-anchor="middle">B-PER</text>
+  <rect x="184" y="246" width="60" height="28" rx="4" fill="#f4f1e9" stroke="#e2dcc9"></rect>
+  <text x="214" y="265" font-size="9.5" fill="#8a8175" text-anchor="middle">O</text>
+  <rect x="248" y="246" width="60" height="28" rx="4" fill="#eaf3ee" stroke="#3f7a5a"></rect>
+  <text x="278" y="265" font-size="9.5" fill="#2c5c42" text-anchor="middle">B-LOC</text>
+  <rect x="312" y="246" width="60" height="28" rx="4" fill="#eaf3ee" stroke="#3f7a5a"></rect>
+  <text x="342" y="265" font-size="9.5" fill="#2c5c42" text-anchor="middle">I-LOC</text>
+  <rect x="376" y="246" width="60" height="28" rx="4" fill="#f4f1e9" stroke="#e2dcc9"></rect>
+  <text x="406" y="265" font-size="9.5" fill="#8a8175" text-anchor="middle">O</text>
+  <rect x="440" y="246" width="60" height="28" rx="4" fill="#f4f1e9" stroke="#e2dcc9"></rect>
+  <text x="470" y="265" font-size="9.5" fill="#8a8175" text-anchor="middle">O</text>
+  <text x="40" y="302" font-size="10.5" fill="#6d747e">BIOES</text>
+  <rect x="120" y="282" width="60" height="28" rx="4" fill="#eaf3ee" stroke="#3f7a5a"></rect>
+  <text x="150" y="301" font-size="9.5" fill="#2c5c42" text-anchor="middle">S-PER</text>
+  <rect x="184" y="282" width="60" height="28" rx="4" fill="#f4f1e9" stroke="#e2dcc9"></rect>
+  <text x="214" y="301" font-size="9.5" fill="#8a8175" text-anchor="middle">O</text>
+  <rect x="248" y="282" width="60" height="28" rx="4" fill="#eaf3ee" stroke="#3f7a5a"></rect>
+  <text x="278" y="301" font-size="9.5" fill="#2c5c42" text-anchor="middle">B-LOC</text>
+  <rect x="312" y="282" width="60" height="28" rx="4" fill="#eaf3ee" stroke="#3f7a5a"></rect>
+  <text x="342" y="301" font-size="9.5" fill="#2c5c42" text-anchor="middle">E-LOC</text>
+  <rect x="376" y="282" width="60" height="28" rx="4" fill="#f4f1e9" stroke="#e2dcc9"></rect>
+  <text x="406" y="301" font-size="9.5" fill="#8a8175" text-anchor="middle">O</text>
+  <rect x="440" y="282" width="60" height="28" rx="4" fill="#f4f1e9" stroke="#e2dcc9"></rect>
+  <text x="470" y="301" font-size="9.5" fill="#8a8175" text-anchor="middle">O</text>
+  <text x="600" y="265" font-size="10.5" fill="#6d747e">单字实体只能写成 B</text>
+  <text x="600" y="301" font-size="10.5" fill="#3f7a5a">一个 S 就说清了</text>
+  <text x="40" y="336" font-size="11" fill="#6d747e">标签种类从 2 类涨到 4 类，换来的是一段实体到哪儿结束不用再靠后一个字去猜。</text>
+</svg>
+
+<h3 id="解码与嵌套实体"><a href="#解码与嵌套实体" class="headerlink" title="解码与嵌套实体"></a>解码与嵌套实体</h3><p>模型吐出来的是标签串，写进图谱之前还要解码一次。</p>
+<svg width="100%" style="max-width:860px;height:auto" viewBox="0 0 860 300" role="img" aria-label="标签串解码成实体">
+  <rect width="860" height="300" fill="#fdfbf6"></rect>
+  <text x="40" y="30" font-size="11.5" fill="#6d747e">解码：把标签串重新拼回实体</text>
+  <text x="40" y="58" font-size="10.5" fill="#6d747e">标签串</text>
+  <text x="330" y="58" font-size="10.5" fill="#6d747e">动作</text>
+  <text x="600" y="58" font-size="10.5" fill="#6d747e">得到的实体</text>
+  <rect x="40" y="72" width="102" height="32" rx="5" fill="#e9f2f6" stroke="#2f6f8f"></rect>
+  <text x="91" y="93" font-size="10.5" fill="#1f4d64" text-anchor="middle">B-PER</text>
+  <rect x="150" y="72" width="102" height="32" rx="5" fill="#e9f2f6" stroke="#2f6f8f"></rect>
+  <text x="201" y="93" font-size="10.5" fill="#1f4d64" text-anchor="middle">I-PER</text>
+  <line x1="266" y1="88" x2="306" y2="88" stroke="#8a8175" stroke-width="1.4" marker-end="url(#c11)"></line>
+  <text x="330" y="93" font-size="11" fill="#3d444d">遇到 B 开一段，遇到下一个 B 或 O 收尾</text>
+  <rect x="600" y="72" width="224" height="32" rx="5" fill="#eaf3ee" stroke="#3f7a5a"></rect>
+  <text x="712" y="93" font-size="11" fill="#2c5c42" text-anchor="middle">张三　1-2　PER</text>
+  <rect x="40" y="130" width="102" height="32" rx="5" fill="#eaf3ee" stroke="#3f7a5a"></rect>
+  <text x="91" y="151" font-size="10.5" fill="#2c5c42" text-anchor="middle">B-LOC</text>
+  <rect x="150" y="130" width="102" height="32" rx="5" fill="#eaf3ee" stroke="#3f7a5a"></rect>
+  <text x="201" y="151" font-size="10.5" fill="#2c5c42" text-anchor="middle">I-LOC</text>
+  <line x1="266" y1="146" x2="306" y2="146" stroke="#8a8175" stroke-width="1.4" marker-end="url(#c11)"></line>
+  <text x="330" y="151" font-size="11" fill="#3d444d">同一条规则，换成地名类型</text>
+  <rect x="600" y="130" width="224" height="32" rx="5" fill="#eaf3ee" stroke="#3f7a5a"></rect>
+  <text x="712" y="151" font-size="11" fill="#2c5c42" text-anchor="middle">上海　4-5　LOC</text>
+  <rect x="40" y="188" width="102" height="32" rx="5" fill="#f4f1e9" stroke="#e2dcc9"></rect>
+  <text x="91" y="209" font-size="10.5" fill="#8a8175" text-anchor="middle">O</text>
+  <line x1="266" y1="204" x2="306" y2="204" stroke="#8a8175" stroke-width="1.4" marker-end="url(#c11)"></line>
+  <text x="330" y="209" font-size="11" fill="#3d444d">跳过，不属于任何实体</text>
+  <rect x="600" y="188" width="224" height="32" rx="5" fill="#ffffff" stroke="#e4e0d6" stroke-dasharray="4 3"></rect>
+  <text x="712" y="209" font-size="11" fill="#8a8175" text-anchor="middle">无输出</text>
+  <text x="40" y="258" font-size="11" fill="#6d747e">还有一条没画出来：I-PER 前面既不是 B-PER 也不是 I-PER 时，这段该怎么收场。</text>
+  <text x="40" y="280" font-size="11" fill="#6d747e">解码程序只能丢弃或者硬猜起点，这正是 CRF 层要提前拦掉的情况。</text>
+  <defs><marker id="c11" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#8a8175"></path></marker></defs>
+</svg>
+
+<p><em>解码这步看着简单，遇到 I-PER 前面没有 B 的非法序列，就得先决定丢弃还是修补。这正是 CRF 层要提前拦下来的情况。</em></p>
+<p>还有一类边界问题，一套标签根本标不下。「北京大学附属医院」整体是一家机构，里面的「北京大学」也是一家机构，两个实体嵌套，BIO 每个字只留一个标签位。要改成多层标签序列，或者换成给候选片段单独打分的做法。</p>
+<h2 id="规则法：词典、正则与模板"><a href="#规则法：词典、正则与模板" class="headerlink" title="规则法：词典、正则与模板"></a>规则法：词典、正则与模板</h2><p>最早的做法不需要训练。人先观察语料，总结出模式：机构名常以“大学”“医院”“集团”收尾，人名常出现在“某某说”“某某老师”里。把这些模式写成正则或模板，拿文本去匹配，匹配上就标成实体。</p>
 <svg width="100%" style="max-width:860px;height:auto" viewBox="0 0 860 250" role="img" aria-label="规则式抽取的流程">
   <rect width="860" height="250" fill="#fdfbf6"></rect>
   <rect x="24" y="60" width="150" height="56" rx="8" fill="#f4f1e9" stroke="#e2dcc9"></rect>
@@ -359,8 +639,51 @@ if (true) {
 
 <p><em>规则法的准确率可以做到很高，代价是覆盖率靠人一条条堆。它到今天仍然有用，通常作为模型的第一层过滤，或者用来处理模型学不会的格式类实体。</em></p>
 <p>规则法在专业领域活得很好。医疗文本里的药品规格、检验指标，法律文书里的案号，格式固定，正则一句话就够，模型反而不划算。它的软肋在于可移植性，一套写给病历的规则搬到财报上，几乎全部失效。</p>
-<h2 id="统计模型进来之后"><a href="#统计模型进来之后" class="headerlink" title="统计模型进来之后"></a>统计模型进来之后</h2><p>规则堆不动的时候，思路转向从数据里学。做法是先人工定义一批特征（词本身、词性、前后缀、是否数字、是否姓氏），把每个位置的上下文编码成一个特征向量，再训练一个分类器判断这个位置该打什么标签。</p>
-<p>HMM 是这条路线上最早的一个。它把标签序列当隐状态、把词当观测，用两组概率描述整个过程：状态之间怎么转移，某个状态下会生成什么词。给定观测序列，找最可能的状态序列，就是找最可能的标签序列。</p>
+<h3 id="规则法漏在哪"><a href="#规则法漏在哪" class="headerlink" title="规则法漏在哪"></a>规则法漏在哪</h3><p>写几条规则出来，输入输出就很直白。词典里收了「万达集团」和「星光影视」，模板写成「某人」出席了「某活动」。金额这类格式交给正则 \d+亿元。</p>
+<svg width="100%" style="max-width:860px;height:auto" viewBox="0 0 860 366" role="img" aria-label="四条规则各命中什么，又各自漏掉什么">
+  <rect width="860" height="366" fill="#fdfbf6"></rect>
+  <text x="40" y="28" font-size="11.5" fill="#6d747e">每条规则都有它认不出的写法</text>
+  <text x="250" y="52" font-size="10.5" fill="#2c5c42">命中的</text>
+  <text x="620" y="52" font-size="10.5" fill="#8f3d1c">落空的</text>
+  <rect x="40" y="66" width="180" height="30" rx="5" fill="#e9f2f6" stroke="#2f6f8f"></rect>
+  <text x="130" y="86" font-size="11" fill="#1f4d64" text-anchor="middle">机构名词典</text>
+  <rect x="250" y="66" width="96" height="30" rx="4" fill="#eaf3ee" stroke="#3f7a5a"></rect>
+  <text x="298" y="86" font-size="11" fill="#2c5c42" text-anchor="middle">万达集团</text>
+  <rect x="354" y="66" width="96" height="30" rx="4" fill="#eaf3ee" stroke="#3f7a5a"></rect>
+  <text x="402" y="86" font-size="11" fill="#2c5c42" text-anchor="middle">星光影视</text>
+  <text x="460" y="86" font-size="10.5" fill="#6d747e">2 个</text>
+  <rect x="620" y="66" width="96" height="30" rx="4" fill="#ffffff" stroke="#b4552d" stroke-dasharray="5 4"></rect>
+  <text x="668" y="86" font-size="11" fill="#8f3d1c" text-anchor="middle">海风科技</text>
+  <text x="726" y="86" font-size="10.5" fill="#6d747e">词典里没收</text>
+  <rect x="40" y="132" width="180" height="30" rx="5" fill="#e9f2f6" stroke="#2f6f8f"></rect>
+  <text x="130" y="152" font-size="11" fill="#1f4d64" text-anchor="middle">后缀模板「某集团」</text>
+  <rect x="250" y="132" width="96" height="30" rx="4" fill="#eaf3ee" stroke="#3f7a5a"></rect>
+  <text x="298" y="152" font-size="11" fill="#2c5c42" text-anchor="middle">万达集团</text>
+  <text x="360" y="152" font-size="10.5" fill="#6d747e">1 个</text>
+  <rect x="620" y="132" width="96" height="30" rx="4" fill="#ffffff" stroke="#b4552d" stroke-dasharray="5 4"></rect>
+  <text x="668" y="152" font-size="11" fill="#8f3d1c" text-anchor="middle">海风科技</text>
+  <text x="726" y="152" font-size="10.5" fill="#6d747e">不带后缀</text>
+  <rect x="40" y="198" width="180" height="30" rx="5" fill="#e9f2f6" stroke="#2f6f8f"></rect>
+  <text x="130" y="218" font-size="11" fill="#1f4d64" text-anchor="middle">正则 \d+亿元</text>
+  <rect x="250" y="198" width="96" height="30" rx="4" fill="#eaf3ee" stroke="#3f7a5a"></rect>
+  <text x="298" y="218" font-size="11" fill="#2c5c42" text-anchor="middle">5 亿元</text>
+  <rect x="620" y="198" width="96" height="30" rx="4" fill="#ffffff" stroke="#b4552d" stroke-dasharray="5 4"></rect>
+  <text x="668" y="218" font-size="11" fill="#8f3d1c" text-anchor="middle">五亿元</text>
+  <text x="726" y="218" font-size="10.5" fill="#6d747e">写成中文数字</text>
+  <rect x="40" y="264" width="180" height="30" rx="5" fill="#e9f2f6" stroke="#2f6f8f"></rect>
+  <text x="130" y="284" font-size="11" fill="#1f4d64" text-anchor="middle">「出席了」模板</text>
+  <rect x="250" y="264" width="212" height="30" rx="4" fill="#eaf3ee" stroke="#3f7a5a"></rect>
+  <text x="356" y="284" font-size="11" fill="#2c5c42" text-anchor="middle">王健林出席了签约仪式</text>
+  <rect x="620" y="264" width="120" height="30" rx="4" fill="#ffffff" stroke="#b4552d" stroke-dasharray="5 4"></rect>
+  <text x="680" y="284" font-size="11" fill="#8f3d1c" text-anchor="middle">王健林到场</text>
+  <text x="750" y="284" font-size="10.5" fill="#6d747e">换动词</text>
+  <line x1="40" y1="322" x2="820" y2="322" stroke="#e4e0d6" stroke-width="1"></line>
+  <text x="40" y="348" font-size="11" fill="#6d747e">四条规则放进一段没见过的财报，通常只剩后缀模板还能命中几个带「公司」的名字。</text>
+</svg>
+
+<p><em>规则准是因为它只认自己见过的写法。换个动词、换个简写、换一种数字格式，匹配就直接落空。这四条规则放到一段没见过的财报里，通常只剩后缀模板还能命中几条。</em></p>
+<h2 id="统计模型：HMM-与-CRF"><a href="#统计模型：HMM-与-CRF" class="headerlink" title="统计模型：HMM 与 CRF"></a>统计模型：HMM 与 CRF</h2><p>规则堆不动的时候，思路转向从数据里学。做法是先人工定义一批特征（词本身、词性、前后缀、是否数字、是否姓氏），把每个位置的上下文编码成一个特征向量，再训练一个分类器判断这个位置该打什么标签。</p>
+<h3 id="HMM：转移概率与发射概率"><a href="#HMM：转移概率与发射概率" class="headerlink" title="HMM：转移概率与发射概率"></a>HMM：转移概率与发射概率</h3><p>HMM 是这条路线上最早的一个。它把标签序列当隐状态、把词当观测，用两组概率描述整个过程：状态之间怎么转移，某个状态下会生成什么词。给定观测序列，找最可能的状态序列，就是找最可能的标签序列。</p>
 <svg width="100%" style="max-width:860px;height:auto" viewBox="0 0 860 290" role="img" aria-label="HMM 的隐状态与观测序列">
   <rect width="860" height="290" fill="#fdfbf6"></rect>
   <text x="60" y="52" font-size="11.5" fill="#6d747e">隐状态（标签序列）</text>
@@ -404,7 +727,7 @@ if (true) {
 
 <p><em>HMM 描述的是“标签怎么生成词”。转移概率来自标签之间的搭配习惯，发射概率来自某类实体常出现哪些字。解码用维特比算法找一条概率最大的路径。</em></p>
 <p>HMM 的短板在图里已经能看出来：每个位置独立发射，标签之间只靠前一个状态牵连。一句话里前面的“张”如果是姓氏，后面的“三”几乎必然是名，这种长距离的相互约束 HMM 表达不了。</p>
-<p>CRF 就是在这一点上动的手。它不建模联合概率，直接建模条件概率 P(Y|X)，然后对整个序列做全局归一化。这样每个位置的标签可以依赖整段输入，而不只是前一个状态。副作用是训练慢一些，标注时要考虑全局最优路径。</p>
+<h3 id="CRF：条件概率与全局归一化"><a href="#CRF：条件概率与全局归一化" class="headerlink" title="CRF：条件概率与全局归一化"></a>CRF：条件概率与全局归一化</h3><p>CRF 就是在这一点上动的手。它不建模联合概率，直接建模条件概率 P(Y|X)，然后对整个序列做全局归一化。这样每个位置的标签可以依赖整段输入，而不只是前一个状态。副作用是训练慢一些，标注时要考虑全局最优路径。</p>
 <svg width="100%" style="max-width:860px;height:auto" viewBox="0 0 860 260" role="img" aria-label="线性链条件随机场">
   <rect width="860" height="260" fill="#fdfbf6"></rect>
   <circle cx="110" cy="130" r="26" fill="#e9f2f6" stroke="#2f6f8f"></circle>
@@ -440,10 +763,106 @@ if (true) {
 </svg>
 
 <p><em>线性链 CRF 的结构。两条边的颜色分开：横向是标签之间的转移，纵向是输入到标签的状态特征。这个结构后来被原样搬进 BiLSTM-CRF 的最后一层。</em></p>
-<p>同期的 SVM 走另一条路，把每个词当独立样本分类，用核函数把特征映射到高维再找最大间隔超平面。它在小样本上稳，但丢掉了序列信息，做序列标注反而不如 CRF。</p>
-<h2 id="深度模型与-BiLSTM-CRF"><a href="#深度模型与-BiLSTM-CRF" class="headerlink" title="深度模型与 BiLSTM-CRF"></a>深度模型与 BiLSTM-CRF</h2><p>统计模型的天花板在于特征是人挑的。挑得好，效果就好；换个语种、换个领域，又得重新挑。深度学习把这个环节也交给了模型：输入词向量，让网络自己学该看什么。</p>
-<p>四个模型常被放在一起讲。CNN 用卷积核在句子窗口上滑动，擅长抓局部片段，训练快。RNN 按顺序读入，把前文压进隐状态，天然适合序列，但长句子会梯度消失。BERT 用 Transformer 做双向编码，先在海量文本上预训练，再到具体任务上微调，把“上下文”这件事做到了当时的极限。</p>
-<p>实际做中文 NER 时用得最多的是 BiLSTM-CRF。它的结构可以拆成三段：先把每个字变成向量，用 BiLSTM 从前往后、从后往前各读一遍，把两段输出拼起来；再把拼好的表示送进 CRF 层，让 CRF 在全局上挑一条合法且分数最高的标签路径。</p>
+<h3 id="SVM-与人工特征"><a href="#SVM-与人工特征" class="headerlink" title="SVM 与人工特征"></a>SVM 与人工特征</h3><p>同期的 SVM 走另一条路，把每个词当独立样本分类，用核函数把特征映射到高维再找最大间隔超平面。它在小样本上稳，但丢掉了序列信息，做序列标注反而不如 CRF。</p>
+<p>「人工定义特征」这句太抽象。真到训练时，一个字会被摊成一张表，取「张三在上海工作」里的「上」字。</p>
+<svg width="100%" style="max-width:860px;height:auto" viewBox="0 0 860 372" role="img" aria-label="上字被摊成六条特征再送进分类器">
+  <rect width="860" height="372" fill="#fdfbf6"></rect>
+  <text x="40" y="28" font-size="11.5" fill="#6d747e">「上」这个位置进分类器之前，先摊成六条特征</text>
+  <rect x="40" y="48" width="46" height="34" rx="5" fill="#ffffff" stroke="#cfd6da"></rect>
+  <text x="63" y="71" font-size="15" fill="#8a8175" text-anchor="middle">在</text>
+  <rect x="90" y="48" width="46" height="34" rx="5" fill="#e9f2f6" stroke="#2f6f8f" stroke-width="1.6"></rect>
+  <text x="113" y="71" font-size="15" fill="#1f4d64" text-anchor="middle">上</text>
+  <rect x="140" y="48" width="46" height="34" rx="5" fill="#ffffff" stroke="#cfd6da"></rect>
+  <text x="163" y="71" font-size="15" fill="#8a8175" text-anchor="middle">海</text>
+  <text x="200" y="71" font-size="10.5" fill="#6d747e">只看「上」这一个位置</text>
+  <line x1="113" y1="86" x2="113" y2="104" stroke="#8a8175" stroke-width="1.3" marker-end="url(#c12)"></line>
+  <rect x="40" y="110" width="360" height="26" rx="4" fill="#ffffff" stroke="#e4e0d6"></rect>
+  <text x="52" y="128" font-size="10.5" fill="#6d747e">当前字</text>
+  <text x="150" y="128" font-size="11" fill="#1b1d21">上</text>
+  <text x="230" y="128" font-size="10.5" fill="#2c5c42">地名词首常见</text>
+  <rect x="40" y="142" width="360" height="26" rx="4" fill="#ffffff" stroke="#e4e0d6"></rect>
+  <text x="52" y="160" font-size="10.5" fill="#6d747e">前一个字</text>
+  <text x="150" y="160" font-size="11" fill="#1b1d21">在</text>
+  <text x="230" y="160" font-size="10.5" fill="#2c5c42">介词后面常接地名</text>
+  <rect x="40" y="174" width="360" height="26" rx="4" fill="#ffffff" stroke="#e4e0d6"></rect>
+  <text x="52" y="192" font-size="10.5" fill="#6d747e">后一个字</text>
+  <text x="150" y="192" font-size="11" fill="#1b1d21">海</text>
+  <text x="230" y="192" font-size="10.5" fill="#2c5c42">「上海」是高频词</text>
+  <rect x="40" y="206" width="360" height="26" rx="4" fill="#ffffff" stroke="#e4e0d6"></rect>
+  <text x="52" y="224" font-size="10.5" fill="#6d747e">词性</text>
+  <text x="150" y="224" font-size="11" fill="#1b1d21">名词</text>
+  <text x="230" y="224" font-size="10.5" fill="#2c5c42">排除动词位置</text>
+  <rect x="40" y="238" width="360" height="26" rx="4" fill="#ffffff" stroke="#e4e0d6"></rect>
+  <text x="52" y="256" font-size="10.5" fill="#6d747e">是否在姓氏表</text>
+  <text x="150" y="256" font-size="11" fill="#1b1d21">否</text>
+  <text x="230" y="256" font-size="10.5" fill="#8f3d1c">压低 PER 分数</text>
+  <rect x="40" y="270" width="360" height="26" rx="4" fill="#ffffff" stroke="#e4e0d6"></rect>
+  <text x="52" y="288" font-size="10.5" fill="#6d747e">前一个标签</text>
+  <text x="150" y="288" font-size="11" fill="#1b1d21">O</text>
+  <text x="230" y="288" font-size="10.5" fill="#2c5c42">允许开一段新实体</text>
+  <line x1="408" y1="203" x2="448" y2="203" stroke="#8a8175" stroke-width="1.4" marker-end="url(#c12)"></line>
+  <rect x="456" y="176" width="140" height="54" rx="7" fill="#f4f1e9" stroke="#e2dcc9"></rect>
+  <text x="526" y="198" font-size="11" fill="#3d444d" text-anchor="middle">分类器</text>
+  <text x="526" y="218" font-size="10.5" fill="#6d747e" text-anchor="middle">六条取值学权重</text>
+  <line x1="604" y1="203" x2="644" y2="203" stroke="#8a8175" stroke-width="1.4" marker-end="url(#c12)"></line>
+  <rect x="652" y="176" width="108" height="54" rx="7" fill="#eaf3ee" stroke="#3f7a5a"></rect>
+  <text x="706" y="208" font-size="12" fill="#2c5c42" text-anchor="middle">B-LOC</text>
+  <text x="40" y="330" font-size="11" fill="#6d747e">六条取值拼成一个向量。分类器读的是这一列，「上」和「海」只是其中两项。</text>
+  <text x="40" y="352" font-size="11" fill="#6d747e">换一种语言，六条特征得按那种语言重新设计一遍。</text>
+  <defs><marker id="c12" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#8a8175"></path></marker></defs>
+</svg>
+
+<p><em>十几条这样的取值拼成一个向量。分类器在上面学权重，读的是这一列取值，「上海」两个字只作为其中一项出现。换一种语言，特征模板要重写一遍。</em></p>
+<h3 id="CRF-拦住非法路径"><a href="#CRF-拦住非法路径" class="headerlink" title="CRF 拦住非法路径"></a>CRF 拦住非法路径</h3><p>CRF 的作用也可以用一条具体输出看出来。逐位置打分时，两条标签序列都可能被选出来。</p>
+<svg width="100%" style="max-width:860px;height:auto" viewBox="0 0 860 290" role="img" aria-label="CRF 对合法与非法标签路径的打分对照">
+  <rect width="860" height="290" fill="#fdfbf6"></rect>
+  <text x="30" y="28" font-size="11.5" fill="#6d747e">输入（字）</text>
+  <rect x="50" y="38" width="90" height="32" rx="5" fill="#ffffff" stroke="#cfd6da"></rect>
+  <text x="95" y="60" font-size="12" fill="#1b1d21" text-anchor="middle">张</text>
+  <rect x="160" y="38" width="90" height="32" rx="5" fill="#ffffff" stroke="#cfd6da"></rect>
+  <text x="205" y="60" font-size="12" fill="#1b1d21" text-anchor="middle">三</text>
+  <rect x="270" y="38" width="90" height="32" rx="5" fill="#ffffff" stroke="#cfd6da"></rect>
+  <text x="315" y="60" font-size="12" fill="#1b1d21" text-anchor="middle">在</text>
+  <rect x="380" y="38" width="90" height="32" rx="5" fill="#ffffff" stroke="#cfd6da"></rect>
+  <text x="425" y="60" font-size="12" fill="#1b1d21" text-anchor="middle">上</text>
+  <rect x="490" y="38" width="90" height="32" rx="5" fill="#ffffff" stroke="#cfd6da"></rect>
+  <text x="535" y="60" font-size="12" fill="#1b1d21" text-anchor="middle">海</text>
+  <text x="30" y="102" font-size="11.5" fill="#8f3d1c">逐位置打分 · 路径 A</text>
+  <rect x="50" y="112" width="90" height="32" rx="5" fill="#f4f1e9" stroke="#e2dcc9"></rect>
+  <text x="95" y="134" font-size="11" fill="#8a8175" text-anchor="middle">B-PER</text>
+  <rect x="160" y="112" width="90" height="32" rx="5" fill="#f4f1e9" stroke="#e2dcc9"></rect>
+  <text x="205" y="134" font-size="11" fill="#8a8175" text-anchor="middle">I-PER</text>
+  <rect x="270" y="112" width="90" height="32" rx="5" fill="#f4f1e9" stroke="#e2dcc9"></rect>
+  <text x="315" y="134" font-size="11" fill="#8a8175" text-anchor="middle">O</text>
+  <rect x="380" y="112" width="90" height="32" rx="5" fill="#fbeee7" stroke="#b4552d" stroke-width="1.6"></rect>
+  <text x="425" y="134" font-size="11" fill="#8f3d1c" text-anchor="middle">I-LOC</text>
+  <rect x="490" y="112" width="90" height="32" rx="5" fill="#f4f1e9" stroke="#e2dcc9"></rect>
+  <text x="535" y="134" font-size="11" fill="#8a8175" text-anchor="middle">I-LOC</text>
+  <text x="30" y="166" font-size="10.5" fill="#b4552d">第 4 个字是 I-LOC，前面却是 O，这条转移记了一笔很低的分数</text>
+  <rect x="600" y="106" width="230" height="54" rx="7" fill="#fbeee7" stroke="#f0d5c7"></rect>
+  <text x="616" y="128" font-size="11" fill="#8f3d1c">路径总分 6.2（示意）</text>
+  <text x="616" y="148" font-size="10.5" fill="#6d747e">含 O 到 I-LOC 的转移罚分</text>
+  <text x="30" y="204" font-size="11.5" fill="#2c5c42">CRF · 路径 B</text>
+  <rect x="50" y="214" width="90" height="32" rx="5" fill="#eaf3ee" stroke="#3f7a5a"></rect>
+  <text x="95" y="236" font-size="11" fill="#2c5c42" text-anchor="middle">B-PER</text>
+  <rect x="160" y="214" width="90" height="32" rx="5" fill="#eaf3ee" stroke="#3f7a5a"></rect>
+  <text x="205" y="236" font-size="11" fill="#2c5c42" text-anchor="middle">I-PER</text>
+  <rect x="270" y="214" width="90" height="32" rx="5" fill="#f4f1e9" stroke="#e2dcc9"></rect>
+  <text x="315" y="236" font-size="11" fill="#8a8175" text-anchor="middle">O</text>
+  <rect x="380" y="214" width="90" height="32" rx="5" fill="#eaf3ee" stroke="#3f7a5a" stroke-width="1.6"></rect>
+  <text x="425" y="236" font-size="11" fill="#2c5c42" text-anchor="middle">B-LOC</text>
+  <rect x="490" y="214" width="90" height="32" rx="5" fill="#eaf3ee" stroke="#3f7a5a"></rect>
+  <text x="535" y="236" font-size="11" fill="#2c5c42" text-anchor="middle">I-LOC</text>
+  <rect x="600" y="208" width="230" height="54" rx="7" fill="#eaf3ee" stroke="#c6ded0"></rect>
+  <text x="616" y="230" font-size="11" fill="#2c5c42">路径总分 8.7（示意）</text>
+  <text x="616" y="250" font-size="10.5" fill="#6d747e">整条路径一起打分后胜出</text>
+  <text x="30" y="274" font-size="10.5" fill="#6d747e">分数是示意值。真正参与比较的是各位置的发射分数加相邻标签的转移分数。</text>
+</svg>
+
+<p><em>第一行第 4 个字是 I-LOC，前面却没有 B-LOC。逐位置分类器各自为政，察觉不到这个断层；CRF 给「上一位置 O，这一位置 I-LOC」记低分，整条路径因此被压下去，第二行才浮上来。全局归一化做的就是这件事。</em></p>
+<h2 id="深度模型：BiLSTM-CRF-与预训练"><a href="#深度模型：BiLSTM-CRF-与预训练" class="headerlink" title="深度模型：BiLSTM-CRF 与预训练"></a>深度模型：BiLSTM-CRF 与预训练</h2><p>统计模型的天花板在于特征是人挑的。挑得好，效果就好；换个语种、换个领域，又得重新挑。深度学习把这个环节也交给了模型：输入词向量，让网络自己学该看什么。</p>
+<h3 id="四个模型的分工"><a href="#四个模型的分工" class="headerlink" title="四个模型的分工"></a>四个模型的分工</h3><p>四个模型常被放在一起讲。CNN 用卷积核在句子窗口上滑动，擅长抓局部片段，训练快。RNN 按顺序读入，把前文压进隐状态，天然适合序列，但长句子会梯度消失。BERT 用 Transformer 做双向编码，先在海量文本上预训练，再到具体任务上微调，把“上下文”这件事做到了当时的极限。</p>
+<h3 id="BiLSTM-CRF：编码器加约束层"><a href="#BiLSTM-CRF：编码器加约束层" class="headerlink" title="BiLSTM-CRF：编码器加约束层"></a>BiLSTM-CRF：编码器加约束层</h3><p>实际做中文 NER 时用得最多的是 BiLSTM-CRF。它的结构可以拆成三段：先把每个字变成向量，用 BiLSTM 从前往后、从后往前各读一遍，把两段输出拼起来；再把拼好的表示送进 CRF 层，让 CRF 在全局上挑一条合法且分数最高的标签路径。</p>
 <svg width="100%" style="max-width:860px;height:auto" viewBox="0 0 860 420" role="img" aria-label="BiLSTM-CRF 的结构">
   <rect width="860" height="420" fill="#fdfbf6"></rect>
   <text x="60" y="46" font-size="11.5" fill="#6d747e">输出标签</text>
@@ -493,8 +912,129 @@ if (true) {
 
 <p><em>分工很清楚：BiLSTM 负责看上下文，CRF 负责保证标签序列合法。少了 CRF，模型可能输出 B-PER 后面直接跟 B-LOC 这种边界断裂的结果。</em></p>
 <p>这套结构之后，主流做法换成了“预训练模型 + 轻量分类头”，BiLSTM 那一段被 Transformer 替掉。结构在变，两件事没变：一是要有上下文表示，二是要有约束保证标签序列合法。中文 NER 到现在仍有两个硬骨头，一是缺少天然分词，词的边界本身就有争议；二是新词不断出现，训练集里没有的实体只能靠上下文猜。</p>
-<h2 id="关系抽取"><a href="#关系抽取" class="headerlink" title="关系抽取"></a>关系抽取</h2><p>实体找出来之后，下一步是判断它们之间有什么关系。这个任务 1988 年在 MUC 会议上被正式提出，比实体抽取难得多。难在同一个意思有很多种说法：“A 是 B 的父亲”“B 是 A 的儿子”“A 老来得子”，都要归到同一条关系上。</p>
-<p>“猫抓老鼠”这类句子，依存句法能帮上忙。句法分析把句子拆成一棵依存树，主语、宾语、修饰关系都标出来，实体对之间的关系路径就落在树上。沿着“猫—主谓—抓—动宾—老鼠”这条路径走，动作关系就出来了。句法路径也常被当成特征，喂给后面的分类器。</p>
+<h3 id="去掉-CRF-与更换编码器"><a href="#去掉-CRF-与更换编码器" class="headerlink" title="去掉 CRF 与更换编码器"></a>去掉 CRF 与更换编码器</h3><p>把 CRF 层拆掉，同一句话的输出差异可以直接看出来。</p>
+<svg width="100%" style="max-width:860px;height:auto" viewBox="0 0 860 300" role="img" aria-label="同一句话带 CRF 与只有 Softmax 的标签输出差异">
+  <rect width="860" height="300" fill="#fdfbf6"></rect>
+  <text x="40" y="28" font-size="11.5" fill="#6d747e">同一句话，去掉 CRF 之后第 9 个字出了什么问题</text>
+  <rect x="40" y="60" width="44" height="30" rx="4" fill="#ffffff" stroke="#cfd6da"></rect>
+  <text x="62" y="81" font-size="13" fill="#1b1d21" text-anchor="middle">张</text>
+  <rect x="92" y="60" width="44" height="30" rx="4" fill="#ffffff" stroke="#cfd6da"></rect>
+  <text x="114" y="81" font-size="13" fill="#1b1d21" text-anchor="middle">三</text>
+  <rect x="144" y="60" width="44" height="30" rx="4" fill="#ffffff" stroke="#cfd6da"></rect>
+  <text x="166" y="81" font-size="13" fill="#1b1d21" text-anchor="middle">在</text>
+  <rect x="196" y="60" width="44" height="30" rx="4" fill="#ffffff" stroke="#cfd6da"></rect>
+  <text x="218" y="81" font-size="13" fill="#1b1d21" text-anchor="middle">上</text>
+  <rect x="248" y="60" width="44" height="30" rx="4" fill="#ffffff" stroke="#cfd6da"></rect>
+  <text x="270" y="81" font-size="13" fill="#1b1d21" text-anchor="middle">海</text>
+  <rect x="300" y="60" width="44" height="30" rx="4" fill="#ffffff" stroke="#cfd6da"></rect>
+  <text x="322" y="81" font-size="13" fill="#1b1d21" text-anchor="middle">工</text>
+  <rect x="352" y="60" width="44" height="30" rx="4" fill="#ffffff" stroke="#cfd6da"></rect>
+  <text x="374" y="81" font-size="13" fill="#1b1d21" text-anchor="middle">作</text>
+  <rect x="404" y="60" width="44" height="30" rx="4" fill="#ffffff" stroke="#cfd6da"></rect>
+  <text x="426" y="81" font-size="13" fill="#1b1d21" text-anchor="middle">，</text>
+  <rect x="456" y="60" width="44" height="30" rx="4" fill="#ffffff" stroke="#b4552d" stroke-width="1.4"></rect>
+  <text x="478" y="81" font-size="13" fill="#1b1d21" text-anchor="middle">李</text>
+  <rect x="508" y="60" width="44" height="30" rx="4" fill="#ffffff" stroke="#cfd6da"></rect>
+  <text x="530" y="81" font-size="13" fill="#1b1d21" text-anchor="middle">四</text>
+  <rect x="560" y="60" width="44" height="30" rx="4" fill="#ffffff" stroke="#cfd6da"></rect>
+  <text x="582" y="81" font-size="13" fill="#1b1d21" text-anchor="middle">在</text>
+  <rect x="612" y="60" width="44" height="30" rx="4" fill="#ffffff" stroke="#cfd6da"></rect>
+  <text x="634" y="81" font-size="13" fill="#1b1d21" text-anchor="middle">北</text>
+  <rect x="664" y="60" width="44" height="30" rx="4" fill="#ffffff" stroke="#cfd6da"></rect>
+  <text x="686" y="81" font-size="13" fill="#1b1d21" text-anchor="middle">京</text>
+  <text x="40" y="122" font-size="10.5" fill="#2c5c42">带 CRF</text>
+  <rect x="40" y="130" width="44" height="24" rx="3" fill="#e9f2f6" stroke="#2f6f8f"></rect>
+  <text x="62" y="147" font-size="8" fill="#1f4d64" text-anchor="middle">B-PER</text>
+  <rect x="92" y="130" width="44" height="24" rx="3" fill="#e9f2f6" stroke="#2f6f8f"></rect>
+  <text x="114" y="147" font-size="8" fill="#1f4d64" text-anchor="middle">I-PER</text>
+  <rect x="144" y="130" width="44" height="24" rx="3" fill="#f4f1e9" stroke="#e2dcc9"></rect>
+  <text x="166" y="147" font-size="8" fill="#8a8175" text-anchor="middle">O</text>
+  <rect x="196" y="130" width="44" height="24" rx="3" fill="#eaf3ee" stroke="#3f7a5a"></rect>
+  <text x="218" y="147" font-size="8" fill="#2c5c42" text-anchor="middle">B-LOC</text>
+  <rect x="248" y="130" width="44" height="24" rx="3" fill="#eaf3ee" stroke="#3f7a5a"></rect>
+  <text x="270" y="147" font-size="8" fill="#2c5c42" text-anchor="middle">I-LOC</text>
+  <rect x="300" y="130" width="44" height="24" rx="3" fill="#f4f1e9" stroke="#e2dcc9"></rect>
+  <text x="322" y="147" font-size="8" fill="#8a8175" text-anchor="middle">O</text>
+  <rect x="352" y="130" width="44" height="24" rx="3" fill="#f4f1e9" stroke="#e2dcc9"></rect>
+  <text x="374" y="147" font-size="8" fill="#8a8175" text-anchor="middle">O</text>
+  <rect x="404" y="130" width="44" height="24" rx="3" fill="#f4f1e9" stroke="#e2dcc9"></rect>
+  <text x="426" y="147" font-size="8" fill="#8a8175" text-anchor="middle">O</text>
+  <rect x="456" y="130" width="44" height="24" rx="3" fill="#e9f2f6" stroke="#2f6f8f"></rect>
+  <text x="478" y="147" font-size="8" fill="#1f4d64" text-anchor="middle">B-PER</text>
+  <rect x="508" y="130" width="44" height="24" rx="3" fill="#e9f2f6" stroke="#2f6f8f"></rect>
+  <text x="530" y="147" font-size="8" fill="#1f4d64" text-anchor="middle">I-PER</text>
+  <rect x="560" y="130" width="44" height="24" rx="3" fill="#f4f1e9" stroke="#e2dcc9"></rect>
+  <text x="582" y="147" font-size="8" fill="#8a8175" text-anchor="middle">O</text>
+  <rect x="612" y="130" width="44" height="24" rx="3" fill="#eaf3ee" stroke="#3f7a5a"></rect>
+  <text x="634" y="147" font-size="8" fill="#2c5c42" text-anchor="middle">B-LOC</text>
+  <rect x="664" y="130" width="44" height="24" rx="3" fill="#eaf3ee" stroke="#3f7a5a"></rect>
+  <text x="686" y="147" font-size="8" fill="#2c5c42" text-anchor="middle">I-LOC</text>
+  <text x="726" y="147" font-size="10.5" fill="#2c5c42">合法</text>
+  <text x="40" y="188" font-size="10.5" fill="#8f3d1c">只有 Softmax</text>
+  <rect x="40" y="196" width="44" height="24" rx="3" fill="#e9f2f6" stroke="#2f6f8f"></rect>
+  <text x="62" y="213" font-size="8" fill="#1f4d64" text-anchor="middle">B-PER</text>
+  <rect x="92" y="196" width="44" height="24" rx="3" fill="#e9f2f6" stroke="#2f6f8f"></rect>
+  <text x="114" y="213" font-size="8" fill="#1f4d64" text-anchor="middle">I-PER</text>
+  <rect x="144" y="196" width="44" height="24" rx="3" fill="#f4f1e9" stroke="#e2dcc9"></rect>
+  <text x="166" y="213" font-size="8" fill="#8a8175" text-anchor="middle">O</text>
+  <rect x="196" y="196" width="44" height="24" rx="3" fill="#eaf3ee" stroke="#3f7a5a"></rect>
+  <text x="218" y="213" font-size="8" fill="#2c5c42" text-anchor="middle">B-LOC</text>
+  <rect x="248" y="196" width="44" height="24" rx="3" fill="#eaf3ee" stroke="#3f7a5a"></rect>
+  <text x="270" y="213" font-size="8" fill="#2c5c42" text-anchor="middle">I-LOC</text>
+  <rect x="300" y="196" width="44" height="24" rx="3" fill="#f4f1e9" stroke="#e2dcc9"></rect>
+  <text x="322" y="213" font-size="8" fill="#8a8175" text-anchor="middle">O</text>
+  <rect x="352" y="196" width="44" height="24" rx="3" fill="#f4f1e9" stroke="#e2dcc9"></rect>
+  <text x="374" y="213" font-size="8" fill="#8a8175" text-anchor="middle">O</text>
+  <rect x="404" y="196" width="44" height="24" rx="3" fill="#f4f1e9" stroke="#e2dcc9"></rect>
+  <text x="426" y="213" font-size="8" fill="#8a8175" text-anchor="middle">O</text>
+  <rect x="456" y="196" width="44" height="24" rx="3" fill="#fbeee7" stroke="#b4552d" stroke-width="1.6"></rect>
+  <text x="478" y="213" font-size="8" fill="#8f3d1c" text-anchor="middle">I-PER</text>
+  <rect x="508" y="196" width="44" height="24" rx="3" fill="#e9f2f6" stroke="#2f6f8f"></rect>
+  <text x="530" y="213" font-size="8" fill="#1f4d64" text-anchor="middle">I-PER</text>
+  <rect x="560" y="196" width="44" height="24" rx="3" fill="#f4f1e9" stroke="#e2dcc9"></rect>
+  <text x="582" y="213" font-size="8" fill="#8a8175" text-anchor="middle">O</text>
+  <rect x="612" y="196" width="44" height="24" rx="3" fill="#eaf3ee" stroke="#3f7a5a"></rect>
+  <text x="634" y="213" font-size="8" fill="#2c5c42" text-anchor="middle">B-LOC</text>
+  <rect x="664" y="196" width="44" height="24" rx="3" fill="#eaf3ee" stroke="#3f7a5a"></rect>
+  <text x="686" y="213" font-size="8" fill="#2c5c42" text-anchor="middle">I-LOC</text>
+  <text x="726" y="213" font-size="10.5" fill="#b4552d">前面是 O，非法</text>
+  <text x="40" y="256" font-size="11" fill="#6d747e">逐位置取最大概率，每个字都只管自己。「I 前面必须是 B 或 I」这条约束没有地方写。</text>
+  <text x="40" y="278" font-size="11" fill="#6d747e">解码程序遇到这种序列，要么丢掉这一段，要么硬猜一个起点，「李四」这个实体就没了或错位。</text>
+</svg>
+
+<p><em>第 9 个字「李」被判成了 I-PER，前面是 O。少掉 CRF 之后，模型在每个位置上单独取最大值，边界约束没有地方生效。解码程序遇到这种序列，要么丢弃这一段，要么硬猜一个起点，两种处理都会让「李四」这个实体丢掉或错位。</em></p>
+<p>后面换成预训练模型，输入输出的形状仍然一样。</p>
+<table>
+<thead>
+<tr>
+<th>做法</th>
+<th>输入</th>
+<th>中间表示</th>
+<th>输出</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>BiLSTM-CRF</td>
+<td>字序列</td>
+<td>双向 LSTM 拼接</td>
+<td>CRF 解码出的标签序列</td>
+</tr>
+<tr>
+<td>BERT 加 CRF</td>
+<td>字序列加位置编码</td>
+<td>Transformer 双向编码</td>
+<td>CRF 解码出的标签序列</td>
+</tr>
+<tr>
+<td>BERT 加 Softmax</td>
+<td>字序列加位置编码</td>
+<td>Transformer 双向编码</td>
+<td>逐位置最大概率标签</td>
+</tr>
+</tbody></table>
+<p><em>换掉的是编码器，标签体系和解码约束照旧。判断 CRF 能不能省，看的始终是标签序列合法性这一条，跟前面用哪种编码器无关。</em></p>
+<h2 id="关系抽取：从句子到三元组"><a href="#关系抽取：从句子到三元组" class="headerlink" title="关系抽取：从句子到三元组"></a>关系抽取：从句子到三元组</h2><p>实体找出来之后，下一步是判断它们之间有什么关系。这个任务 1988 年在 MUC 会议上被正式提出，比实体抽取难得多。难在同一个意思有很多种说法：“A 是 B 的父亲”“B 是 A 的儿子”“A 老来得子”，都要归到同一条关系上。</p>
+<h3 id="依存句法：实体之间的路径"><a href="#依存句法：实体之间的路径" class="headerlink" title="依存句法：实体之间的路径"></a>依存句法：实体之间的路径</h3><p>“猫抓老鼠”这类句子，依存句法能帮上忙。句法分析把句子拆成一棵依存树，主语、宾语、修饰关系都标出来，实体对之间的关系路径就落在树上。沿着“猫—主谓—抓—动宾—老鼠”这条路径走，动作关系就出来了。句法路径也常被当成特征，喂给后面的分类器。</p>
 <svg width="100%" style="max-width:860px;height:auto" viewBox="0 0 860 250" role="img" aria-label="依存句法路径用于关系抽取">
   <rect width="860" height="250" fill="#fdfbf6"></rect>
   <text x="70" y="186" font-size="15" fill="#1b1d21">猫</text>
@@ -517,7 +1057,7 @@ if (true) {
 </svg>
 
 <p><em>句法只在句子结构规整时好使。口语、长句、跨句指代一多，依存树本身就不可靠，后面的判断跟着失准。</em></p>
-<p>按标注量分类，关系抽取有三条路线。监督学习用人工标好的句子训练分类器，效果最稳，成本最高；半监督用少量种子去撬动大量未标注文本；无监督完全不看标签，靠聚类把表达同一关系的句子聚到一起，聚出来的簇还得人来看是什么意思。</p>
+<h3 id="三条监督路线"><a href="#三条监督路线" class="headerlink" title="三条监督路线"></a>三条监督路线</h3><p>按标注量分类，关系抽取有三条路线。监督学习用人工标好的句子训练分类器，效果最稳，成本最高；半监督用少量种子去撬动大量未标注文本；无监督完全不看标签，靠聚类把表达同一关系的句子聚到一起，聚出来的簇还得人来看是什么意思。</p>
 <table>
 <thead>
 <tr>
@@ -552,7 +1092,38 @@ if (true) {
 <td>结果需人工解释</td>
 </tr>
 </tbody></table>
-<h2 id="标注不够用的时候"><a href="#标注不够用的时候" class="headerlink" title="标注不够用的时候"></a>标注不够用的时候</h2><p>关系抽取最缺的是标注数据。一句一句标一万人年也标不完，于是有了远程监督。它押一个假设：如果知识库里已经写着两个实体有某种关系，那么所有同时提到这两个实体的句子，都可能表达这种关系。于是拿知识库当词典，去海量文本里自动对齐，一夜之间就有了百万级训练集。</p>
+<h3 id="同义说法归一"><a href="#同义说法归一" class="headerlink" title="同义说法归一"></a>同义说法归一</h3><p>开头说的「同一个意思有很多种说法」，摊开是这样。</p>
+<svg width="100%" style="max-width:860px;height:auto" viewBox="0 0 860 280" role="img" aria-label="三种说法归到同一条三元组">
+  <rect width="860" height="280" fill="#fdfbf6"></rect>
+  <text x="30" y="28" font-size="11.5" fill="#6d747e">输入（句子加两个实体的位置）</text>
+  <rect x="30" y="38" width="420" height="40" rx="7" fill="#ffffff" stroke="#e4e0d6"></rect>
+  <text x="46" y="63" font-size="11.5" fill="#3d444d">王健林是王思聪的父亲</text>
+  <rect x="30" y="84" width="420" height="40" rx="7" fill="#ffffff" stroke="#e4e0d6"></rect>
+  <text x="46" y="109" font-size="11.5" fill="#3d444d">王思聪是王健林的独子</text>
+  <rect x="30" y="130" width="420" height="40" rx="7" fill="#ffffff" stroke="#e4e0d6"></rect>
+  <text x="46" y="155" font-size="11.5" fill="#3d444d">王健林老来得子</text>
+  <path d="M450,58 L560,112" stroke="#2f6f8f" stroke-width="1.4" fill="none" marker-end="url(#rl1)"></path>
+  <path d="M450,104 L560,114" stroke="#2f6f8f" stroke-width="1.4" fill="none" marker-end="url(#rl1)"></path>
+  <path d="M450,150 L560,118" stroke="#2f6f8f" stroke-width="1.4" fill="none" marker-end="url(#rl1)"></path>
+  <text x="500" y="80" font-size="10.5" fill="#6d747e">都归一到「父子」</text>
+  <rect x="570" y="86" width="260" height="66" rx="9" fill="#e9f2f6" stroke="#2f6f8f"></rect>
+  <text x="700" y="112" font-size="11.5" fill="#1f4d64" text-anchor="middle">关系标签：父子</text>
+  <text x="700" y="136" font-size="11.5" fill="#1f4d64" text-anchor="middle">（王健林，父子，王思聪）</text>
+  <rect x="30" y="196" width="420" height="40" rx="7" fill="#fbeee7" stroke="#f0d5c7"></rect>
+  <text x="46" y="221" font-size="11.5" fill="#8f3d1c">王健林与王思聪共同投资了这家公司</text>
+  <path d="M450,216 L560,216" stroke="#b4552d" stroke-width="1.4" stroke-dasharray="5 4" fill="none" marker-end="url(#rl2)"></path>
+  <rect x="570" y="196" width="260" height="40" rx="7" fill="#f4f1e9" stroke="#e2dcc9"></rect>
+  <text x="700" y="221" font-size="11.5" fill="#8a8175" text-anchor="middle">输出 None，不生成三元组</text>
+  <text x="30" y="262" font-size="10.5" fill="#6d747e">字面线索不同，标签相同；字面提到同一对实体，未必在讲那条关系。</text>
+  <defs>
+    <marker id="rl1" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#2f6f8f"></path></marker>
+    <marker id="rl2" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#b4552d"></path></marker>
+  </defs>
+</svg>
+
+<p><em>四句话讲的是同一个家庭，只有前三句给了父子关系的证据。分类器的输入是句子加两个实体的位置，输出是关系类型或者 None，它要学的是把「父亲」「独子」「老来得子」这些不同字面归到同一个标签上。</em></p>
+<h3 id="关系方向：句子顺序与三元组顺序"><a href="#关系方向：句子顺序与三元组顺序" class="headerlink" title="关系方向：句子顺序与三元组顺序"></a>关系方向：句子顺序与三元组顺序</h3><p>还有一层容易漏，关系的方向。「王思聪是王健林的独子」里，句子先出现王思聪，后出现王健林，图谱里记的却是（王健林，父子，王思聪）。句子里的先后顺序和三元组的头尾顺序经常是反的，训练时实体位置标记必须带上，否则模型分不清谁是父亲。</p>
+<h2 id="远程监督与-Bootstrapping"><a href="#远程监督与-Bootstrapping" class="headerlink" title="远程监督与 Bootstrapping"></a>远程监督与 Bootstrapping</h2><p>关系抽取最缺的是标注数据。一句一句标一万人年也标不完，于是有了远程监督。它押一个假设：如果知识库里已经写着两个实体有某种关系，那么所有同时提到这两个实体的句子，都可能表达这种关系。于是拿知识库当词典，去海量文本里自动对齐，一夜之间就有了百万级训练集。</p>
 <svg width="100%" style="max-width:860px;height:auto" viewBox="0 0 860 280" role="img" aria-label="远程监督的自动标注">
   <rect width="860" height="280" fill="#fdfbf6"></rect>
   <rect x="40" y="60" width="240" height="120" rx="9" fill="#e9f2f6" stroke="#2f6f8f"></rect>
@@ -575,48 +1146,291 @@ if (true) {
 </svg>
 
 <p><em>远程监督的假设很粗糙，但它把标注成本压到了近乎零。工程上的做法是先拿它铺量，再用小规模人工标注去校准和降噪。</em></p>
-<p>Bootstrapping 走的是另一条路。给几个种子实例，从包含它们的句子里学模板，用模板去抽新实例，新实例再回来学新模板，如此迭代。风险是语义漂移：第一轮抽到“苹果公司”，第二轮可能抽到“苹果”，第三轮就跑到水果上去了。</p>
-<p>深度学习时代的框架变得统一：把句子编码成词向量，同时给每个词加上“距离头实体多远、距离尾实体多远”的位置向量，两者拼起来送进 CNN 或 RNN 抽特征，最后接一个分类层输出关系类型。位置向量这一步很关键，它让网络知道当前这个词离两个实体各有多远。</p>
-<h2 id="事件抽取"><a href="#事件抽取" class="headerlink" title="事件抽取"></a>事件抽取</h2><p>三元组描述的是静态事实，事件描述的是“发生了什么”。同样一段话，实体和关系都抽对了，事件信息还可能漏掉一大半。</p>
+<h3 id="Bootstrapping：模板迭代与语义漂移"><a href="#Bootstrapping：模板迭代与语义漂移" class="headerlink" title="Bootstrapping：模板迭代与语义漂移"></a>Bootstrapping：模板迭代与语义漂移</h3><p>Bootstrapping 走的是另一条路。给几个种子实例，从包含它们的句子里学模板，用模板去抽新实例，新实例再回来学新模板，如此迭代。风险是语义漂移：第一轮抽到“苹果公司”，第二轮可能抽到“苹果”，第三轮就跑到水果上去了。</p>
+<h3 id="位置向量：深度学习时代的关系分类"><a href="#位置向量：深度学习时代的关系分类" class="headerlink" title="位置向量：深度学习时代的关系分类"></a>位置向量：深度学习时代的关系分类</h3><p>深度学习时代的框架变得统一：把句子编码成词向量，同时给每个词加上“距离头实体多远、距离尾实体多远”的位置向量，两者拼起来送进 CNN 或 RNN 抽特征，最后接一个分类层输出关系类型。位置向量这一步很关键，它让网络知道当前这个词离两个实体各有多远。</p>
+<h3 id="远程监督的四条训练样本"><a href="#远程监督的四条训练样本" class="headerlink" title="远程监督的四条训练样本"></a>远程监督的四条训练样本</h3><p>远程监督产出的训练样本长这样，句子本身没被人工读过一眼。</p>
+<svg width="100%" style="max-width:860px;height:auto" viewBox="0 0 860 330" role="img" aria-label="远程监督给四句话统一打父子标签，两句是噪声">
+  <rect width="860" height="330" fill="#fdfbf6"></rect>
+  <text x="40" y="28" font-size="11.5" fill="#6d747e">知识库只认实体对，四句话拿到同一个标签</text>
+  <text x="40" y="54" font-size="10.5" fill="#6d747e">句子</text>
+  <text x="470" y="54" font-size="10.5" fill="#6d747e">自动标签</text>
+  <text x="566" y="54" font-size="10.5" fill="#6d747e">句子实际在讲</text>
+  <rect x="40" y="66" width="404" height="38" rx="5" fill="#ffffff" stroke="#e4e0d6"></rect>
+  <text x="52" y="90" font-size="11" fill="#1b1d21">王思聪是王健林的独子</text>
+  <rect x="456" y="66" width="76" height="38" rx="5" fill="#e9f2f6" stroke="#2f6f8f"></rect>
+  <text x="494" y="90" font-size="11" fill="#1f4d64" text-anchor="middle">父子</text>
+  <text x="566" y="90" font-size="11" fill="#3d444d">亲子关系</text>
+  <text x="810" y="90" font-size="11" fill="#3f7a5a" text-anchor="end">不是噪声</text>
+  <rect x="40" y="114" width="404" height="38" rx="5" fill="#ffffff" stroke="#e4e0d6"></rect>
+  <text x="52" y="138" font-size="11" fill="#1b1d21">王健林携子王思聪出席活动</text>
+  <rect x="456" y="114" width="76" height="38" rx="5" fill="#e9f2f6" stroke="#2f6f8f"></rect>
+  <text x="494" y="138" font-size="11" fill="#1f4d64" text-anchor="middle">父子</text>
+  <text x="566" y="138" font-size="11" fill="#3d444d">亲子关系</text>
+  <text x="810" y="138" font-size="11" fill="#3f7a5a" text-anchor="end">不是噪声</text>
+  <rect x="40" y="162" width="404" height="38" rx="5" fill="#fbeee7" stroke="#b4552d"></rect>
+  <text x="52" y="186" font-size="11" fill="#8f3d1c">王健林与王思聪共同投资了这家公司</text>
+  <rect x="456" y="162" width="76" height="38" rx="5" fill="#e9f2f6" stroke="#2f6f8f"></rect>
+  <text x="494" y="186" font-size="11" fill="#1f4d64" text-anchor="middle">父子</text>
+  <text x="566" y="186" font-size="11" fill="#8f3d1c">商业合作</text>
+  <text x="810" y="186" font-size="11" fill="#b4552d" text-anchor="end">噪声</text>
+  <rect x="40" y="210" width="404" height="38" rx="5" fill="#fbeee7" stroke="#b4552d"></rect>
+  <text x="52" y="234" font-size="11" fill="#8f3d1c">王思聪否认父亲王健林曾注资</text>
+  <rect x="456" y="210" width="76" height="38" rx="5" fill="#e9f2f6" stroke="#2f6f8f"></rect>
+  <text x="494" y="234" font-size="11" fill="#1f4d64" text-anchor="middle">父子</text>
+  <text x="566" y="234" font-size="11" fill="#8f3d1c">否认与资金往来</text>
+  <text x="810" y="234" font-size="11" fill="#b4552d" text-anchor="end">噪声</text>
+  <line x1="40" y1="272" x2="820" y2="272" stroke="#e4e0d6" stroke-width="1"></line>
+  <text x="40" y="296" font-size="11" fill="#6d747e">四句里有两句是噪声。真实语料比例更高，名人的父子关系常被当背景介绍，句子重点在别处。</text>
+  <text x="40" y="316" font-size="11" fill="#6d747e">多示例学习把同一实体对的句子打成包，让模型自己分配权重，包级预测才不至于被噪声带跑。</text>
+</svg>
+
+<p><em>四句里两句是噪声。真实语料里这个比例还会更高，名人的父子关系常被拿来当背景介绍，句子的重点在别处。多示例学习把同一个实体对对应的所有句子打成一个包，让模型自己给包里每句话分配权重，权重高的句子主导分类。句子级注意力做的也是这件事，包级预测因此还能落在「父子」上。</em></p>
+<p>Bootstrapping 的语义漂移是一轮一轮看得见的。</p>
+<svg width="100%" style="max-width:860px;height:auto" viewBox="0 0 860 430" role="img" aria-label="Bootstrapping 四轮迭代从公司漂移到农产品">
+  <rect width="860" height="430" fill="#fdfbf6"></rect>
+  <text x="40" y="28" font-size="11.5" fill="#6d747e">从公司到水果，四轮就滑出去了</text>
+  <circle cx="62" cy="86" r="13" fill="#3f7a5a"></circle>
+  <text x="62" y="90" font-size="10.5" fill="#ffffff" text-anchor="middle">0</text>
+  <rect x="96" y="68" width="320" height="36" rx="5" fill="#eaf3ee" stroke="#3f7a5a"></rect>
+  <text x="108" y="91" font-size="11" fill="#2c5c42">种子（苹果公司，创始人，乔布斯）</text>
+  <line x1="430" y1="86" x2="466" y2="86" stroke="#8a8175" stroke-width="1.3" marker-end="url(#c13)"></line>
+  <text x="480" y="91" font-size="11" fill="#6d747e">还没有新实例</text>
+  <text x="700" y="91" font-size="11" fill="#3f7a5a">公司</text>
+  <line x1="62" y1="100" x2="62" y2="132" stroke="#3f7a5a" stroke-width="1.3" marker-end="url(#c14)"></line>
+  <circle cx="62" cy="162" r="13" fill="#3f7a5a"></circle>
+  <text x="62" y="166" font-size="10.5" fill="#ffffff" text-anchor="middle">1</text>
+  <rect x="96" y="144" width="320" height="36" rx="5" fill="#eaf3ee" stroke="#3f7a5a"></rect>
+  <text x="108" y="167" font-size="11" fill="#2c5c42">模板「X 创立了 Y」「Y 的创始人 X」</text>
+  <line x1="430" y1="162" x2="466" y2="162" stroke="#8a8175" stroke-width="1.3" marker-end="url(#c13)"></line>
+  <text x="480" y="167" font-size="11" fill="#3d444d">微软、谷歌和特斯拉</text>
+  <text x="700" y="167" font-size="11" fill="#3f7a5a">公司</text>
+  <line x1="62" y1="176" x2="62" y2="208" stroke="#c9ad74" stroke-width="1.3" marker-end="url(#c14)"></line>
+  <circle cx="62" cy="238" r="13" fill="#c9ad74"></circle>
+  <text x="62" y="242" font-size="10.5" fill="#ffffff" text-anchor="middle">2</text>
+  <rect x="96" y="220" width="320" height="36" rx="5" fill="#f6e7c8" stroke="#c9ad74"></rect>
+  <text x="108" y="243" font-size="11" fill="#6b5320">模板「X 的 Y 上市」「吃 X 的 Y」</text>
+  <line x1="430" y1="238" x2="466" y2="238" stroke="#8a8175" stroke-width="1.3" marker-end="url(#c13)"></line>
+  <text x="480" y="243" font-size="11" fill="#8a6a2f">苹果手机、苹果汁</text>
+  <text x="700" y="243" font-size="11" fill="#8a6a2f">开始偏</text>
+  <line x1="62" y1="252" x2="62" y2="284" stroke="#b4552d" stroke-width="1.3" marker-end="url(#c14)"></line>
+  <circle cx="62" cy="314" r="13" fill="#b4552d"></circle>
+  <text x="62" y="318" font-size="10.5" fill="#ffffff" text-anchor="middle">3</text>
+  <rect x="96" y="296" width="320" height="36" rx="5" fill="#fbeee7" stroke="#b4552d"></rect>
+  <text x="108" y="319" font-size="11" fill="#8f3d1c">模板「X 产自 Y」「X 价格」</text>
+  <line x1="430" y1="314" x2="466" y2="314" stroke="#8a8175" stroke-width="1.3" marker-end="url(#c13)"></line>
+  <text x="480" y="319" font-size="11" fill="#8f3d1c">红富士、山东</text>
+  <text x="700" y="319" font-size="11" fill="#b4552d">农产品</text>
+  <text x="40" y="376" font-size="11" fill="#6d747e">每一轮只往外挪一点，单看任何一轮都不算错。到第三轮，模板已经把「苹果」当成水果了。</text>
+  <text x="40" y="398" font-size="11" fill="#6d747e">工程上要设置信度阈值、每轮人工抽检，或者限定模板里实体类型不许变。</text>
+  <defs>
+    <marker id="c13" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#8a8175"></path></marker>
+    <marker id="c14" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#8a8175"></path></marker>
+  </defs>
+</svg>
+
+<p><em>模板每轮只往外挪一点，第三轮就跑到了水果上，中间单看任何一轮都不算错。工程上要设置信度阈值、每轮人工抽检，或者限制模板里实体类型不能变。</em></p>
+<h2 id="事件抽取：触发词与论元"><a href="#事件抽取：触发词与论元" class="headerlink" title="事件抽取：触发词与论元"></a>事件抽取：触发词与论元</h2><p>三元组描述的是静态事实，事件描述的是“发生了什么”。同样一段话，实体和关系都抽对了，事件信息还可能漏掉一大半。</p>
 <blockquote>
 <p>2011 年日本大地震后的一段报道：地震发生后，许多建筑物倒塌，造成大量人员伤亡。救援人员迅速展开紧急救援，许多国家也向日本提供了援助。</p>
 <p>这段话里有三个事件。地震是起因，救援是响应，国际援助是后续。每个事件都有自己的时间、地点、参与方和结果。</p>
 </blockquote>
 <p>事件抽取要做两件事：先找到触发词，判断这里发生了一个什么类型的事件；再把论元填进槽位，时间、地点、参与者、伤亡数字各归各位。</p>
-<svg width="100%" style="max-width:860px;height:auto" viewBox="0 0 860 330" role="img" aria-label="事件的结构：触发词与论元">
-  <rect width="860" height="330" fill="#fdfbf6"></rect>
-  <rect x="40" y="46" width="780" height="56" rx="8" fill="#ffffff" stroke="#e4e0d6"></rect>
-  <text x="58" y="80" font-size="13" fill="#1b1d21">地震发生后，许多建筑物</text>
-  <rect x="222" y="62" width="44" height="26" rx="4" fill="#fbeee7" stroke="#b4552d"></rect>
-  <text x="244" y="80" font-size="13" fill="#8f3d1c" text-anchor="middle">倒塌</text>
-  <text x="272" y="80" font-size="13" fill="#1b1d21">，造成大量人员伤亡。</text>
-  <text x="40" y="128" font-size="11.5" fill="#6d747e">触发词“倒塌”决定了事件类型是“灾害”而不是“建设”</text>
-  <rect x="40" y="148" width="380" height="150" rx="9" fill="#ffffff" stroke="#cfdde4"></rect>
-  <text x="56" y="174" font-size="12.5" font-weight="600" fill="#1f4d64">事件一 · 地震</text>
-  <text x="56" y="200" font-size="11" fill="#6d747e">触发词</text>
-  <text x="120" y="200" font-size="11.5" fill="#1f4d64">地震</text>
-  <text x="56" y="224" font-size="11" fill="#6d747e">时间</text>
-  <text x="120" y="224" font-size="11.5" fill="#3d444d">2011 年</text>
-  <text x="56" y="248" font-size="11" fill="#6d747e">地点</text>
-  <text x="120" y="248" font-size="11.5" fill="#3d444d">日本 东京</text>
-  <text x="56" y="272" font-size="11" fill="#6d747e">后果</text>
-  <text x="120" y="272" font-size="11.5" fill="#3d444d">建筑倒塌 人员伤亡</text>
-  <rect x="440" y="148" width="380" height="150" rx="9" fill="#ffffff" stroke="#cfdde4"></rect>
-  <text x="456" y="174" font-size="12.5" font-weight="600" fill="#1f4d64">事件二 · 国际援助</text>
-  <text x="456" y="200" font-size="11" fill="#6d747e">触发词</text>
-  <text x="520" y="200" font-size="11.5" fill="#1f4d64">提供援助</text>
-  <text x="456" y="224" font-size="11" fill="#6d747e">施动方</text>
-  <text x="520" y="224" font-size="11.5" fill="#3d444d">多个国家</text>
-  <text x="456" y="248" font-size="11" fill="#6d747e">受动方</text>
-  <text x="520" y="248" font-size="11.5" fill="#3d444d">日本</text>
-  <text x="456" y="272" font-size="11" fill="#6d747e">时序</text>
-  <text x="520" y="272" font-size="11.5" fill="#3d444d">地震之后</text>
+<svg width="100%" style="max-width:860px;height:auto" viewBox="0 0 860 372" role="img" aria-label="事件的结构：触发词与三个事件的论元槽位">
+  <rect width="860" height="372" fill="#fdfbf6"></rect>
+  <rect x="40" y="40" width="780" height="50" rx="8" fill="#ffffff" stroke="#e4e0d6"></rect>
+  <text x="56" y="71" font-size="12.5" fill="#1b1d21">地震发生后，许多建筑物</text>
+  <rect x="214" y="54" width="44" height="24" rx="4" fill="#fbeee7" stroke="#b4552d"></rect>
+  <text x="236" y="71" font-size="12.5" fill="#8f3d1c" text-anchor="middle">倒塌</text>
+  <text x="264" y="71" font-size="12.5" fill="#1b1d21">，造成大量人员伤亡。救援人员展开紧急救援，许多国家也向日本提供了援助。</text>
+  <text x="40" y="112" font-size="11" fill="#6d747e">触发词「倒塌」把这句话定成灾害类，而不是建设类</text>
+  <rect x="40" y="128" width="246" height="176" rx="9" fill="#ffffff" stroke="#cfdde4"></rect>
+  <text x="54" y="152" font-size="11.5" font-weight="600" fill="#1f4d64">事件一 · 地震</text>
+  <text x="54" y="178" font-size="10" fill="#6d747e">触发词</text>
+  <text x="112" y="178" font-size="10.5" fill="#1f4d64">地震</text>
+  <text x="54" y="202" font-size="10" fill="#6d747e">时间</text>
+  <text x="112" y="202" font-size="10.5" fill="#3d444d">2011 年</text>
+  <text x="54" y="226" font-size="10" fill="#6d747e">地点</text>
+  <text x="112" y="226" font-size="10.5" fill="#3d444d">日本</text>
+  <text x="54" y="250" font-size="10" fill="#6d747e">参与方</text>
+  <text x="112" y="250" font-size="10.5" fill="#8a8175">未提及</text>
+  <text x="54" y="274" font-size="10" fill="#6d747e">结果</text>
+  <text x="112" y="274" font-size="10.5" fill="#3d444d">建筑倒塌、人员伤亡</text>
+  <rect x="306" y="128" width="246" height="176" rx="9" fill="#ffffff" stroke="#cfdde4"></rect>
+  <text x="320" y="152" font-size="11.5" font-weight="600" fill="#1f4d64">事件二 · 救援</text>
+  <text x="320" y="178" font-size="10" fill="#6d747e">触发词</text>
+  <text x="378" y="178" font-size="10.5" fill="#1f4d64">展开救援</text>
+  <text x="320" y="202" font-size="10" fill="#6d747e">时间</text>
+  <text x="378" y="202" font-size="10.5" fill="#3d444d">地震发生后</text>
+  <text x="320" y="226" font-size="10" fill="#6d747e">地点</text>
+  <text x="378" y="226" font-size="10.5" fill="#3d444d">日本</text>
+  <text x="320" y="250" font-size="10" fill="#6d747e">参与方</text>
+  <text x="378" y="250" font-size="10.5" fill="#3d444d">救援人员</text>
+  <text x="320" y="274" font-size="10" fill="#6d747e">对象</text>
+  <text x="378" y="274" font-size="10.5" fill="#3d444d">紧急救援</text>
+  <rect x="572" y="128" width="248" height="176" rx="9" fill="#ffffff" stroke="#cfdde4"></rect>
+  <text x="586" y="152" font-size="11.5" font-weight="600" fill="#1f4d64">事件三 · 国际援助</text>
+  <text x="586" y="178" font-size="10" fill="#6d747e">触发词</text>
+  <text x="644" y="178" font-size="10.5" fill="#1f4d64">提供援助</text>
+  <text x="586" y="202" font-size="10" fill="#6d747e">时间</text>
+  <text x="644" y="202" font-size="10.5" fill="#3d444d">地震发生后</text>
+  <text x="586" y="226" font-size="10" fill="#6d747e">地点</text>
+  <text x="644" y="226" font-size="10.5" fill="#3d444d">日本</text>
+  <text x="586" y="250" font-size="10" fill="#6d747e">参与方</text>
+  <text x="644" y="250" font-size="10.5" fill="#3d444d">许多国家</text>
+  <text x="586" y="274" font-size="10" fill="#6d747e">对象</text>
+  <text x="644" y="274" font-size="10.5" fill="#3d444d">向日本提供援助</text>
+  <text x="40" y="334" font-size="11" fill="#6d747e">两个事件写的是相对时间，入库前要归一化到绝对时间轴。槽位缺的写「未提及」，空着和写「未提及」是两件事。</text>
+  <text x="40" y="356" font-size="11" fill="#6d747e">论元散在不同句子里：许多国家在第二句，日本在第三句。句子级只看得到其中一格，篇章级要做的就是把这些格子拼起来。</text>
 </svg>
 
-<p><em>同一段文字里可以并存多个事件，它们往往共用触发词之外的所有要素。论元填不全，事件就不完整，后面拿去做推理会缺条件。</em></p>
-<p>结构上有两种做法。管道式先做触发词识别，再做论元抽取，两阶段串行，简单但前一阶段的错误会累积。联合式把两件事放进一个模型一起学，共享底层表示，能缓解误差传递，代价是模型复杂、调参麻烦。</p>
-<p>再往上还有篇章级。句子级抽取只能看到一句话，跨句的信息抓不到。篇章级要解决两个新问题：关键事件检测，判断整篇文档里哪些段落提到了重要事件；论元补足，把分散在不同段落里的事件要素拼成完整结构。上面那段报道里，“地震”“救援行动”“国际援助”三个关键事件，就是把全文读完才能确定它们的关系的。</p>
+<p><em>同一段文字里并排着三个事件，它们共用大部分要素，只有触发词和参与方不同。论元填不全，事件就不完整，后面拿去做推理会缺条件。</em></p>
+<h3 id="管道式与联合式"><a href="#管道式与联合式" class="headerlink" title="管道式与联合式"></a>管道式与联合式</h3><p>结构上有两种做法。管道式先做触发词识别，再做论元抽取，两阶段串行，简单但前一阶段的错误会累积。联合式把两件事放进一个模型一起学，共享底层表示，能缓解误差传递，代价是模型复杂、调参麻烦。</p>
+<p>管道式的误差传递也能算出来。</p>
+<table>
+<thead>
+<tr>
+<th>结构</th>
+<th>中间产物</th>
+<th>出错时的损失</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>管道式</td>
+<td>触发词列表</td>
+<td>触发词漏一个，对应事件的全部论元一起丢</td>
+</tr>
+<tr>
+<td>联合式</td>
+<td>无独立中间输出</td>
+<td>单个论元判错，其余槽位仍可保留</td>
+</tr>
+</tbody></table>
+<p><em>触发词识别漏掉「提供援助」，后面论元抽取根本不会为这个事件启动，五个槽位一起空着。联合式把触发词和论元放进一个模型里判断，共享底层表示；代价是训练数据要同时标好两样东西。</em></p>
+<h3 id="篇章级事件抽取"><a href="#篇章级事件抽取" class="headerlink" title="篇章级事件抽取"></a>篇章级事件抽取</h3><p>再往上还有篇章级。句子级抽取只能看到一句话，跨句的信息抓不到。篇章级要解决两个新问题：关键事件检测，判断整篇文档里哪些段落提到了重要事件；论元补足，把分散在不同段落里的事件要素拼成完整结构。上面那段报道里，“地震”“救援行动”“国际援助”三个关键事件，就是把全文读完才能确定它们的关系的。</p>
 <p>事件抽取的现状和实体抽取不太一样。深度模型在标准数据集上分数很高，换到真实业务就掉得厉害，原因是事件类型定义往往跟业务强绑定，公开数据集的类型体系套不上。领域自适应和低资源事件抽取，目前仍是活跃的研究方向。</p>
+<h2 id="评估：准确率、召回率与-F1"><a href="#评估：准确率、召回率与-F1" class="headerlink" title="评估：准确率、召回率与 F1"></a>评估：准确率、召回率与 F1</h2><p>五阶段图里最后那格写着准确率、召回率，前面一直没展开。拿一段人工标好的文本当标准答案，答案里有 10 条三元组，模型抽出来 8 条，其中 6 条在答案里，另外 2 条是编出来的。抽对的是 TP，抽错的是 FP，漏掉的是 FN。</p>
+<p>准确率 P &#x3D; 6 &#x2F; 8 &#x3D; 0.75，召回率 R &#x3D; 6 &#x2F; 10 &#x3D; 0.60，F1 &#x3D; 2PR&#x2F;(P+R) &#x3D; 0.667。</p>
+<svg width="100%" style="max-width:860px;height:auto" viewBox="0 0 860 260" role="img" aria-label="十标准答案与八条抽取结果的对照条">
+  <rect width="860" height="260" fill="#fdfbf6"></rect>
+  <text x="30" y="28" font-size="11.5" fill="#6d747e">人工答案：10 条三元组（每一格代表 1 条）</text>
+  <rect x="30" y="38" width="456" height="42" rx="5" fill="#eaf3ee" stroke="#3f7a5a"></rect>
+  <text x="258" y="64" font-size="11.5" fill="#2c5c42" text-anchor="middle">6 条抽对 TP</text>
+  <rect x="486" y="38" width="304" height="42" rx="5" fill="#fbeee7" stroke="#b4552d"></rect>
+  <text x="638" y="64" font-size="11.5" fill="#8f3d1c" text-anchor="middle">4 条漏抽 FN</text>
+  <text x="30" y="112" font-size="11.5" fill="#6d747e">模型输出：8 条三元组</text>
+  <rect x="30" y="122" width="456" height="42" rx="5" fill="#eaf3ee" stroke="#3f7a5a"></rect>
+  <text x="258" y="148" font-size="11.5" fill="#2c5c42" text-anchor="middle">6 条抽对 TP</text>
+  <rect x="486" y="122" width="152" height="42" rx="5" fill="#f8d9cf" stroke="#b4552d"></rect>
+  <text x="562" y="148" font-size="11.5" fill="#8f3d1c" text-anchor="middle">2 条抽错 FP</text>
+  <rect x="638" y="122" width="152" height="42" rx="5" fill="#ffffff" stroke="#e4e0d6" stroke-dasharray="4 3"></rect>
+  <text x="714" y="148" font-size="10.5" fill="#6d747e" text-anchor="middle">没有输出的部分</text>
+  <rect x="30" y="192" width="760" height="38" rx="7" fill="#f4f1e9" stroke="#e2dcc9"></rect>
+  <text x="46" y="217" font-size="11.5" fill="#8a6a2f">P = 6 / 8 = 0.75　　R = 6 / 10 = 0.60　　F1 = 2PR / (P + R) = 0.67</text>
+  <text x="30" y="248" font-size="10.5" fill="#6d747e">两条绿色块长度相同，都是那 6 条抽对的三元组；橙色和红色分别是漏掉的和多出来的。</text>
+</svg>
+
+<h3 id="严格规则与放宽规则"><a href="#严格规则与放宽规则" class="headerlink" title="严格规则与放宽规则"></a>严格规则与放宽规则</h3><p>把规则放宽一点，实体不再要求必须出现在姓氏表里，「李雷」「韩梅梅」这类没见过的名字也能进来，抽出条数从 8 变成 13，抽对的涨到 9 条。P &#x3D; 9&#x2F;13 ≈ 0.69，R &#x3D; 9&#x2F;10 &#x3D; 0.90，F1 ≈ 0.78。准确率掉了，召回率上来了，F1 反而涨了。</p>
+<svg width="100%" style="max-width:860px;height:auto" viewBox="0 0 860 330" role="img" aria-label="三种做法的准确率召回率与 F1 对比">
+  <rect width="860" height="330" fill="#fdfbf6"></rect>
+  <text x="40" y="28" font-size="11.5" fill="#6d747e">同一份答案，三种做法，三个指标</text>
+  <text x="600" y="52" font-size="10" fill="#2f6f8f">P</text>
+  <text x="676" y="52" font-size="10" fill="#3f7a5a">R</text>
+  <text x="752" y="52" font-size="10" fill="#b4552d">F1</text>
+  <text x="40" y="86" font-size="11" fill="#3d444d">严格规则</text>
+  <rect x="140" y="70" width="300" height="12" rx="3" fill="#f0ece2"></rect>
+  <rect x="140" y="70" width="225" height="12" rx="3" fill="#2f6f8f"></rect>
+  <text x="452" y="80" font-size="10.5" fill="#1f4d64">0.75</text>
+  <rect x="140" y="88" width="300" height="12" rx="3" fill="#f0ece2"></rect>
+  <rect x="140" y="88" width="180" height="12" rx="3" fill="#3f7a5a"></rect>
+  <text x="452" y="98" font-size="10.5" fill="#2c5c42">0.60</text>
+  <rect x="140" y="106" width="300" height="12" rx="3" fill="#f0ece2"></rect>
+  <rect x="140" y="106" width="201" height="12" rx="3" fill="#b4552d"></rect>
+  <text x="452" y="116" font-size="10.5" fill="#8f3d1c">0.67</text>
+  <text x="520" y="98" font-size="10.5" fill="#6d747e">抽出 8 条，对 6 条</text>
+  <text x="40" y="162" font-size="11" fill="#3d444d">放宽规则</text>
+  <rect x="140" y="146" width="300" height="12" rx="3" fill="#f0ece2"></rect>
+  <rect x="140" y="146" width="207" height="12" rx="3" fill="#2f6f8f"></rect>
+  <text x="452" y="156" font-size="10.5" fill="#1f4d64">0.69</text>
+  <rect x="140" y="164" width="300" height="12" rx="3" fill="#f0ece2"></rect>
+  <rect x="140" y="164" width="270" height="12" rx="3" fill="#3f7a5a"></rect>
+  <text x="452" y="174" font-size="10.5" fill="#2c5c42">0.90</text>
+  <rect x="140" y="182" width="300" height="12" rx="3" fill="#f0ece2"></rect>
+  <rect x="140" y="182" width="234" height="12" rx="3" fill="#b4552d"></rect>
+  <text x="452" y="192" font-size="10.5" fill="#8f3d1c">0.78</text>
+  <text x="520" y="174" font-size="10.5" fill="#6d747e">抽出 13 条，对 9 条</text>
+  <text x="40" y="238" font-size="11" fill="#3d444d">全交上去</text>
+  <rect x="140" y="222" width="300" height="12" rx="3" fill="#f0ece2"></rect>
+  <rect x="140" y="222" width="99" height="12" rx="3" fill="#2f6f8f"></rect>
+  <text x="452" y="232" font-size="10.5" fill="#1f4d64">0.33</text>
+  <rect x="140" y="240" width="300" height="12" rx="3" fill="#f0ece2"></rect>
+  <rect x="140" y="240" width="300" height="12" rx="3" fill="#3f7a5a"></rect>
+  <text x="452" y="250" font-size="10.5" fill="#2c5c42">1.00</text>
+  <rect x="140" y="258" width="300" height="12" rx="3" fill="#f0ece2"></rect>
+  <rect x="140" y="258" width="150" height="12" rx="3" fill="#b4552d"></rect>
+  <text x="452" y="268" font-size="10.5" fill="#8f3d1c">0.50</text>
+  <text x="520" y="250" font-size="10.5" fill="#6d747e">抽出 30 条，对 10 条</text>
+  <line x1="140" y1="288" x2="820" y2="288" stroke="#e4e0d6" stroke-width="1"></line>
+  <text x="140" y="292" font-size="9.5" fill="#8a8175" text-anchor="middle">0</text>
+  <text x="290" y="292" font-size="9.5" fill="#8a8175" text-anchor="middle">0.5</text>
+  <text x="440" y="292" font-size="9.5" fill="#8a8175" text-anchor="middle">1.0</text>
+  <text x="40" y="316" font-size="11" fill="#6d747e">召回率满分只要把候选全交上去，代价是准确率掉到三分之一。F1 是两边的调和平均，哪边塌了都跟着降。</text>
+</svg>
+
+<p><em>把 30 条候选全交上去，召回率满分，准确率掉到三分之一。只看一个指标选不出方案，F1 是两边的调和平均，哪边塌了都会跟着降。实体抽取按实体算 P 和 R，关系抽取按三元组算；事件抽取要分开报两套分数，触发词识别一套，论元识别一套。</em></p>
+<h2 id="方法演进：七代方法解决了什么"><a href="#方法演进：七代方法解决了什么" class="headerlink" title="方法演进：七代方法解决了什么"></a>方法演进：七代方法解决了什么</h2><p>整章出现的方法可以按「上一代留下什么问题」排成一条线。输入始终是一段文本，输出始终是带类型的实体、关系或事件。</p>
+<table>
+<thead>
+<tr>
+<th>方法</th>
+<th>判断依据</th>
+<th>解决了上一代的什么</th>
+<th>又留下什么</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>规则和词典</td>
+<td>人写好的模式</td>
+<td>不需要标注数据，格式类实体很准</td>
+<td>换个领域要重写，没见过的写法全漏</td>
+</tr>
+<tr>
+<td>HMM</td>
+<td>转移概率加发射概率</td>
+<td>从数据里学，不用手写规则</td>
+<td>每个位置只看当前状态，长距离约束表达不了</td>
+</tr>
+<tr>
+<td>CRF</td>
+<td>整条路径的条件概率</td>
+<td>标签能依赖整段输入，非法序列被压掉</td>
+<td>特征仍要人挑，训练慢</td>
+</tr>
+<tr>
+<td>SVM 等分类器</td>
+<td>核函数映射后的超平面</td>
+<td>小样本上稳</td>
+<td>序列信息丢了，标注任务不占优</td>
+</tr>
+<tr>
+<td>BiLSTM-CRF</td>
+<td>网络自己学的上下文表示</td>
+<td>特征不用人挑</td>
+<td>需要足够标注语料，长句仍有压力</td>
+</tr>
+<tr>
+<td>预训练加分类头</td>
+<td>海量文本预训练出的表示</td>
+<td>上下文表示更强，生词靠字级信息也能猜</td>
+<td>算力开销大，领域迁移仍要微调</td>
+</tr>
+<tr>
+<td>远程监督</td>
+<td>知识库对齐出来的自动标签</td>
+<td>标注成本压到接近零</td>
+<td>标签噪声，语义漂移</td>
+</tr>
+</tbody></table>
+<p><em>表格里既有实体抽取的路线，也有关系抽取补数据的办法，工程里常常一起用。规则兜住格式类实体，开放文本交给模型；关系分类靠远程监督铺量，再留一小份人工标注做校准和评估。</em></p>
 <h2 id="自测"><a href="#自测" class="headerlink" title="自测"></a>自测</h2><details><summary>为什么实体抽取要被改写成序列标注？</summary> <p>因为“找边界”本身不好直接优化，而“给每个位置打一个标签”可以逐位置计算损失。BIOES 这套标签把边界信息编码进标签里，边界和类型一次输出。</p></details> 
 
 <details><summary>BiLSTM-CRF 里，CRF 层不能省的理由是什么？</summary> <p>BiLSTM 独立给每个位置打分，可能输出“B-PER 后面跟 I-LOC”这种非法序列。CRF 建模相邻标签的转移，并在整条路径上做全局归一化，保证输出的标签序列合法且整体最优。</p></details> 
@@ -624,7 +1438,12 @@ if (true) {
 <details><summary>远程监督为什么一定会引入噪声？</summary> <p>它的假设是“两个实体有关系，则提到它们的句子就在讲这个关系”。这个假设过强，同一对实体出现在完全不同语境的句子里，也会被强行打上标签。</p></details> 
 
 <details><summary>管道式和联合式事件抽取，各自适合什么场景？</summary> <p>类型体系稳定、要快速上线，用管道式，每个模块可以单独调；论元跨句严重、误差传递影响大，用联合式，共享表示能减少前后不一致。</p></details> 
-</article><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/other/QUT/%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E6%95%99%E7%A8%8B/04-%E7%9F%A5%E8%AF%86%E8%9E%8D%E5%90%88%E6%8A%80%E6%9C%AF/"><img class="prev-cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">04 知识融合技术</div></div></a></div><div class="next-post pull-right"><a href="/other/QUT/%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E6%95%99%E7%A8%8B/02-%E7%9F%A5%E8%AF%86%E8%A1%A8%E7%A4%BA%E6%8A%80%E6%9C%AF/"><img class="next-cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">02 知识表示技术</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="anzhiyufont anzhiyu-icon-thumbs-up fa-fw" style="font-size: 1.5rem; margin-right: 4px"></i><span>喜欢这篇文章的人也看了</span></div><div class="relatedPosts-list"><div><a href="/other/QUT/%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E6%95%99%E7%A8%8B/01-%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E6%A6%82%E8%BF%B0/" title="01 知识图谱概述"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/" alt="cover"><div class="content is-center"><div class="date"><i class="anzhiyufont anzhiyu-icon-calendar-days fa-fw"></i> 2026-11-06</div><div class="title">01 知识图谱概述</div></div></a></div><div><a href="/other/QUT/%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E6%95%99%E7%A8%8B/02-%E7%9F%A5%E8%AF%86%E8%A1%A8%E7%A4%BA%E6%8A%80%E6%9C%AF/" title="02 知识表示技术"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/" alt="cover"><div class="content is-center"><div class="date"><i class="anzhiyufont anzhiyu-icon-calendar-days fa-fw"></i> 2026-11-06</div><div class="title">02 知识表示技术</div></div></a></div><div><a href="/other/QUT/%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E6%95%99%E7%A8%8B/04-%E7%9F%A5%E8%AF%86%E8%9E%8D%E5%90%88%E6%8A%80%E6%9C%AF/" title="04 知识融合技术"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/" alt="cover"><div class="content is-center"><div class="date"><i class="anzhiyufont anzhiyu-icon-calendar-days fa-fw"></i> 2026-11-06</div><div class="title">04 知识融合技术</div></div></a></div><div><a href="/other/QUT/%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E6%95%99%E7%A8%8B/05-%E7%9F%A5%E8%AF%86%E5%AD%98%E5%82%A8%E6%8A%80%E6%9C%AF/" title="05 知识存储技术"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/" alt="cover"><div class="content is-center"><div class="date"><i class="anzhiyufont anzhiyu-icon-calendar-days fa-fw"></i> 2026-11-06</div><div class="title">05 知识存储技术</div></div></a></div><div><a href="/other/QUT/%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E6%95%99%E7%A8%8B/07-%E7%9F%A5%E8%AF%86%E6%8E%A8%E7%90%86%E6%8A%80%E6%9C%AF/" title="07 知识推理技术"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/" alt="cover"><div class="content is-center"><div class="date"><i class="anzhiyufont anzhiyu-icon-calendar-days fa-fw"></i> 2026-11-06</div><div class="title">07 知识推理技术</div></div></a></div><div><a href="/other/QUT/%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E6%95%99%E7%A8%8B/08-%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E8%A1%8D%E7%94%9F%E6%8A%80%E6%9C%AF/" title="08 知识图谱衍生技术"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/" alt="cover"><div class="content is-center"><div class="date"><i class="anzhiyufont anzhiyu-icon-calendar-days fa-fw"></i> 2026-11-06</div><div class="title">08 知识图谱衍生技术</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="card-content"><div class="author-info-avatar"><img class="avatar-img" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://qiuxz-blog-image.oss-cn-beijing.aliyuncs.com/blog/avatar.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__description">全栈开发、agent开发</div><div class="author-info__bottom-group"><a class="author-info__bottom-group-left" href="/"><h1 class="author-info__name">qiuxz</h1><div class="author-info__desc"></div></a><div class="card-info-social-icons is-center"><a class="social-icon faa-parent animated-hover" href="https://github.com/qiuxzh" target="_blank" title="Github"><i class="anzhiyufont anzhiyu-icon-github"></i></a><a class="social-icon faa-parent animated-hover" href="javascript:void(0);" title="QQ" data-copy="1256227507"><i class="anzhiyufont anzhiyu-icon-qq"></i></a><a class="social-icon faa-parent animated-hover" href="javascript:void(0);" title="Email" data-copy="1256227507@qq.com"><i class="anzhiyufont anzhiyu-icon-envelope"></i></a></div></div></div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="anzhiyufont anzhiyu-icon-bars"></i><span>文章目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E5%8F%A5%E8%AF%9D%E9%87%8C%E7%9A%84%E4%B8%89%E5%B1%82%E4%BF%A1%E6%81%AF"><span class="toc-number">1.</span> <span class="toc-text">一句话里的三层信息</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8A%BD%E5%8F%96%E7%9A%84%E4%BA%94%E4%B8%AA%E9%98%B6%E6%AE%B5"><span class="toc-number">2.</span> <span class="toc-text">抽取的五个阶段</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%9E%E4%BD%93%E6%8A%BD%E5%8F%96%EF%BC%9A%E5%85%88%E5%88%87%E8%BE%B9%E7%95%8C"><span class="toc-number">3.</span> <span class="toc-text">实体抽取：先切边界</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%A7%84%E5%88%99%E6%B3%95"><span class="toc-number">4.</span> <span class="toc-text">规则法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BB%9F%E8%AE%A1%E6%A8%A1%E5%9E%8B%E8%BF%9B%E6%9D%A5%E4%B9%8B%E5%90%8E"><span class="toc-number">5.</span> <span class="toc-text">统计模型进来之后</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B7%B1%E5%BA%A6%E6%A8%A1%E5%9E%8B%E4%B8%8E-BiLSTM-CRF"><span class="toc-number">6.</span> <span class="toc-text">深度模型与 BiLSTM-CRF</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%B3%E7%B3%BB%E6%8A%BD%E5%8F%96"><span class="toc-number">7.</span> <span class="toc-text">关系抽取</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A0%87%E6%B3%A8%E4%B8%8D%E5%A4%9F%E7%94%A8%E7%9A%84%E6%97%B6%E5%80%99"><span class="toc-number">8.</span> <span class="toc-text">标注不够用的时候</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8B%E4%BB%B6%E6%8A%BD%E5%8F%96"><span class="toc-number">9.</span> <span class="toc-text">事件抽取</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%87%AA%E6%B5%8B"><span class="toc-number">10.</span> <span class="toc-text">自测</span></a></li></ol></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"></div><div id="footer-bar"><div class="footer-bar-links"><div class="footer-bar-left"><div id="footer-bar-tips"><div class="copyright">&copy;2020 - 2026 By <a class="footer-bar-link" href="/" title="qiuxz" target="_blank">qiuxz</a></div></div><div id="footer-type-tips"></div></div><div class="footer-bar-right"><a class="footer-bar-link" target="_blank" rel="noopener" href="https://github.com/anzhiyu-c/hexo-theme-anzhiyu" title="主题">主题</a></div></div></div></footer></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="sidebar-site-data site-data is-center"><a href="/archives/" title="archive"><div class="headline">文章</div><div class="length-num">49</div></a><a href="/tags/" title="tag"><div class="headline">标签</div><div class="length-num">9</div></a><a href="/categories/" title="category"><div class="headline">分类</div><div class="length-num">11</div></a></div><span class="sidebar-menu-item-title">功能</span><div class="sidebar-menu-item"><a class="darkmode_switchbutton menu-child" href="javascript:void(0);" title="显示模式"><i class="anzhiyufont anzhiyu-icon-circle-half-stroke"></i><span>显示模式</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="javascript:void(0);"><span> 文章</span></a><ul class="menus_item_child"><li><a class="site-page child faa-parent animated-hover" href="/archives/"><i class="anzhiyufont anzhiyu-icon-box-archive faa-tada" style="font-size: 0.9em;"></i><span> 隧道</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><span> 关于</span></a><ul class="menus_item_child"><li><a class="site-page child faa-parent animated-hover" href="/other/about/"><i class="anzhiyufont anzhiyu-icon-paper-plane faa-tada" style="font-size: 0.9em;"></i><span> 关于本人</span></a></li><li><a class="site-page child faa-parent animated-hover" href="javascript:toRandomPost()"><i class="anzhiyufont anzhiyu-icon-shoe-prints1 faa-tada" style="font-size: 0.9em;"></i><span> 随便逛逛</span></a></li></ul></div></div><span class="sidebar-menu-item-title">标签</span><div class="card-tags"><div class="item-headline"></div><div class="card-tag-cloud"><a href="/tags/YJango%E8%A7%86%E9%A2%91%E6%95%B4%E7%90%86/" style="font-size: 0.88rem;">YJango视频整理<sup>11</sup></a><a href="/tags/%E4%B8%AA%E4%BA%BA%E6%88%90%E9%95%BF/" style="font-size: 0.88rem;">个人成长<sup>3</sup></a><a href="/tags/%E5%AD%A6%E4%B9%A0/" style="font-size: 0.88rem;">学习<sup>13</sup></a><a href="/tags/%E6%84%9F%E6%82%9F/" style="font-size: 0.88rem;">感悟<sup>1</sup></a><a href="/tags/%E6%95%99%E7%A8%8B/" style="font-size: 0.88rem;">教程<sup>8</sup></a><a href="/tags/%E6%9C%AA%E5%88%86%E7%B1%BB/" style="font-size: 0.88rem;">未分类<sup>6</sup></a><a href="/tags/%E6%9E%B6%E6%9E%84/" style="font-size: 0.88rem;">架构<sup>1</sup></a><a href="/tags/%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1/" style="font-size: 0.88rem;">知识图谱<sup>9</sup></a><a href="/tags/%E8%80%83%E8%AF%95/" style="font-size: 0.88rem;">考试<sup>7</sup></a></div></div><hr/></div></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="anzhiyufont anzhiyu-icon-book-open"></i></button><button id="translateLink" type="button" title="简繁转换">繁</button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="anzhiyufont anzhiyu-icon-circle-half-stroke"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="anzhiyufont anzhiyu-icon-arrows-left-right"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="anzhiyufont anzhiyu-icon-gear"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="anzhiyufont anzhiyu-icon-list-ul"></i></button><button id="mobile-column-button" type="button" title="专栏目录"><i class="anzhiyufont anzhiyu-icon-bars"></i></button><button id="go-up" type="button" title="回到顶部"><i class="anzhiyufont anzhiyu-icon-arrow-up"></i></button></div></div><div id="rightMenu"><div class="rightMenu-group rightMenu-small"><div class="rightMenu-item" id="menu-backward"><i class="anzhiyufont anzhiyu-icon-arrow-left"></i></div><div class="rightMenu-item" id="menu-forward"><i class="anzhiyufont anzhiyu-icon-arrow-right"></i></div><div class="rightMenu-item" id="menu-refresh"><i class="anzhiyufont anzhiyu-icon-arrow-rotate-right" style="font-size: 1rem;"></i></div><div class="rightMenu-item" id="menu-top"><i class="anzhiyufont anzhiyu-icon-arrow-up"></i></div></div><div class="rightMenu-group rightMenu-line rightMenuPlugin"><div class="rightMenu-item" id="menu-copytext"><i class="anzhiyufont anzhiyu-icon-copy"></i><span>复制选中文本</span></div><div class="rightMenu-item" id="menu-pastetext"><i class="anzhiyufont anzhiyu-icon-paste"></i><span>粘贴文本</span></div><a class="rightMenu-item" id="menu-commenttext"><i class="anzhiyufont anzhiyu-icon-comment-medical"></i><span>引用到评论</span></a><div class="rightMenu-item" id="menu-newwindow"><i class="anzhiyufont anzhiyu-icon-window-restore"></i><span>新窗口打开</span></div><div class="rightMenu-item" id="menu-copylink"><i class="anzhiyufont anzhiyu-icon-link"></i><span>复制链接地址</span></div><div class="rightMenu-item" id="menu-copyimg"><i class="anzhiyufont anzhiyu-icon-images"></i><span>复制此图片</span></div><div class="rightMenu-item" id="menu-downloadimg"><i class="anzhiyufont anzhiyu-icon-download"></i><span>下载此图片</span></div><div class="rightMenu-item" id="menu-newwindowimg"><i class="anzhiyufont anzhiyu-icon-window-restore"></i><span>新窗口打开图片</span></div><div class="rightMenu-item" id="menu-search"><i class="anzhiyufont anzhiyu-icon-magnifying-glass"></i><span>站内搜索</span></div><div class="rightMenu-item" id="menu-searchBaidu"><i class="anzhiyufont anzhiyu-icon-magnifying-glass"></i><span>百度搜索</span></div></div><div class="rightMenu-group rightMenu-line rightMenuOther"><a class="rightMenu-item menu-link" id="menu-randomPost"><i class="anzhiyufont anzhiyu-icon-shuffle"></i><span>随便逛逛</span></a><a class="rightMenu-item menu-link" href="/categories/"><i class="anzhiyufont anzhiyu-icon-cube"></i><span>博客分类</span></a><a class="rightMenu-item menu-link" href="/tags/"><i class="anzhiyufont anzhiyu-icon-tags"></i><span>文章标签</span></a></div><div class="rightMenu-group rightMenu-line rightMenuOther"><a class="rightMenu-item" id="menu-copy" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-copy"></i><span>复制地址</span></a><a class="rightMenu-item" id="menu-commentBarrage" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-message"></i><span class="menu-commentBarrage-text">关闭热评</span></a><a class="rightMenu-item" id="menu-darkmode" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-circle-half-stroke"></i><span class="menu-darkmode-text">深色模式</span></a><a class="rightMenu-item" id="menu-translate" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-language"></i><span>轉為繁體</span></a></div></div><div id="rightmenu-mask"></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="/js/tw_cn.js"></script><script src="https://cdn.cbd.int/@fancyapps/ui@6.1.6/dist/fancybox/fancybox.umd.js"></script><script src="https://cdn.cbd.int/instant.page@5.2.0/instantpage.js" type="module"></script><script src="https://cdn.cbd.int/vanilla-lazyload@19.1.3/dist/lazyload.iife.min.js"></script><script src="https://cdn.cbd.int/node-snackbar@0.1.16/dist/snackbar.min.js"></script><canvas id="universe"></canvas><script async src="https://npm.elemecdn.com/anzhiyu-theme-static@1.0.0/dark/dark.js"></script><script>// 消除控制台打印
+<details><summary>同一句话用 BIO 和 BIOES 标，输出差在哪？</summary> <p>BIO 只有 B 和 I，双字实体写成 B-PER I-PER。BIOES 多了 E 和 S，同一个实体写成 B-PER E-PER，单字实体一个 S-PER 就够。边界信息更明确，代价是标签种类从 2 类涨到 4 类。</p></details> 
+<details><summary>逐位置分类为什么会输出「O 后面直接跟 I-LOC」？</summary> <p>每个位置独立取最大概率，模型没有地方表达「I 前面必须是 B 或 I」这条约束。CRF 给这类转移记低分，并在整条路径上做全局归一化，非法路径的总分因此被压下去。</p></details> 
+<details><summary>准确率 0.75、召回率 0.60 是怎么来的？</summary> <p>答案里 10 条，模型抽出 8 条，其中 6 条对。准确率分母是模型抽出的条数，6/8 = 0.75；召回率的分母换成答案里的条数，6/10 = 0.60。剩下 2 条是抽错，4 条是漏抽。</p></details> 
+<details><summary>放宽规则让召回率从 0.60 升到 0.90，方案一定变好了吗？</summary> <p>准确率会从 0.75 掉到 0.69，得看场景能不能接受多出来的错抽。F1 从 0.67 升到 0.78，是两边取调和平均后的结果；如果错抽进图谱的代价很高，宁可保准确率。</p></details> 
+<details><summary>「北京大学附属医院」为什么用一套 BIO 标不下？</summary> <p>整串是一家机构，里面的「北京大学」也是一家机构，两个实体嵌套，BIO 每个字只留一个标签位。要改成多层标签序列，或者换成给候选片段单独打分的做法。</p></details> 
+</article><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/other/QUT/%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E6%95%99%E7%A8%8B/04-%E7%9F%A5%E8%AF%86%E8%9E%8D%E5%90%88%E6%8A%80%E6%9C%AF/"><img class="prev-cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">04 知识融合技术</div></div></a></div><div class="next-post pull-right"><a href="/other/QUT/%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E6%95%99%E7%A8%8B/02-%E7%9F%A5%E8%AF%86%E8%A1%A8%E7%A4%BA%E6%8A%80%E6%9C%AF/"><img class="next-cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">02 知识表示技术</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="anzhiyufont anzhiyu-icon-thumbs-up fa-fw" style="font-size: 1.5rem; margin-right: 4px"></i><span>喜欢这篇文章的人也看了</span></div><div class="relatedPosts-list"><div><a href="/other/QUT/%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E6%95%99%E7%A8%8B/01-%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E6%A6%82%E8%BF%B0/" title="01 知识图谱概述"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/" alt="cover"><div class="content is-center"><div class="date"><i class="anzhiyufont anzhiyu-icon-calendar-days fa-fw"></i> 2026-11-06</div><div class="title">01 知识图谱概述</div></div></a></div><div><a href="/other/QUT/%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E6%95%99%E7%A8%8B/02-%E7%9F%A5%E8%AF%86%E8%A1%A8%E7%A4%BA%E6%8A%80%E6%9C%AF/" title="02 知识表示技术"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/" alt="cover"><div class="content is-center"><div class="date"><i class="anzhiyufont anzhiyu-icon-calendar-days fa-fw"></i> 2026-11-06</div><div class="title">02 知识表示技术</div></div></a></div><div><a href="/other/QUT/%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E6%95%99%E7%A8%8B/04-%E7%9F%A5%E8%AF%86%E8%9E%8D%E5%90%88%E6%8A%80%E6%9C%AF/" title="04 知识融合技术"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/" alt="cover"><div class="content is-center"><div class="date"><i class="anzhiyufont anzhiyu-icon-calendar-days fa-fw"></i> 2026-11-06</div><div class="title">04 知识融合技术</div></div></a></div><div><a href="/other/QUT/%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E6%95%99%E7%A8%8B/07-%E7%9F%A5%E8%AF%86%E6%8E%A8%E7%90%86%E6%8A%80%E6%9C%AF/" title="07 知识推理技术"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/" alt="cover"><div class="content is-center"><div class="date"><i class="anzhiyufont anzhiyu-icon-calendar-days fa-fw"></i> 2026-11-06</div><div class="title">07 知识推理技术</div></div></a></div><div><a href="/other/QUT/%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E6%95%99%E7%A8%8B/06-%E5%9B%BE%E8%A1%A8%E7%A4%BA%E5%AD%A6%E4%B9%A0%E4%B8%8E%E5%9B%BE%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/" title="06 图表示学习与图神经网络"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/" alt="cover"><div class="content is-center"><div class="date"><i class="anzhiyufont anzhiyu-icon-calendar-days fa-fw"></i> 2026-11-06</div><div class="title">06 图表示学习与图神经网络</div></div></a></div><div><a href="/other/QUT/%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E6%95%99%E7%A8%8B/05-%E7%9F%A5%E8%AF%86%E5%AD%98%E5%82%A8%E6%8A%80%E6%9C%AF/" title="05 知识存储技术"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/" alt="cover"><div class="content is-center"><div class="date"><i class="anzhiyufont anzhiyu-icon-calendar-days fa-fw"></i> 2026-11-06</div><div class="title">05 知识存储技术</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="card-content"><div class="author-info-avatar"><img class="avatar-img" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://qiuxz-blog-image.oss-cn-beijing.aliyuncs.com/blog/avatar.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__description">全栈开发、agent开发</div><div class="author-info__bottom-group"><a class="author-info__bottom-group-left" href="/"><h1 class="author-info__name">qiuxz</h1><div class="author-info__desc"></div></a><div class="card-info-social-icons is-center"><a class="social-icon faa-parent animated-hover" href="https://github.com/qiuxzh" target="_blank" title="Github"><i class="anzhiyufont anzhiyu-icon-github"></i></a><a class="social-icon faa-parent animated-hover" href="javascript:void(0);" title="QQ" data-copy="1256227507"><i class="anzhiyufont anzhiyu-icon-qq"></i></a><a class="social-icon faa-parent animated-hover" href="javascript:void(0);" title="Email" data-copy="1256227507@qq.com"><i class="anzhiyufont anzhiyu-icon-envelope"></i></a></div></div></div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="anzhiyufont anzhiyu-icon-bars"></i><span>文章目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%9F%A5%E8%AF%86%E6%8A%BD%E5%8F%96%EF%BC%9A%E4%BB%8E%E6%96%87%E6%9C%AC%E5%88%B0%E4%B8%89%E5%85%83%E7%BB%84"><span class="toc-number">1.</span> <span class="toc-text">知识抽取：从文本到三元组</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BE%93%E5%85%A5%EF%BC%9A%E4%B8%80%E6%AE%B5%E4%B8%A4%E5%8F%A5%E8%AF%9D%E7%9A%84%E6%96%B0%E9%97%BB"><span class="toc-number">1.1.</span> <span class="toc-text">输入：一段两句话的新闻</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BE%93%E5%87%BA%EF%BC%9A%E5%AE%9E%E4%BD%93%E6%B8%85%E5%8D%95%E3%80%81%E4%B8%89%E5%85%83%E7%BB%84%E4%B8%8E%E4%BA%8B%E4%BB%B6%E6%A7%BD%E4%BD%8D"><span class="toc-number">1.2.</span> <span class="toc-text">输出：实体清单、三元组与事件槽位</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8A%BD%E5%8F%96%E4%B8%89%E6%AD%A5%EF%BC%9A%E6%89%BE%E5%AE%9E%E4%BD%93%E3%80%81%E5%88%A4%E5%85%B3%E7%B3%BB%E4%B8%8E%E5%BD%92%E4%B8%80"><span class="toc-number">2.</span> <span class="toc-text">抽取三步：找实体、判关系与归一</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%AD%E6%96%87%E8%BE%B9%E7%95%8C%EF%BC%9A%E4%B8%80%E5%8F%A5%E8%AF%9D%E6%9C%89%E4%B8%89%E7%A7%8D%E5%88%87%E6%B3%95"><span class="toc-number">2.1.</span> <span class="toc-text">中文边界：一句话有三种切法</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8A%BD%E5%8F%96%E6%B5%81%E6%B0%B4%E7%BA%BF%EF%BC%9A%E4%BA%94%E4%B8%AA%E9%98%B6%E6%AE%B5"><span class="toc-number">3.</span> <span class="toc-text">抽取流水线：五个阶段</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%A2%84%E5%A4%84%E7%90%86%EF%BC%9A%E6%94%B6%E9%9B%86%E3%80%81%E6%B8%85%E6%B4%97%E4%B8%8E%E6%A0%87%E6%B3%A8"><span class="toc-number">3.1.</span> <span class="toc-text">预处理：收集、清洗与标注</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BA%94%E9%81%93%E5%B7%A5%E5%BA%8F%E7%9A%84%E8%BE%93%E5%87%BA%E5%AF%B9%E7%85%A7"><span class="toc-number">3.2.</span> <span class="toc-text">五道工序的输出对照</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%9E%E4%BD%93%E6%8A%BD%E5%8F%96%EF%BC%9A%E5%BA%8F%E5%88%97%E6%A0%87%E6%B3%A8"><span class="toc-number">4.</span> <span class="toc-text">实体抽取：序列标注</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BA%8F%E5%88%97%E6%A0%87%E6%B3%A8%EF%BC%9ABIO-%E4%B8%8E-BIOES"><span class="toc-number">4.1.</span> <span class="toc-text">序列标注：BIO 与 BIOES</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A7%A3%E7%A0%81%E4%B8%8E%E5%B5%8C%E5%A5%97%E5%AE%9E%E4%BD%93"><span class="toc-number">4.2.</span> <span class="toc-text">解码与嵌套实体</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%A7%84%E5%88%99%E6%B3%95%EF%BC%9A%E8%AF%8D%E5%85%B8%E3%80%81%E6%AD%A3%E5%88%99%E4%B8%8E%E6%A8%A1%E6%9D%BF"><span class="toc-number">5.</span> <span class="toc-text">规则法：词典、正则与模板</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A7%84%E5%88%99%E6%B3%95%E6%BC%8F%E5%9C%A8%E5%93%AA"><span class="toc-number">5.1.</span> <span class="toc-text">规则法漏在哪</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BB%9F%E8%AE%A1%E6%A8%A1%E5%9E%8B%EF%BC%9AHMM-%E4%B8%8E-CRF"><span class="toc-number">6.</span> <span class="toc-text">统计模型：HMM 与 CRF</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#HMM%EF%BC%9A%E8%BD%AC%E7%A7%BB%E6%A6%82%E7%8E%87%E4%B8%8E%E5%8F%91%E5%B0%84%E6%A6%82%E7%8E%87"><span class="toc-number">6.1.</span> <span class="toc-text">HMM：转移概率与发射概率</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#CRF%EF%BC%9A%E6%9D%A1%E4%BB%B6%E6%A6%82%E7%8E%87%E4%B8%8E%E5%85%A8%E5%B1%80%E5%BD%92%E4%B8%80%E5%8C%96"><span class="toc-number">6.2.</span> <span class="toc-text">CRF：条件概率与全局归一化</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#SVM-%E4%B8%8E%E4%BA%BA%E5%B7%A5%E7%89%B9%E5%BE%81"><span class="toc-number">6.3.</span> <span class="toc-text">SVM 与人工特征</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#CRF-%E6%8B%A6%E4%BD%8F%E9%9D%9E%E6%B3%95%E8%B7%AF%E5%BE%84"><span class="toc-number">6.4.</span> <span class="toc-text">CRF 拦住非法路径</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B7%B1%E5%BA%A6%E6%A8%A1%E5%9E%8B%EF%BC%9ABiLSTM-CRF-%E4%B8%8E%E9%A2%84%E8%AE%AD%E7%BB%83"><span class="toc-number">7.</span> <span class="toc-text">深度模型：BiLSTM-CRF 与预训练</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9B%9B%E4%B8%AA%E6%A8%A1%E5%9E%8B%E7%9A%84%E5%88%86%E5%B7%A5"><span class="toc-number">7.1.</span> <span class="toc-text">四个模型的分工</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#BiLSTM-CRF%EF%BC%9A%E7%BC%96%E7%A0%81%E5%99%A8%E5%8A%A0%E7%BA%A6%E6%9D%9F%E5%B1%82"><span class="toc-number">7.2.</span> <span class="toc-text">BiLSTM-CRF：编码器加约束层</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8E%BB%E6%8E%89-CRF-%E4%B8%8E%E6%9B%B4%E6%8D%A2%E7%BC%96%E7%A0%81%E5%99%A8"><span class="toc-number">7.3.</span> <span class="toc-text">去掉 CRF 与更换编码器</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%B3%E7%B3%BB%E6%8A%BD%E5%8F%96%EF%BC%9A%E4%BB%8E%E5%8F%A5%E5%AD%90%E5%88%B0%E4%B8%89%E5%85%83%E7%BB%84"><span class="toc-number">8.</span> <span class="toc-text">关系抽取：从句子到三元组</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BE%9D%E5%AD%98%E5%8F%A5%E6%B3%95%EF%BC%9A%E5%AE%9E%E4%BD%93%E4%B9%8B%E9%97%B4%E7%9A%84%E8%B7%AF%E5%BE%84"><span class="toc-number">8.1.</span> <span class="toc-text">依存句法：实体之间的路径</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%89%E6%9D%A1%E7%9B%91%E7%9D%A3%E8%B7%AF%E7%BA%BF"><span class="toc-number">8.2.</span> <span class="toc-text">三条监督路线</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%90%8C%E4%B9%89%E8%AF%B4%E6%B3%95%E5%BD%92%E4%B8%80"><span class="toc-number">8.3.</span> <span class="toc-text">同义说法归一</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%B3%E7%B3%BB%E6%96%B9%E5%90%91%EF%BC%9A%E5%8F%A5%E5%AD%90%E9%A1%BA%E5%BA%8F%E4%B8%8E%E4%B8%89%E5%85%83%E7%BB%84%E9%A1%BA%E5%BA%8F"><span class="toc-number">8.4.</span> <span class="toc-text">关系方向：句子顺序与三元组顺序</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BF%9C%E7%A8%8B%E7%9B%91%E7%9D%A3%E4%B8%8E-Bootstrapping"><span class="toc-number">9.</span> <span class="toc-text">远程监督与 Bootstrapping</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Bootstrapping%EF%BC%9A%E6%A8%A1%E6%9D%BF%E8%BF%AD%E4%BB%A3%E4%B8%8E%E8%AF%AD%E4%B9%89%E6%BC%82%E7%A7%BB"><span class="toc-number">9.1.</span> <span class="toc-text">Bootstrapping：模板迭代与语义漂移</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BD%8D%E7%BD%AE%E5%90%91%E9%87%8F%EF%BC%9A%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E6%97%B6%E4%BB%A3%E7%9A%84%E5%85%B3%E7%B3%BB%E5%88%86%E7%B1%BB"><span class="toc-number">9.2.</span> <span class="toc-text">位置向量：深度学习时代的关系分类</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BF%9C%E7%A8%8B%E7%9B%91%E7%9D%A3%E7%9A%84%E5%9B%9B%E6%9D%A1%E8%AE%AD%E7%BB%83%E6%A0%B7%E6%9C%AC"><span class="toc-number">9.3.</span> <span class="toc-text">远程监督的四条训练样本</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8B%E4%BB%B6%E6%8A%BD%E5%8F%96%EF%BC%9A%E8%A7%A6%E5%8F%91%E8%AF%8D%E4%B8%8E%E8%AE%BA%E5%85%83"><span class="toc-number">10.</span> <span class="toc-text">事件抽取：触发词与论元</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AE%A1%E9%81%93%E5%BC%8F%E4%B8%8E%E8%81%94%E5%90%88%E5%BC%8F"><span class="toc-number">10.1.</span> <span class="toc-text">管道式与联合式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AF%87%E7%AB%A0%E7%BA%A7%E4%BA%8B%E4%BB%B6%E6%8A%BD%E5%8F%96"><span class="toc-number">10.2.</span> <span class="toc-text">篇章级事件抽取</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AF%84%E4%BC%B0%EF%BC%9A%E5%87%86%E7%A1%AE%E7%8E%87%E3%80%81%E5%8F%AC%E5%9B%9E%E7%8E%87%E4%B8%8E-F1"><span class="toc-number">11.</span> <span class="toc-text">评估：准确率、召回率与 F1</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%A5%E6%A0%BC%E8%A7%84%E5%88%99%E4%B8%8E%E6%94%BE%E5%AE%BD%E8%A7%84%E5%88%99"><span class="toc-number">11.1.</span> <span class="toc-text">严格规则与放宽规则</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%96%B9%E6%B3%95%E6%BC%94%E8%BF%9B%EF%BC%9A%E4%B8%83%E4%BB%A3%E6%96%B9%E6%B3%95%E8%A7%A3%E5%86%B3%E4%BA%86%E4%BB%80%E4%B9%88"><span class="toc-number">12.</span> <span class="toc-text">方法演进：七代方法解决了什么</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%87%AA%E6%B5%8B"><span class="toc-number">13.</span> <span class="toc-text">自测</span></a></li></ol></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"></div><div id="footer-bar"><div class="footer-bar-links"><div class="footer-bar-left"><div id="footer-bar-tips"><div class="copyright">&copy;2020 - 2026 By <a class="footer-bar-link" href="/" title="qiuxz" target="_blank">qiuxz</a></div></div><div id="footer-type-tips"></div></div><div class="footer-bar-right"><a class="footer-bar-link" target="_blank" rel="noopener" href="https://github.com/anzhiyu-c/hexo-theme-anzhiyu" title="主题">主题</a></div></div></div></footer></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="sidebar-site-data site-data is-center"><a href="/archives/" title="archive"><div class="headline">文章</div><div class="length-num">49</div></a><a href="/tags/" title="tag"><div class="headline">标签</div><div class="length-num">9</div></a><a href="/categories/" title="category"><div class="headline">分类</div><div class="length-num">11</div></a></div><span class="sidebar-menu-item-title">功能</span><div class="sidebar-menu-item"><a class="darkmode_switchbutton menu-child" href="javascript:void(0);" title="显示模式"><i class="anzhiyufont anzhiyu-icon-circle-half-stroke"></i><span>显示模式</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="javascript:void(0);"><span> 文章</span></a><ul class="menus_item_child"><li><a class="site-page child faa-parent animated-hover" href="/archives/"><i class="anzhiyufont anzhiyu-icon-box-archive faa-tada" style="font-size: 0.9em;"></i><span> 隧道</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><span> 关于</span></a><ul class="menus_item_child"><li><a class="site-page child faa-parent animated-hover" href="/other/about/"><i class="anzhiyufont anzhiyu-icon-paper-plane faa-tada" style="font-size: 0.9em;"></i><span> 关于本人</span></a></li><li><a class="site-page child faa-parent animated-hover" href="javascript:toRandomPost()"><i class="anzhiyufont anzhiyu-icon-shoe-prints1 faa-tada" style="font-size: 0.9em;"></i><span> 随便逛逛</span></a></li></ul></div></div><span class="sidebar-menu-item-title">标签</span><div class="card-tags"><div class="item-headline"></div><div class="card-tag-cloud"><a href="/tags/YJango%E8%A7%86%E9%A2%91%E6%95%B4%E7%90%86/" style="font-size: 0.88rem;">YJango视频整理<sup>11</sup></a><a href="/tags/%E4%B8%AA%E4%BA%BA%E6%88%90%E9%95%BF/" style="font-size: 0.88rem;">个人成长<sup>3</sup></a><a href="/tags/%E5%AD%A6%E4%B9%A0/" style="font-size: 0.88rem;">学习<sup>13</sup></a><a href="/tags/%E6%84%9F%E6%82%9F/" style="font-size: 0.88rem;">感悟<sup>1</sup></a><a href="/tags/%E6%95%99%E7%A8%8B/" style="font-size: 0.88rem;">教程<sup>8</sup></a><a href="/tags/%E6%9C%AA%E5%88%86%E7%B1%BB/" style="font-size: 0.88rem;">未分类<sup>6</sup></a><a href="/tags/%E6%9E%B6%E6%9E%84/" style="font-size: 0.88rem;">架构<sup>1</sup></a><a href="/tags/%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1/" style="font-size: 0.88rem;">知识图谱<sup>9</sup></a><a href="/tags/%E8%80%83%E8%AF%95/" style="font-size: 0.88rem;">考试<sup>7</sup></a></div></div><hr/></div></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="anzhiyufont anzhiyu-icon-book-open"></i></button><button id="translateLink" type="button" title="简繁转换">繁</button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="anzhiyufont anzhiyu-icon-circle-half-stroke"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="anzhiyufont anzhiyu-icon-arrows-left-right"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="anzhiyufont anzhiyu-icon-gear"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="anzhiyufont anzhiyu-icon-list-ul"></i></button><button id="mobile-column-button" type="button" title="专栏目录"><i class="anzhiyufont anzhiyu-icon-bars"></i></button><button id="go-up" type="button" title="回到顶部"><i class="anzhiyufont anzhiyu-icon-arrow-up"></i></button></div></div><div id="rightMenu"><div class="rightMenu-group rightMenu-small"><div class="rightMenu-item" id="menu-backward"><i class="anzhiyufont anzhiyu-icon-arrow-left"></i></div><div class="rightMenu-item" id="menu-forward"><i class="anzhiyufont anzhiyu-icon-arrow-right"></i></div><div class="rightMenu-item" id="menu-refresh"><i class="anzhiyufont anzhiyu-icon-arrow-rotate-right" style="font-size: 1rem;"></i></div><div class="rightMenu-item" id="menu-top"><i class="anzhiyufont anzhiyu-icon-arrow-up"></i></div></div><div class="rightMenu-group rightMenu-line rightMenuPlugin"><div class="rightMenu-item" id="menu-copytext"><i class="anzhiyufont anzhiyu-icon-copy"></i><span>复制选中文本</span></div><div class="rightMenu-item" id="menu-pastetext"><i class="anzhiyufont anzhiyu-icon-paste"></i><span>粘贴文本</span></div><a class="rightMenu-item" id="menu-commenttext"><i class="anzhiyufont anzhiyu-icon-comment-medical"></i><span>引用到评论</span></a><div class="rightMenu-item" id="menu-newwindow"><i class="anzhiyufont anzhiyu-icon-window-restore"></i><span>新窗口打开</span></div><div class="rightMenu-item" id="menu-copylink"><i class="anzhiyufont anzhiyu-icon-link"></i><span>复制链接地址</span></div><div class="rightMenu-item" id="menu-copyimg"><i class="anzhiyufont anzhiyu-icon-images"></i><span>复制此图片</span></div><div class="rightMenu-item" id="menu-downloadimg"><i class="anzhiyufont anzhiyu-icon-download"></i><span>下载此图片</span></div><div class="rightMenu-item" id="menu-newwindowimg"><i class="anzhiyufont anzhiyu-icon-window-restore"></i><span>新窗口打开图片</span></div><div class="rightMenu-item" id="menu-search"><i class="anzhiyufont anzhiyu-icon-magnifying-glass"></i><span>站内搜索</span></div><div class="rightMenu-item" id="menu-searchBaidu"><i class="anzhiyufont anzhiyu-icon-magnifying-glass"></i><span>百度搜索</span></div></div><div class="rightMenu-group rightMenu-line rightMenuOther"><a class="rightMenu-item menu-link" id="menu-randomPost"><i class="anzhiyufont anzhiyu-icon-shuffle"></i><span>随便逛逛</span></a><a class="rightMenu-item menu-link" href="/categories/"><i class="anzhiyufont anzhiyu-icon-cube"></i><span>博客分类</span></a><a class="rightMenu-item menu-link" href="/tags/"><i class="anzhiyufont anzhiyu-icon-tags"></i><span>文章标签</span></a></div><div class="rightMenu-group rightMenu-line rightMenuOther"><a class="rightMenu-item" id="menu-copy" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-copy"></i><span>复制地址</span></a><a class="rightMenu-item" id="menu-commentBarrage" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-message"></i><span class="menu-commentBarrage-text">关闭热评</span></a><a class="rightMenu-item" id="menu-darkmode" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-circle-half-stroke"></i><span class="menu-darkmode-text">深色模式</span></a><a class="rightMenu-item" id="menu-translate" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-language"></i><span>轉為繁體</span></a></div></div><div id="rightmenu-mask"></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="/js/tw_cn.js"></script><script src="https://cdn.cbd.int/@fancyapps/ui@6.1.6/dist/fancybox/fancybox.umd.js"></script><script src="https://cdn.cbd.int/instant.page@5.2.0/instantpage.js" type="module"></script><script src="https://cdn.cbd.int/vanilla-lazyload@19.1.3/dist/lazyload.iife.min.js"></script><script src="https://cdn.cbd.int/node-snackbar@0.1.16/dist/snackbar.min.js"></script><canvas id="universe"></canvas><script async src="https://npm.elemecdn.com/anzhiyu-theme-static@1.0.0/dark/dark.js"></script><script>// 消除控制台打印
 var HoldLog = console.log;
 console.log = function () {};
 let now1 = new Date();

@@ -1,0 +1,917 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no"><title>02 软件基础 | qiuxz's Blog</title><meta name="keywords" content="大数据,复习"><meta name="author" content="qiuxz"><meta name="copyright" content="qiuxz"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#f7f9fe"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-touch-fullscreen" content="yes"><meta name="apple-mobile-web-app-title" content="02 软件基础"><meta name="application-name" content="02 软件基础"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="#f7f9fe"><meta property="og:type" content="article"><meta property="og:title" content="02 软件基础"><meta property="og:url" content="https://qiuxzh.github.io/other/QUT/%E5%A4%A7%E6%95%B0%E6%8D%AE%E8%B5%84%E6%96%99/02-%E8%BD%AF%E4%BB%B6%E5%9F%BA%E7%A1%80/index.html"><meta property="og:site_name" content="qiuxz's Blog"><meta property="og:description" content="Hadoop、Spark、Hive、Kafka……这些名字背后，有没有一个共同点？  有：它们几乎全跑在 Linux 上。你在 Windows 上装 Hadoop 得先装个模拟层，装 Spark 要先配环境变量和 SSH，折腾半天还可能跑不起来。 原因很朴素：大数据集群动辄上百台机器，需要稳定、免"><meta property="og:locale" content="zh-CN"><meta property="og:image" content="https://qiuxz-blog-image.oss-cn-beijing.aliyuncs.com/blog/avatar.jpg"><meta property="article:author" content="qiuxz"><meta property="article:tag"><meta name="twitter:card" content="summary"><meta name="twitter:image" content="https://qiuxz-blog-image.oss-cn-beijing.aliyuncs.com/blog/avatar.jpg"><meta name="description" content="Hadoop、Spark、Hive、Kafka……这些名字背后，有没有一个共同点？  有：它们几乎全跑在 Linux 上。你在 Windows 上装 Hadoop 得先装个模拟层，装 Spark 要先配环境变量和 SSH，折腾半天还可能跑不起来。 原因很朴素：大数据集群动辄上百台机器，需要稳定、免"><link rel="shortcut icon" href="/favicon.ico"><link rel="canonical" href="https://qiuxzh.github.io/other/QUT/%E5%A4%A7%E6%95%B0%E6%8D%AE%E8%B5%84%E6%96%99/02-%E8%BD%AF%E4%BB%B6%E5%9F%BA%E7%A1%80/"><link rel="preconnect" href="//cdn.cbd.int"/><meta name="google-site-verification" content="xxx"/><meta name="baidu-site-verification" content="code-xxx"/><meta name="msvalidate.01" content="xxx"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.cbd.int/node-snackbar@0.1.16/dist/snackbar.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.cbd.int/@fancyapps/ui@6.1.6/dist/fancybox/fancybox.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  linkPageTop: undefined,
+  peoplecanvas: {"enable":true,"img":"https://upload-bbs.miyoushe.com/upload/2024/07/27/125766904/ba62475f396df9de3316a08ed9e65d86_5680958632268053399..png"},
+  postHeadAiDescription: undefined,
+  diytitle: undefined,
+  LA51: undefined,
+  greetingBox: undefined,
+  twikooEnvId: '',
+  commentBarrageConfig:undefined,
+  music_page_default: "nav_music",
+  root: '/',
+  preloader: {"source":3},
+  friends_vue_info: undefined,
+  navMusic: false,
+  mainTone: undefined,
+  authorStatus: undefined,
+  algolia: undefined,
+  localSearch: undefined,
+  translate: {"defaultEncoding":2,"translateDelay":0,"msgToTraditionalChinese":"繁","msgToSimplifiedChinese":"简","rightMenuMsgToTraditionalChinese":"转为繁体","rightMenuMsgToSimplifiedChinese":"转为简体"},
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":330},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    simplehomepage: true,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: {"copy":true,"copyrightEbable":false,"limitCount":50,"languages":{"author":"作者: qiuxz","link":"链接: ","source":"来源: qiuxz's Blog","info":"著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。","copySuccess":"复制成功，复制和转载请标注本文地址"}},
+  lightbox: 'fancybox',
+  Snackbar: {"chs_to_cht":"你已切换为繁体","cht_to_chs":"你已切换为简体","day_to_night":"你已切换为深色模式","night_to_day":"你已切换为浅色模式","bgLight":"#425AEF","bgDark":"#1f1f1f","position":"top-center"},
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.cbd.int/flickr-justified-gallery@2.2.0/dist/fjGallery.min.js',
+      css: 'https://cdn.cbd.int/flickr-justified-gallery@2.2.0/dist/fjGallery.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: true,
+  isAnchor: false,
+  shortcutKey: undefined,
+  autoDarkmode: true
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  configTitle: 'qiuxz\'s Blog',
+  title: '02 软件基础',
+  postAI: '',
+  pageFillDescription: 'Linux 到底是什么, 一段必须知道的历史, Linux 里面长什么样, 发行版：内核 + 一堆软件的打包, 终端与命令提示符, Linux 的目录结构：一棵树没有 C 盘, 路径：绝对路径 vs 相对路径, 命令按用途分四组, 1) 查看信息, 2) 目录操作, 3) 文件操作, 4) 用户与权限, vim：Linux 下最常用的编辑器, 七条能省下大量时间的技巧, 2.2　为什么大数据要用 Python？, 它是怎么来的, 优点：为什么它好上手, 缺点：它不完美, 代码风格：几个不能马虎的细节, IDE：在哪写 Python, 基础语法：一小时能补完的部分, 1) 基本运算与布尔, 2) 四种容器（必须会用）, 3) 控制语句, 4) 函数与 range, 5) 文件读写, 遇到不会的怎么查这些名字背后有没有一个共同点有它们几乎全跑在上你在上装得先装个模拟层装要先配环境变量和折腾半天还可能跑不起来原因很朴素大数据集群动辄上百台机器需要稳定免费能批量远程管理还要求长时间不重启的操作系统四条全占所以这门课先讲再讲大数据工具是长在地基上的到底是什么是一个操作系统和是同一类东西但它出现在你想不到的地方跑着整个互联网的服务从搜索到各大网站的服务器跑在大量设备里手机电视路由器甚至汽车也可以装在你自己的电脑上图企鹅是的吉祥物也是它最出名的标志一段必须知道的历史时间人物地点事件贝尔实验室写出现代操作系统的祖师爷发起计划要做一个自由的操作系统芬兰赫尔辛基大学学生写了一个内核放在网上供人免费使用取名发布采用协议可以免费用改再分发当时是对不满想给自己的新电脑弄一个免费的类的系统于是动手写了内核它是一个学生为了解决自己的问题做出来的不是被公司立项做出来的里面长什么样由三部分组成组成干什么的举例内核最基本的功能管理进程内存驱动文件系统和网络直接决定性能与稳定性内核本身写的那个系统程序随系统提供的工具与命令让用户能操作内核应用程序你要用的软件浏览器关键在内核和用户的分界内核管资源用户不能直接操作它必须通过系统调用请它代劳这条分界线叫内核态和用户态为什么会这样设计因为要防止一个程序把整个系统搞崩发行版内核一堆软件的打包既然内核只有一个为什么会有这么多因为内核只提供最底层的功能你还需要桌面包管理器常用工具把它们和内核打包在一起就叫发行版内核是同一个打包的内容不同发行版包管理特点上手最容易桌面和服务器都常用企业级服务器市场占大头稳定保守就是从它衍生出来的偏新偏激进的试验田欧洲企业常用滚动更新适合折腾党包管理器只有两个家族系和系被问到怎么装软件答案就是换成则是终端与命令提示符没有图形界面也能用靠的是终端一个只能打字的黑框你在里面输入命令负责读懂并交给内核执行这一行把四件事都说清楚了部分含义说明当前用户你以谁的身份在操作分隔符固定写法主机名集群里靠它区分机器当前目录代表当前用户的家目录才是根目录权限提示普通用户超级用户看到就要小心了的目录结构一棵树没有盘有盘盘没有盘符只有一棵树最顶上是根目录根目录一切的起点常用命令都在这配置文件装完软件改配置都来这普通用户的家目录你的就在这里用户的家目录用户程序和库装软件主要往这放用户级临时文件经常变的数据日志就在系统临时文件重启可能清空设备文件一切皆文件挂载点插盘挂这里和是两个不同的目录别混前者是系统临时目录后者是用户级的路径绝对路径相对路径绝对路径从写起如在哪执行都一样相对路径从当前位置写起如当前目录上一级目录家目录上一次所在的目录命令按用途分四组查看信息我在哪显示当前绝对路径我是谁当前用户名现在几点有什么列出目录内容详细列表权限大小时间连隐藏文件以开头一起列加上人类可读的大小目录操作进去回上一级回家目录建目录连着建多级父目录不存在也自动建删空目录非空会报错文件操作不存在就新建存在就更新时间戳复制递归复制整个目录移动同目录内就是重命名删除递归删目录及其内容一次看完整个文件分页看大文件退出也行看前行实时滚动看日志排查问题最常用写入覆盖是追加最危险的一条命令会从根目录开始删除整个系统没有回收站删了就没了执行前也不会有任何你确定吗的二次确认所以平时养成习惯删之前先看一眼把当成手术刀用用户与权限改权限给属主加执行权限改属主与属组新建用户需要设置密码切换到用户用看到的第一列长这样其他人同组属主文件类型九个字符分三组每组三位分别对应读写执行所以属主其他人首字符表示类型首字符说明目录普通文件有没有决定能不能执行符号链接相当于快捷方式命名管道进程间通信套接字块设备如硬盘字符设备如键盘文件已丢失链接悬空下最常用的编辑器第一次用的人都会懵怎么打字打不进去因为有模式打开时你在命令模式按键被当成命令而不是文字要打字先按进入插入模式命令模式插入模式命令模式末行模式操作按键进入插入模式光标前插入光标后插入下一行新开一行回到命令模式保存并退出不保存强退只保存不退出忘了按就敲这四个字符会原样插进正文文件并没有保存七条能省下大量时间的技巧补全命令路径打一半按自动补全还能顺便检查你路径有没有打错上下方向键翻历史命令重复执行不用重打强制中断当前命令死循环卡住的进程都靠它清屏等同命令名查手册如不记得命令名就用关键词命令快速看用法比轻量列出所有敲过的命令配合编号重跑一个习惯能救很多次命执行这类命令前先把同样的路径喂给看一眼确认是你要动的那个目录再执行多花三秒少哭一晚总结是操作系统由内核系统程序应用组成内核管资源用户态不能直接碰发行版内核一堆软件包管理分两族与提示符用户主机目录普通用户没有盘符只有一棵从开始的树命令配置家目录日志命令四组查看信息目录文件用户与权限权限首字符等表示类型三模式命令插入末行没有回收站慎用为什么大数据要用处理数据不是更快吗为什么偏偏用因为写的时候你的时间花在想逻辑上不是花在写细节上有一句话点得很准而且大数据生态里几乎所有工具都给了接口有能写直接把数据处理做成了几行代码所以这门课把它当成默认的动手语言它是怎么来的作者是荷兰人吉多范罗苏姆年他在阿姆斯特丹大学拿到数学与计算机的硕士学位年一个人把写了出来后来他和同事组成了的核心团队语言一路演进先是框架立住然后标准库体系稳定接着生态开始向第三方包扩张把从一门语言养成了物种丰富的热带雨林现在它的地位的第三大开发语言的基础语言豆瓣的服务器语言优点为什么它好上手优点具体指什么语法优雅可读性高读一段好的程序像读英文容易学虽然底层用写但抛掉了里最复杂的指针语法大幅简化自带庞大标准库连服务器正则匹配文件读写这些常见任务都有现成的交互模式随手敲几行就能验证想法试错成本极低易扩展可以用写模块嵌进来性能瓶颈交给它们跨平台都能跑数据类型丰富数字浮点复数无限长整数字符串列表字典面向对象支持类与多重继承强类型动态类型类型不兼容会直接抛异常错误暴露得早自动内存管理不用手动垃圾回收自己处理强类型动态类型这两个词放一起是不是有点矛盾不矛盾它们是两件不同的事强类型说的是不会偷偷帮你转换直接报错不猜你想干嘛动态类型说的是类型在运行时才确定变量不用声明类型赋什么就是什么有一句话说得很到位现在指向一个对象同一个改指向对象合法强类型不会帮你转成缺点它不完美缺点怎么回事怎么绕很多语句写不进一行表达力上不如某些函数式语言紧凑的做法是宁可多一行也要读得懂运行速度慢关键部分用重写但对使用者而言很多场景下这点差异根本感知不到开源导致无法加密源码就是明文做商业闭源分发要另外想办法编译加壳两个版本不兼容历史包袱重新项目一律用关于慢慢是事实但大数据场景的瓶颈通常在和集群不在解释器那几毫秒代码风格几个不能马虎的细节有个著名的设计哲学写在里优美胜于丑陋明了胜于晦涩简单胜于复杂规则说明大小写敏感和是两个东西没有大括号也几乎没有分号代码块靠缩进划分缩进有意义官方风格是每级个空格缩进错了程序直接跑不了单双引号等价但同一个项目里别混用注释单行注释多行用文档字符串或命名变量名不能以数字开头不能用关键字多重赋值一行搞定风格指南官方编码规范全称很少写通常只说最该记牢的一句话用缩进表示代码块而不是大括号这一条决定了后面所有代码的样子标准缩进量是个空格混用和空格会报在哪写集成开发环境就是编辑器运行调试打包在一起学最省事的路子是装一个它自带包管理器环境管理器以及一大堆科学计算库装环境这件事基本不用操心里能一键启动的工具主要是这几个工具适合干什么浏览器里的交互式笔记本边写边看结果做数据分析首选科学计算向的变量查看器好用像轻量交互终端画图直接嵌在窗口里多维数据可视化可视化编程做数据挖掘语言的环境顺便装着通用编辑器装插件后也是主力选择基础语法一小时能补完的部分基本运算与布尔加真除法结果一定是整除向下取整取余幂布尔参与运算时最后一行特别容易被忽略布尔类型参与运算时会被当成和因为里是的子类四种容器必须会用类型符号有序可变特点列表有序可变元素类型可以不同能增删改元组有序不可变初始化后不能改不能追加相当于只读列表集合无序可变元素唯一重复的自动去掉字典有序可变键值对唯一包起来逗号分隔列表推导式包起来不可改这行会报去重键值对唯一取值列表推导式的写法是表达式变量迭代器条件一行完成筛选变换比写循环干净得多控制语句遍历字典循环里变量会被依次赋值为可迭代对象的下一个元素可迭代对象可以是字符串列表元组字典集合循环体必须缩进否则不在循环里这就是缩进即语法的直观体现函数与是左闭右开包含不包含这个边界最容易记错记不住就想是到不是到文件读写用的好处是块结束时自动关闭文件不用自己写也不怕中途抛异常漏掉关闭处理大文件时逐行读像上面那样不要一次进内存遇到不会的怎么查五条途径按离线能用排序前三条平时就够用了安装时自带的官方文档官方在线文档和最实用的两个内置函数搜索引擎配上错误信息一起搜的之类学习资源这个对象有哪些属性方法某个方法具体怎么用有哪些标准库模块的输出是分页显示的看完按退出卡在帮助里出不来就是这个原因总结作者与出身荷兰人年独立开发优点语法优雅可读易学标准库大有交互模式可扩展跨平台类型丰富面向对象强类型自动内存管理缺点语句难挤成一行运行慢可用重写开源不可加密与不兼容风格大小写敏感无大括号缩进空格注释四种容器可变有序不可变无序去重键唯一语法细节整除取余幂布尔参与运算为左闭右开求助按退出',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2026-11-16 20:13:00',
+  postMainColor: '',
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+      win.saveToLocal = {
+        set: (key, value, ttl) => {
+          if (ttl === 0) return
+          const now = Date.now()
+          const expiry = now + ttl * 86400000
+          const item = {
+            value,
+            expiry
+          }
+          localStorage.setItem(key, JSON.stringify(item))
+        },
+      
+        get: key => {
+          const itemStr = localStorage.getItem(key)
+      
+          if (!itemStr) {
+            return undefined
+          }
+          const item = JSON.parse(itemStr)
+          const now = Date.now()
+      
+          if (now > item.expiry) {
+            localStorage.removeItem(key)
+            return undefined
+          }
+          return item.value
+        }
+      }
+    
+      win.getScript = (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        script.onerror = reject
+        script.onload = script.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          script.onload = script.onreadystatechange = null
+          resolve()
+        }
+
+        Object.keys(attr).forEach(key => {
+          script.setAttribute(key, attr[key])
+        })
+
+        document.head.appendChild(script)
+      })
+    
+      win.getCSS = (url, id = false) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onerror = reject
+        link.onload = link.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          link.onload = link.onreadystatechange = null
+          resolve()
+        }
+        document.head.appendChild(link)
+      })
+    
+      win.activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#18171d')
+        }
+      }
+      win.activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#f7f9fe')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          const isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches
+          const isLightMode = window.matchMedia('(prefers-color-scheme: light)').matches
+          const isNotSpecified = window.matchMedia('(prefers-color-scheme: no-preference)').matches
+          const hasNoSupport = !isDarkMode && !isLightMode && !isNotSpecified
+
+          if (t === undefined) {
+            if (isLightMode) activateLightMode()
+            else if (isDarkMode) activateDarkMode()
+            else if (isNotSpecified || hasNoSupport) {
+              const now = new Date()
+              const hour = now.getHours()
+              const isNight = hour <= 6 || hour >= 18
+              isNight ? activateDarkMode() : activateLightMode()
+            }
+            window.matchMedia('(prefers-color-scheme: dark)').addListener(e => {
+              if (saveToLocal.get('theme') === undefined) {
+                e.matches ? activateDarkMode() : activateLightMode()
+              }
+            })
+          } else if (t === 'light') activateLightMode()
+          else activateDarkMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+      const detectApple = () => {
+        if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+          document.documentElement.classList.add('apple')
+        }
+      }
+      detectApple()
+    })(window)</script><meta name="generator" content="Hexo 7.0.0"></head><body data-type="anzhiyu"><div id="web_bg"></div><div id="an_music_bg"></div><div id="loading-box" onclick="document.getElementById(&quot;loading-box&quot;).classList.add(&quot;loaded&quot;)"><div class="loading-bg"><img class="loading-img nolazyload" alt="加载头像" src="https://qiuxz-blog-image.oss-cn-beijing.aliyuncs.com/blog/avatar.jpg"/><div class="loading-image-dot"></div></div></div><script>const preloader = {
+  endLoading: () => {
+    document.getElementById('loading-box').classList.add("loaded");
+  },
+  initLoading: () => {
+    document.getElementById('loading-box').classList.remove("loaded")
+  }
+}
+window.addEventListener('load',()=> { preloader.endLoading() })
+setTimeout(function(){preloader.endLoading();},10000)
+
+if (true) {
+  document.addEventListener('pjax:send', () => { preloader.initLoading() })
+  document.addEventListener('pjax:complete', () => { preloader.endLoading() })
+}</script><link rel="stylesheet" href="https://cdn.cbd.int/anzhiyu-theme-static@1.1.10/progress_bar/progress_bar.css"/><script async="async" src="https://cdn.cbd.int/pace-js@1.2.4/pace.min.js" data-pace-options="{ &quot;restartOnRequestAfter&quot;:false,&quot;eventLag&quot;:false}"></script><div class="post" id="body-wrap"><header class="not-top-img" id="page-header"><nav id="nav"><div id="nav-group"><span id="blog_name"><a id="site-name" href="/" accesskey="h"><div class="title">qiuxz's Blog</div><i class="anzhiyufont anzhiyu-icon-house-chimney"></i></a></span><div class="mask-name-container"><div id="name-container"><a id="page-name" href="javascript:anzhiyu.scrollToDest(0, 500)">PAGE_NAME</a></div></div><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="javascript:void(0);"><span> 文章</span></a><ul class="menus_item_child"><li><a class="site-page child faa-parent animated-hover" href="/archives/"><i class="anzhiyufont anzhiyu-icon-box-archive faa-tada" style="font-size: 0.9em;"></i><span> 隧道</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><span> 关于</span></a><ul class="menus_item_child"><li><a class="site-page child faa-parent animated-hover" href="/other/about/"><i class="anzhiyufont anzhiyu-icon-paper-plane faa-tada" style="font-size: 0.9em;"></i><span> 关于本人</span></a></li><li><a class="site-page child faa-parent animated-hover" href="javascript:toRandomPost()"><i class="anzhiyufont anzhiyu-icon-shoe-prints1 faa-tada" style="font-size: 0.9em;"></i><span> 随便逛逛</span></a></li></ul></div></div></div><div id="nav-right"><div class="nav-button" id="randomPost_button"><a class="site-page" onclick="toRandomPost()" title="随机前往一个文章" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-dice"></i></a></div><input id="center-console" type="checkbox"/><label class="widget" for="center-console" title="中控台" onclick="anzhiyu.switchConsole();"><i class="left"></i><i class="widget center"></i><i class="widget right"></i></label><div id="console"><div class="console-card-group-reward"><ul class="reward-all console-card"><li class="reward-item"><a href="https://npm.elemecdn.com/anzhiyu-blog@1.1.6/img/post/common/qrcode-weichat.png" target="_blank"><img class="post-qr-code-img" alt="微信" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://npm.elemecdn.com/anzhiyu-blog@1.1.6/img/post/common/qrcode-weichat.png"/></a><div class="post-qr-code-desc">微信</div></li><li class="reward-item"><a href="https://npm.elemecdn.com/anzhiyu-blog@1.1.6/img/post/common/qrcode-alipay.png" target="_blank"><img class="post-qr-code-img" alt="支付宝" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://npm.elemecdn.com/anzhiyu-blog@1.1.6/img/post/common/qrcode-alipay.png"/></a><div class="post-qr-code-desc">支付宝</div></li></ul></div><div class="console-card-group"><div class="console-card-group-left"><div class="console-card" id="card-newest-comments"><div class="card-content"><div class="author-content-item-tips">互动</div><span class="author-content-item-title"> 最新评论</span></div><div class="aside-list"><span>正在加载中...</span></div></div></div><div class="console-card-group-right"><div class="console-card tags"><div class="card-content"><div class="author-content-item-tips">兴趣点</div><span class="author-content-item-title">寻找你感兴趣的领域</span><div class="card-tags"><div class="item-headline"></div><div class="card-tag-cloud"><a href="/tags/AI/" style="font-size: 1.05rem;">AI <sup>1</sup></a><a href="/tags/YJango%E8%A7%86%E9%A2%91%E6%95%B4%E7%90%86/" style="font-size: 1.05rem;">YJango视频整理<sup>11</sup></a><a href="/tags/%E4%B8%AA%E4%BA%BA%E6%88%90%E9%95%BF/" style="font-size: 1.05rem;">个人成长<sup>3</sup></a><a href="/tags/%E5%A4%8D%E4%B9%A0/" style="font-size: 1.05rem;">复习<sup>9</sup></a><a href="/tags/%E5%A4%A7%E6%95%B0%E6%8D%AE/" style="font-size: 1.05rem;">大数据<sup>9</sup></a><a href="/tags/%E5%AD%A6%E4%B9%A0/" style="font-size: 1.05rem;">学习<sup>13</sup></a><a href="/tags/%E6%84%9F%E6%82%9F/" style="font-size: 1.05rem;">感悟<sup>1</sup></a><a href="/tags/%E6%95%99%E7%A8%8B/" style="font-size: 1.05rem;">教程<sup>8</sup></a><a href="/tags/%E6%9C%AA%E5%88%86%E7%B1%BB/" style="font-size: 1.05rem;">未分类<sup>6</sup></a><a href="/tags/%E6%9E%B6%E6%9E%84/" style="font-size: 1.05rem;">架构<sup>1</sup></a><a href="/tags/%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1/" style="font-size: 1.05rem;">知识图谱<sup>10</sup></a><a href="/tags/%E8%80%83%E8%AF%95/" style="font-size: 1.05rem;">考试<sup>8</sup></a></div></div><hr/></div></div><div class="console-card history"><div class="item-headline"><i class="anzhiyufont anzhiyu-icon-box-archiv"></i><span>文章</span></div><div class="card-archives"><div class="item-headline"><i class="anzhiyufont anzhiyu-icon-archive"></i><span>归档</span><a class="card-more-btn" href="/archives/" title="查看更多">
+    <i class="anzhiyufont anzhiyu-icon-angle-right"></i></a></div><ul class="card-archive-list"><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2026/11/"><span class="card-archive-list-date">十一月 2026</span><div class="card-archive-list-count-group"><span class="card-archive-list-count">26</span><span>篇</span></div></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2026/10/"><span class="card-archive-list-date">十月 2026</span><div class="card-archive-list-count-group"><span class="card-archive-list-count">3</span><span>篇</span></div></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2026/09/"><span class="card-archive-list-date">九月 2026</span><div class="card-archive-list-count-group"><span class="card-archive-list-count">16</span><span>篇</span></div></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2026/08/"><span class="card-archive-list-date">八月 2026</span><div class="card-archive-list-count-group"><span class="card-archive-list-count">4</span><span>篇</span></div></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2026/06/"><span class="card-archive-list-date">六月 2026</span><div class="card-archive-list-count-group"><span class="card-archive-list-count">4</span><span>篇</span></div></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2026/05/"><span class="card-archive-list-date">五月 2026</span><div class="card-archive-list-count-group"><span class="card-archive-list-count">1</span><span>篇</span></div></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2026/03/"><span class="card-archive-list-date">三月 2026</span><div class="card-archive-list-count-group"><span class="card-archive-list-count">1</span><span>篇</span></div></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2025/12/"><span class="card-archive-list-date">十二月 2025</span><div class="card-archive-list-count-group"><span class="card-archive-list-count">2</span><span>篇</span></div></a></li></ul></div><hr/></div></div></div><div class="button-group"><div class="console-btn-item"><a class="darkmode_switchbutton" title="显示模式切换" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-moon"></i></a></div><div class="console-btn-item" id="consoleHideAside" onclick="anzhiyu.hideAsideBtn()" title="边栏显示控制"><a class="asideSwitch"><i class="anzhiyufont anzhiyu-icon-arrows-left-right"></i></a></div></div><div class="console-mask" onclick="anzhiyu.hideConsole()" href="javascript:void(0);"></div></div><div class="nav-button" id="nav-totop"><a class="totopbtn" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-arrow-up"></i><span id="percent" onclick="anzhiyu.scrollToDest(0,500)">0</span></a></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);" title="切换"><i class="anzhiyufont anzhiyu-icon-bars"></i></a></div></div></div></nav></header><main id="blog-container"><div class="column-nav"><div class="column-nav-inner"><div class="column-nav-title">QUT考试</div><nav class="column-nav-list"><details class="column-branch" open><summary class="column-dir" style="padding-left:0px"><span class="column-dir-arrow">&#9662;</span><span>大数据资料</span></summary><div class="column-branch-children"><a class="column-link" href="https://qiuxzh.github.io/other/QUT/%E5%A4%A7%E6%95%B0%E6%8D%AE%E8%B5%84%E6%96%99/08-%E4%B8%AD%E8%8B%B1%E6%9C%AF%E8%AF%AD%E5%AF%B9%E7%85%A7%E8%A1%A8/" style="padding-left:20px">08 中英术语对照表</a><a class="column-link" href="https://qiuxzh.github.io/other/QUT/%E5%A4%A7%E6%95%B0%E6%8D%AE%E8%B5%84%E6%96%99/07-%E5%A4%A7%E6%95%B0%E6%8D%AE%E4%BA%BA%E6%96%87/" style="padding-left:20px">07 大数据人文</a><a class="column-link" href="https://qiuxzh.github.io/other/QUT/%E5%A4%A7%E6%95%B0%E6%8D%AE%E8%B5%84%E6%96%99/06-%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90/" style="padding-left:20px">06 数据分析</a><a class="column-link" href="https://qiuxzh.github.io/other/QUT/%E5%A4%A7%E6%95%B0%E6%8D%AE%E8%B5%84%E6%96%99/05-%E6%95%B0%E6%8D%AE%E9%A2%84%E5%A4%84%E7%90%86/" style="padding-left:20px">05 数据预处理</a><a class="column-link" href="https://qiuxzh.github.io/other/QUT/%E5%A4%A7%E6%95%B0%E6%8D%AE%E8%B5%84%E6%96%99/04-%E6%95%B0%E6%8D%AE%E5%AD%98%E5%82%A8%E4%B8%8E%E7%AE%A1%E7%90%86/" style="padding-left:20px">04 数据存储与管理</a><a class="column-link" href="https://qiuxzh.github.io/other/QUT/%E5%A4%A7%E6%95%B0%E6%8D%AE%E8%B5%84%E6%96%99/03-%E6%95%B0%E6%8D%AE%E9%87%87%E9%9B%86/" style="padding-left:20px">03 数据采集</a><a class="column-link active" href="https://qiuxzh.github.io/other/QUT/%E5%A4%A7%E6%95%B0%E6%8D%AE%E8%B5%84%E6%96%99/02-%E8%BD%AF%E4%BB%B6%E5%9F%BA%E7%A1%80/" style="padding-left:20px">02 软件基础</a><a class="column-link" href="https://qiuxzh.github.io/other/QUT/%E5%A4%A7%E6%95%B0%E6%8D%AE%E8%B5%84%E6%96%99/01-%E6%95%B0%E6%8D%AE%E4%B8%8E%E5%A4%A7%E6%95%B0%E6%8D%AE/" style="padding-left:20px">01 数据与大数据</a><a class="column-link" href="https://qiuxzh.github.io/other/QUT/%E5%A4%A7%E6%95%B0%E6%8D%AE%E8%B5%84%E6%96%99/00-%E5%A4%8D%E4%B9%A0%E6%89%8B%E5%86%8C%E6%80%BB%E8%A7%88/" style="padding-left:20px">00 复习手册总览</a></div></details><details class="column-branch"><summary class="column-dir" style="padding-left:0px"><span class="column-dir-arrow">&#9662;</span><span>知识图谱教程</span></summary><div class="column-branch-children"><a class="column-link" href="https://qiuxzh.github.io/other/QUT/%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E6%95%99%E7%A8%8B/00-%E6%95%99%E7%A8%8B%E6%80%BB%E8%A7%88/" style="padding-left:20px">00 教程总览</a><a class="column-link" href="https://qiuxzh.github.io/other/QUT/%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E6%95%99%E7%A8%8B/01-%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E6%A6%82%E8%BF%B0/" style="padding-left:20px">01 知识图谱概述</a><a class="column-link" href="https://qiuxzh.github.io/other/QUT/%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E6%95%99%E7%A8%8B/02-%E7%9F%A5%E8%AF%86%E8%A1%A8%E7%A4%BA%E6%8A%80%E6%9C%AF/" style="padding-left:20px">02 知识表示技术</a><a class="column-link" href="https://qiuxzh.github.io/other/QUT/%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E6%95%99%E7%A8%8B/03-%E7%9F%A5%E8%AF%86%E6%8A%BD%E5%8F%96%E6%8A%80%E6%9C%AF/" style="padding-left:20px">03 知识抽取技术</a><a class="column-link" href="https://qiuxzh.github.io/other/QUT/%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E6%95%99%E7%A8%8B/04-%E7%9F%A5%E8%AF%86%E8%9E%8D%E5%90%88%E6%8A%80%E6%9C%AF/" style="padding-left:20px">04 知识融合技术</a><a class="column-link" href="https://qiuxzh.github.io/other/QUT/%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E6%95%99%E7%A8%8B/05-%E7%9F%A5%E8%AF%86%E5%AD%98%E5%82%A8%E6%8A%80%E6%9C%AF/" style="padding-left:20px">05 知识存储技术</a><a class="column-link" href="https://qiuxzh.github.io/other/QUT/%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E6%95%99%E7%A8%8B/06-%E5%9B%BE%E8%A1%A8%E7%A4%BA%E5%AD%A6%E4%B9%A0%E4%B8%8E%E5%9B%BE%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/" style="padding-left:20px">06 图表示学习与图神经网络</a><a class="column-link" href="https://qiuxzh.github.io/other/QUT/%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E6%95%99%E7%A8%8B/07-%E7%9F%A5%E8%AF%86%E6%8E%A8%E7%90%86%E6%8A%80%E6%9C%AF/" style="padding-left:20px">07 知识推理技术</a><a class="column-link" href="https://qiuxzh.github.io/other/QUT/%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E6%95%99%E7%A8%8B/08-%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E8%A1%8D%E7%94%9F%E6%8A%80%E6%9C%AF/" style="padding-left:20px">08 知识图谱衍生技术</a></div></details><details class="column-branch"><summary class="column-dir" style="padding-left:0px"><span class="column-dir-arrow">&#9662;</span><span>知识图谱作业和考试</span></summary><div class="column-branch-children"><a class="column-link" href="https://qiuxzh.github.io/other/QUT/%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E4%BD%9C%E4%B8%9A%E5%92%8C%E8%80%83%E8%AF%95/%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E8%80%83%E8%AF%95%E5%88%92%E9%87%8D%E7%82%B9/" style="padding-left:20px">知识图谱期末划重点</a><a class="column-link" href="https://qiuxzh.github.io/other/QUT/%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E4%BD%9C%E4%B8%9A%E5%92%8C%E8%80%83%E8%AF%95/00-%E4%BD%9C%E4%B8%9A%E6%80%BB%E8%A7%88/" style="padding-left:20px">00 作业总览</a><a class="column-link" href="https://qiuxzh.github.io/other/QUT/%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E4%BD%9C%E4%B8%9A%E5%92%8C%E8%80%83%E8%AF%95/QUT%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E4%BD%9C%E4%B8%9A%E8%A7%A3%E6%9E%90-%E7%AC%AC%E4%B8%80%E7%AB%A0-%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E6%A6%82%E8%BF%B0/" style="padding-left:20px">QUT知识图谱作业解析：第一章 知识图谱概述</a><a class="column-link" href="https://qiuxzh.github.io/other/QUT/%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E4%BD%9C%E4%B8%9A%E5%92%8C%E8%80%83%E8%AF%95/QUT%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E4%BD%9C%E4%B8%9A%E8%A7%A3%E6%9E%90-%E7%AC%AC%E4%BA%8C%E7%AB%A0-%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E8%A1%A8%E7%A4%BA/" style="padding-left:20px">QUT知识图谱作业解析：第二章 知识图谱表示</a><a class="column-link" href="https://qiuxzh.github.io/other/QUT/%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E4%BD%9C%E4%B8%9A%E5%92%8C%E8%80%83%E8%AF%95/QUT%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E4%BD%9C%E4%B8%9A%E8%A7%A3%E6%9E%90-%E7%AC%AC%E4%B8%89%E7%AB%A0-%E7%9F%A5%E8%AF%86%E6%8A%BD%E5%8F%96%E6%8A%80%E6%9C%AF/" style="padding-left:20px">QUT知识图谱作业解析：第三章 知识抽取技术</a><a class="column-link" href="https://qiuxzh.github.io/other/QUT/%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E4%BD%9C%E4%B8%9A%E5%92%8C%E8%80%83%E8%AF%95/QUT%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E4%BD%9C%E4%B8%9A%E8%A7%A3%E6%9E%90-%E7%AC%AC%E5%9B%9B%E7%AB%A0-%E7%9F%A5%E8%AF%86%E8%9E%8D%E5%90%88/" style="padding-left:20px">QUT知识图谱作业解析：第四章 知识融合</a><a class="column-link" href="https://qiuxzh.github.io/other/QUT/%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E4%BD%9C%E4%B8%9A%E5%92%8C%E8%80%83%E8%AF%95/QUT%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E4%BD%9C%E4%B8%9A%E8%A7%A3%E6%9E%90-%E7%AC%AC%E5%85%AD%E7%AB%A0-%E5%9B%BE%E8%A1%A8%E7%A4%BA%E5%AD%A6%E4%B9%A0%E4%B8%8E%E5%9B%BE%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/" style="padding-left:20px">QUT知识图谱作业解析：第六章 图表示学习与图神经网络</a></div></details></nav></div></div><div class="layout" id="content-inner"><div id="post"><div id="post-info"><div id="post-firstinfo"><div class="meta-firstline"><a class="post-meta-original">原创</a><span class="post-meta-categories"><span class="post-meta-separator"></span><i class="anzhiyufont anzhiyu-icon-inbox post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E5%A4%A7%E6%95%B0%E6%8D%AE%E6%A6%82%E8%AE%BA/" itemprop="url">大数据概论</a></span><span class="article-meta tags"><a class="article-meta__tags" href="/tags/%E5%A4%A7%E6%95%B0%E6%8D%AE/" tabindex="-1" itemprop="url"> <span> <i class="anzhiyufont anzhiyu-icon-hashtag"></i>大数据</span></a><a class="article-meta__tags" href="/tags/%E5%A4%8D%E4%B9%A0/" tabindex="-1" itemprop="url"> <span> <i class="anzhiyufont anzhiyu-icon-hashtag"></i>复习</span></a></span></div></div><h1 class="post-title" itemprop="name headline">02 软件基础</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="anzhiyufont anzhiyu-icon-calendar-days post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" itemprop="dateCreated datePublished" datetime="2026-11-16T20:13:00.000Z" title="发表于 2026-11-16 20:13:00">2026-11-16</time><span class="post-meta-separator"></span><i class="anzhiyufont anzhiyu-icon-history post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" itemprop="dateCreated datePublished" datetime="2026-11-16T20:13:00.000Z" title="更新于 2026-11-16 20:13:00">2026-11-16</time></span></div><div class="meta-secondline"></div></div></div><article class="post-content" id="article-container" itemscope itemtype="https://qiuxzh.github.io/other/QUT/%E5%A4%A7%E6%95%B0%E6%8D%AE%E8%B5%84%E6%96%99/02-%E8%BD%AF%E4%BB%B6%E5%9F%BA%E7%A1%80/"><header><a class="post-meta-categories" href="/categories/%E5%A4%A7%E6%95%B0%E6%8D%AE%E6%A6%82%E8%AE%BA/" itemprop="url">大数据概论</a><a href="/tags/%E5%A4%A7%E6%95%B0%E6%8D%AE/" tabindex="-1" itemprop="url">大数据</a><a href="/tags/%E5%A4%8D%E4%B9%A0/" tabindex="-1" itemprop="url">复习</a><h1 id="CrawlerTitle" itemprop="name headline">02 软件基础</h1><span itemprop="author" itemscope itemtype="http://schema.org/Person">qiuxz</span><time itemprop="dateCreated datePublished" datetime="2026-11-16T20:13:00.000Z" title="发表于 2026-11-16 20:13:00">2026-11-16</time><time itemprop="dateCreated datePublished" datetime="2026-11-16T20:13:00.000Z" title="更新于 2026-11-16 20:13:00">2026-11-16</time></header><blockquote>
+<p>Hadoop、Spark、Hive、Kafka……这些名字背后，有没有一个共同点？</p>
+</blockquote>
+<p>有：<strong>它们几乎全跑在 Linux 上。</strong>你在 Windows 上装 Hadoop 得先装个模拟层，装 Spark 要先配环境变量和 SSH，折腾半天还可能跑不起来。</p>
+<p>原因很朴素：大数据集群动辄上百台机器，需要<strong>稳定、免费、能批量远程管理</strong>，还要求长时间不重启的操作系统。Linux 四条全占。所以这门课先讲 Linux，再讲大数据。<strong>工具是长在地基上的。</strong></p>
+<h3 id="Linux-到底是什么"><a href="#Linux-到底是什么" class="headerlink" title="Linux 到底是什么"></a>Linux 到底是什么</h3><p><strong>Linux 是一个操作系统（<em>Operating System</em>），和 Windows、macOS 是同一类东西。</strong></p>
+<p>但它出现在你想不到的地方：跑着整个互联网的服务（从 Google 搜索到各大网站的服务器）；跑在大量设备里（手机、电视、路由器，甚至汽车）；也可以装在你自己的电脑上。</p>
+<img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="data:image/webp;base64,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" alt="img_020.jpg" style="max-width:min(100%,534px);height:auto">
+
+<p><em>图 2-1　企鹅 Tux 是 Linux 的吉祥物，也是它最出名的标志</em></p>
+<h4 id="一段必须知道的历史"><a href="#一段必须知道的历史" class="headerlink" title="一段必须知道的历史"></a>一段必须知道的历史</h4><table>
+<thead>
+<tr>
+<th>时间</th>
+<th>人物 &#x2F; 地点</th>
+<th>事件</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1969</td>
+<td>Ken Thompson、Dennis Ritchie，贝尔实验室</td>
+<td>写出 <strong>UNIX</strong>，现代操作系统的祖师爷</td>
+</tr>
+<tr>
+<td>1983</td>
+<td>Richard Stallman</td>
+<td>发起 <strong>GNU</strong> 计划，要做一个自由的操作系统</td>
+</tr>
+<tr>
+<td>1991</td>
+<td><strong>Linus Torvalds</strong>，芬兰赫尔辛基大学学生</td>
+<td>写了一个 <strong>内核</strong>（kernel），放在网上供人免费使用，取名 Linux</td>
+</tr>
+<tr>
+<td>1994</td>
+<td>—</td>
+<td>Linux 1.0 发布，采用 <strong>GPL</strong> 协议：可以免费用、改、再分发</td>
+</tr>
+</tbody></table>
+<p><strong>Linus 当时是对 MS-DOS 不满</strong>，想给自己的新电脑弄一个免费的、类 UNIX 的系统，于是动手写了内核。<strong>它是一个学生为了解决自己的问题做出来的，不是被公司立项做出来的。</strong></p>
+<h3 id="Linux-里面长什么样"><a href="#Linux-里面长什么样" class="headerlink" title="Linux 里面长什么样"></a>Linux 里面长什么样</h3><p>Linux 由三部分组成。</p>
+<table>
+<thead>
+<tr>
+<th>组成</th>
+<th>干什么的</th>
+<th>举例</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>内核</strong><br>Kernel</td>
+<td>最基本的功能：管理<strong>进程、内存、驱动、文件系统和网络</strong>，直接决定性能与稳定性</td>
+<td>Linux 内核本身（Linus 写的那个）</td>
+</tr>
+<tr>
+<td><strong>系统程序</strong><br>Shell &#x2F; Utilities</td>
+<td>随系统提供的工具与命令，让用户能操作内核</td>
+<td>bash、ls、cp、vim</td>
+</tr>
+<tr>
+<td><strong>应用程序</strong><br>Applications</td>
+<td>你要用的软件</td>
+<td>浏览器、Python、Spark</td>
+</tr>
+</tbody></table>
+<p>关键在<strong>内核和用户的分界</strong>：<strong>内核</strong>管资源，用户<strong>不能直接操作它</strong>，必须通过「系统调用」请它代劳。这条分界线叫<strong>内核态</strong>（<em>kernel mode</em>）和<strong>用户态</strong>（<em>user mode</em>）。为什么会这样设计？<strong>因为要防止一个程序把整个系统搞崩。</strong></p>
+<h3 id="发行版：内核-一堆软件的打包"><a href="#发行版：内核-一堆软件的打包" class="headerlink" title="发行版：内核 + 一堆软件的打包"></a>发行版：内核 + 一堆软件的打包</h3><blockquote>
+<p>既然内核只有一个，为什么会有 Ubuntu、CentOS、RedHat 这么多「Linux」？</p>
+</blockquote>
+<p>因为内核只提供最底层的功能，你还需要桌面、包管理器、常用工具，把它们和内核打包在一起，就叫<strong>发行版</strong>（<em>Distribution</em>）。<strong>内核是同一个，打包的内容不同。</strong></p>
+<table>
+<thead>
+<tr>
+<th>发行版</th>
+<th>包管理</th>
+<th>特点</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>Ubuntu</strong></td>
+<td>DEB（apt）</td>
+<td>上手最容易，桌面和服务器都常用</td>
+</tr>
+<tr>
+<td><strong>RedHat &#x2F; CentOS</strong></td>
+<td>RPM（yum）</td>
+<td>企业级，服务器市场占大头</td>
+</tr>
+<tr>
+<td><strong>Debian</strong></td>
+<td>DEB（apt）</td>
+<td>稳定保守，Ubuntu 就是从它衍生出来的</td>
+</tr>
+<tr>
+<td><strong>Fedora</strong></td>
+<td>RPM（dnf）</td>
+<td>偏新、偏激进，RedHat 的试验田</td>
+</tr>
+<tr>
+<td><strong>openSUSE</strong></td>
+<td>RPM（zypper）</td>
+<td>欧洲企业常用</td>
+</tr>
+<tr>
+<td><strong>Arch &#x2F; Solus</strong></td>
+<td>pacman &#x2F; eopkg</td>
+<td>滚动更新，适合折腾党</td>
+</tr>
+</tbody></table>
+<p>⚠️ 包管理器只有两个家族：<strong>DEB 系（apt）</strong> 和 <strong>RPM 系（yum &#x2F; dnf）</strong>。被问到「CentOS 怎么装软件」，答案就是 <code>yum install</code>；换成 Ubuntu，则是 <code>apt install</code>。</p>
+<h3 id="终端与命令提示符"><a href="#终端与命令提示符" class="headerlink" title="终端与命令提示符"></a>终端与命令提示符</h3><p>Linux 没有图形界面也能用，靠的是<strong>终端</strong>（<em>Terminal</em>），一个只能打字的黑框。你在里面输入命令，<strong>Shell</strong> 负责读懂并交给内核执行。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[alex@hadoop100 ~]$ <span class="built_in">ls</span></span><br></pre></td></tr></table></figure>
+
+<p>这一行把四件事都说清楚了。</p>
+<table>
+<thead>
+<tr>
+<th>部分</th>
+<th>含义</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>alex</code></td>
+<td>当前用户</td>
+<td>你以谁的身份在操作</td>
+</tr>
+<tr>
+<td><code>@</code></td>
+<td>分隔符</td>
+<td>固定写法</td>
+</tr>
+<tr>
+<td><code>hadoop100</code></td>
+<td>主机名</td>
+<td>hostname，集群里靠它区分机器</td>
+</tr>
+<tr>
+<td><code>~</code></td>
+<td>当前目录</td>
+<td><code>~</code> 代表<strong>当前用户的家目录</strong>；<code>/</code> 才是根目录</td>
+</tr>
+<tr>
+<td><code>$</code></td>
+<td>权限提示</td>
+<td><code>$</code> 普通用户，<code>#</code> 超级用户 root。<strong>看到 <code>#</code> 就要小心了</strong></td>
+</tr>
+</tbody></table>
+<h3 id="Linux-的目录结构：一棵树，没有-C-盘"><a href="#Linux-的目录结构：一棵树，没有-C-盘" class="headerlink" title="Linux 的目录结构：一棵树，没有 C 盘"></a>Linux 的目录结构：一棵树，没有 C 盘</h3><p>Windows 有 C 盘、D 盘，Linux <strong>没有盘符</strong>，只有一棵树，最顶上是根目录 <code>/</code>。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">/                      # 根目录，一切的起点</span><br><span class="line">├── bin/              # 常用命令（ls、cp、mv 都在这）</span><br><span class="line">├── etc/              # 配置文件，装完软件改配置都来这</span><br><span class="line">├── home/             # 普通用户的家目录，你的 ~ 就在这里</span><br><span class="line">├── root/             # root 用户的家目录</span><br><span class="line">├── usr/              # 用户程序和库，装软件主要往这放</span><br><span class="line">│   └── tmp/          # 用户级临时文件</span><br><span class="line">│       └── tmpfile</span><br><span class="line">├── var/              # 经常变的数据，日志就在 var/log</span><br><span class="line">├── tmp/              # 系统临时文件，重启可能清空</span><br><span class="line">├── dev/              # 设备文件，一切皆文件</span><br><span class="line">└── mnt/              # 挂载点，插 U 盘挂这里</span><br></pre></td></tr></table></figure>
+
+<p>⚠️ <strong><code>/tmp</code> 和 <code>/usr/tmp</code> 是两个不同的目录</strong>，别混。前者是系统临时目录，后者是用户级的。</p>
+<h4 id="路径：绝对路径-vs-相对路径"><a href="#路径：绝对路径-vs-相对路径" class="headerlink" title="路径：绝对路径 vs 相对路径"></a>路径：绝对路径 vs 相对路径</h4><ul>
+<li><strong>绝对路径</strong> （<em>absolute path</em>）：从 <code>/</code> 写起，如 <code>/home/alex/doc</code>，在哪执行都一样；</li>
+<li><strong>相对路径</strong> （<em>relative path</em>）：从当前位置写起，如 <code>doc</code>、<code>../doc</code>；</li>
+<li><code>.</code> 当前目录，<code>..</code> 上一级目录，<code>~</code> 家目录，<code>-</code> 上一次所在的目录。</li>
+</ul>
+<h3 id="命令按用途分四组"><a href="#命令按用途分四组" class="headerlink" title="命令按用途分四组"></a>命令按用途分四组</h3><h4 id="1-查看信息"><a href="#1-查看信息" class="headerlink" title="1) 查看信息"></a>1) 查看信息</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">[alex@hadoop100 ~]$ <span class="built_in">pwd</span>              <span class="comment"># 我在哪：显示当前绝对路径</span></span><br><span class="line">[alex@hadoop100 ~]$ <span class="built_in">whoami</span>           <span class="comment"># 我是谁：当前用户名</span></span><br><span class="line">[alex@hadoop100 ~]$ <span class="built_in">date</span>             <span class="comment"># 现在几点</span></span><br><span class="line">[alex@hadoop100 ~]$ <span class="built_in">ls</span>               <span class="comment"># 有什么：列出目录内容</span></span><br><span class="line">[alex@hadoop100 ~]$ <span class="built_in">ls</span> -l            <span class="comment"># 详细列表（权限、大小、时间）</span></span><br><span class="line">[alex@hadoop100 ~]$ <span class="built_in">ls</span> -a            <span class="comment"># 连隐藏文件（以 . 开头）一起列</span></span><br><span class="line">[alex@hadoop100 ~]$ <span class="built_in">ls</span> -lh           <span class="comment"># -l 加上人类可读的大小（KB/MB）</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="2-目录操作"><a href="#2-目录操作" class="headerlink" title="2) 目录操作"></a>2) 目录操作</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[alex@hadoop100 ~]$ <span class="built_in">cd</span> /home/alex    <span class="comment"># 进去（change directory）</span></span><br><span class="line">[alex@hadoop100 ~]$ <span class="built_in">cd</span> ..            <span class="comment"># 回上一级</span></span><br><span class="line">[alex@hadoop100 ~]$ <span class="built_in">cd</span> ~             <span class="comment"># 回家目录</span></span><br><span class="line">[alex@hadoop100 ~]$ <span class="built_in">mkdir</span> mydir      <span class="comment"># 建目录（make directory）</span></span><br><span class="line">[alex@hadoop100 ~]$ <span class="built_in">mkdir</span> -p a/b/c   <span class="comment"># -p 连着建多级，父目录不存在也自动建</span></span><br><span class="line">[alex@hadoop100 ~]$ <span class="built_in">rmdir</span> mydir      <span class="comment"># 删【空】目录，非空会报错</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="3-文件操作"><a href="#3-文件操作" class="headerlink" title="3) 文件操作"></a>3) 文件操作</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">[alex@hadoop100 ~]$ <span class="built_in">touch</span> test.txt   <span class="comment"># 不存在就新建，存在就更新时间戳</span></span><br><span class="line">[alex@hadoop100 ~]$ <span class="built_in">cp</span> a.txt b.txt   <span class="comment"># 复制（copy）</span></span><br><span class="line">[alex@hadoop100 ~]$ <span class="built_in">cp</span> -r dir1 dir2  <span class="comment"># -r 递归复制整个目录</span></span><br><span class="line">[alex@hadoop100 ~]$ <span class="built_in">mv</span> a.txt /tmp     <span class="comment"># 移动；同目录内就是【重命名】</span></span><br><span class="line">[alex@hadoop100 ~]$ <span class="built_in">rm</span> test.txt      <span class="comment"># 删除（remove）</span></span><br><span class="line">[alex@hadoop100 ~]$ <span class="built_in">rm</span> -r mydir      <span class="comment"># 递归删目录及其内容</span></span><br><span class="line">[alex@hadoop100 ~]$ <span class="built_in">cat</span> a.txt        <span class="comment"># 一次看完整个文件</span></span><br><span class="line">[alex@hadoop100 ~]$ less big.log     <span class="comment"># 分页看大文件，q 退出（more 也行）</span></span><br><span class="line">[alex@hadoop100 ~]$ <span class="built_in">head</span> -5 a.txt    <span class="comment"># 看前 5 行</span></span><br><span class="line">[alex@hadoop100 ~]$ <span class="built_in">tail</span> -f app.log  <span class="comment"># 实时滚动看日志，排查问题最常用</span></span><br><span class="line">[alex@hadoop100 ~]$ <span class="built_in">echo</span> <span class="string">&quot;hi&quot;</span> &gt; a.txt <span class="comment"># 写入（覆盖）；&gt;&gt; 是追加</span></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p><strong>最危险的一条命令</strong></p>
+<p><code>rm -rf /</code> 会从根目录开始删除整个系统。<strong>Linux 没有回收站</strong>，删了就没了，执行前也不会有任何「你确定吗」的二次确认。<br>所以平时养成习惯：<strong>删之前先 <code>ls</code> 看一眼</strong>，把 <code>rm -rf</code> 当成手术刀用。</p>
+</blockquote>
+<h4 id="4-用户与权限"><a href="#4-用户与权限" class="headerlink" title="4) 用户与权限"></a>4) 用户与权限</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[alex@hadoop100 ~]$ <span class="built_in">chmod</span> 755 run.sh       <span class="comment"># 改权限：755 = rwxr-xr-x</span></span><br><span class="line">[alex@hadoop100 ~]$ <span class="built_in">chmod</span> u+x run.sh       <span class="comment"># 给属主加执行权限</span></span><br><span class="line">[alex@hadoop100 ~]$ <span class="built_in">chown</span> alex:alex a.txt   <span class="comment"># 改属主与属组</span></span><br><span class="line">[alex@hadoop100 ~]$ useradd tom            <span class="comment"># 新建用户（需要 root）</span></span><br><span class="line">[alex@hadoop100 ~]$ passwd tom             <span class="comment"># 设置密码</span></span><br><span class="line">[root@hadoop100 ~]# su - alex              <span class="comment"># 切换到 alex 用户</span></span><br></pre></td></tr></table></figure>
+
+<p>用 <code>ls -l</code> 看到的第一列，长这样。</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">-rwxr-xr-x  1 alex alex  1024 Oct 30 10:00 run.sh</span><br><span class="line">│└┬┘└┬┘└┬┘</span><br><span class="line">│ │  │  └── other（其他人）：r-x</span><br><span class="line">│ │  └───── group（同组）：r-x</span><br><span class="line">│ └──────── user（属主）：rwx</span><br><span class="line">└────────── 文件类型</span><br></pre></td></tr></table></figure>
+
+<p>九个字符分三组，每组三位，分别对应 <strong>r（读 4）、w（写 2）、x（执行 1）</strong>。所以 <code>755</code> &#x3D; 属主 rwx，其他人 r-x。首字符表示类型。</p>
+<table>
+<thead>
+<tr>
+<th>首字符</th>
+<th>File Type</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>d</code></td>
+<td>Directory</td>
+<td>目录</td>
+</tr>
+<tr>
+<td><code>-</code></td>
+<td>File &#x2F; Executable File</td>
+<td>普通文件（有没有 x 决定能不能执行）</td>
+</tr>
+<tr>
+<td><code>l</code></td>
+<td>Symbolic Link File</td>
+<td>符号链接，相当于快捷方式</td>
+</tr>
+<tr>
+<td><code>p</code></td>
+<td>Named Pipe (FIFO)</td>
+<td>命名管道，进程间通信</td>
+</tr>
+<tr>
+<td><code>s</code></td>
+<td>Socket</td>
+<td>套接字</td>
+</tr>
+<tr>
+<td><code>b</code></td>
+<td>Block Device</td>
+<td>块设备，如硬盘</td>
+</tr>
+<tr>
+<td><code>c</code></td>
+<td>Character Device</td>
+<td>字符设备，如键盘</td>
+</tr>
+<tr>
+<td><code>?</code></td>
+<td>Missing File</td>
+<td>文件已丢失（链接悬空）</td>
+</tr>
+</tbody></table>
+<h3 id="vim：Linux-下最常用的编辑器"><a href="#vim：Linux-下最常用的编辑器" class="headerlink" title="vim：Linux 下最常用的编辑器"></a>vim：Linux 下最常用的编辑器</h3><blockquote>
+<p>第一次用 vim 的人都会懵：怎么打字打不进去？</p>
+</blockquote>
+<p>因为 vim 有<strong>模式</strong>。打开时你在<strong>命令模式</strong>（<em>Command Mode</em>），按键被当成命令而不是文字。要打字，先按 <code>i</code> 进入<strong>插入模式</strong>（<em>Insert Mode</em>）。</p>
+<p>命令模式Command — i &#x2F; a &#x2F; o → 插入模式Insert — Esc → 命令模式 — : → 末行模式Last-line</p>
+<table>
+<thead>
+<tr>
+<th>操作</th>
+<th>按键</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>进入插入模式</td>
+<td><code>i</code> 光标前插入 &#x2F; <code>a</code> 光标后插入 &#x2F; <code>o</code> 下一行新开一行</td>
+</tr>
+<tr>
+<td>回到命令模式</td>
+<td><code>Esc</code></td>
+</tr>
+<tr>
+<td>保存并退出</td>
+<td><code>:wq</code>（write &amp; quit）</td>
+</tr>
+<tr>
+<td>不保存强退</td>
+<td><code>:q!</code></td>
+</tr>
+<tr>
+<td>只保存不退出</td>
+<td><code>:w</code></td>
+</tr>
+</tbody></table>
+<p>⚠️ <strong>忘了按 <code>Esc</code> 就敲 <code>:wq</code>，这四个字符会原样插进正文，文件并没有保存。</strong></p>
+<h3 id="七条能省下大量时间的技巧"><a href="#七条能省下大量时间的技巧" class="headerlink" title="七条能省下大量时间的技巧"></a>七条能省下大量时间的技巧</h3><ol>
+<li><strong>Tab 补全</strong>：命令、路径打一半按 Tab，自动补全，还能顺便检查你路径有没有打错；</li>
+<li><strong>上下方向键</strong>：翻历史命令，重复执行不用重打；</li>
+<li><strong>Ctrl + C</strong>：强制中断当前命令（死循环、卡住的进程都靠它）；</li>
+<li><strong>Ctrl + L</strong>：清屏（等同 <code>clear</code>）；</li>
+<li>**<code>man 命令名</code>**：查手册，如 <code>man ls</code>；不记得命令名就用 <code>man -k 关键词</code>；</li>
+<li>**<code>命令 --help</code>**：快速看用法，比 man 轻量；</li>
+<li>**<code>history</code>**：列出所有敲过的命令，配合 <code>!编号</code> 重跑。</li>
+</ol>
+<blockquote>
+<p><strong>一个习惯，能救很多次命</strong></p>
+<p>执行 <code>rm</code>、<code>mv</code>、<code>chmod -R</code> 这类命令前，<strong>先把同样的路径喂给 <code>ls</code> 看一眼</strong>。确认是你要动的那个目录，再执行。多花三秒，少哭一晚。</p>
+</blockquote>
+<blockquote>
+<p><strong>总结</strong></p>
+<ol>
+<li><strong>Linux 是操作系统</strong>，由内核（kernel）+ 系统程序 + 应用组成；内核管资源，用户态不能直接碰。</li>
+<li><strong>发行版</strong> &#x3D; 内核 + 一堆软件；包管理分两族：<strong>DEB（apt）</strong> 与 <strong>RPM（yum&#x2F;dnf）</strong>。</li>
+<li><strong>提示符</strong> <code>[用户@主机目录]$</code>，<code>$</code> 普通用户、<code>#</code> root。</li>
+<li><strong>没有盘符</strong>，只有一棵从 <code>/</code> 开始的树；<code>/bin</code> 命令、<code>/etc</code> 配置、<code>/home</code> 家目录、<code>/var</code> 日志。</li>
+<li><strong>命令四组</strong>：查看信息、目录、文件、用户与权限。</li>
+<li><strong>权限</strong> r&#x3D;4 w&#x3D;2 x&#x3D;1，<code>755</code>&#x3D;rwxr-xr-x；首字符 <code>d</code>&#x2F;<code>-</code>&#x2F;<code>l</code> 等表示类型。</li>
+<li><strong>vim 三模式</strong>：命令 → 插入（i）→ 末行（:wq）；没有回收站，<code>rm -rf</code> 慎用。</li>
+</ol>
+</blockquote>
+<h2 id="2-2-为什么大数据要用-Python？"><a href="#2-2-为什么大数据要用-Python？" class="headerlink" title="2.2　为什么大数据要用 Python？"></a>2.2　为什么大数据要用 Python？</h2><blockquote>
+<p>处理数据，Java、C++ 不是更快吗？为什么偏偏用 Python？</p>
+</blockquote>
+<p>因为写 Python 的时候，<strong>你的时间花在想逻辑上，不是花在写细节上</strong>。有一句话点得很准：<em>Python programmers can spend more time thinking about the program logic than the specific implementation details.</em></p>
+<p>而且大数据生态里几乎所有工具都给了 Python 接口：Spark 有 PySpark，Hadoop 能写 Streaming，NumPy、pandas、matplotlib 直接把数据处理做成了几行代码。所以这门课把它当成<strong>默认的动手语言</strong>。</p>
+<h3 id="它是怎么来的"><a href="#它是怎么来的" class="headerlink" title="它是怎么来的"></a>它是怎么来的</h3><p>作者是荷兰人 <strong>Guido van Rossum</strong>（吉多·范罗苏姆）。1982 年他在阿姆斯特丹大学拿到数学与计算机的硕士学位，<strong>1989 年一个人把 Python 写了出来</strong>。</p>
+<p>后来他和同事组成了 Python 的核心团队，语言一路演进：先是<strong>框架立住</strong>，然后<strong>标准库体系稳定</strong>，接着生态开始向<strong>第三方包</strong>扩张，Django、web.py、wxpython、NumPy、matplotlib、PIL，把 Python 从一门语言养成了「物种丰富的热带雨林」。</p>
+<p>现在它的地位：<strong>Google 的第三大开发语言、Dropbox 的基础语言、豆瓣的服务器语言。</strong></p>
+<h3 id="优点：为什么它好上手"><a href="#优点：为什么它好上手" class="headerlink" title="优点：为什么它好上手"></a>优点：为什么它好上手</h3><table>
+<thead>
+<tr>
+<th>优点</th>
+<th>具体指什么</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>语法优雅、可读性高</strong></td>
+<td>读一段好的 Python 程序，像读英文</td>
+</tr>
+<tr>
+<td><strong>容易学</strong></td>
+<td>虽然底层用 C 写，但抛掉了 C 里最复杂的指针，语法大幅简化</td>
+</tr>
+<tr>
+<td><strong>自带庞大标准库</strong></td>
+<td>连 Web 服务器、正则匹配、文件读写这些常见任务都有现成的</td>
+</tr>
+<tr>
+<td><strong>交互模式</strong></td>
+<td>随手敲几行就能验证想法，试错成本极低</td>
+</tr>
+<tr>
+<td><strong>易扩展</strong></td>
+<td>可以用 C &#x2F; C++ 写模块嵌进来，性能瓶颈交给它们</td>
+</tr>
+<tr>
+<td><strong>跨平台</strong></td>
+<td>macOS、Windows、Linux、Unix 都能跑</td>
+</tr>
+<tr>
+<td><strong>数据类型丰富</strong></td>
+<td>数字（浮点、复数、无限长整数）、字符串（ASCII &#x2F; Unicode）、列表、字典</td>
+</tr>
+<tr>
+<td><strong>面向对象</strong></td>
+<td>支持类与多重继承</td>
+</tr>
+<tr>
+<td><strong>强类型 + 动态类型</strong></td>
+<td>类型不兼容会直接抛异常，<strong>错误暴露得早</strong></td>
+</tr>
+<tr>
+<td><strong>自动内存管理</strong></td>
+<td>不用手动 malloc &#x2F; free，垃圾回收自己处理</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>「强类型 + 动态类型」这两个词放一起，是不是有点矛盾？</p>
+</blockquote>
+<p>不矛盾，它们是两件不同的事。</p>
+<ul>
+<li><strong>强类型</strong> （<em>strongly typed</em>）说的是「<strong>不会偷偷帮你转换</strong>」：<code>&quot;1&quot; + 1</code> 直接报错，不猜你想干嘛；</li>
+<li><strong>动态类型</strong> （<em>dynamically typed</em>）说的是「<strong>类型在运行时才确定</strong>」：变量不用声明类型，赋什么就是什么。</li>
+</ul>
+<p>有一句话说得很到位：<em>In Python, you never declare anything. If a name is assigned to an object of one type, it may later be assigned to an object of a different type.</em></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">a = <span class="number">1</span>          <span class="comment"># a 现在指向一个 int 对象</span></span><br><span class="line">a = <span class="string">&quot;hello&quot;</span>    <span class="comment"># 同一个 a，改指向 str 对象，合法</span></span><br><span class="line">a = <span class="number">1</span> + <span class="string">&quot;x&quot;</span>    <span class="comment"># TypeError：强类型，不会帮你转成 &quot;1x&quot;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="缺点：它不完美"><a href="#缺点：它不完美" class="headerlink" title="缺点：它不完美"></a>缺点：它不完美</h3><table>
+<thead>
+<tr>
+<th>缺点</th>
+<th>怎么回事 &#x2F; 怎么绕</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>很多语句写不进一行</strong></td>
+<td>表达力上不如某些函数式语言紧凑；Python 的做法是「宁可多一行，也要读得懂」</td>
+</tr>
+<tr>
+<td><strong>运行速度慢</strong></td>
+<td>关键部分用 C &#x2F; C++ 重写；但对使用者而言，很多场景下这点差异根本感知不到</td>
+</tr>
+<tr>
+<td><strong>开源导致无法加密</strong></td>
+<td>源码就是明文，做商业闭源分发要另外想办法（编译、加壳）</td>
+</tr>
+<tr>
+<td><strong>Python 2 vs Python 3</strong></td>
+<td>两个版本不兼容，历史包袱重，新项目一律用 3</td>
+</tr>
+</tbody></table>
+<p>⚠️ 关于「慢」，<strong>Python 慢是事实，但大数据场景的瓶颈通常在 IO 和集群，不在解释器那几毫秒。</strong></p>
+<h3 id="代码风格：几个不能马虎的细节"><a href="#代码风格：几个不能马虎的细节" class="headerlink" title="代码风格：几个不能马虎的细节"></a>代码风格：几个不能马虎的细节</h3><p>Python 有个著名的设计哲学，写在 <em>The Zen of Python</em> 里。</p>
+<blockquote>
+<p>**Beautiful is better than ugly.**（优美胜于丑陋）<br> **Explicit is better than implicit.**（明了胜于晦涩）<br> **Simple is better than complex.**（简单胜于复杂）</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th>规则</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>大小写敏感</strong></td>
+<td><code>Name</code> 和 <code>name</code> 是两个东西</td>
+</tr>
+<tr>
+<td><strong>没有大括号</strong></td>
+<td>也几乎没有分号；代码块靠<strong>缩进</strong>划分</td>
+</tr>
+<tr>
+<td><strong>缩进有意义</strong></td>
+<td>官方风格是<strong>每级 4 个空格</strong>；缩进错了程序直接跑不了</td>
+</tr>
+<tr>
+<td><strong>单双引号等价</strong></td>
+<td>但同一个项目里别混用</td>
+</tr>
+<tr>
+<td><strong>注释</strong></td>
+<td><code>#</code> 单行注释；多行用文档字符串 <code>&#39;&#39;&#39;…&#39;&#39;&#39;</code> 或 <code>&quot;&quot;&quot;…&quot;&quot;&quot;</code>（docstring）</td>
+</tr>
+<tr>
+<td><strong>命名</strong></td>
+<td>变量名不能以数字开头，不能用关键字</td>
+</tr>
+<tr>
+<td><strong>多重赋值</strong></td>
+<td><code>a = b = c = 1</code> 一行搞定</td>
+</tr>
+<tr>
+<td><strong>风格指南</strong></td>
+<td><strong>PEP 8</strong>（<em>Style Guide for Python Code</em>）：官方编码规范，全称很少写，通常只说 PEP 8</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p><strong>最该记牢的一句话</strong></p>
+<p>「Python 用<strong>缩进</strong>表示代码块，而不是大括号。」这一条决定了后面所有代码的样子。标准缩进量是 <strong>4 个空格</strong>，混用 Tab 和空格会报 <code>IndentationError</code>。</p>
+</blockquote>
+<h3 id="IDE：在哪写-Python"><a href="#IDE：在哪写-Python" class="headerlink" title="IDE：在哪写 Python"></a>IDE：在哪写 Python</h3><p><strong>IDE</strong>（<em>Integrated Development Environment</em>，集成开发环境）就是「编辑器 + 运行 + 调试」打包在一起。学 Python 最省事的路子是装一个 <strong>Anaconda</strong>，它自带包管理器 <code>conda</code>、环境管理器，以及一大堆科学计算库，装环境这件事基本不用操心。</p>
+<p>Anaconda Navigator 里能一键启动的工具，主要是这几个。</p>
+<table>
+<thead>
+<tr>
+<th>工具</th>
+<th>适合干什么</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>JupyterLab &#x2F; Jupyter Notebook</strong></td>
+<td>浏览器里的交互式笔记本，边写边看结果，<strong>做数据分析首选</strong></td>
+</tr>
+<tr>
+<td><strong>Spyder</strong></td>
+<td>科学计算向的 IDE，变量查看器好用，像 MATLAB</td>
+</tr>
+<tr>
+<td><strong>Qt Console</strong></td>
+<td>轻量交互终端，画图直接嵌在窗口里</td>
+</tr>
+<tr>
+<td><strong>Glueviz &#x2F; Orange 3</strong></td>
+<td>多维数据可视化、可视化编程做数据挖掘</td>
+</tr>
+<tr>
+<td><strong>RStudio</strong></td>
+<td>R 语言的环境（顺便装着）</td>
+</tr>
+<tr>
+<td><strong>VS Code</strong></td>
+<td>通用编辑器，装 Python 插件后也是主力选择</td>
+</tr>
+</tbody></table>
+<h3 id="基础语法：一小时能补完的部分"><a href="#基础语法：一小时能补完的部分" class="headerlink" title="基础语法：一小时能补完的部分"></a>基础语法：一小时能补完的部分</h3><h4 id="1-基本运算与布尔"><a href="#1-基本运算与布尔" class="headerlink" title="1) 基本运算与布尔"></a>1) 基本运算与布尔</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1</span> + <span class="number">2</span>        <span class="comment"># 3      加</span></span><br><span class="line"><span class="number">7</span> / <span class="number">2</span>        <span class="comment"># 3.5    真除法，结果一定是 float</span></span><br><span class="line"><span class="number">7</span> // <span class="number">2</span>       <span class="comment"># 3      整除（向下取整）</span></span><br><span class="line"><span class="number">7</span> % <span class="number">2</span>        <span class="comment"># 1      取余</span></span><br><span class="line"><span class="number">2</span> ** <span class="number">10</span>      <span class="comment"># 1024   幂</span></span><br><span class="line"><span class="literal">True</span> + <span class="literal">True</span>  <span class="comment"># 2      布尔参与运算时，True=1、False=0</span></span><br></pre></td></tr></table></figure>
+
+<p>最后一行特别容易被忽略：<strong>布尔类型参与运算时会被当成 1 和 0</strong>，因为 Python 里 <code>bool</code> 是 <code>int</code> 的子类。</p>
+<h4 id="2-四种容器（必须会用）"><a href="#2-四种容器（必须会用）" class="headerlink" title="2) 四种容器（必须会用）"></a>2) 四种容器（必须会用）</h4><table>
+<thead>
+<tr>
+<th>类型</th>
+<th>符号</th>
+<th>有序？</th>
+<th>可变？</th>
+<th>特点</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>list</strong> 列表</td>
+<td><code>[]</code></td>
+<td>有序</td>
+<td><strong>可变</strong></td>
+<td>元素类型可以不同，能增删改</td>
+</tr>
+<tr>
+<td><strong>tuple</strong> 元组</td>
+<td><code>()</code></td>
+<td>有序</td>
+<td><strong>不可变</strong></td>
+<td>初始化后不能改、不能追加，相当于「只读列表」</td>
+</tr>
+<tr>
+<td><strong>set</strong> 集合</td>
+<td><code>&#123;&#125;</code></td>
+<td><strong>无序</strong></td>
+<td>可变</td>
+<td>元素唯一，重复的自动去掉</td>
+</tr>
+<tr>
+<td><strong>dict</strong> 字典</td>
+<td><code>&#123;key: value&#125;</code></td>
+<td>有序（3.7+）</td>
+<td>可变</td>
+<td>键值对，<strong>key 唯一</strong></td>
+</tr>
+</tbody></table>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">fruits = [<span class="string">&quot;apple&quot;</span>, <span class="string">&quot;banana&quot;</span>, <span class="string">&quot;cherry&quot;</span>]        <span class="comment"># list：[] 包起来，逗号分隔</span></span><br><span class="line">squares = [x*x <span class="keyword">for</span> x <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">6</span>) <span class="keyword">if</span> x % <span class="number">2</span> == <span class="number">0</span>]  <span class="comment"># 列表推导式 → [0, 4, 16]</span></span><br><span class="line"></span><br><span class="line">point = (<span class="number">3</span>, <span class="number">4</span>)                                 <span class="comment"># tuple：() 包起来，不可改</span></span><br><span class="line"><span class="comment"># point[0] = 5   ← 这行会报 TypeError</span></span><br><span class="line"></span><br><span class="line">s = &#123;<span class="number">1</span>, <span class="number">2</span>, <span class="number">2</span>, <span class="number">3</span>&#125;                               <span class="comment"># set：去重 → &#123;1, 2, 3&#125;</span></span><br><span class="line"></span><br><span class="line">person = &#123;<span class="string">&quot;name&quot;</span>: <span class="string">&quot;Ming&quot;</span>, <span class="string">&quot;age&quot;</span>: <span class="number">12</span>&#125;           <span class="comment"># dict：键值对，key 唯一</span></span><br><span class="line">person[<span class="string">&quot;age&quot;</span>]                                   <span class="comment"># 取值 → 12</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>列表推导式</strong>（<em>list comprehension</em>）的写法是 <code>表达式 for 变量 in 迭代器 if 条件</code>，一行完成「筛选 + 变换」，比写循环干净得多。</p>
+<h4 id="3-控制语句"><a href="#3-控制语句" class="headerlink" title="3) 控制语句"></a>3) 控制语句</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">score = <span class="number">72</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> score &gt;= <span class="number">60</span>:</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;pass&quot;</span>)</span><br><span class="line"><span class="keyword">elif</span> score &gt;= <span class="number">50</span>:</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;make-up exam&quot;</span>)</span><br><span class="line"><span class="keyword">else</span>:</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;fail&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">3</span>):          <span class="comment"># 0 1 2</span></span><br><span class="line">    <span class="built_in">print</span>(i)</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> k, v <span class="keyword">in</span> person.items(): <span class="comment"># 遍历字典</span></span><br><span class="line">    <span class="built_in">print</span>(k, v)</span><br></pre></td></tr></table></figure>
+
+<p>⚠️ <code>for</code> 循环里<strong>变量会被依次赋值为可迭代对象的下一个元素</strong>；可迭代对象可以是字符串、列表、元组、字典、集合。循环体必须缩进，否则不在循环里。这就是「缩进即语法」的直观体现。</p>
+<h4 id="4-函数与-range"><a href="#4-函数与-range" class="headerlink" title="4) 函数与 range"></a>4) 函数与 range</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">add</span>(<span class="params">a, b</span>):</span><br><span class="line">    <span class="keyword">return</span> a + b</span><br><span class="line"></span><br><span class="line">add(<span class="number">1</span>, <span class="number">2</span>)            <span class="comment"># 3</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">range</span>(<span class="number">5</span>)             <span class="comment"># 0 1 2 3 4      （stop）</span></span><br><span class="line"><span class="built_in">range</span>(<span class="number">2</span>, <span class="number">5</span>)          <span class="comment"># 2 3 4          （start, stop）</span></span><br><span class="line"><span class="built_in">list</span>(<span class="built_in">range</span>(<span class="number">2</span>, <span class="number">10</span>, <span class="number">3</span>))  <span class="comment"># [2, 5, 8]    （start, stop, step）</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>range 是左闭右开</strong>（*[start, stop)*），包含 start，不包含 stop。这个边界最容易记错，记不住就想 <code>range(5)</code> 是 0 到 4，不是 0 到 5。</p>
+<h4 id="5-文件读写"><a href="#5-文件读写" class="headerlink" title="5) 文件读写"></a>5) 文件读写</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">with</span> <span class="built_in">open</span>(<span class="string">&quot;data.txt&quot;</span>, <span class="string">&quot;r&quot;</span>, encoding=<span class="string">&quot;utf-8&quot;</span>) <span class="keyword">as</span> f:</span><br><span class="line">    <span class="keyword">for</span> line <span class="keyword">in</span> f:</span><br><span class="line">        <span class="built_in">print</span>(line.strip())</span><br><span class="line"></span><br><span class="line"><span class="keyword">with</span> <span class="built_in">open</span>(<span class="string">&quot;out.txt&quot;</span>, <span class="string">&quot;w&quot;</span>, encoding=<span class="string">&quot;utf-8&quot;</span>) <span class="keyword">as</span> f:</span><br><span class="line">    f.write(<span class="string">&quot;hello\n&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<p>用 <code>with</code> 的好处是<strong>块结束时自动关闭文件</strong>，不用自己写 <code>close()</code>，也不怕中途抛异常漏掉关闭。处理大文件时<strong>逐行读</strong>（像上面那样 <code>for line in f</code>），不要一次 <code>read()</code> 进内存。</p>
+<h3 id="遇到不会的，怎么查"><a href="#遇到不会的，怎么查" class="headerlink" title="遇到不会的，怎么查"></a>遇到不会的，怎么查</h3><p>五条途径，按「离线能用」排序，前三条平时就够用了。</p>
+<ol>
+<li><strong>Python Manuals</strong>：安装时自带的官方文档；</li>
+<li><strong>python.org&#x2F;doc</strong>：官方在线文档；</li>
+<li>**<code>help()</code> 和 <code>dir()</code>**：最实用的两个内置函数；</li>
+<li>搜索引擎（配上错误信息一起搜）；</li>
+<li>Python Wiki 的 Beginner’s Guide 之类学习资源。</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="built_in">dir</span>(<span class="built_in">list</span>)        <span class="comment"># 这个对象有哪些属性/方法</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="built_in">help</span>(<span class="built_in">list</span>.append)  <span class="comment"># 某个方法具体怎么用</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="built_in">help</span>(<span class="string">&quot;modules&quot;</span>)    <span class="comment"># 有哪些标准库模块</span></span><br></pre></td></tr></table></figure>
+
+<p>⚠️ <code>help()</code> 的输出是<strong>分页显示</strong>的，看完按 <code>Q</code> 退出，卡在帮助里出不来，就是这个原因。</p>
+<blockquote>
+<p><strong>总结</strong></p>
+<ol>
+<li><strong>作者与出身</strong>：Guido van Rossum，荷兰人，1989 年独立开发。</li>
+<li><strong>优点</strong>：语法优雅可读、易学、标准库大、有交互模式、可扩展、跨平台、类型丰富、面向对象、强类型、自动内存管理。</li>
+<li><strong>缺点</strong>：语句难挤成一行、运行慢（可用 C&#x2F;C++ 重写）、开源不可加密、Py2 与 Py3 不兼容。</li>
+<li><strong>风格</strong>：大小写敏感、无大括号、<strong>缩进 4 空格</strong>、<code>#</code> 注释 + docstring、<strong>PEP 8</strong>。</li>
+<li><strong>四种容器</strong>：list <code>[]</code> 可变有序、tuple <code>()</code> 不可变、set <code>&#123;&#125;</code> 无序去重、dict <code>&#123;k:v&#125;</code> 键唯一。</li>
+<li><strong>语法细节</strong>：<code>//</code> 整除、<code>%</code> 取余、<code>**</code> 幂；布尔参与运算为 1&#x2F;0；<code>range</code> 左闭右开。</li>
+<li><strong>求助</strong>：<code>help()</code> &#x2F; <code>dir()</code>，按 <code>Q</code> 退出。</li>
+</ol>
+</blockquote>
+</article><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/other/QUT/%E5%A4%A7%E6%95%B0%E6%8D%AE%E8%B5%84%E6%96%99/01-%E6%95%B0%E6%8D%AE%E4%B8%8E%E5%A4%A7%E6%95%B0%E6%8D%AE/"><img class="prev-cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">01 数据与大数据</div></div></a></div><div class="next-post pull-right"><a href="/other/QUT/%E5%A4%A7%E6%95%B0%E6%8D%AE%E8%B5%84%E6%96%99/03-%E6%95%B0%E6%8D%AE%E9%87%87%E9%9B%86/"><img class="next-cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">03 数据采集</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="anzhiyufont anzhiyu-icon-thumbs-up fa-fw" style="font-size: 1.5rem; margin-right: 4px"></i><span>喜欢这篇文章的人也看了</span></div><div class="relatedPosts-list"><div><a href="/other/QUT/%E5%A4%A7%E6%95%B0%E6%8D%AE%E8%B5%84%E6%96%99/00-%E5%A4%8D%E4%B9%A0%E6%89%8B%E5%86%8C%E6%80%BB%E8%A7%88/" title="00 复习手册总览"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/" alt="cover"><div class="content is-center"><div class="date"><i class="anzhiyufont anzhiyu-icon-calendar-days fa-fw"></i> 2026-11-16</div><div class="title">00 复习手册总览</div></div></a></div><div><a href="/other/QUT/%E5%A4%A7%E6%95%B0%E6%8D%AE%E8%B5%84%E6%96%99/03-%E6%95%B0%E6%8D%AE%E9%87%87%E9%9B%86/" title="03 数据采集"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/" alt="cover"><div class="content is-center"><div class="date"><i class="anzhiyufont anzhiyu-icon-calendar-days fa-fw"></i> 2026-11-16</div><div class="title">03 数据采集</div></div></a></div><div><a href="/other/QUT/%E5%A4%A7%E6%95%B0%E6%8D%AE%E8%B5%84%E6%96%99/04-%E6%95%B0%E6%8D%AE%E5%AD%98%E5%82%A8%E4%B8%8E%E7%AE%A1%E7%90%86/" title="04 数据存储与管理"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/" alt="cover"><div class="content is-center"><div class="date"><i class="anzhiyufont anzhiyu-icon-calendar-days fa-fw"></i> 2026-11-16</div><div class="title">04 数据存储与管理</div></div></a></div><div><a href="/other/QUT/%E5%A4%A7%E6%95%B0%E6%8D%AE%E8%B5%84%E6%96%99/07-%E5%A4%A7%E6%95%B0%E6%8D%AE%E4%BA%BA%E6%96%87/" title="07 大数据人文"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/" alt="cover"><div class="content is-center"><div class="date"><i class="anzhiyufont anzhiyu-icon-calendar-days fa-fw"></i> 2026-11-16</div><div class="title">07 大数据人文</div></div></a></div><div><a href="/other/QUT/%E5%A4%A7%E6%95%B0%E6%8D%AE%E8%B5%84%E6%96%99/08-%E4%B8%AD%E8%8B%B1%E6%9C%AF%E8%AF%AD%E5%AF%B9%E7%85%A7%E8%A1%A8/" title="08 中英术语对照表"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/" alt="cover"><div class="content is-center"><div class="date"><i class="anzhiyufont anzhiyu-icon-calendar-days fa-fw"></i> 2026-11-16</div><div class="title">08 中英术语对照表</div></div></a></div><div><a href="/other/QUT/%E5%A4%A7%E6%95%B0%E6%8D%AE%E8%B5%84%E6%96%99/01-%E6%95%B0%E6%8D%AE%E4%B8%8E%E5%A4%A7%E6%95%B0%E6%8D%AE/" title="01 数据与大数据"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/" alt="cover"><div class="content is-center"><div class="date"><i class="anzhiyufont anzhiyu-icon-calendar-days fa-fw"></i> 2026-11-16</div><div class="title">01 数据与大数据</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="card-content"><div class="author-info-avatar"><img class="avatar-img" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://qiuxz-blog-image.oss-cn-beijing.aliyuncs.com/blog/avatar.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__description">全栈开发、agent开发</div><div class="author-info__bottom-group"><a class="author-info__bottom-group-left" href="/"><h1 class="author-info__name">qiuxz</h1><div class="author-info__desc"></div></a><div class="card-info-social-icons is-center"><a class="social-icon faa-parent animated-hover" href="https://github.com/qiuxzh" target="_blank" title="Github"><i class="anzhiyufont anzhiyu-icon-github"></i></a><a class="social-icon faa-parent animated-hover" href="javascript:void(0);" title="QQ" data-copy="1256227507"><i class="anzhiyufont anzhiyu-icon-qq"></i></a><a class="social-icon faa-parent animated-hover" href="javascript:void(0);" title="Email" data-copy="1256227507@qq.com"><i class="anzhiyufont anzhiyu-icon-envelope"></i></a></div></div></div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="anzhiyufont anzhiyu-icon-bars"></i><span>文章目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Linux-%E5%88%B0%E5%BA%95%E6%98%AF%E4%BB%80%E4%B9%88"><span class="toc-number">1.</span> <span class="toc-text">Linux 到底是什么</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%B8%80%E6%AE%B5%E5%BF%85%E9%A1%BB%E7%9F%A5%E9%81%93%E7%9A%84%E5%8E%86%E5%8F%B2"><span class="toc-number">1.1.</span> <span class="toc-text">一段必须知道的历史</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Linux-%E9%87%8C%E9%9D%A2%E9%95%BF%E4%BB%80%E4%B9%88%E6%A0%B7"><span class="toc-number">2.</span> <span class="toc-text">Linux 里面长什么样</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%91%E8%A1%8C%E7%89%88%EF%BC%9A%E5%86%85%E6%A0%B8-%E4%B8%80%E5%A0%86%E8%BD%AF%E4%BB%B6%E7%9A%84%E6%89%93%E5%8C%85"><span class="toc-number">3.</span> <span class="toc-text">发行版：内核 + 一堆软件的打包</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BB%88%E7%AB%AF%E4%B8%8E%E5%91%BD%E4%BB%A4%E6%8F%90%E7%A4%BA%E7%AC%A6"><span class="toc-number">4.</span> <span class="toc-text">终端与命令提示符</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Linux-%E7%9A%84%E7%9B%AE%E5%BD%95%E7%BB%93%E6%9E%84%EF%BC%9A%E4%B8%80%E6%A3%B5%E6%A0%91%EF%BC%8C%E6%B2%A1%E6%9C%89-C-%E7%9B%98"><span class="toc-number">5.</span> <span class="toc-text">Linux 的目录结构：一棵树，没有 C 盘</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%B7%AF%E5%BE%84%EF%BC%9A%E7%BB%9D%E5%AF%B9%E8%B7%AF%E5%BE%84-vs-%E7%9B%B8%E5%AF%B9%E8%B7%AF%E5%BE%84"><span class="toc-number">5.1.</span> <span class="toc-text">路径：绝对路径 vs 相对路径</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%91%BD%E4%BB%A4%E6%8C%89%E7%94%A8%E9%80%94%E5%88%86%E5%9B%9B%E7%BB%84"><span class="toc-number">6.</span> <span class="toc-text">命令按用途分四组</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-%E6%9F%A5%E7%9C%8B%E4%BF%A1%E6%81%AF"><span class="toc-number">6.1.</span> <span class="toc-text">1) 查看信息</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-%E7%9B%AE%E5%BD%95%E6%93%8D%E4%BD%9C"><span class="toc-number">6.2.</span> <span class="toc-text">2) 目录操作</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-%E6%96%87%E4%BB%B6%E6%93%8D%E4%BD%9C"><span class="toc-number">6.3.</span> <span class="toc-text">3) 文件操作</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-%E7%94%A8%E6%88%B7%E4%B8%8E%E6%9D%83%E9%99%90"><span class="toc-number">6.4.</span> <span class="toc-text">4) 用户与权限</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#vim%EF%BC%9ALinux-%E4%B8%8B%E6%9C%80%E5%B8%B8%E7%94%A8%E7%9A%84%E7%BC%96%E8%BE%91%E5%99%A8"><span class="toc-number">7.</span> <span class="toc-text">vim：Linux 下最常用的编辑器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%83%E6%9D%A1%E8%83%BD%E7%9C%81%E4%B8%8B%E5%A4%A7%E9%87%8F%E6%97%B6%E9%97%B4%E7%9A%84%E6%8A%80%E5%B7%A7"><span class="toc-number">8.</span> <span class="toc-text">七条能省下大量时间的技巧</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-2-%E4%B8%BA%E4%BB%80%E4%B9%88%E5%A4%A7%E6%95%B0%E6%8D%AE%E8%A6%81%E7%94%A8-Python%EF%BC%9F"><span class="toc-number"></span> <span class="toc-text">2.2　为什么大数据要用 Python？</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%83%E6%98%AF%E6%80%8E%E4%B9%88%E6%9D%A5%E7%9A%84"><span class="toc-number">1.</span> <span class="toc-text">它是怎么来的</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BC%98%E7%82%B9%EF%BC%9A%E4%B8%BA%E4%BB%80%E4%B9%88%E5%AE%83%E5%A5%BD%E4%B8%8A%E6%89%8B"><span class="toc-number">2.</span> <span class="toc-text">优点：为什么它好上手</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BC%BA%E7%82%B9%EF%BC%9A%E5%AE%83%E4%B8%8D%E5%AE%8C%E7%BE%8E"><span class="toc-number">3.</span> <span class="toc-text">缺点：它不完美</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%A3%E7%A0%81%E9%A3%8E%E6%A0%BC%EF%BC%9A%E5%87%A0%E4%B8%AA%E4%B8%8D%E8%83%BD%E9%A9%AC%E8%99%8E%E7%9A%84%E7%BB%86%E8%8A%82"><span class="toc-number">4.</span> <span class="toc-text">代码风格：几个不能马虎的细节</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#IDE%EF%BC%9A%E5%9C%A8%E5%93%AA%E5%86%99-Python"><span class="toc-number">5.</span> <span class="toc-text">IDE：在哪写 Python</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95%EF%BC%9A%E4%B8%80%E5%B0%8F%E6%97%B6%E8%83%BD%E8%A1%A5%E5%AE%8C%E7%9A%84%E9%83%A8%E5%88%86"><span class="toc-number">6.</span> <span class="toc-text">基础语法：一小时能补完的部分</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-%E5%9F%BA%E6%9C%AC%E8%BF%90%E7%AE%97%E4%B8%8E%E5%B8%83%E5%B0%94"><span class="toc-number">6.1.</span> <span class="toc-text">1) 基本运算与布尔</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-%E5%9B%9B%E7%A7%8D%E5%AE%B9%E5%99%A8%EF%BC%88%E5%BF%85%E9%A1%BB%E4%BC%9A%E7%94%A8%EF%BC%89"><span class="toc-number">6.2.</span> <span class="toc-text">2) 四种容器（必须会用）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-%E6%8E%A7%E5%88%B6%E8%AF%AD%E5%8F%A5"><span class="toc-number">6.3.</span> <span class="toc-text">3) 控制语句</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-%E5%87%BD%E6%95%B0%E4%B8%8E-range"><span class="toc-number">6.4.</span> <span class="toc-text">4) 函数与 range</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#5-%E6%96%87%E4%BB%B6%E8%AF%BB%E5%86%99"><span class="toc-number">6.5.</span> <span class="toc-text">5) 文件读写</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%81%87%E5%88%B0%E4%B8%8D%E4%BC%9A%E7%9A%84%EF%BC%8C%E6%80%8E%E4%B9%88%E6%9F%A5"><span class="toc-number">7.</span> <span class="toc-text">遇到不会的，怎么查</span></a></li></ol></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"></div><div id="footer-bar"><div class="footer-bar-links"><div class="footer-bar-left"><div id="footer-bar-tips"><div class="copyright">&copy;2020 - 2026 By <a class="footer-bar-link" href="/" title="qiuxz" target="_blank">qiuxz</a></div></div><div id="footer-type-tips"></div></div><div class="footer-bar-right"><a class="footer-bar-link" target="_blank" rel="noopener" href="https://github.com/anzhiyu-c/hexo-theme-anzhiyu" title="主题">主题</a></div></div></div></footer></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="sidebar-site-data site-data is-center"><a href="/archives/" title="archive"><div class="headline">文章</div><div class="length-num">60</div></a><a href="/tags/" title="tag"><div class="headline">标签</div><div class="length-num">12</div></a><a href="/categories/" title="category"><div class="headline">分类</div><div class="length-num">13</div></a></div><span class="sidebar-menu-item-title">功能</span><div class="sidebar-menu-item"><a class="darkmode_switchbutton menu-child" href="javascript:void(0);" title="显示模式"><i class="anzhiyufont anzhiyu-icon-circle-half-stroke"></i><span>显示模式</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="javascript:void(0);"><span> 文章</span></a><ul class="menus_item_child"><li><a class="site-page child faa-parent animated-hover" href="/archives/"><i class="anzhiyufont anzhiyu-icon-box-archive faa-tada" style="font-size: 0.9em;"></i><span> 隧道</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><span> 关于</span></a><ul class="menus_item_child"><li><a class="site-page child faa-parent animated-hover" href="/other/about/"><i class="anzhiyufont anzhiyu-icon-paper-plane faa-tada" style="font-size: 0.9em;"></i><span> 关于本人</span></a></li><li><a class="site-page child faa-parent animated-hover" href="javascript:toRandomPost()"><i class="anzhiyufont anzhiyu-icon-shoe-prints1 faa-tada" style="font-size: 0.9em;"></i><span> 随便逛逛</span></a></li></ul></div></div><span class="sidebar-menu-item-title">标签</span><div class="card-tags"><div class="item-headline"></div><div class="card-tag-cloud"><a href="/tags/AI/" style="font-size: 0.88rem;">AI <sup>1</sup></a><a href="/tags/YJango%E8%A7%86%E9%A2%91%E6%95%B4%E7%90%86/" style="font-size: 0.88rem;">YJango视频整理<sup>11</sup></a><a href="/tags/%E4%B8%AA%E4%BA%BA%E6%88%90%E9%95%BF/" style="font-size: 0.88rem;">个人成长<sup>3</sup></a><a href="/tags/%E5%A4%8D%E4%B9%A0/" style="font-size: 0.88rem;">复习<sup>9</sup></a><a href="/tags/%E5%A4%A7%E6%95%B0%E6%8D%AE/" style="font-size: 0.88rem;">大数据<sup>9</sup></a><a href="/tags/%E5%AD%A6%E4%B9%A0/" style="font-size: 0.88rem;">学习<sup>13</sup></a><a href="/tags/%E6%84%9F%E6%82%9F/" style="font-size: 0.88rem;">感悟<sup>1</sup></a><a href="/tags/%E6%95%99%E7%A8%8B/" style="font-size: 0.88rem;">教程<sup>8</sup></a><a href="/tags/%E6%9C%AA%E5%88%86%E7%B1%BB/" style="font-size: 0.88rem;">未分类<sup>6</sup></a><a href="/tags/%E6%9E%B6%E6%9E%84/" style="font-size: 0.88rem;">架构<sup>1</sup></a><a href="/tags/%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1/" style="font-size: 0.88rem;">知识图谱<sup>10</sup></a><a href="/tags/%E8%80%83%E8%AF%95/" style="font-size: 0.88rem;">考试<sup>8</sup></a></div></div><hr/></div></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="anzhiyufont anzhiyu-icon-book-open"></i></button><button id="translateLink" type="button" title="简繁转换">繁</button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="anzhiyufont anzhiyu-icon-circle-half-stroke"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="anzhiyufont anzhiyu-icon-arrows-left-right"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="anzhiyufont anzhiyu-icon-gear"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="anzhiyufont anzhiyu-icon-list-ul"></i></button><button id="mobile-column-button" type="button" title="专栏目录"><i class="anzhiyufont anzhiyu-icon-bars"></i></button><button id="go-up" type="button" title="回到顶部"><i class="anzhiyufont anzhiyu-icon-arrow-up"></i></button></div></div><div id="rightMenu"><div class="rightMenu-group rightMenu-small"><div class="rightMenu-item" id="menu-backward"><i class="anzhiyufont anzhiyu-icon-arrow-left"></i></div><div class="rightMenu-item" id="menu-forward"><i class="anzhiyufont anzhiyu-icon-arrow-right"></i></div><div class="rightMenu-item" id="menu-refresh"><i class="anzhiyufont anzhiyu-icon-arrow-rotate-right" style="font-size: 1rem;"></i></div><div class="rightMenu-item" id="menu-top"><i class="anzhiyufont anzhiyu-icon-arrow-up"></i></div></div><div class="rightMenu-group rightMenu-line rightMenuPlugin"><div class="rightMenu-item" id="menu-copytext"><i class="anzhiyufont anzhiyu-icon-copy"></i><span>复制选中文本</span></div><div class="rightMenu-item" id="menu-pastetext"><i class="anzhiyufont anzhiyu-icon-paste"></i><span>粘贴文本</span></div><a class="rightMenu-item" id="menu-commenttext"><i class="anzhiyufont anzhiyu-icon-comment-medical"></i><span>引用到评论</span></a><div class="rightMenu-item" id="menu-newwindow"><i class="anzhiyufont anzhiyu-icon-window-restore"></i><span>新窗口打开</span></div><div class="rightMenu-item" id="menu-copylink"><i class="anzhiyufont anzhiyu-icon-link"></i><span>复制链接地址</span></div><div class="rightMenu-item" id="menu-copyimg"><i class="anzhiyufont anzhiyu-icon-images"></i><span>复制此图片</span></div><div class="rightMenu-item" id="menu-downloadimg"><i class="anzhiyufont anzhiyu-icon-download"></i><span>下载此图片</span></div><div class="rightMenu-item" id="menu-newwindowimg"><i class="anzhiyufont anzhiyu-icon-window-restore"></i><span>新窗口打开图片</span></div><div class="rightMenu-item" id="menu-search"><i class="anzhiyufont anzhiyu-icon-magnifying-glass"></i><span>站内搜索</span></div><div class="rightMenu-item" id="menu-searchBaidu"><i class="anzhiyufont anzhiyu-icon-magnifying-glass"></i><span>百度搜索</span></div></div><div class="rightMenu-group rightMenu-line rightMenuOther"><a class="rightMenu-item menu-link" id="menu-randomPost"><i class="anzhiyufont anzhiyu-icon-shuffle"></i><span>随便逛逛</span></a><a class="rightMenu-item menu-link" href="/categories/"><i class="anzhiyufont anzhiyu-icon-cube"></i><span>博客分类</span></a><a class="rightMenu-item menu-link" href="/tags/"><i class="anzhiyufont anzhiyu-icon-tags"></i><span>文章标签</span></a></div><div class="rightMenu-group rightMenu-line rightMenuOther"><a class="rightMenu-item" id="menu-copy" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-copy"></i><span>复制地址</span></a><a class="rightMenu-item" id="menu-commentBarrage" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-message"></i><span class="menu-commentBarrage-text">关闭热评</span></a><a class="rightMenu-item" id="menu-darkmode" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-circle-half-stroke"></i><span class="menu-darkmode-text">深色模式</span></a><a class="rightMenu-item" id="menu-translate" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-language"></i><span>轉為繁體</span></a></div></div><div id="rightmenu-mask"></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="/js/tw_cn.js"></script><script src="https://cdn.cbd.int/@fancyapps/ui@6.1.6/dist/fancybox/fancybox.umd.js"></script><script src="https://cdn.cbd.int/instant.page@5.2.0/instantpage.js" type="module"></script><script src="https://cdn.cbd.int/vanilla-lazyload@19.1.3/dist/lazyload.iife.min.js"></script><script src="https://cdn.cbd.int/node-snackbar@0.1.16/dist/snackbar.min.js"></script><canvas id="universe"></canvas><script async src="https://npm.elemecdn.com/anzhiyu-theme-static@1.0.0/dark/dark.js"></script><script>// 消除控制台打印
+var HoldLog = console.log;
+console.log = function () {};
+let now1 = new Date();
+queueMicrotask(() => {
+  const Log = function () {
+    HoldLog.apply(console, arguments);
+  }; //在恢复前输出日志
+  const grt = new Date("08/08/2026 00:00:00"); //此处修改你的建站时间或者网站上线时间
+  now1.setTime(now1.getTime() + 250);
+  const days = (now1 - grt) / 1000 / 60 / 60 / 24;
+  const dnum = Math.floor(days);
+  const ascll = [
+    `欢迎使用安知鱼!`,
+    `生活明朗, 万物可爱`,
+    `
+        
+       █████╗ ███╗   ██╗███████╗██╗  ██╗██╗██╗   ██╗██╗   ██╗
+      ██╔══██╗████╗  ██║╚══███╔╝██║  ██║██║╚██╗ ██╔╝██║   ██║
+      ███████║██╔██╗ ██║  ███╔╝ ███████║██║ ╚████╔╝ ██║   ██║
+      ██╔══██║██║╚██╗██║ ███╔╝  ██╔══██║██║  ╚██╔╝  ██║   ██║
+      ██║  ██║██║ ╚████║███████╗██║  ██║██║   ██║   ╚██████╔╝
+      ╚═╝  ╚═╝╚═╝  ╚═══╝╚══════╝╚═╝  ╚═╝╚═╝   ╚═╝    ╚═════╝
+        
+        `,
+    "已上线",
+    dnum,
+    "天",
+    "©2020 By 安知鱼 V1.7.1",
+  ];
+  const ascll2 = [`NCC2-036`, `调用前置摄像头拍照成功，识别为【小笨蛋】.`, `Photo captured: `, `🤪`];
+
+  setTimeout(
+    Log.bind(
+      console,
+      `\n%c${ascll[0]} %c ${ascll[1]} %c ${ascll[2]} %c${ascll[3]}%c ${ascll[4]}%c ${ascll[5]}\n\n%c ${ascll[6]}\n`,
+      "color:#425AEF",
+      "",
+      "color:#425AEF",
+      "color:#425AEF",
+      "",
+      "color:#425AEF",
+      ""
+    )
+  );
+  setTimeout(
+    Log.bind(
+      console,
+      `%c ${ascll2[0]} %c ${ascll2[1]} %c \n${ascll2[2]} %c\n${ascll2[3]}\n`,
+      "color:white; background-color:#4fd953",
+      "",
+      "",
+      'background:url("https://npm.elemecdn.com/anzhiyu-blog@1.1.6/img/post/common/tinggge.gif") no-repeat;font-size:450%'
+    )
+  );
+
+  setTimeout(Log.bind(console, "%c WELCOME %c 你好，小笨蛋.", "color:white; background-color:#4f90d9", ""));
+
+  setTimeout(
+    console.warn.bind(
+      console,
+      "%c ⚡ Powered by 安知鱼 %c 你正在访问 qiuxz 的博客.",
+      "color:white; background-color:#f0ad4e",
+      ""
+    )
+  );
+
+  setTimeout(Log.bind(console, "%c W23-12 %c 你已打开控制台.", "color:white; background-color:#4f90d9", ""));
+
+  setTimeout(
+    console.warn.bind(console, "%c S013-782 %c 你现在正处于监控中.", "color:white; background-color:#d9534f", "")
+  );
+});</script><script async src="/anzhiyu/random.js"></script><div class="js-pjax"><script>if (!window.MathJax) {
+  window.MathJax = {
+    tex: {
+      inlineMath: [['$', '$'], ['\\(', '\\)']],
+      tags: 'ams'
+    },
+    chtml: {
+      scale: 1.1,
+      // MathJax 4 默认从 cdn.jsdelivr.net 取 NewCM 字体，国内直连拿不到，
+      // 公式会退化成缺字形。这里改走 npmmirror（与 mathjax@4.0.0 对应）。
+      fontURL: 'https://registry.npmmirror.com/@mathjax/mathjax-newcm-font/4.0.0/files/chtml/woff2',
+      dynamicPrefix: 'https://registry.npmmirror.com/@mathjax/mathjax-newcm-font/4.0.0/files/chtml/dynamic'
+    },
+    options: {
+      renderActions: {
+        findScript: [10, doc => {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/)
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+            const text = document.createTextNode('')
+            node.parentNode.replaceChild(text, node)
+            math.start = {node: text, delim: '', n: 0}
+            math.end = {node: text, delim: '', n: 0}
+            doc.math.push(math)
+          }
+        }, '']
+      }
+    }
+  }
+  
+  const script = document.createElement('script')
+  script.src = 'https://cdn.cbd.int/mathjax@4.0.0/tex-mml-chtml.js'
+  script.id = 'MathJax-script'
+  script.async = true
+  document.head.appendChild(script)
+} else {
+  MathJax.startup.document.state(0)
+  MathJax.texReset()
+  MathJax.typesetPromise()
+}</script><link rel="stylesheet" type="text/css" href="https://cdn.cbd.int/katex@0.16.25/dist/katex.min.css"><script src="https://cdn.cbd.int/katex@0.16.25/dist/contrib/copy-tex.min.js"></script><script>(() => {
+  document.querySelectorAll('#article-container span.katex-display').forEach(item => {
+    anzhiyu.wrap(item, 'div', { class: 'katex-wrap'})
+  })
+})()</script><input type="hidden" name="page-type" id="page-type" value="post"></div><script>var visitorMail = "";
+</script><script async data-pjax src="https://cdn.cbd.int/anzhiyu-theme-static@1.0.0/waterfall/waterfall.js"></script><script src="https://cdn.cbd.int/qrcodejs@1.0.0/qrcode.min.js"></script><link rel="stylesheet" href="https://cdn.cbd.int/anzhiyu-theme-static@1.1.9/icon/ali_iconfont_css.css"><script src="/js/social-copy.js"></script><script src="/js/column-nav-mobile.js"></script><script src="https://cdn.cbd.int/pjax@0.2.8/pjax.min.js"></script><script>let pjaxSelectors = ["head > title","#config-diff","#body-wrap","#rightside-config-hide","#rightside-config-show",".js-pjax"]
+var pjax = new Pjax({
+  elements: 'a:not([target="_blank"])',
+  selectors: pjaxSelectors,
+  cacheBust: false,
+  analytics: false,
+  scrollRestoration: false
+})
+
+document.addEventListener('pjax:send', function () {
+  // removeEventListener scroll 
+  anzhiyu.removeGlobalFnEvent('pjax')
+  anzhiyu.removeGlobalFnEvent('themeChange')
+
+  document.getElementById('rightside').classList.remove('rightside-show')
+  
+  if (window.aplayers) {
+    for (let i = 0; i < window.aplayers.length; i++) {
+      if (!window.aplayers[i].options.fixed) {
+        window.aplayers[i].destroy()
+      }
+    }
+  }
+
+  typeof typed === 'object' && typed.destroy()
+
+  //reset readmode
+  const $bodyClassList = document.body.classList
+  $bodyClassList.contains('read-mode') && $bodyClassList.remove('read-mode')
+})
+
+document.addEventListener('pjax:complete', function () {
+  window.refreshFn()
+
+  document.querySelectorAll('script[data-pjax]').forEach(item => {
+    const newScript = document.createElement('script')
+    const content = item.text || item.textContent || item.innerHTML || ""
+    Array.from(item.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value))
+    newScript.appendChild(document.createTextNode(content))
+    item.parentNode.replaceChild(newScript, item)
+  })
+
+  GLOBAL_CONFIG.islazyload && window.lazyLoadInstance.update()
+
+  typeof panguInit === 'function' && panguInit()
+
+  // google analytics
+  typeof gtag === 'function' && gtag('config', '', {'page_path': window.location.pathname});
+
+  // baidu analytics
+  typeof _hmt === 'object' && _hmt.push(['_trackPageview',window.location.pathname]);
+
+  typeof loadMeting === 'function' && document.getElementsByClassName('aplayer').length && loadMeting()
+
+  // prismjs
+  typeof Prism === 'object' && Prism.highlightAll()
+})
+
+document.addEventListener('pjax:error', e => {
+  if (e.request.status === 404) {
+    pjax.loadUrl('/404.html')
+  }
+})</script><script charset="UTF-8" src="https://cdn.cbd.int/anzhiyu-theme-static@1.1.5/accesskey/accesskey.js"></script></div><div id="popup-window"><div class="popup-window-title">通知</div><div class="popup-window-divider"></div><div class="popup-window-content"><div class="popup-tip">你好呀</div><div class="popup-link"><i class="anzhiyufont anzhiyu-icon-arrow-circle-right"></i></div></div></div></body></html>

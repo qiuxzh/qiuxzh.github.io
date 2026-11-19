@@ -3,7 +3,7 @@ title: QUT知识图谱作业解析：第一章 知识图谱概述
 date: 2026-11-06 10:05:00
 updated: 2026-11-06 10:05:00
 categories:
-  - 期末考试
+  - QUT
 tags:
   - 考试
 cover:

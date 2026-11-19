@@ -3,7 +3,7 @@ title: QUT知识图谱作业解析：第四章 知识融合
 date: 2026-11-06 10:02:00
 updated: 2026-11-06 10:02:00
 categories:
-  - 期末考试
+  - QUT
 tags:
   - 考试
 cover:

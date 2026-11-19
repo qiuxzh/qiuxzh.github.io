@@ -3,7 +3,7 @@ title: QUT知识图谱作业解析：第六章 图表示学习与图神经网络
 date: 2026-11-06 10:01:00
 updated: 2026-11-06 10:01:00
 categories:
-  - 期末考试
+  - QUT
 tags:
   - 考试
 cover:

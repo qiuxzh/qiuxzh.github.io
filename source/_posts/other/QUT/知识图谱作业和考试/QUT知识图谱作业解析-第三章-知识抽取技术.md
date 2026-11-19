@@ -3,7 +3,7 @@ title: QUT知识图谱作业解析：第三章 知识抽取技术
 date: 2026-11-06 10:03:00
 updated: 2026-11-06 10:03:00
 categories:
-  - 期末考试
+  - QUT
 tags:
   - 考试
 cover:

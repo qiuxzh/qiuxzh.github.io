@@ -1,0 +1,26 @@
+/* ============================================================
+   行内代码样式覆盖
+   主题默认是「主题色底 + 白字」，在正文里像一枚枚高亮标签，
+   一篇文章几十处，视觉上很吵。这里改成浅灰底 + 正文同色字，
+   靠等宽字体（consolas）和轻微背景区分即可。
+   ============================================================ */
+
+#article-container :not(pre) > code {
+  padding: 0.1rem 0.4rem;
+  margin: 0 3px;
+  border-radius: 4px;
+  background: var(--anzhiyu-card-btn-bg);
+  color: var(--anzhiyu-fontcolor);
+  font-size: 0.9em;
+  line-height: 1.7;
+  box-shadow: none;
+  border: 1px solid var(--anzhiyu-card-border);
+  word-break: break-word;
+}
+
+/* 表格、引用块里的行内代码字号再收一点，避免把行高撑开 */
+#article-container table :not(pre) > code,
+#article-container blockquote :not(pre) > code {
+  font-size: 0.86em;
+  padding: 0.05rem 0.3rem;
+}

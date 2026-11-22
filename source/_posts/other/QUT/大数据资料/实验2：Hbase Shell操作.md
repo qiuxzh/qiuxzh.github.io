@@ -1,4 +1,5 @@
 ---
+published: false
 title: 实验2：Hbase Shell 操作
 date: 2026-11-21 10:30:00
 categories:

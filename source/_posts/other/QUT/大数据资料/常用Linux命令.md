@@ -1,4 +1,5 @@
 ﻿---
+published: false
 title: 常用 Linux 命令
 date: 2026-11-21 10:20:00
 categories:
